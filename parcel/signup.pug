@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(href="./signup.sass", rel="stylesheet")
+    title PiggyPal | aboutus
+  body
+    h1 Sign Up
+    form#signup
+      |username: 
+      input(type="text", name="name")
+      br
+      |ID:
+      input(type="text", name="id")
+      br
+      |password:
+      input(type="text", name="password")
+      br
+      button(type="submit") sign up
+    #signup-output
+    br
+    br
+    h1 Login
+    form#login
+      |ID:
+      input(type="text", name="id")
+      br
+      |password:
+      input(type="text", name="pw")
+      br
+      button(type="submit") login
+  
+  script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  script(src="./signup.js")

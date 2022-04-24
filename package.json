@@ -2,8 +2,8 @@
   "name": "PiggyPal",
   "version": "1.0.0",
   "description": "",
-  "type": "",
-  "main": "",
+  "type": "module",
+  "main": "signup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "express": "^4.17.3",
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "mysql": "^2.18.1"
   }
 }
