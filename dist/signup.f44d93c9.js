@@ -130,6 +130,15 @@ $(document).ready(function () {
       $("#signup-output").html("".concat(data));
     });
   });
+  $('#login button[type="submit"]').click(function (event) {
+    event.preventDefault();
+    $.get('./login', {
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
+    }, function (data) {
+      $("#login-output").html("".concat(data));
+    });
+  });
 });
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -157,9 +166,9 @@ var checkedAssets, assetsToAccept;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = "" || location.hostname;
+  var hostname = "luffy.ee.ncku.edu.tw" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44920" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35434" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

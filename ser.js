@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import express from 'express'
-import fs from 'fs'
+import fs, { rmSync } from 'fs'
 import {dirname} from 'path'
 import {fileURLToPath} from 'url'
 import config from './config.js'
@@ -35,18 +35,19 @@ app.get('/signup', (req, res) => {
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
   
   //change to string
-  var ID = '" '+ `${req.query.id}` + '"'
-  var NAME = '"' + `${req.query.name}` + '"'
-  var PWD = '"' + `${req.query.password}` + '"'
+  let ID = '" '+ `${req.query.id}` + '"'
+  let NAME = '"' + `${req.query.name}` + '"'
+  let PWD = '"' + `${req.query.password}` + '"'
    
-  var add_user = false
+  let add_user = false
   const search_id = `
     SELECT id FROM user
-    WHERE user.id LIKE ${ID}`
+    WHERE id = ${ID}`
   const add = `INSERT INTO user (id, name, password) VALUES (${ID}, ${NAME}, ${PWD})`
   connection.query(search_id, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
+    console.log(rows)
     if (rows[0] === undefined) {
       add_user = true
     }
@@ -61,7 +62,6 @@ app.get('/signup', (req, res) => {
       connection.query(add, (err, result) => {
         if (err) console.log('fail to insert: ', err)
       })
-      console.log(add_user)
       res.send("Sign Up Sucessful.")
     }
   }, 100)
@@ -69,6 +69,28 @@ app.get('/signup', (req, res) => {
   
 })
 
-//connection.end()
+app.get('/login',(req,res) => {
+  //connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
 
-//
+  let UID = '"' + `${req.query.id}` + '"'
+  let PWD = '"' + `${req.query.password}` + '"'
+
+  const search_user = `
+    SELECT id and password FROM user
+    WHERE id = ${UID} and password =${PWD}`
+  connection.query(search_user, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    
+    console.log(UID, PWD)
+    console.log(row)
+    if (row[0]===undefined) {
+      res.send("failed,try again")
+    }
+    else{
+      res.send("login")
+    }
+  })
+})
+
+//connection.end()
