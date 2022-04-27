@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import express from 'express'
-import fs, { rmSync } from 'fs'
+//import fs, { rmSync } from 'fs'
 import {dirname} from 'path'
 import {fileURLToPath} from 'url'
 import config from './config.js'
@@ -69,11 +69,12 @@ app.get('/signup', (req, res) => {
   
 })
 
+//login
 app.get('/login',(req,res) => {
-  //connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
+  connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
 
-  let UID = '"' + `${req.query.id}` + '"'
-  let PWD = '"' + `${req.query.password}` + '"'
+  let UID = `${req.query.id}`
+  let PWD = `${req.query.password}`
 
   const search_user = `
     SELECT id and password FROM user
