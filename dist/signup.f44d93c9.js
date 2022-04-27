@@ -133,8 +133,8 @@ $(document).ready(function () {
   $('#login button[type="submit"]').click(function (event) {
     event.preventDefault();
     $.get('./login', {
-      id: $('#login input[name=id]').val(),
-      password: $('#login input[name=pw]').val()
+      id: $('#login input[name=id]').val().toString(),
+      password: $('#login input[name=pw]').val().toString()
     }, function (data) {
       $("#login-output").html("".concat(data));
     });
@@ -168,7 +168,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "luffy.ee.ncku.edu.tw" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35434" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41176" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -35,7 +35,7 @@ app.get('/signup', (req, res) => {
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
   
   //change to string
-  let ID = '" '+ `${req.query.id}` + '"'
+  let ID = '"'+ `${req.query.id}` + '"'
   let NAME = '"' + `${req.query.name}` + '"'
   let PWD = '"' + `${req.query.password}` + '"'
    
@@ -73,12 +73,14 @@ app.get('/signup', (req, res) => {
 app.get('/login',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
 
-  let UID = `${req.query.id}`
-  let PWD = `${req.query.password}`
+  let UID = "'"+`${req.query.id}`+"'"
+  let PWD = "'"+`${req.query.password}`+"'"
+
+  console.log(typeof(UID),typeof(req.query.id),typeof(req.query.password),typeof(PWD))
 
   const search_user = `
     SELECT id and password FROM user
-    WHERE id = ${UID} and password =${PWD}`
+    WHERE id = ${UID} and password = ${PWD}`
   connection.query(search_user, (err, row, fields) => {
     if (err)
       console.log('fail to search: ', err)

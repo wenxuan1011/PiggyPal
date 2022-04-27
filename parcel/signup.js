@@ -15,8 +15,8 @@ $(document).ready(function() {
   $('#login button[type="submit"]').click((event)=> {
     event.preventDefault()
     $.get('./login', {
-      id: $('#login input[name=id]').val(),
-      password: $('#login input[name=pw]').val()
+      id: $('#login input[name=id]').val().toString(),
+      password: $('#login input[name=pw]').val().toString()
     }, (data) => {
       $("#login-output").html(`${data}`);
     });
