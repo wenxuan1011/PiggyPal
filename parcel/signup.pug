@@ -4,33 +4,38 @@ html
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(href="./signup.sass", rel="stylesheet")
-    title PiggyPal | aboutus
+    title PiggyPal | Login
   body
-    h1 Sign Up
-    form#signup
-      |username: 
-      input(type="text", name="name")
-      br
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="password")
-      br
-      button(type="submit") sign up
-    #signup-output
-    br
-    br
-    h1 Login
-    form#login
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="pw")
-      br
-      button(type="submit") login
-    #login-output
+  
+    #Login
+      img(src = "../image/login/main_image.png", height = "26.8%")
+      #login-form
+        h1 Login
+        form#login
+          .box
+            img(src = "../image/login/icon_email.png", height = "60%")
+            input(type="text", name="id", placeholder = "Email")
+          .box
+            img(src = "../image/login/icon_password.png", height = "60%")
+            input(type="text", name="pw", placeholder = "Password")
+          p Forget password?
+          button(type="submit")
+      #login-output
+      
+    #SignUp
+      h1 Sign Up
+      form#signup
+        |username: 
+        input(type="text", name="name")
+        br
+        |ID:
+        input(type="text", name="id")
+        br
+        |password:
+        input(type="text", name="password")
+        br
+        button(type="submit") sign up
+      #signup-output
   
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="./signup.js")

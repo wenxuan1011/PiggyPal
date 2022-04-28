@@ -35,9 +35,9 @@ app.get('/signup', (req, res) => {
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
   
   //change to string
-  let ID = '"'+ `${req.query.id}` + '"'
-  let NAME = '"' + `${req.query.name}` + '"'
-  let PWD = '"' + `${req.query.password}` + '"'
+  let ID = "'" + `${req.query.id}` + "'"
+  let NAME = "'" + `${req.query.name}` + "'"
+  let PWD = "'" + `${req.query.password}` + "'"
    
   let add_user = false
   const search_id = `
