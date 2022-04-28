@@ -95,22 +95,28 @@ body {
         text-align: right;
         margin: 0 0 10% 0; }
       #SignUp #signup-form #SignUp button {
-        background: url(/btn_SignUp.d4513fb0.png) no-repeat center/contain;
+        background: url(/btn_signup.95e54a84.png) no-repeat center/contain;
         width: 80%;
         height: 25%;
         border: none; }
 
 #other_choice {
-  display: flex;
+  display: absolute;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
   width: 100vw;
-  margin: 0; }
+  margin: 0;
+  position: absolute;
+  top: 91%;
+  left: 33%; }
   #other_choice p {
     font-size: 11px;
     text-align: right;
     margin: 0 0 10% 0; }
+  #other_choice img {
+    top: 15vh;
+    margin: 0 17px 0 0;
+    height: 4vh; }
 
 
 /*# sourceMappingURL=/signup.53978396.css.map */

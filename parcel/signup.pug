@@ -22,7 +22,7 @@ html
           button(type="submit")
           p ――――――――  Or Log with  ――――――――
       #login-output
-      
+        p Don't have an account? Sign Up.
     #SignUp
       img(src = "../image/signup/main_image.png", height = "26.8%")
       #signup-form
@@ -37,18 +37,20 @@ html
           .box
             img(src = "../image/signup/icon_password.png", height = "60%")
             input(type="text", name="password", placeholder = "Password")
-          p I read and agree to terms and condition.
+          label 
+            input(type='checkbox', name='check') 
+            |I read and agree to terms and condition.
+          br
           button(type="submit")
-          p ――――――――  Or Connect with  ――――――――
+          p ――――――  Or Connect with  ――――――
       #signup-output
-
+        p Already had an account? Login.
     #other_choice
       img(src = "../image/login/icon_fb.png", height = "26.8%")
       img(src = "../image/login/icon_google.png", height = "26.8%")
       img(src = "../image/login/icon_twitter.png", height = "26.8%")
 
-    #change
-      p Already had an account? Login.
+      
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="./signup.js")
