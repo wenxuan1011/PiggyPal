@@ -14,28 +14,41 @@ html
         form#login
           .box
             img(src = "../image/login/icon_email.png", height = "60%")
-            input(type="text", name="id", placeholder = "Email")
+            input(type="text", name="id", placeholder = "E-mail")
           .box
             img(src = "../image/login/icon_password.png", height = "60%")
             input(type="text", name="pw", placeholder = "Password")
           p Forget password?
           button(type="submit")
+          p ――――――――  Or Log with  ――――――――
       #login-output
       
     #SignUp
-      h1 Sign Up
-      form#signup
-        |username: 
-        input(type="text", name="name")
-        br
-        |ID:
-        input(type="text", name="id")
-        br
-        |password:
-        input(type="text", name="password")
-        br
-        button(type="submit") sign up
+      img(src = "../image/signup/main_image.png", height = "26.8%")
+      #signup-form
+        h1 Sign Up
+        form#signup
+          .box
+            img(src = "../image/signup/icon_username.png", height = "60%")
+            input(type="text", name="name", placeholder = "User Name")
+          .box
+            img(src = "../image/signup/icon_email.png", height = "60%")
+            input(type="text", name="id", placeholder = "E-mail")
+          .box
+            img(src = "../image/signup/icon_password.png", height = "60%")
+            input(type="text", name="password", placeholder = "Password")
+          p I read and agree to terms and condition.
+          button(type="submit")
+          p ――――――――  Or Connect with  ――――――――
       #signup-output
-  
+
+    #other_choice
+      img(src = "../image/login/icon_fb.png", height = "26.8%")
+      img(src = "../image/login/icon_google.png", height = "26.8%")
+      img(src = "../image/login/icon_twitter.png", height = "26.8%")
+
+    #change
+      p Already had an account? Login.
+
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="./signup.js")
