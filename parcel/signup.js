@@ -1,3 +1,4 @@
+var ID="";
 $(document).ready(function() {
   
   // sign up
@@ -18,7 +19,14 @@ $(document).ready(function() {
       id: $('#login input[name=id]').val().toString(),
       password: $('#login input[name=pw]').val().toString()
     }, (data) => {
-      $("#login-output").html(`${data}`);
+      ID=data;
     });
   })
+ 
+
 });
+function transmit(){
+  return ID
+};
+
+module.export= transmit

@@ -11,7 +11,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6161
+const port = 6162
 
 // listen port
 app.listen(port, () => {
@@ -76,22 +76,18 @@ app.get('/login',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
   let PWD = "'"+`${req.query.password}`+"'"
 
-  console.log(typeof(UID),typeof(req.query.id),typeof(req.query.password),typeof(PWD))
-
   const search_user = `
     SELECT id and password FROM user
     WHERE id = ${UID} and password = ${PWD}`
   connection.query(search_user, (err, row, fields) => {
     if (err)
       console.log('fail to search: ', err)
-    
-    console.log(UID, PWD)
     console.log(row)
     if (row[0]===undefined) {
       res.send("failed,try again")
     }
     else{
-      res.send("login")
+      res.send(`${UID}`)
     }
   })
 })
