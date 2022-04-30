@@ -82,7 +82,7 @@ app.get('/login',(req,res) => {
   connection.query(search_user, (err, row, fields) => {
     if (err)
       console.log('fail to search: ', err)
-    console.log(row)
+    //console.log(row)
     if (row[0]===undefined) {
       res.send("failed,try again")
     }

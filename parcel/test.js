@@ -1,3 +1,8 @@
-const getID=require('./signup.js')
+import transmit from './signup.js' 
 
-console.log(getID.transmit())
+$('#login button[type="submit"]').click((event)=> {
+    event.preventDefault()
+    setTimeout(()=>{
+        $('#login-output').html(transmit)
+    },500)
+})

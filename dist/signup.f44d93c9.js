@@ -140,20 +140,24 @@ $(document).ready(function () {
   $('#login button[type="submit"]').click(function (event) {
     event.preventDefault();
     $.get('./login', {
-      id: $('#login input[name=id]').val().toString(),
-      password: $('#login input[name=pw]').val().toString()
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
     }, function (data) {
-      ID = data;
+      ID = data; //transmit(ID)
     });
   });
 });
 
 function transmit() {
+  console.log(123);
+  console.log(ID);
   return ID;
 }
 
 ;
-var _default = transmit;
+
+var _default = transmit();
+
 exports.default = _default;
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -183,7 +187,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39740" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46465" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

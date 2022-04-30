@@ -16,17 +16,16 @@ $(document).ready(function() {
   $('#login button[type="submit"]').click((event)=> {
     event.preventDefault()
     $.get('./login', {
-      id: $('#login input[name=id]').val().toString(),
-      password: $('#login input[name=pw]').val().toString()
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
     }, (data) => {
       ID=data;
     });
   })
- 
+ });
 
-});
 function transmit(){
   return ID
 };
 
-module.export= transmit
+export default transmit
