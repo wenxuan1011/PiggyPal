@@ -77,7 +77,7 @@ app.get('/login',(req,res) => {
   let PWD = "'"+`${req.query.password}`+"'"
 
   const search_user = `
-    SELECT id and password FROM user
+    SELECT id FROM user
     WHERE id = ${UID} and password = ${PWD}`
   connection.query(search_user, (err, row, fields) => {
     if (err)
@@ -87,9 +87,13 @@ app.get('/login',(req,res) => {
       res.send("failed,try again")
     }
     else{
-      res.send(`${UID}`)
+      let result=JSON.stringify(row[0])
+      result=JSON.parse(result)
+      result=result.id
+      res.send(`${result}`)
     }
   })
 })
+
 
 //connection.end()

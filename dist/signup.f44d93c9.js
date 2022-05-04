@@ -143,21 +143,17 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      ID = data; //transmit(ID)
+      ID = data;
     });
   });
 });
 
 function transmit() {
-  console.log(123);
-  console.log(ID);
   return ID;
 }
 
 ;
-
-var _default = transmit();
-
+var _default = transmit;
 exports.default = _default;
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -187,7 +183,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46465" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40035" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
