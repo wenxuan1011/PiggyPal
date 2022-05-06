@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Roboto Bold";
+  src: url(Roboto-Bold.1282eba5.ttf); }
+
+@font-face {
+  font-family: "Roboto Light";
+  src: url(Roboto-Light.1ce72739.ttf); }
+
+@font-face {
+  font-family: "Roboto Medium";
+  src: url(Roboto-Medium.5ffcd2b0.ttf); }
+
 body {
   display: flex;
   flex-direction: column;
@@ -7,20 +19,22 @@ body {
   margin: 0; }
 
 #Login {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: 100vw;
-  margin: 0; }
+  width: 100vw; }
   #Login img {
-    margin: 74px 0 0 8%; }
+    margin: 9.11vh 0 0 0; }
   #Login #login-form {
+    width: 70.66vw;
     display: flex;
     flex-direction: column;
-    margin: 32px 0 0 0; }
+    margin: 3.94vh 0 6.4vh 0; }
     #Login #login-form h1 {
-      margin: 0 0 20px 0; }
+      font-family: Roboto Bold;
+      font-size: 4.4335vh;
+      margin: 0 0 2.463vh 0; }
     #Login #login-form #login {
       display: flex;
       flex-direction: column;
@@ -28,95 +42,200 @@ body {
       #Login #login-form #login img {
         margin: 0 17px 0 0; }
       #Login #login-form #login input {
-        min-height: 50%;
+        min-height: 100%;
         border-style: none;
         border-bottom-style: solid;
         border-radius: 0;
-        width: 100%; }
+        width: 100%;
+        padding: 0; }
       #Login #login-form #login .box {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        height: 7vh;
-        width: 70.66vw;
-        margin: 0 0 2vh 0; }
+        height: 2.956vh;
+        width: 100%;
+        margin: 0 0 3.817vh 0; }
       #Login #login-form #login .box:nth-child(2) {
-        margin: 0 0 2vh 0; }
-      #Login #login-form #login p {
-        font-size: 11px;
-        text-align: right;
-        margin: 0 0 10% 0; }
+        margin: 0 0 3.0788vh 0; }
+      #Login #login-form #login .forget {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: end;
+        margin: 0 0 2.8325vh 0; }
+        #Login #login-form #login .forget p {
+          font-family: Roboto Light;
+          font-size: 1.5vh;
+          text-align: left;
+          margin: 0; }
       #Login #login-form #login button {
-        background: url(/btn_Login.dfed0153.png) no-repeat center/contain;
-        width: 80%;
-        height: 25%;
-        border: none; }
+        background-color: white;
+        display: flex;
+        align-items: center;
+        height: 3.94vh;
+        border: none;
+        padding: 0; }
+        #Login #login-form #login button img {
+          margin: 0; }
+  #Login .other_choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    margin: 0; }
+    #Login .other_choice img {
+      margin: 0; }
+    #Login .other_choice .icon {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 22.55%;
+      width: 100%;
+      margin: 3.818vh 0 9.36vh 0; }
+      #Login .other_choice .icon img {
+        margin: 0 17px 0 0; }
+      #Login .other_choice .icon img:nth-child(3) {
+        margin: 0; }
+    #Login .other_choice #login-output {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-family: Roboto Medium;
+      font-size: 1.5vh; }
+      #Login .other_choice #login-output p {
+        margin: 0; }
+      #Login .other_choice #login-output p#change-to-signup {
+        color: #8e5ff4; }
 
 #SignUp {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: 100vw;
-  margin: 0; }
+  width: 100vw; }
   #SignUp img {
-    margin: 74px 0 0 8%; }
+    margin: 9.11vh 0 0 0; }
   #SignUp #signup-form {
+    width: 70.66vw;
     display: flex;
     flex-direction: column;
-    margin: 32px 0 0 0; }
+    margin: 3.94vh 0 4.43vh 0; }
     #SignUp #signup-form h1 {
-      margin: 0 0 20px 0; }
-    #SignUp #signup-form #SignUp {
+      font-family: Roboto Bold;
+      font-size: 4.4335vh;
+      margin: 0 0 2.463vh 0; }
+    #SignUp #signup-form #signup {
       display: flex;
       flex-direction: column;
       align-items: center; }
-      #SignUp #signup-form #SignUp img {
+      #SignUp #signup-form #signup img {
         margin: 0 17px 0 0; }
-      #SignUp #signup-form #SignUp input {
-        min-height: 50%;
+      #SignUp #signup-form #signup input {
+        min-height: 100%;
         border-style: none;
         border-bottom-style: solid;
         border-radius: 0;
-        width: 100%; }
-      #SignUp #signup-form #SignUp .box {
+        width: 100%;
+        padding: 0; }
+      #SignUp #signup-form #signup .box {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        height: 7vh;
-        width: 70.66vw;
-        margin: 0 0 2vh 0; }
-      #SignUp #signup-form #SignUp .box:nth-child(3) {
-        margin: 0 0 2vh 0; }
-      #SignUp #signup-form #SignUp p {
-        font-size: 11px;
-        text-align: right;
-        margin: 0 0 10% 0; }
-      #SignUp #signup-form #SignUp button {
-        background: url(/btn_signup.95e54a84.png) no-repeat center/contain;
-        width: 80%;
-        height: 25%;
-        border: none; }
+        height: 2.956vh;
+        width: 100%;
+        margin: 0 0 3.817vh 0; }
+      #SignUp #signup-form #signup .box:nth-child(3) {
+        margin: 0 0 1.97vh 0; }
+      #SignUp #signup-form #signup .check {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-self: start;
+        margin: 0 0 4.8vh 0; }
+        #SignUp #signup-form #signup .check input {
+          width: 12px;
+          margin: 0 5px 0 0; }
+        #SignUp #signup-form #signup .check label {
+          font-family: Roboto Light;
+          font-size: 1.5vh;
+          margin: 0; }
+      #SignUp #signup-form #signup button {
+        background-color: white;
+        display: flex;
+        align-items: center;
+        height: 3.94vh;
+        border: none;
+        padding: 0; }
+        #SignUp #signup-form #signup button img {
+          margin: 0; }
+  #SignUp .other_choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 16.38vh;
+    width: 100vw;
+    margin: 0; }
+    #SignUp .other_choice img {
+      margin: 0; }
+    #SignUp .other_choice .icon {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 4.31vh;
+      width: 100vw;
+      margin: 3.818vh 0 5.17vh 0; }
+      #SignUp .other_choice .icon img {
+        margin: 0 17px 0 0; }
+      #SignUp .other_choice .icon img:nth-child(3) {
+        margin: 0; }
+    #SignUp .other_choice #signup-output {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-family: Roboto Medium;
+      font-size: 1.5vh; }
+      #SignUp .other_choice #signup-output p {
+        margin: 0; }
+      #SignUp .other_choice #signup-output #change-to-login {
+        color: #8e5ff4; }
 
-#other_choice {
-  display: absolute;
+#main {
+  display: none;
   flex-direction: column;
-  height: 100vh;
+  align-items: center;
+  background-color: #E5E5E5;
   width: 100vw;
-  margin: 0;
-  position: absolute;
-  top: 91%;
-  left: 33%; }
-  #other_choice p {
-    font-size: 11px;
-    text-align: right;
-    margin: 0 0 10% 0; }
-  #other_choice img {
-    top: 15vh;
-    margin: 0 17px 0 0;
-    height: 4vh; }
+  height: 100vh; }
+  #main #mainpage {
+    display: flex; }
+  #main #account {
+    display: none; }
+  #main #accounting {
+    display: none; }
+  #main #barcode {
+    display: none; }
+  #main #project {
+    display: none; }
+  #main #navbar {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 10.59vh;
+    position: absolute;
+    bottom: 0; }
+    #main #navbar img {
+      margin: 0 8vw 0 0; }
+    #main #navbar img:nth-child(5) {
+      margin: 0; }
 
 
-/*# sourceMappingURL=/signup.53978396.css.map */
+/*# sourceMappingURL=signup.53978396.css.map */

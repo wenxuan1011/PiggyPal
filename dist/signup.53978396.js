@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../image/login/btn_Login.png":[["btn_Login.dfed0153.png","../image/login/btn_Login.png"],"../image/login/btn_Login.png"],"./../image/signup/btn_signup.png":[["btn_signup.95e54a84.png","../image/signup/btn_signup.png"],"../image/signup/btn_signup.png"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./image/font/Roboto-Bold.ttf":[["Roboto-Bold.1282eba5.ttf","image/font/Roboto-Bold.ttf"],"image/font/Roboto-Bold.ttf"],"./image/font/Roboto-Light.ttf":[["Roboto-Light.1ce72739.ttf","image/font/Roboto-Light.ttf"],"image/font/Roboto-Light.ttf"],"./image/font/Roboto-Medium.ttf":[["Roboto-Medium.5ffcd2b0.ttf","image/font/Roboto-Medium.ttf"],"image/font/Roboto-Medium.ttf"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39860" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42531" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -394,4 +394,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/signup.53978396.js.map
+//# sourceMappingURL=signup.53978396.js.map
