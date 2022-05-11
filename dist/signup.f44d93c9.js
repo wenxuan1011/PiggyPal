@@ -11322,6 +11322,7 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
       } else {
         $("#signup-output").html("".concat(data));
+        ID;
       }
 
       ;
@@ -11383,7 +11384,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42245" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36669" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -130,6 +130,55 @@ html
         h1 Barcode 
       #project
         h1 Project
+      #personal_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 個人資料
+        #photo_and_name
+          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%")
+          p USER
+        #financial_setting
+          p 財務設定
+          .list 
+            li
+              p 固定收入
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+            li
+              p 固定支出
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+            li
+              p 固定儲蓄
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+        #account_setting
+          p 帳號設定
+          .list 
+            li
+              p 更改密碼
+            li
+              p 登出
+            li
+              p 刪除所有數據
+            li
+              p 更改密碼
+      #financial_setting_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 固定收入
+        form#financial
+          .box
+            p 收入項目
+            input(type = "text", name = "item", value = "薪水")
+          .box
+            p 入帳日期
+            input(type = "text", name = "date", value = "2022/05/11")
+          .box
+            p 入帳金額
+            input(type = "text", name = "money", value = "10000")
+          .box
+            p 重複
+            input(type = "text", name = "repeat", value = "重複")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png" height = "100%")
       
       
       #navbar
@@ -142,6 +191,7 @@ html
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="./signup.js")
+  script(src="./personal.js")
   script(src="./dailymoney.js")
   script(src="./module.js")
   script(src="./record.js")

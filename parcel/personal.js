@@ -1,5 +1,4 @@
-import jquery from 'jquery'
-window.$ = window.jQuery = jquery
+import ID from './signup.js'
 
 // open/close personal page
 $('#mainpage img').click(function(){
@@ -32,10 +31,21 @@ $('#personal_page #financial_setting .list li:nth-child(3)').click(function(){
 
 
 $(document).ready(function() {
-    // 固定輸入
+    // change username
+    $('#mainpage img').click((event) => {
+      event.preventDefault()
+      $.get('./username', {
+        id: ID,
+      }, (data) => {
+        $('#personal_page #photo_and_name p').html(`${data}`);
+      });
+    })
+
+    // update income
     $('#financial button[type="submit"]').click((event) => {
       event.preventDefault()
-      $.get('./financial', {
+      $.get('./income', {
+        id: ID,
         item: $('#financial input[name=item]').val(),
         date: $('#financial input[name=date]').val(),
         money: $('#financial input[name=money]').val(),

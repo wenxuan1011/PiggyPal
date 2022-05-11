@@ -12,11 +12,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-<<<<<<< HEAD
 const port = 6165
-=======
-const port = 6162
->>>>>>> b1b3c7969cad3e3adbd776346bc53f72eb3fceee
 
 // listen port
 app.listen(port, () => {
@@ -97,8 +93,58 @@ app.get('/login',(req,res) => {
   })
 })
 
-<<<<<<< HEAD
-=======
+
+// get username
+app.get('/username',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+
+  const search_user = `
+    SELECT name FROM user
+    WHERE id = ${UID}`
+  connection.query(search_user, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    if (row[0]===undefined) {
+      res.send("failed,try again")
+    }
+    else{
+      res.send(mod.gettabledata(row,'name',0))
+    }
+  })
+})
+
+
+// financial
+app.get('/income',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS income (id VARCHAR(30), item VARCHAR(30), date VARCHAR(30), income VARCHAR(30), , repeat VARCHAR(30))')
+
+  let UID = "'"+`${req.query.id}`+"'"
+  let ITEM = "'"+`${req.query.item}`+"'"
+  let DATE = "'"+`${req.query.date}`+"'"
+  let INCOME = "'"+`${req.query.income}`+"'"
+  let REPEAT = "'"+`${req.query.repeat}`+"'"
+
+  const search_user = `
+    SELECT id FROM user
+    WHERE id = ${UID} and password = ${PWD}`
+  connection.query(search_user, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    //console.log(row)
+    if (row[0]===undefined) {
+      res.send("failed,try again")
+    }
+    else{
+      res.send(mod.gettabledata(row,'id',0))
+    }
+  })
+})
+
+
+
+
+
+// record
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS Account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
   
@@ -120,6 +166,7 @@ app.get('/record',(req,res) => {
   
 })
 
+// monthlymoney
 app.get('/monthlymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
   var output=[income, expenditure, fixedincome, fixedexpenditure, fixedsaving]
@@ -141,6 +188,5 @@ app.get('/monthlymoney',(req,res) =>{
 })
 
 
->>>>>>> b1b3c7969cad3e3adbd776346bc53f72eb3fceee
 
 //connection.end()

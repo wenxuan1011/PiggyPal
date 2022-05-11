@@ -23,7 +23,7 @@ body {
   margin: 0; }
 
 #Login {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
@@ -210,13 +210,17 @@ body {
         color: #8e5ff4; }
 
 #main {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   background-color: #F4F4F4;
   width: 100vw;
   height: 100vh;
   font-family: Roboto Regular; }
+  #main #mainpage img {
+    position: absolute;
+    top: 3.448vh;
+    right: 0; }
   #main #mainpage #balance_bar {
     display: flex;
     justify-content: left;

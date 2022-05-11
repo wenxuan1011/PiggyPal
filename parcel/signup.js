@@ -1,7 +1,3 @@
-import jquery from 'jquery'
-window.$ = window.jQuery = jquery
-
-
 $('#change-to-login').click(function(){
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -110,6 +106,7 @@ $(document).ready(function() {
       }
       else{
         $("#signup-output").html(`${data}`);
+        ID
       };
     });
   })
@@ -133,6 +130,8 @@ $(document).ready(function() {
       };
     });
   })
+
+
  });
 
 function transmit(){
