@@ -117,6 +117,7 @@ $(document).ready(function() {
       if(`${data}` != 'failed,try again'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        
         ID=data
       }
       else{

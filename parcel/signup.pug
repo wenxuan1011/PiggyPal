@@ -4,6 +4,7 @@ html
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(href="./signup.sass", rel="stylesheet")
+    link(rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css")
     title PiggyPal | Login
   body
   
@@ -82,10 +83,53 @@ html
         h1 Account
       #accounting 
         h1 Accounting 
+        h1 Record
+        button(type="submit", id="Display") Record
+        br
+        br
+        form#record
+          div
+            |options:
+            button(type="submit", id="expend") expend
+            button(type="submit", id="income") income
+          br
+          div
+            |品項:
+            input(type="text", name="items")
+          br
+          div
+            |花費:
+            input(type="text", name="cost", id="spend")
+          br
+          div
+            |日期:
+            input(type="text", name="date", id="da")
+          br
+          button(type="submit", id="save") Save
+          br
+          br
+          
+        div#keyboard
+          button(type="submit", id="one") 1
+          button(type="submit", id="two") 2
+          button(type="submit", id="three") 3
+          br
+          button(type="submit", id="four") 4
+          button(type="submit", id="five") 5
+          button(type="submit", id="six") 6
+          br
+          button(type="submit", id="seven") 7
+          button(type="submit", id="eight") 8
+          button(type="submit", id="nine") 9  
+          br
+          button(type="submit", id="zero") 0
+        button(type="submit", id="backspace") delete   
+        button(type="submit", id="ok") OK
       #barcode
         h1 Barcode 
       #project
         h1 Project
+      
       
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
@@ -95,6 +139,9 @@ html
         img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  script(src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="./signup.js")
   script(src="./dailymoney.js")
   script(src="./module.js")
+  script(src="./record.js")
+  

@@ -252,6 +252,14 @@ body {
     display: none; }
   #main #accounting {
     display: none; }
+    #main #accounting #record {
+      display: none; }
+    #main #accounting #keyboard {
+      display: none; }
+    #main #accounting #ok {
+      display: none; }
+    #main #accounting #backspace {
+      display: none; }
   #main #barcode {
     display: none; }
   #main #project {

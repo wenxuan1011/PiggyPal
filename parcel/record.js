@@ -1,8 +1,10 @@
 import ID from './signup.js'
+import jquery from 'jquery'
 var money="";
 // 0支出 1收入
 var click_op = 0;
 var t = document.getElementById("spend");
+window.$ = window.jQuery = jquery
 
 $(document).ready(function() {
 /*
@@ -125,9 +127,9 @@ $('#ok').click(function(){
   $('#ok').hide();
   $('#backspace').hide();
 })
-
+var $j = jQuery.noConflict();
 $(function(){
-  $("#da").datepicker();
+  $j("#da").datepicker();
 });
 
 
