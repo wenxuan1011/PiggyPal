@@ -11284,6 +11284,7 @@ function unselected_to_selected() {
   if (present_page == navbar[0]) {
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
     $('#barcode').css("display", "flex");
+    window.location.href = 'https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html?';
   } else if (present_page == navbar[1]) {
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
     $('#account').css("display", "flex");
@@ -11367,7 +11368,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39461" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39456" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

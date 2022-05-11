@@ -73,6 +73,7 @@ function unselected_to_selected(){
   if(present_page == navbar[0]){
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
     $('#barcode').css("display", "flex");
+    window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html?';
   }
   else if(present_page == navbar[1]){
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
@@ -129,4 +130,3 @@ $(document).ready(function() {
     });
   })
 });
-

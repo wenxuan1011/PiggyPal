@@ -67,9 +67,51 @@ html
         h1 MainPage
         img(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
       #account
-        h1 Account
+        h1 account
       #accounting 
-        h1 Accounting 
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 記帳
+        #everyday_earn
+          img(src = "./image/Accounting/box_SelectDate.png", height = "30.10752688%")
+          #today_earn
+            p 本日損益
+            p +1920
+            img(src = "./image/Accounting/btn_add.png", height = "19.355%")
+        .list
+          p 收入
+          p 工讀
+          p 薪水
+          p 支出
+          p 早餐
+          p 飲料點心
+          p 交通
+      #add_deals
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 新增交易
+        #type
+          p 儲蓄
+          p 收入
+          p 支出
+          p 轉帳
+        form#fin
+          .box
+            input(type = "text", name = "item", value = "2021.09.27")
+          .box
+            input(type = "text", name = "item", value = "0")
+          .box
+            p 分類
+            input(type = "text", name = "date", value = "食品酒水")
+          .box
+            p 帳戶
+            input(type = "text", name = "money", value = "現金")
+          .box
+            p 備註
+            input(type = "text", name = "repeat", value = "")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png" height = "100%")
+
       #barcode
         h1 Barcode 
       #project
@@ -109,7 +151,7 @@ html
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 固定收入
-      
+        
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
         img(src="./image/navbar/unselect/account_unselect.png", height = "77.647%")
