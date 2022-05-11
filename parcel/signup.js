@@ -93,6 +93,7 @@ function unselected_to_selected(){
   };
 };
 
+var ID="";
 $(document).ready(function() {
   
   // sign up
@@ -116,18 +117,26 @@ $(document).ready(function() {
   // login
   $('#login button[type="submit"]').click((event)=> {
     event.preventDefault()
+    ID=$('#login input[name=id]').val()
     $.get('./login', {
-      id: $('#login input[name=id]').val().toString(),
-      password: $('#login input[name=pw]').val().toString()
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
     }, (data) => {
-      if(`${data}` == 'login'){
+      if(`${data}` != 'failed,try again'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        
+        ID=data
       }
       else{
         $("#login-output").html(`${data}`);
       };
     });
   })
-});
+ });
 
+function transmit(){
+  return ID
+};
+
+export default transmit

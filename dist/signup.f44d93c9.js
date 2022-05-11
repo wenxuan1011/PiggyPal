@@ -11215,6 +11215,11 @@ return jQuery;
 },{"process":"../node_modules/process/browser.js"}],"signup.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _jquery = _interopRequireDefault(require("jquery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -11302,6 +11307,7 @@ function unselected_to_selected() {
 }
 
 ;
+var ID = "";
 $(document).ready(function () {
   // sign up
   $('#signup button[type="submit"]').click(function (event) {
@@ -11324,13 +11330,15 @@ $(document).ready(function () {
 
   $('#login button[type="submit"]').click(function (event) {
     event.preventDefault();
+    ID = $('#login input[name=id]').val();
     $.get('./login', {
-      id: $('#login input[name=id]').val().toString(),
-      password: $('#login input[name=pw]').val().toString()
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) == 'login') {
+      if ("".concat(data) != 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        ID = data;
       } else {
         $("#login-output").html("".concat(data));
       }
@@ -11339,6 +11347,14 @@ $(document).ready(function () {
     });
   });
 });
+
+function transmit() {
+  return ID;
+}
+
+;
+var _default = transmit;
+exports.default = _default;
 },{"jquery":"../node_modules/jquery/dist/jquery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -11367,7 +11383,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36882" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42245" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,6 +4,7 @@ html
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(href="./signup.sass", rel="stylesheet")
+    link(rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css")
     title PiggyPal | Login
   body
   
@@ -64,67 +65,72 @@ html
 
     #main
       #mainpage
-        h1 MainPage
         img(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
+        h1 MainPage
+          #balance_bar 
+            #contain
+              .balance $4560
+              t 本月可用
+            .personal_block
+          #project_block 
+            t 儲蓄專案
+            .add_project 
+            .daily_expend
+          #detail_block 
+            t 當日明細
+            
+          .add_button
       #account
         h1 Account
       #accounting 
         h1 Accounting 
+        h1 Record
+        button(type="submit", id="Display") Record
+        br
+        br
+        form#record
+          div
+            |options:
+            button(type="submit", id="expend") expend
+            button(type="submit", id="income") income
+          br
+          div
+            |品項:
+            input(type="text", name="items")
+          br
+          div
+            |花費:
+            input(type="text", name="cost", id="spend")
+          br
+          div
+            |日期:
+            input(type="text", name="date", id="da")
+          br
+          button(type="submit", id="save") Save
+          br
+          br
+          
+        div#keyboard
+          button(type="submit", id="one") 1
+          button(type="submit", id="two") 2
+          button(type="submit", id="three") 3
+          br
+          button(type="submit", id="four") 4
+          button(type="submit", id="five") 5
+          button(type="submit", id="six") 6
+          br
+          button(type="submit", id="seven") 7
+          button(type="submit", id="eight") 8
+          button(type="submit", id="nine") 9  
+          br
+          button(type="submit", id="zero") 0
+        button(type="submit", id="backspace") delete   
+        button(type="submit", id="ok") OK
       #barcode
         h1 Barcode 
       #project
         h1 Project
       
-      #personal_page
-        .bar
-          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
-          p 個人資料
-        #photo_and_name
-          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%")
-          p USER
-        #financial_setting
-          p 財務設定
-          .list 
-            li
-              p 固定收入
-              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
-            li
-              p 固定支出
-              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
-            li
-              p 固定儲蓄
-              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
-        #account_setting
-          p 帳號設定
-          .list 
-            li
-              p 更改密碼
-            li
-              p 登出
-            li
-              p 刪除所有數據
-            li
-              p 更改密碼
-      #financial_setting_page
-        .bar
-          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
-          p 固定收入
-        form#financial
-          .box
-            p 收入項目
-            input(type = "text", name = "item", value = "薪水")
-          .box
-            p 入帳日期
-            input(type = "text", name = "date", value = "2022/05/11")
-          .box
-            p 入帳金額
-            input(type = "text", name = "money", value = "10000")
-          .box
-            p 重複
-            input(type = "text", name = "repeat", value = "重複")
-          button(type="submit")
-            img(src = "./image/btn/btn_save.png" height = "100%")
-
       
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
@@ -134,5 +140,9 @@ html
         img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="./signup.js")
-  script(src="./personal.js")
+  script(src="./dailymoney.js")
+  script(src="./module.js")
+  script(src="./record.js")
+  
