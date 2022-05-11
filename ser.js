@@ -29,21 +29,23 @@ app.use(express.static(`${__dirname}/dist`))
     }
   })
 
+var ID = ""
+
 // sign up
 app.get('/signup', (req, res) => {
   // create table
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
-  
+  ID = `${req.query.id}`
   //change to string
-  let ID = "'" + `${req.query.id}` + "'"
+  let UID = "'" + `${req.query.id}` + "'"
   let NAME = "'" + `${req.query.name}` + "'"
   let PWD = "'" + `${req.query.password}` + "'"
    
   let add_user = false
   const search_id = `
     SELECT id FROM user
-    WHERE id = ${ID}`
-  const add = `INSERT INTO user (id, name, password) VALUES (${ID}, ${NAME}, ${PWD})`
+    WHERE id = ${UID}`
+  const add = `INSERT INTO user (id, name, password) VALUES (${UID}, ${NAME}, ${PWD})`
   connection.query(search_id, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
@@ -52,7 +54,7 @@ app.get('/signup', (req, res) => {
       add_user = true
     }
     else{
-      res.send("BAD.")
+      res.send("Signup faild.")
     }
   })
   
@@ -62,7 +64,7 @@ app.get('/signup', (req, res) => {
       connection.query(add, (err, result) => {
         if (err) console.log('fail to insert: ', err)
       })
-      res.send("Sign Up Sucessful.")
+      res.send("signup")
     }
   }, 100)
   
@@ -95,5 +97,13 @@ app.get('/login',(req,res) => {
     }
   })
 })
+
+
+function transmit(){
+  return ID
+};
+
+export default transmit
+
 
 //connection.end()

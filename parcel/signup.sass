@@ -9,7 +9,11 @@
 @font-face 
     font-family: "Roboto Medium"
     src: url(./image/font/Roboto-Medium.ttf)
-    
+
+@font-face 
+    font-family: "Roboto Regular"
+    src: url(./image/font/Roboto-Regular.ttf)
+
 body
     display: flex
     flex-direction: column
@@ -17,9 +21,11 @@ body
     height: 100vh
     width: 100vw
     margin: 0
+    //overflow-x: hidden
+    //overflow-y: hidden
 
 #Login
-    display: flex
+    display: none
     flex-direction: column
     align-items: center
     height: 100vh
@@ -249,15 +255,21 @@ body
     
 
 #main
-    display: none
+    display: flex
     flex-direction: column
     align-items: center
-    background-color: #E5E5E5
+    background-color: #F4F4F4
     width: 100vw
     height: 100vh
+    font-family: Roboto Regular
 
     #mainpage
         display: flex
+        img
+            position: absolute
+            top: 3.448vh
+            right: 0
+
     
     #account
         display: none
@@ -271,6 +283,136 @@ body
     #project
         display: none
 
+    #personal_page
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: auto
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid 
+
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #photo_and_name
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 13.547vh
+            margin: 4.31vh 0 0 0
+            
+            img
+                margin: 0 0 1.97vh 0
+            
+            p
+                font-size: 1.47vh
+                margin: 0
+
+        #financial_setting
+            display: flex
+            flex-direction: column
+            width: 85.333vw
+            height: 22.78vh
+            margin: 3.325vh 0 0 0
+
+            p
+                font-size: 1.724vh
+                margin: 0
+
+        #account_setting
+            display: flex
+            flex-direction: column
+            width: 85.333vw
+            height: 29vh
+            margin: 3.325vh 0 20vh 0
+
+            p
+                font-size: 1.724vh
+                margin: 0
+
+        .list
+            list-style-type: none
+            background-color: white
+            width: 100%
+            border-radius: 10px
+            margin: 2.0936vh 0 0 0
+
+            li
+                display: flex
+                flex-direction: row
+                align-items: center
+                border-bottom: 0.3px solid #B3B3B3
+                border-radius: 0
+
+                p
+                    display: block
+                    color: black
+                    width: 75%
+                    padding: 1.724vh 5.6vw 1.724vh 5.6vw
+                    text-decoration: none
+                    font-size: 2vh !important
+            
+            li:nth-last-child(1)
+                border-style: none
+
+    #financial_setting_page
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid 
+
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
     #navbar
         background-color: white
         display: flex
@@ -279,7 +421,7 @@ body
         align-items: center
         width: 100vw
         height: 10.59vh
-        position: absolute
+        position: fixed
         bottom: 0
 
         img

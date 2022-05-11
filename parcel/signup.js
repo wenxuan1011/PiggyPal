@@ -1,5 +1,4 @@
 import jquery from 'jquery'
-//import image from './image/navbar/unselect/barcode_unselect.png'
 window.$ = window.jQuery = jquery
 
 $('#change-to-login').click(function(){
@@ -12,6 +11,8 @@ $('#change-to-signup').click(function(){
   $("#SignUp").css("display", "flex");
 })
 
+
+// navbar change page
 const navbar = ['barcode', 'account', 'mainpage', 'accounting', 'project'];
 var present_page = 'mainpage';
 
@@ -101,7 +102,13 @@ $(document).ready(function() {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val(),
     }, (data) => {
-      $("#signup-output").html(`${data}`);
+      if(`${data}` == 'signup'){
+        $('#SignUp').css("display", "none");
+        $('#main').css("display", "flex");
+      }
+      else{
+        $("#signup-output").html(`${data}`);
+      };
     });
   })
   
@@ -122,3 +129,4 @@ $(document).ready(function() {
     });
   })
 });
+
