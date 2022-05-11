@@ -80,20 +80,20 @@ html
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 個人資料
         #photo_and_name
-          img(src="./image/PersonalPage/Personal_userPic.png", height = "74%")
+          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%")
           p USER
         #financial_setting
           p 財務設定
           .list 
             li
               p 固定收入
-              img(src="./image/btn/btn_arrow_right.png", height = "15px")
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
             li
               p 固定支出
-              img(src="./image/btn/btn_arrow_right.png", height = "15px")
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
             li
               p 固定儲蓄
-              img(src="./image/btn/btn_arrow_right.png", height = "15px")
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
         #account_setting
           p 帳號設定
           .list 
@@ -109,6 +109,22 @@ html
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 固定收入
+        form#financial
+          .box
+            p 收入項目
+            input(type = "text", name = "item", value = "薪水")
+          .box
+            p 入帳日期
+            input(type = "text", name = "date", value = "2022/05/11")
+          .box
+            p 入帳金額
+            input(type = "text", name = "money", value = "10000")
+          .box
+            p 重複
+            input(type = "text", name = "repeat", value = "重複")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png" height = "100%")
+
       
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")

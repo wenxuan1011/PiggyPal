@@ -11,7 +11,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6164
+const port = 6165
 
 // listen port
 app.listen(port, () => {
@@ -29,13 +29,11 @@ app.use(express.static(`${__dirname}/dist`))
     }
   })
 
-var ID = ""
-
 // sign up
 app.get('/signup', (req, res) => {
   // create table
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
-  ID = `${req.query.id}`
+
   //change to string
   let UID = "'" + `${req.query.id}` + "'"
   let NAME = "'" + `${req.query.name}` + "'"
@@ -97,13 +95,6 @@ app.get('/login',(req,res) => {
     }
   })
 })
-
-
-function transmit(){
-  return ID
-};
-
-export default transmit
 
 
 //connection.end()
