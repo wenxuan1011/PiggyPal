@@ -88,7 +88,7 @@ app.get('/login',(req,res) => {
       res.send("failed,try again")
     }
     else{
-      res.send("login")
+      res.send(mod.gettabledata(user,id,0))
     }
   })
 })

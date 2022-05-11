@@ -114,9 +114,10 @@ $(document).ready(function() {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, (data) => {
-      if(`${data}` == 'login'){
+      if(`${data}` != 'failed,try again'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        ID=data
       }
       else{
         $("#login-output").html(`${data}`);

@@ -146,10 +146,10 @@ By Maker
 */
 var today = new Date();
 
-function gettabledata(table, id, row) {
+function gettabledata(table, parameter, row) {
   var result = JSON.stringify(table[row]);
   result = JSON.parse(result);
-  result = result[id];
+  result = result[parameter];
   return result;
 }
 

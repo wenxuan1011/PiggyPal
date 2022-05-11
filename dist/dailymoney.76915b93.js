@@ -11328,9 +11328,10 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) == 'login') {
+      if ("".concat(data) != 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        ID = data;
       } else {
         $("#login-output").html("".concat(data));
       }
@@ -11376,10 +11377,10 @@ By Maker
 */
 var today = new Date();
 
-function gettabledata(table, id, row) {
+function gettabledata(table, parameter, row) {
   var result = JSON.stringify(table[row]);
   result = JSON.parse(result);
-  result = result[id];
+  result = result[parameter];
   return result;
 }
 

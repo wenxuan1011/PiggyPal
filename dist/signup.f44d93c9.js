@@ -11328,9 +11328,10 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) == 'login') {
+      if ("".concat(data) != 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
+        ID = data;
       } else {
         $("#login-output").html("".concat(data));
       }
