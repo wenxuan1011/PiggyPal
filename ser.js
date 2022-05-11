@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import express from 'express'
-//import fs, { rmSync } from 'fs'
 import {dirname} from 'path'
 import {fileURLToPath} from 'url'
 import config from './config.js'
@@ -11,7 +10,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6162
+const port = 6163
 
 // listen port
 app.listen(port, () => {
@@ -28,6 +27,7 @@ app.use(express.static(`${__dirname}/dist`))
       process.exit()
     }
   })
+
 
 // sign up
 app.get('/signup', (req, res) => {
@@ -88,8 +88,34 @@ app.get('/login',(req,res) => {
     }
     else{
       res.send(`${UID}`)
+      IDD = `${UID}`
+      console.log('success')
     }
   })
 })
+
+//record
+app.get('/record',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS Account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
+  
+  let id = `${req.query.id}`
+  let items = "'" + `${req.query.items}` + "'"
+  let cost = "'" + `${req.query.cost}` + "'"
+  let temp_date = `${req.query.date}`
+  let type = "'" + `${req.query.type}` + "'"
+  
+  let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
+  let month = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
+  let day = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
+  
+  const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
+  
+  connection.query(add_record, (err) => {
+    if (err) console.log('fail to insert: ', err)
+  })
+  
+})
+
+
 
 //connection.end()
