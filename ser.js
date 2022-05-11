@@ -94,7 +94,7 @@ app.get('/login',(req,res) => {
 })
 
 app.get('./monthlymoney',(req,res) =>{
-  connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
+  //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
   var output=[income, expenditure, fixedincome, fixedexpenditure, fixedsaving]
 
   let ID="'"+`${req.query.ID}`+"'"
@@ -105,7 +105,7 @@ app.get('./monthlymoney',(req,res) =>{
     if (err)
       console.log('failed, to search: ',err)
     if (row[0]===undefined){
-      res.send(`failed, please setup monthly ${output[mod.StringtoInt(req.query.type)-2]}`)
+      res.send(`failed, please setup monthly ${output[mod.StringtoInt(req.query.type, 10)-2]}`)
     }
     else {
       res.send(row)

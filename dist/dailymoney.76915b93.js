@@ -11323,12 +11323,11 @@ $(document).ready(function () {
 
   $('#login button[type="submit"]').click(function (event) {
     event.preventDefault();
+    ID = $('#login input[name=id]').val();
     $.get('./login', {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      ID = data;
-
       if ("".concat(data) == 'login') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
@@ -11390,7 +11389,7 @@ function getMonthlyMoney(ID, type) {
     type: type
   }, function (data) {
     if (_typeof(data) === Object) {
-      return StringtoInt(gettabledata(data, 'cost', 0));
+      return StringtoInt(gettabledata(data, 'cost', 0), 10);
     } else return 0;
   });
 }
@@ -11400,7 +11399,7 @@ function caltotalmoney(money, type) {
 
   for (var i in money) {
     if (gettabledata(money, 'type', i) === type && gettabledata(money, 'month', i) === today.getMonth() && gettabledata(money, 'year', i) === today.getFullYear()) {
-      total = total + StringtoInt(gettabledata(money, 'cost', i));
+      total = total + StringtoInt(gettabledata(money, 'cost', i), 10);
     }
   }
 
@@ -11471,9 +11470,12 @@ function calculate() {
 
   var Expenditure = mod.caltotalmoney(mod.getMonthlyMoney(_signup.default, 0), 0);
   var Income = mod.caltotalmoney(mod.getMonthlyMoney(_signup.default, 1), 1);
-  var MonthlyIncome = mod.getMonthlyIncome(_signup.default, 2);
-  var MonthlyExpend = mod.getMonthlyIncome(_signup.default, 3);
-  var MontlySaving = mod.getMonthlyIncome(_signup.default, 4);
+  var MonthlyIncome = mod.getMonthlyIncome(_signup.default, 2); //need to change table
+
+  var MonthlyExpend = mod.getMonthlyIncome(_signup.default, 3); //need to change table
+
+  var MontlySaving = mod.getMonthlyIncome(_signup.default, 4); //need to change table
+
   var ProjectSaving; //money remain in project/project remaining day
 
   var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MontlySaving - Expenditure + Income) / (totalday - today.getDate() + 1);

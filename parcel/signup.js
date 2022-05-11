@@ -109,11 +109,11 @@ $(document).ready(function() {
   // login
   $('#login button[type="submit"]').click((event)=> {
     event.preventDefault()
+    ID=$('#login input[name=id]').val()
     $.get('./login', {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, (data) => {
-      ID=data;
       if(`${data}` == 'login'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");

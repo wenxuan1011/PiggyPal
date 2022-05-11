@@ -31,7 +31,7 @@ function getMonthlyMoney(ID,type){
         type:type
     },(data) =>{
         if(typeof(data)===Object){
-            return StringtoInt(gettabledata(data, 'cost', 0))
+            return StringtoInt(gettabledata(data, 'cost', 0), 10)
         }
         else 
             return 0
@@ -43,7 +43,7 @@ function caltotalmoney(money,type){
     let total=0
     for (var i in money){
         if (gettabledata(money, 'type', i)===type && gettabledata(money, 'month',i)===today.getMonth() && gettabledata(money, 'year',i)===today.getFullYear()){
-            total=total+StringtoInt(gettabledata(money, 'cost', i))
+            total=total+StringtoInt(gettabledata(money, 'cost', i), 10)
         }
     }
     return total

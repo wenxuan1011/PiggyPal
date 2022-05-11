@@ -25,9 +25,9 @@ function calculate(){
     
     var Expenditure=mod.caltotalmoney(mod.getMonthlyMoney(ID,0),0);
     var Income=mod.caltotalmoney(mod.getMonthlyMoney(ID,1),1)
-    var MonthlyIncome=mod.getMonthlyIncome(ID,2)
-    var MonthlyExpend=mod.getMonthlyIncome(ID,3)
-    var MontlySaving=mod.getMonthlyIncome(ID,4)
+    var MonthlyIncome=mod.getMonthlyIncome(ID,2)//need to change table
+    var MonthlyExpend=mod.getMonthlyIncome(ID,3)//need to change table
+    var MontlySaving=mod.getMonthlyIncome(ID,4)//need to change table
     var ProjectSaving//money remain in project/project remaining day
     var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MontlySaving-Expenditure+Income)/(totalday-today.getDate()+1)
     var actualDailyExpenditure=DailyExpenditure-ProjectSaving/1
