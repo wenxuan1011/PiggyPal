@@ -1,35 +1,12 @@
 import ID from './signup.js'
-import jquery from 'jquery'
+
 var money="";
 // 0支出 1收入
 var click_op = 0;
 var t = document.getElementById("spend");
-window.$ = window.jQuery = jquery
+
 
 $(document).ready(function() {
-/*
-  // sign up
-  $('#signup button[type="submit"]').click((event) => {
-    event.preventDefault()
-    $.get('./signup', {
-      name: $('#signup input[name=name]').val(),
-      id: $('#signup input[name=id]').val(),
-      password: $('#signup input[name=password]').val(),
-    }, (data) => {
-      $("#signup-output").html(`${data}`);
-    });
-  })
-  
-  $('#login button[type="submit"]').click((event)=> {
-    event.preventDefault()
-    $.get('./login', {
-      id: $('#login input[name=id]').val(),
-      password: $('#login input[name=pw]').val()
-    }, (data) => {
-      ID=data;
-    });
-  })
-*/
   
   $('#save').click((event)=> {
     event.preventDefault()
@@ -129,14 +106,5 @@ $('#ok').click(function(){
 })
 
 $(function(){
-  $("#da").Datepicker();
+  $("#da").datepicker();
 });
-
-
-/*
-function transmit(){
-  return ID
-};
-
-export default transmit
-*/

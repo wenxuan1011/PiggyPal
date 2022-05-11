@@ -66,12 +66,11 @@ html
     #main
       #mainpage
         img(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
-        h1 MainPage
+        h1 
           #balance_bar 
             #contain
               .balance $4560
               t 本月可用
-            .personal_block
           #project_block 
             t 儲蓄專案
             .add_project 
@@ -91,8 +90,10 @@ html
         form#record
           div
             |options:
+            button(type="submit", id="expend") 儲蓄
             button(type="submit", id="expend") expend
             button(type="submit", id="income") income
+            button(type="submit", id="expend") 轉帳
           br
           div
             |品項:

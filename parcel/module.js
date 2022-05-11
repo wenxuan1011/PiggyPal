@@ -48,11 +48,15 @@ function caltotalmoney(money,type){
     }
     return total
 }
+
+function calprojectcomplete(ID){
+    return //return .1f%
+}
 function StringtoInt(x, base) {
     const parsed = parseInt(x, base)
     if (isNaN(parsed)) { return 0; }
     return parsed
-  }
+}
 
 export default{
     gettabledata,//get id inside the row of column select from database

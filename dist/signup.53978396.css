@@ -228,7 +228,8 @@ body {
     width: 100vw;
     height: 15vh;
     left: 10vw;
-    color: #E5E5E5; }
+    background-color: #FF0000;
+    opacity: 0.08; }
     #main #mainpage #balance_bar #contain {
       display: flex;
       flex-direction: column;
@@ -237,26 +238,29 @@ body {
       margin-left: 10.43vw; }
       #main #mainpage #balance_bar #contain .balance {
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
-        top: 7.39vh;
+        margin-top: 7.39vh;
         left: 10.13vw;
-        height: 9.33vh;
+        height: 4.31vh;
         width: 27.46vw; }
       #main #mainpage #balance_bar #contain t {
         display: flex;
         font-size: 10px;
         width: 15vw;
-        height: 8vh;
-        button: 0vh;
-        left: 1.013vw; }
+        height: 2.3vh;
+        margin-top: 1.85vw;
+        margin-right: 4vh;
+        font-color: black; }
   #main #mainpage #project_block {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 4.31vh;
     width: 100vw;
-    height: 37.44vh; }
+    height: 37.44vh;
+    background-color: #FF0000;
+    opacity: 0.08; }
   #main #account {
     display: none; }
   #main #accounting {

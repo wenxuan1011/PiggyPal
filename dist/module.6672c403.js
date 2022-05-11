@@ -176,6 +176,10 @@ function caltotalmoney(money, type) {
   return total;
 }
 
+function calprojectcomplete(ID) {
+  return; //return .1f%
+}
+
 function StringtoInt(x, base) {
   var parsed = parseInt(x, base);
 
@@ -225,7 +229,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36669" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38891" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
