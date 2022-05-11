@@ -127,9 +127,9 @@ $('#ok').click(function(){
   $('#ok').hide();
   $('#backspace').hide();
 })
-var $j = jQuery.noConflict();
+
 $(function(){
-  $j("#da").datepicker();
+  $("#da").Datepicker();
 });
 
 
