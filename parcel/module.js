@@ -15,12 +15,38 @@ this function doing
 
 By Maker
 */
+var today=new Date();
 
-function gettabledata(table, parameter, row){
+function gettabledata(table, id, row){
     let result=JSON.stringify(table[row])
     result=JSON.parse(result)
-    result=`${result}.${parameter}`
+    result=result[id]
+    
     return result
+}
+
+function getMonthlyMoney(ID,type){
+    $.get('./monthlymoney',{
+        ID:ID,
+        type:type
+    },(data) =>{
+        if(typeof(data)===Object){
+            return StringtoInt(gettabledata(data, 'cost', 0))
+        }
+        else 
+            return 0
+    })
+}
+
+
+function caltotalmoney(money,type){
+    let total=0
+    for (var i in money){
+        if (gettabledata(money, 'type', i)===type && gettabledata(money, 'month',i)===today.getMonth() && gettabledata(money, 'year',i)===today.getFullYear()){
+            total=total+StringtoInt(gettabledata(money, 'cost', i))
+        }
+    }
+    return total
 }
 function StringtoInt(x, base) {
     const parsed = parseInt(x, base)
@@ -28,5 +54,9 @@ function StringtoInt(x, base) {
     return parsed
   }
 
-export function gettabledata(table, parameter, row)//get data inside the row of column select from database
-export function StringtoInt(x, base)//transfer string to integer
+export default{
+    gettabledata,//get id inside the row of column select from database
+    getMonthlyMoney,//get monthly fixed income(2),expenditure(3),saving(4)
+    caltotalmoney,//calculate total money
+    StringtoInt//transfer string to integer
+} 

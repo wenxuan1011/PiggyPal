@@ -1,13 +1,16 @@
 {
   "name": "PiggyPal",
   "version": "1.0.0",
-  "description": "",
+  "description": "裡面已經寫好login和signup，其他頁面的框架也有了。 ### 1.Initialize setting     npm i ### 2. Setting config.js config.js裡的資料被我拿掉了，要連到database前記得補上。 ### 3. 進行打包 用parcel打包 ``` ./node_modules/.bin/parcel watch ./parcel/signup.pug --public-url ./ ``` 與server連線 ``` node ser.js ``` ### 4. Check 幫我檢查看看有沒有問題，有問題再告訴我",
   "type": "module",
   "main": "signup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git+https://github.com/wenxuan1011/PiggyPal.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenxuan1011/PiggyPal.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,8 +26,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/cli": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
     "express": "^4.17.3",
     "jquery": "^3.6.0",

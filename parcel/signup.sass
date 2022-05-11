@@ -1,0 +1,330 @@
+@font-face 
+    font-family: "Roboto Bold"
+    src: url(./image/font/Roboto-Bold.ttf)
+
+@font-face 
+    font-family: "Roboto Light"
+    src: url(./image/font/Roboto-Light.ttf)
+
+@font-face 
+    font-family: "Roboto Medium"
+    src: url(./image/font/Roboto-Medium.ttf)
+    
+body
+    display: flex
+    flex-direction: column
+    align-items: center
+    height: 100vh
+    width: 100vw
+    margin: 0
+
+#Login
+    display: flex
+    flex-direction: column
+    align-items: center
+    height: 100vh
+    width: 100vw
+
+    img
+        margin: 9.11vh 0 0 0
+    
+    #login-form
+        width: 70.66vw
+        display: flex
+        flex-direction: column
+        margin: 3.94vh 0 6.4vh 0
+
+        h1
+            font-family: Roboto Bold
+            font-size:  4.4335vh
+            margin: 0 0 2.463vh 0
+        
+        #login
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            img
+                margin: 0 17px 0 0
+            
+            input
+                min-height: 100%
+                border-style: none
+                border-bottom-style: solid
+                border-radius: 0
+                width: 100%
+                padding: 0
+            
+            .box
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                height: 2.956vh
+                width: 100%
+                margin: 0 0 3.817vh 0
+            
+            .box:nth-child(2)
+                margin: 0 0 3.0788vh 0
+            
+            .forget
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-self: end
+                margin: 0 0 2.8325vh 0
+
+                p
+                    font-family: Roboto Light
+                    font-size: 1.5vh
+                    text-align: left
+                    margin: 0
+
+            button
+                background-color: white
+                display: flex
+                align-items: center
+                height: 3.94vh
+                border: none
+                padding: 0
+                
+                img
+                    margin: 0
+
+    .other_choice
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        margin: 0
+
+        img
+            margin: 0
+
+        .icon
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            height: 22.55%
+            width: 100%
+            margin: 3.818vh 0 9.36vh 0
+
+            img
+                margin: 0 17px 0 0
+            
+            img:nth-child(3)
+                margin: 0
+
+        #login-output
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            font-family: Roboto Medium
+            font-size: 1.5vh
+            
+            p
+                margin: 0
+            
+            p#change-to-signup
+                color: rgb(142, 95, 244)
+
+
+#SignUp
+    display: none
+    flex-direction: column
+    align-items: center
+    height: 100vh
+    width: 100vw
+
+    img
+        margin: 9.11vh 0 0 0
+    
+    #signup-form
+        width: 70.66vw
+        display: flex
+        flex-direction: column
+        margin: 3.94vh 0 4.43vh 0
+
+        h1
+            font-family: Roboto Bold
+            font-size:  4.4335vh
+            margin: 0 0 2.463vh 0
+        
+        #signup
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            img
+                margin: 0 17px 0 0
+            
+            input
+                min-height: 100%
+                border-style: none
+                border-bottom-style: solid
+                border-radius: 0
+                width: 100%
+                padding: 0
+            
+            .box
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                height: 2.956vh
+                width: 100%
+                margin: 0 0 3.817vh 0
+            
+            .box:nth-child(3)
+                margin: 0 0 1.97vh 0
+            
+            .check
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-self: start
+                margin: 0 0 4.8vh 0
+
+                input
+                    width: 12px
+                    margin: 0 5px 0 0 
+                
+                label
+                    font-family: Roboto Light
+                    font-size: 1.5vh
+                    margin: 0
+
+            button
+                background-color: white
+                display: flex
+                align-items: center
+                height: 3.94vh
+                border: none
+                padding: 0
+
+                img
+                    margin: 0
+
+    .other_choice
+        display: flex
+        flex-direction: column
+        align-items: center
+        height: 16.38vh
+        width: 100vw
+        margin: 0
+
+        img
+            margin: 0
+
+        .icon
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            height: 4.31vh
+            width: 100vw
+            margin: 3.818vh 0 5.17vh 0
+
+            img
+                margin: 0 17px 0 0
+            
+            img:nth-child(3)
+                margin: 0
+
+        #signup-output
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            font-family: Roboto Medium
+            font-size: 1.5vh
+            
+            p
+                margin: 0
+
+            #change-to-login
+                color: rgb(142, 95, 244)
+    
+
+#main
+    display: none
+    flex-direction: column
+    align-items: center
+    background-color: #E5E5E5
+    width: 100vw
+    height: 100vh
+
+    #mainpage
+        #balance_bar
+            display: flex
+            flex-direction:row
+            justify-content: center
+            align-items: center
+            width: 100vw
+            height: 15vh
+            #contain
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                left: 10.13vw
+                
+
+                .balance
+                    display: flex
+                    flex-direction: row
+                    justify-content: center
+                    align-items: center
+                    top: 7.39vh
+                    left: 10.13vw
+                    height: 9.33vh
+                    width: 27.46vw
+
+                t
+                    display: flex
+                    flex-direction:row
+                    font-size: 10px
+                    width: 15vw
+                    height: 8vh
+                    button: 0vh
+                    left: 1.013vw
+        #project_block
+            display: flex
+            flex-direction:row
+            justify-content: center
+            align-items: center
+            width: 100vw
+            height: 37.44vh
+        #detail_block
+        .add_button
+    
+    #account
+        display: none
+
+    #accounting
+        display: none
+
+    #barcode
+        display: none
+
+    #project
+        display: none
+
+    #navbar
+        background-color: white
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        width: 100vw
+        height: 10.59vh
+        position: absolute
+        bottom: 0
+
+        img
+            margin: 0 8vw 0 0  //30px
+
+        img:nth-child(5)
+            margin: 0 

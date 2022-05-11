@@ -6,6 +6,7 @@ import {dirname} from 'path'
 import {fileURLToPath} from 'url'
 import config from './config.js'
 import mysql from 'mysql'
+import mod from './parcel/module.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -35,9 +36,9 @@ app.get('/signup', (req, res) => {
   connection.query('CREATE TABLE IF NOT EXISTS user (id VARCHAR(30), name VARCHAR(30), password VARCHAR(30))')
   
   //change to string
-  let ID = '"'+ `${req.query.id}` + '"'
-  let NAME = '"' + `${req.query.name}` + '"'
-  let PWD = '"' + `${req.query.password}` + '"'
+  let ID = "'" + `${req.query.id}` + "'"
+  let NAME = "'" + `${req.query.name}` + "'"
+  let PWD = "'" + `${req.query.password}` + "'"
    
   let add_user = false
   const search_id = `
@@ -87,13 +88,31 @@ app.get('/login',(req,res) => {
       res.send("failed,try again")
     }
     else{
-      let result=JSON.stringify(row[0])
-      result=JSON.parse(result)
-      result=result.id
-      res.send(`${result}`)
+      res.send("login")
     }
   })
 })
+
+app.get('./monthlymoney',(req,res) =>{
+  connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
+  var output=[income, expenditure, fixedincome, fixedexpenditure, fixedsaving]
+
+  let ID="'"+`${req.query.ID}`+"'"
+  let type="'"+`${req.query.type}`+"'"
+
+  const search_user= `SELECT cost FROM table WHERE id = ${ID} and type= ${type}`
+  connection.query(search_user,(err,row,fields) => {
+    if (err)
+      console.log('failed, to search: ',err)
+    if (row[0]===undefined){
+      res.send(`failed, please setup monthly ${output[mod.StringtoInt(req.query.type)-2]}`)
+    }
+    else {
+      res.send(row)
+    }
+  })
+})
+
 
 
 //connection.end()

@@ -4,35 +4,97 @@ html
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(href="./signup.sass", rel="stylesheet")
-    title PiggyPal | aboutus
+    title PiggyPal | Login
   body
-    h1 Sign Up
-    form#signup
-      |username: 
-      input(type="text", name="name")
-      br
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="password")
-      br
-      button(type="submit") sign up
-    #signup-output
-    br
-    br
-    h1 Login
-    form#login
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="pw")
-      br
-      button(type="submit") login
-    #login-output
   
+    #Login
+      img(src = "./image/login/main_image.png", height = "25.246%")
+      #login-form
+        h1 Login
+        form#login
+          .box
+            img(src = "./image/login/icon_email.png", height = "100%")
+            input(type="text", name="id", placeholder = "E-mail")
+          .box
+            img(src = "./image/login/icon_password.png", height = "100%")
+            input(type="text", name="pw", placeholder = "Password")
+          .forget
+            p Forget password?
+          button(type="submit")
+            img(src = "./image/login/btn_Login.png" height = "100%")
+      .other_choice
+        img(src="./image/login/line_OrLogWith.png", height = "10%")
+        .icon 
+          img(src = "./image/login/icon_fb.png", height = "100%")
+          img(src = "./image/login/icon_google.png", height = "100%")
+          img(src = "./image/login/icon_twitter.png", height = "100%")
+        #login-output
+          p Don't have an account? &nbsp;
+          p#change-to-signup Sign Up.
+    
+    #SignUp
+      img(src = "./image/signup/main_image.png", height = "24.87%")
+      #signup-form
+        h1 Sign Up
+        form#signup
+          .box
+            img(src = "./image/signup/icon_username.png", height = "100%")
+            input(type="text", name="name", placeholder = "User Name")
+          .box
+            img(src = "./image/signup/icon_email.png", height = "100%")
+            input(type="text", name="id", placeholder = "E-mail")
+          .box
+            img(src = "./image/signup/icon_password.png", height = "100%")
+            input(type="text", name="password", placeholder = "Password")
+          .check
+            input(type='checkbox', name='check') 
+            label I read and agree to terms and condition.
+          button(type="submit")
+            img(src = "./image/signup/btn_SignUp.png" height = "100%")
+      .other_choice
+        img(src="./image/signup/line_OrConnectWith.png", height = "9%")
+        .icon 
+          img(src = "./image/signup/icon_fb.png", height = "100%")
+          img(src = "./image/signup/icon_google.png", height = "100%")
+          img(src = "./image/signup/icon_twitter.png", height = "100%")
+        #signup-output
+          p Already had an account? &nbsp; 
+          p#change-to-login Login.
+
+
+    #main
+      #mainpage
+        h1 MainPage
+          #balance_bar 
+            #contain
+              .balance $4560
+              t 本月可用
+            .personal_block
+          #project_block 
+            t 儲蓄專案
+            .add_project 
+            .daily_expend
+          #detail_block 
+            t 當日明細
+            
+          .add_button
+      #account
+        h1 Account
+      #accounting 
+        h1 Accounting 
+      #barcode
+        h1 Barcode 
+      #project
+        h1 Project
+      
+      #navbar
+        img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
+        img(src="./image/navbar/unselect/account_unselect.png", height = "77.647%")
+        img(src="./image/navbar/selected/mainpage_select.png", height = "77.647%")
+        img(src="./image/navbar/unselect/accounting_unselect.png", height = "77.647%")
+        img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
+
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="./signup.js")
-  script(src="./test.js")
-  script(src="./getdbdata.js")
+  script(src="./dailymoney.js")
+  script(src="./module.js")

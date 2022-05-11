@@ -5,49 +5,35 @@ function calculate(){
     var today=new Date();
     var totalday=0;
     
-    if(today.getMonth()=(1||3||5||7||8||10||12)){
-        totalday=31
-    }
-    else if(today.getMonth()=2){
+    var MonthlyTotalDay=[31,28,31,30,31,30,31,31,30,31,30,31]
+    
+    if(today.getMonth()==2){
         if (today.getFullYear()%4==0){
             totalday=29
-            if(today.getFullYear()%100){
+            if(today.getFullYear()%100==0){
                 totalday=28
-                if (today.getFullYear()%400){
+                if (today.getFullYear()%400==0){
                     totalday=29
                 }
             }
         }
+        totalday=MonthlyTotalDay[today.getMonth()-1]
     }
     else{
-        totalday=30
+        totalday=MonthlyTotalDay[today.getMonth()-1]
     }
-    const search_money = `
-    SELECT money FROM user
-    WHERE id = ${UID}
-    ORDER BY money`
-    connect.query(search_money, (err,money,fields) => {
-        if (err)
-            console.log('fail to search id: ', err)
-        let income=calIncome(money)
-        let expenditure=calExpenditure();
-        let dailyeExp=
-    }) 
+    
+    var Expenditure=mod.caltotalmoney(mod.getMonthlyMoney(ID,0),0);
+    var Income=mod.caltotalmoney(mod.getMonthlyMoney(ID,1),1)
+    var MonthlyIncome=mod.getMonthlyIncome(ID,2)
+    var MonthlyExpend=mod.getMonthlyIncome(ID,3)
+    var MontlySaving=mod.getMonthlyIncome(ID,4)
+    var ProjectSaving//money remain in project/project remaining day
+    var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MontlySaving-Expenditure+Income)/(totalday-today.getDate()+1)
+    var actualDailyExpenditure=DailyExpenditure-ProjectSaving/1
+    if(actualDailyExpenditure<0){
+        //daily avaliable expenditure warning
+    }
 }
-function calIncome(money){
-    let income=0
-    for (var i in money){
-        if (mod.gettabledata(money,ID,i)>0){
-            income=income+mod.gettabledata(money, ID,i)
-        }
-    }
 
-}
-function calExpenditure(money){
-    let expenditure=0
-    for (var i in money){
-        if (mod.gettabledata(money,ID,i)>0){
-            expenditure=expenditure+mod.gettabledata(money, ID,i)
-        }
-    }
-}
+export default calculate
