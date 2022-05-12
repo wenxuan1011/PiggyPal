@@ -264,48 +264,37 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var money = ""; // 0支出 1收入
 
-var click_op = 0;
-var t = document.getElementById("spend");
+var click_op = 0; //spend
+
+var t = document.getElementById("spend"); //name
+
+var n = document.getElementById("na"); //date
+
+var d = document.getElementById("da");
 $(document).ready(function () {
-  /*
-    // sign up
-    $('#signup button[type="submit"]').click((event) => {
-      event.preventDefault()
-      $.get('./signup', {
-        name: $('#signup input[name=name]').val(),
-        id: $('#signup input[name=id]').val(),
-        password: $('#signup input[name=password]').val(),
-      }, (data) => {
-        $("#signup-output").html(`${data}`);
-      });
-    })
-    
-    $('#login button[type="submit"]').click((event)=> {
-      event.preventDefault()
-      $.get('./login', {
-        id: $('#login input[name=id]').val(),
-        password: $('#login input[name=pw]').val()
-      }, (data) => {
-        ID=data;
-      });
-    })
-  */
   $('#save').click(function (event) {
     event.preventDefault();
     $.get('./record', {
       id: _signup.default,
-      items: $('#record input[name=items]').val(),
-      cost: $('#record input[name=cost]').val(),
-      date: $('#record input[name=date]').val(),
+      items: $('#fin input[name=items]').val(),
+      cost: $('#fin input[name=cost]').val(),
+      date: $('#fin input[name=date]').val(),
       type: click_op
     });
+    t.value = "";
+    n.value = "";
+    d.value = "05/13/2022";
   });
 });
 $('#expend').click(function (event) {
+  $('#expend').css("border-bottom", "0.3px solid #410ADF");
+  $('#income').css("border-bottom", "none");
   event.preventDefault();
   click_op = 0;
 });
 $('#income').click(function (event) {
+  $('#income').css("border-bottom", "0.3px solid #410ADF");
+  $('#expend').css("border-bottom", "none");
   event.preventDefault();
   click_op = 1;
 });
@@ -353,14 +342,8 @@ $('#backspace').click(function () {
   money = money.slice(0, -1);
   t.value = money;
 });
-$('#Display').click(function () {
-  $('#record').toggle();
-  $('#keyboard').hide();
-  $('#ok').hide();
-  $('#backspace').hide();
-});
 $('#spend').click(function () {
-  $('#keyboard').show();
+  $('#keyboard').css("display", "flex");
   $('#ok').show();
   $('#backspace').show();
   document.activeElement.blur();
@@ -373,13 +356,6 @@ $('#ok').click(function () {
 $(function () {
   $("#da").datepicker();
 });
-/*
-function transmit(){
-  return ID
-};
-
-export default transmit
-*/
 },{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -408,7 +384,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46237" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45771" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -12,7 +12,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6164
+const port = 6163
 
 // listen port
 app.listen(port, () => {
@@ -266,6 +266,34 @@ app.get('/person_project',(req,res) => {
       res.send("You have updated your "+ `${req.query.project_personal}` +".")
     }
   }, 100)
+})
+
+
+app.get('/getmainpagedetail',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+  let month= `${req.query.month}`
+  let date= "'"+`${req.query.date}`+"'"
+  let year= "'"+`${req.query.year}`+"'"
+  var search_user=""
+  if (mod.StringtoInt(month)<10){
+    month=`'0${month}'`
+    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+  }
+  else{
+    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+  }
+  
+  console.log(search_user)
+  connection.query(search_user, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
 })
 
 //connection.end()

@@ -20,10 +20,11 @@ body {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  margin: 0; }
+  margin: 0;
+  overflow-x: hidden; }
 
 #Login {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
@@ -326,18 +327,176 @@ body {
         margin: 0 0 2.525vh 0; }
         #main #mainpage #detail_block #detail_bar p {
           margin: 0 3vw 0 0; }
+      #main #mainpage #detail_block .list {
+        list-style-type: none;
+        background-color: white;
+        width: 92%;
+        border-radius: 10px;
+        margin: 2.0936vh 0 0 0; }
+        #main #mainpage #detail_block .list li {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border-bottom: 0.3px solid #B3B3B3;
+          border-radius: 0; }
+          #main #mainpage #detail_block .list li p {
+            display: block;
+            color: black;
+            width: 75%;
+            padding: 1.724vh 5.6vw 1.724vh 5.6vw;
+            text-decoration: none;
+            font-size: 2vh !important; }
+        #main #mainpage #detail_block .list li:nth-last-child(1) {
+          border-style: none; }
   #main #account {
     display: none; }
   #main #accounting {
-    display: none; }
-    #main #accounting #record {
-      display: none; }
-    #main #accounting #keyboard {
-      display: none; }
-    #main #accounting #ok {
-      display: none; }
-    #main #accounting #backspace {
-      display: none; }
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F4F4F4;
+    width: 100vw;
+    height: 100vh;
+    font-family: Roboto Regular; }
+    #main #accounting .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #accounting .bar img {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #accounting .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #accounting #everyday_earn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60vw;
+      height: 22.91vh;
+      margin-top: 2.59vh;
+      margin-bottom: 3.325123vh; }
+      #main #accounting #everyday_earn img {
+        margin-bottom: 2vh; }
+      #main #accounting #everyday_earn #today_earn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: end;
+        width: 100vw;
+        height: 10vh; }
+        #main #accounting #everyday_earn #today_earn p:nth-child(1) {
+          font-size: 1.601vh;
+          margin: 0 10px 10px 0; }
+        #main #accounting #everyday_earn #today_earn p:nth-child(2) {
+          font-size: 4.4335vh;
+          margin: 0;
+          color: #8E5FF4; }
+      #main #accounting #everyday_earn img:nth-child(2) {
+        margin-top: 3.694vh; }
+  #main #add_deals {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0vh;
+    border: none;
+    border-left: solid; }
+    #main #add_deals .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #add_deals .bar img {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #add_deals .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #add_deals #type {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100vw;
+      height: 4.1872vh;
+      margin: 3.69458vh 0 3.202vh 0; }
+      #main #add_deals #type p {
+        margin: 0 3vh 0 3vh; }
+      #main #add_deals #type p:nth-child(3) {
+        border-bottom: 0.3px solid #410ADF; }
+    #main #add_deals #fin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 72.2667vw;
+      height: auto;
+      margin: 4.31vh 0 0 0; }
+      #main #add_deals #fin input {
+        min-height: 4.31vh;
+        border-style: none;
+        border-radius: 6px;
+        width: 40.16vw;
+        padding: 0;
+        font-size: 1.4778vh;
+        text-align: right;
+        padding: 0 3.733vw 0 0; }
+      #main #add_deals #fin .box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 4.31vh;
+        width: 100%;
+        margin: 0 0 2.586vh 0; }
+      #main #add_deals #fin .box:nth-child(4) {
+        margin: 0 0 4.187vh 0; }
+      #main #add_deals #fin button {
+        background-color: #F4F4F4;
+        display: flex;
+        align-items: center;
+        height: 3.94vh;
+        border: none;
+        padding: 0; }
+        #main #add_deals #fin button img {
+          margin: 0; }
+      #main #add_deals #fin #keyboard {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 60vw;
+        height: auto;
+        margin: 4.31vh 0 0 0; }
+        #main #add_deals #fin #keyboard .board_box {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 60vw;
+          height: auto;
+          margin: 4.31vh 0 0 0; }
+      #main #add_deals #fin #ok {
+        display: none; }
+      #main #add_deals #fin #backspace {
+        display: none; }
   #main #barcode {
     display: none; }
   #main #project {
