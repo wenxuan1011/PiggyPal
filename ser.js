@@ -116,12 +116,14 @@ app.get('/username',(req,res) => {
 
 // update financial
 app.get('/financial',(req,res) => {
-  connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), date VARCHAR(30), income VARCHAR(30), repeats VARCHAR(30))')
+  connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
 
   let UID = "'"+`${req.query.id}`+"'"
   let TYPE = "'"+`${req.query.type}`+"'"
   let ITEM = "'"+`${req.query.item}`+"'"
-  let DATE = "'"+`${req.query.date}`+"'"
+  let YEAR = "'"+`${req.query.year}`+"'"
+  let MONTH = "'"+`${req.query.month}`+"'"
+  let DAY = "'"+`${req.query.day}`+"'"
   let MONEY = "'"+`${req.query.money}`+"'"
   let REPEAT = "'"+`${req.query.repeat}`+"'"
 
@@ -130,7 +132,7 @@ app.get('/financial',(req,res) => {
   const search_item = `
     SELECT id FROM financial
     WHERE id = ${UID} and item =${ITEM}`
-  const update = `INSERT INTO financial (id, type, item, date, income, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${DATE}, ${MONEY}, ${REPEAT})`
+  const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
   connection.query(search_item, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
@@ -156,6 +158,8 @@ app.get('/financial',(req,res) => {
 
 // get information (in financial)
 app.get('/information',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
+
   let UID = "'"+`${req.query.id}`+"'"
   let TYPE = "'"+`${req.query.type}`+"'"
 
@@ -170,7 +174,7 @@ app.get('/information',(req,res) => {
     }
     else{
       console.log(row)
-      let result = [mod.gettabledata(row,'item',0), mod.gettabledata(row,'date',0), mod.gettabledata(row,'income',0), mod.gettabledata(row,'repeats',0)]
+      let result = [mod.gettabledata(row,'item',0), mod.gettabledata(row,'year',0), mod.gettabledata(row,'month',0), mod.gettabledata(row,'day',0), mod.gettabledata(row,'money',0), mod.gettabledata(row,'repeats',0)]
       console.log(result)
       res.send(result)
     }
@@ -190,8 +194,8 @@ app.get('/record',(req,res) => {
   let type = "'" + `${req.query.type}` + "'"
   
   let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
-  let month = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
-  let day = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
+  let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
+  let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
   
   const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
   

@@ -62,7 +62,9 @@ $(document).ready(function() {
         id: ID,
         type: TYPE,
         item: $('#financial input[name=item]').val(),
-        date: $('#financial input[name=date]').val(),
+        year: $('#financial input[name=year]').val(),
+        month: $('#financial input[name=month]').val(),
+        day: $('#financial input[name=day]').val(),
         money: $('#financial input[name=money]').val(),
         repeat: $('#financial input[name=repeat]').val(),
       }, (data) => {

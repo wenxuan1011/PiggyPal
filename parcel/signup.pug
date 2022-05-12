@@ -65,21 +65,37 @@ html
 
     #main
       #mainpage
-        img(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
-        h1 MainPage
-          #balance_bar 
-            #contain
-              .balance $4560
-              t 本月可用
-            .personal_block
-          #project_block 
-            t 儲蓄專案
-            .add_project 
-            .daily_expend
-          #detail_block 
-            t 當日明細
-            
-          .add_button
+        img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
+        img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
+        #balance_bar
+          p $4560
+          p 本月可用
+        #project_block
+          #project_bar
+            p 儲蓄專案
+            img(src = "./image/btn/btn_arrow_right.png", height = "40%")
+            img(src = "./image/MainPage/btn_arrange.png", height = "95%")
+          #project_view
+            .project
+              .title
+                img(src = "./image/project/Project_colordot_purple.png", height = "17.647%")
+                p 一般儲蓄
+              .planned_speed
+                img(src = "./image/MainPage/MainPage_general savings.png", height = "100%")
+            .add_project
+              .title
+                img(src = "./image/MainPage/Project_colordot_grey.png", height = "17.647%")
+                p 新增儲蓄
+              .planned_speed
+                img(src = "./image/MainPage/addcircle.png", height = "100%")
+          #daily_expend
+            img(src = "./image/MainPage/MainPage_helper.png", width = "100%")
+        #detail_block
+          #detail_bar
+            p 當日明細
+            img(src = "./image/btn/btn_arrow_right.png", height = "40%")
+          
+        .add_button
       #account
         h1 Account
       #accounting 
@@ -170,7 +186,9 @@ html
             input(type = "text", name = "item", value = "薪水")
           .box
             p 入帳日期
-            input(type = "text", name = "date", value = "2022/05/11")
+            input(type = "text", name = "year", value = "2022")
+            input(type = "text", name = "month", value = "05")
+            input(type = "text", name = "day", value = "11")
           .box
             p 入帳金額
             input(type = "text", name = "money", value = "10000")

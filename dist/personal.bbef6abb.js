@@ -316,7 +316,9 @@ $(document).ready(function () {
       id: _signup.default,
       type: TYPE,
       item: $('#financial input[name=item]').val(),
-      date: $('#financial input[name=date]').val(),
+      year: $('#financial input[name=year]').val(),
+      month: $('#financial input[name=month]').val(),
+      day: $('#financial input[name=day]').val(),
       money: $('#financial input[name=money]').val(),
       repeat: $('#financial input[name=repeat]').val()
     }, function (data) {
@@ -331,7 +333,8 @@ $(document).ready(function () {
       type: TYPE
     }, function (data) {
       for (var i = 0; i < 4; i++) {
-        $("#financial_setting_page form .box:nth-child(".concat(i + 1, ") input")).css("value", "".concat(data[i + 1]));
+        //big problem
+        $("#financial_setting_page form .box:nth-child(".concat(i + 1, ") input")).html("value", "".concat(data[i + 1]));
       }
     });
   });
@@ -364,7 +367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44732" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39957" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
