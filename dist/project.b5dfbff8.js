@@ -255,86 +255,27 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{}],"personal.js":[function(require,module,exports) {
+},{}],"project.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TYPE = 0; // open/close personal page
-
-$('#mainpage img').click(function () {
-  $('#personal_page').css("transform", "translateX(0%)");
-});
-$('#personal_page .bar img').click(function () {
-  $('#personal_page').css("transform", "translateX(100%)");
-}); // open/close financial_setting_page
-
-$('#personal_page #financial_setting .list li').click(function () {
-  $('#financial_setting_page').css("transform", "translateX(0%)");
-});
-$('#financial_setting_page .bar img').click(function () {
-  $('#financial_setting_page').css("transform", "translateX(100%)");
-}); // change the title of the financial_setting_page
-
-$('#personal_page #financial_setting .list li:nth-child(1)').click(function () {
-  $('#financial_setting_page .bar p').html("固定收入");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("收入項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("入帳日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("收入金額");
-  TYPE = 0;
-});
-$('#personal_page #financial_setting .list li:nth-child(2)').click(function () {
-  $('#financial_setting_page .bar p').html("固定支出");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("支出項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("支出日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("支出金額");
-  TYPE = 1;
-});
-$('#personal_page #financial_setting .list li:nth-child(3)').click(function () {
-  $('#financial_setting_page .bar p').html("固定儲蓄");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("儲蓄項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("儲蓄日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額");
-  TYPE = 2;
-});
-$(document).ready(function () {
-  // change username
-  $('#mainpage img').click(function (event) {
-    event.preventDefault();
-    $.get('./username', {
-      id: _signup.default
-    }, function (data) {
-      $('#personal_page #photo_and_name p').html("".concat(data));
-    });
-  }); // update income
-
-  $('#financial button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./financial', {
-      id: _signup.default,
-      type: TYPE,
-      item: $('#financial input[name=item]').val(),
-      date: $('#financial input[name=date]').val(),
-      money: $('#financial input[name=money]').val(),
-      repeat: $('#financial input[name=repeat]').val()
-    }, function (data) {
-      $("#financial-output").html("".concat(data));
-    });
-  }); // update information
-
-  $('#personal_page #financial_setting .list li').click(function (event) {
-    event.preventDefault();
-    $.get('./information', {
-      id: _signup.default,
-      type: TYPE
-    }, function (data) {
-      for (var i = 0; i < 4; i++) {
-        //big problem
-        $("#financial_setting_page form .box:nth-child(".concat(i + 1, ") input")).html("value", "".concat(data[i + 1]));
-      }
-    });
+$('#person_project button[type="submit"]').click(function (event) {
+  event.preventDefault();
+  $.get('./person_project', {
+    id: _signup.default,
+    project_personal: $('#person_project input[name=project_personal]').val(),
+    start_year: $('#person_project input[name=start_year]').val(),
+    start_month: $('#person_project input[name=start_month]').val(),
+    start_day: $('#person_project input[name=start_day]').val(),
+    end_year: $('#person_project input[name=end_year]').val(),
+    end_month: $('#person_project input[name=end_month]').val(),
+    end_day: $('#person_project input[name=end_day]').val(),
+    target_number: $('#person_project input[name=target_number]').val()
+  }, function (data) {
+    $("#person_project-output").html("".concat(data));
   });
 });
 },{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -541,5 +482,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","personal.js"], null)
-//# sourceMappingURL=personal.bbef6abb.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","project.js"], null)
+//# sourceMappingURL=project.b5dfbff8.js.map

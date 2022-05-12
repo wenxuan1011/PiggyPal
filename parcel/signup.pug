@@ -80,6 +80,7 @@ html
             t 當日明細
             
           .add_button
+          
       #account
         h1 Account
       #accounting 
@@ -129,7 +130,45 @@ html
       #barcode
         h1 Barcode 
       #project
-        h1 Project
+        //test新增個人專案start
+        form#person_project
+          div
+            |專案名稱:
+            input(type="text", name="project_personal")
+          br
+          div
+            |起始年:
+            input(type="text", name="start_year")
+          br
+          div
+            |起始月:
+            input(type="text", name="start_month")
+          br
+          div
+            |起始日:
+            input(type="text", name="start_day")
+          br
+          div
+            |結束年:
+            input(type="text", name="end_year")
+          br
+          div
+            |結束月:
+            input(type="text", name="end_month")
+          br
+          div
+            |結束日:
+            input(type="text", name="end_day")
+          br
+          div
+            |目標金額:
+            input(type="text", name="target_number")
+          br
+          button(type="submit", id="save_project_personal") 儲存
+          br
+          br
+          #person_project-output
+          //test新增個人專案end
       #personal_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
@@ -196,4 +235,5 @@ html
   script(src="./dailymoney.js")
   script(src="./module.js")
   script(src="./record.js")
+  script(src="./project.js")
   
