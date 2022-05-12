@@ -38,12 +38,7 @@ export function getMonthlyMoney(ID,table,selection,month,type){
         //var result=0;
         if(typeof(data)!=String){
             var total=0
-            //console.log('calculate:')
-            //console.log(typeof(data),selection)
             for (var i in data){
-                console.log(StringtoInt(gettabledata(data, `${selection}`, i)))
-                //console.log(1)
-                //console.log(i,data)
                 total+=StringtoInt(gettabledata(data, `${selection}`, i))
                 i++;
             }

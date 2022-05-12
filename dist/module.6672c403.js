@@ -170,13 +170,9 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   }, function (data) {
     //var result=0;
     if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
+      var total = 0;
 
       for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
         total += StringtoInt(gettabledata(data, "".concat(selection), i));
         i++;
       } //total=gettabledata(money,type,0)
@@ -274,7 +270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43812" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

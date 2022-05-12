@@ -264,66 +264,160 @@ body
     font-family: Roboto Regular
 
     #mainpage
-        img
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        position: absolute
+        top: 0
+
+        #personal_btn
             position: absolute
-            top: 3.448vh
+            top: 6.4vh
             right: 0
+        
+        #add_project_btn
+            position: fixed
+            bottom: 13.423vh
+            right: 5.6vw
+
         #balance_bar
             display: flex
-            flex-direction:row
-            justify-content: left
-            align-items: center
-            width: 100vw
-            height: 15vh
-            left: 10vw
-            background-color: #FF0000
-            opacity: 0.08
-            #contain
-                display: flex
-                flex-direction: column
-                justify-content: center
-                align-items: center
-                margin-left: 10.43vw
+            flex-direction: column
+            justify-content: end
+            width: 79.7333vw
+            height: 15.14778vh
 
+            p:nth-child(1)
+                font-family: Roboto Bold
+                font-size: 36px
+                color: #8E5FF4
+                margin: 0 0 1vh 0
 
-                .balance
-                    display: flex
-                    justify-content: center
-                    align-items: center
-                    margin-top: 7.39vh
-                    left: 10.13vw
-                    height: 4.31vh
-                    width: 27.46vw
-                t
-                    display: flex
-                    flex-direction:left
-                    font-size: 10px
-                    width: 15vw
-                    height: 2.3vh
-                    margin-top: 1.85vw
-                    margin-right: 4vh
-                    font-color: black
+            p:nth-child(2)
+                font-size: 13px
+                color: #737474
+                margin: 0
+
         #project_block
             display: flex
-            flex-direction:column
-            justify-content: center
+            flex-direction: column
             align-items: center
             margin-top: 4.31vh
             width: 100vw
-            height: 37.44vh
-            background-color: #FF0000
-            opacity: 0.08
-            t
+            height: auto
+            margin: 4.31vh 0 0 0
+
+            #project_bar
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 79.7333vw
+                height: 3.463vh
+                margin: 0 0 2.525vh 0
+                
+                p
+                    margin: 0 3vw 0 0
+                
+                img:nth-child(2)
+                    margin: 0 50vw 0 0
+            
+            #project_view
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 90vw
+                height: 20.936vh
+                margin: 0 0 2.5vh 0
+
+                .project, .add_project
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    width: 42.648vw
+                    //height: 20.936vh
+                    height: 22vh
+                    background-color: white
+                    border-radius: 8px
+                    box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+
+            .title
+                display: flex
+                flex-direction: row
+                align-items: center
+                width: 100%
+                height: 20%
+                margin: 1.5vh 0 0.5vh 0
+
+                img
+                    margin: 0 2.933vw 0 5vw
+
+                p
+                    font-size: 14px
+
+            .planned_speed
                 display: flex
                 flex-direction: row
                 justify-content: center
+                align-items: center
+                width: 100%
+                height: 58.235%
+
+            #daily_expend 
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 90vw
+                margin: 0 0 0 0
+        
+        #detail_block
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: auto
+            margin: 2.59vh 0 0 0
+
+            #detail_bar
+                display: flex
+                flex-direction: row
+                justify-content: start
+                align-items: center
+                width: 79.7333vw
+                height: 3.463vh
+                margin: 0 0 2.525vh 0
                 
-            .add_project
-                t 
-                    display:flex
-                img
-                    display:flex
-            .daily_expend
+                p
+                    margin: 0 3vw 0 0
+            .list
+                list-style-type: none
+                background-color: white
+                width: 92%
+                border-radius: 10px
+                margin: 2.0936vh 0 0 0
+
+                li
+                    display: flex
+                    flex-direction: row
+                    align-items: center
+                    border-bottom: 0.3px solid #B3B3B3
+                    border-radius: 0
+
+                    p
+                        display: block
+                        color: black
+                        width: 75%
+                        padding: 1.724vh 5.6vw 1.724vh 5.6vw
+                        text-decoration: none
+                        font-size: 2vh !important
+                
+                li:nth-last-child(1)
+                    border-style: none        
+
         #detail_block
         .add_button
     
@@ -352,6 +446,53 @@ body
 
     #project
         display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        position: absolute
+        top: 0
+
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                right: 6.9333vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #type_bar
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+            align-items: center
+            width: 86.1333vw
+            height: 4.187vh
+            margin: 3.69vh 0 0 0
+
+            p
+                padding: 0 0 12px 0
+                border-bottom: none
+
+
 
     #personal_page
         display: flex
@@ -498,16 +639,6 @@ body
             height: auto
             margin: 4.31vh 0 0 0
 
-            input
-                min-height: 4.31vh
-                border-style: none
-                border-radius: 6px
-                width: 40.16vw
-                padding: 0
-                font-size: 1.4778vh
-                text-align: right
-                padding: 0 3.733vw 0 0
-            
             .box
                 display: flex
                 flex-direction: row
@@ -519,6 +650,22 @@ body
 
             .box:nth-child(4)
                 margin: 0 0 4.187vh 0
+
+            input
+                min-height: 4.31vh
+                border-style: none
+                border-radius: 6px
+                width: 40.16vw
+                padding: 0
+                font-size: 1.4778vh
+                text-align: right
+                padding: 0 3.733vw 0 0
+
+            .box:nth-child(2)
+                p
+                    margin: 0 9vw 0 0                
+                input
+                    width: 9.5vw
 
             button
                 background-color: #F4F4F4

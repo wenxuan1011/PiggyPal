@@ -170,13 +170,9 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   }, function (data) {
     //var result=0;
     if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
+      var total = 0;
 
       for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
         total += StringtoInt(gettabledata(data, "".concat(selection), i));
         i++;
       } //total=gettabledata(money,type,0)
@@ -396,17 +392,22 @@ exports.default = _default;
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
+var mod = _interopRequireWildcard(require("./module.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-//import * as mod from './module.js'
 var Expenditure = 0;
 var Income = 0;
 var MonthlyExpend = 0;
 var MonthlyIncome = 0;
 var MonthlySaving = 0;
-$('#navbar').click(function (event) {
+$('#navbar:nth-child(3)').click(function (event) {
   event.preventDefault();
   calculate();
 });
@@ -435,28 +436,23 @@ function calculate() {
     totalday = MonthlyTotalDay[today.getMonth()];
     console.log("totalday:".concat(totalday, ",remain:").concat(totalday - today.getDate() + 1));
   }
+
+  Expenditure = mod.getMonthlyMoney(_signup.default, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 0);
+  Income = mod.getMonthlyMoney(_signup.default, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 1);
+  MonthlyExpend = mod.getMonthlyMoney(_signup.default, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 0);
+  MonthlyIncome = mod.getMonthlyMoney(_signup.default, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 1);
+  MonthlySaving = mod.getMonthlyMoney(_signup.default, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 2);
   /*
-  Expenditure = getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1,0);
-  Income = getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1)
-  MonthlyExpend = getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,0)
-  MonthlyIncome = getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,1)
-  MonthlySaving = getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,2)
+   getMonthlyMoneyEE(ID,'Account','cost',StringtoInt(today.getMonth())+1,0);
+   getMonthlyMoneyII(ID,'Account','cost',StringtoInt(today.getMonth())+1,1);
+   getMonthlyMoneyE(ID,'financial','money',StringtoInt(today.getMonth())+1,0);
+   getMonthlyMoneyI(ID,'financial','money',StringtoInt(today.getMonth())+1,1);
+   getMonthlyMoneyS(ID,'financial','money',StringtoInt(today.getMonth())+1,2);
   */
-
-
-  getMonthlyMoneyEE(_signup.default, 'Account', 'cost', StringtoInt(today.getMonth()) + 1, 0);
-  getMonthlyMoneyII(_signup.default, 'Account', 'cost', StringtoInt(today.getMonth()) + 1, 1);
-  getMonthlyMoneyE(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 0);
-  getMonthlyMoneyI(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 1);
-  getMonthlyMoneyS(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 2);
-
-  for (var i = 0; i < 20000; i++) {
-    console.log(i);
-  } //setVariable()
-
+  //setVariable()
 
   var ProjectSaving = 0;
-  var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income) / (StringtoInt(totalday - today.getDate()) + 1);
+  var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income) / (mod.StringtoInt(totalday - today.getDate()) + 1);
   var actualDailyExpenditure = DailyExpenditure - ProjectSaving / 1;
 
   if (actualDailyExpenditure < 0) {//daily avaliable expenditure warning
@@ -491,8 +487,7 @@ async function setVariable(){
 
 
 function getMonthlyMoney(ID, table, selection, month, type) {
-  var result = 9999;
-  var lock = 0;
+  var result = 0;
   $.get('./monthlymoney', {
     ID: ID,
     table: table,
@@ -505,13 +500,12 @@ function getMonthlyMoney(ID, table, selection, month, type) {
       //console.log(typeof(data),selection)
 
       for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
+        console.log(mod.StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
         //console.log(i,data)
 
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
+        total += mod.StringtoInt(gettabledata(data, "".concat(selection), i));
         i++;
-        result = total;
-        console.log(result);
+        result = total; //console.log(result)
       } //total=gettabledata(money,type,0)
 
 
@@ -526,208 +520,7 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   });
   return result;
 }
-
-function getMonthlyMoneyEE(ID, table, selection, month, type) {
-  var result = 9999;
-  var lock = 0;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
-
-      for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total;
-        console.log(result);
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-      Expenditure = result;
-    }, 100);
-  });
-  return result;
-}
-
-function getMonthlyMoneyII(ID, table, selection, month, type) {
-  var result = 9999;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
-
-      for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total;
-        console.log(result);
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-      Income = result;
-    }, 100);
-  });
-  return result;
-}
-
-function getMonthlyMoneyE(ID, table, selection, month, type) {
-  var result = 9999;
-  var lock = 0;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
-
-      for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total;
-        console.log(result);
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-      MonthlyExpend = result;
-    }, 100);
-  });
-  return result;
-}
-
-function getMonthlyMoneyI(ID, table, selection, month, type) {
-  var result = 9999;
-  var lock = 0;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
-
-      for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total;
-        console.log(result);
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-      MonthlyIncome = result;
-    }, 100);
-  });
-  return result;
-}
-
-function getMonthlyMoneyS(ID, table, selection, month, type) {
-  var result = 9999;
-  var lock = 0;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
-
-      for (var i in data) {
-        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
-
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total;
-        console.log(result);
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-      MonthlySaving = result;
-    }, 100);
-  });
-  return result;
-}
-
-function calculatetotal(one, two, three, four, five) {}
-
-function StringtoInt(x) {
-  var parsed = parseInt(x, 10);
-
-  if (isNaN(parsed)) {
-    return 0;
-  }
-
-  return parsed;
-}
-},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -755,7 +548,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43812" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -217,54 +217,137 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: Roboto Regular; }
-  #main #mainpage img {
-    position: absolute;
-    top: 3.448vh;
-    right: 0; }
-  #main #mainpage #balance_bar {
+  #main #mainpage {
     display: flex;
-    justify-content: left;
+    flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 15vh;
-    left: 10vw;
-    background-color: #FF0000;
-    opacity: 0.08; }
-    #main #mainpage #balance_bar #contain {
+    height: 100vh;
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
+    #main #mainpage #personal_btn {
+      position: absolute;
+      top: 6.4vh;
+      right: 0; }
+    #main #mainpage #add_project_btn {
+      position: fixed;
+      bottom: 13.423vh;
+      right: 5.6vw; }
+    #main #mainpage #balance_bar {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: end;
+      width: 79.7333vw;
+      height: 15.14778vh; }
+      #main #mainpage #balance_bar p:nth-child(1) {
+        font-family: Roboto Bold;
+        font-size: 36px;
+        color: #8E5FF4;
+        margin: 0 0 1vh 0; }
+      #main #mainpage #balance_bar p:nth-child(2) {
+        font-size: 13px;
+        color: #737474;
+        margin: 0; }
+    #main #mainpage #project_block {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-left: 10.43vw; }
-      #main #mainpage #balance_bar #contain .balance {
+      margin-top: 4.31vh;
+      width: 100vw;
+      height: auto;
+      margin: 4.31vh 0 0 0; }
+      #main #mainpage #project_block #project_bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 79.7333vw;
+        height: 3.463vh;
+        margin: 0 0 2.525vh 0; }
+        #main #mainpage #project_block #project_bar p {
+          margin: 0 3vw 0 0; }
+        #main #mainpage #project_block #project_bar img:nth-child(2) {
+          margin: 0 50vw 0 0; }
+      #main #mainpage #project_block #project_view {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90vw;
+        height: 20.936vh;
+        margin: 0 0 2.5vh 0; }
+        #main #mainpage #project_block #project_view .project, #main #mainpage #project_block #project_view .add_project {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 42.648vw;
+          height: 22vh;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1); }
+      #main #mainpage #project_block .title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 20%;
+        margin: 1.5vh 0 0.5vh 0; }
+        #main #mainpage #project_block .title img {
+          margin: 0 2.933vw 0 5vw; }
+        #main #mainpage #project_block .title p {
+          font-size: 14px; }
+      #main #mainpage #project_block .planned_speed {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 58.235%; }
+      #main #mainpage #project_block #daily_expend {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 7.39vh;
-        left: 10.13vw;
-        height: 4.31vh;
-        width: 27.46vw; }
-      #main #mainpage #balance_bar #contain t {
-        display: flex;
-        font-size: 10px;
-        width: 15vw;
-        height: 2.3vh;
-        margin-top: 1.85vw;
-        margin-right: 4vh;
-        font-color: black; }
-  #main #mainpage #project_block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 4.31vh;
-    width: 100vw;
-    height: 37.44vh;
-    background-color: #FF0000;
-    opacity: 0.08; }
-    #main #mainpage #project_block t {
+        width: 90vw;
+        margin: 0 0 0 0; }
+    #main #mainpage #detail_block {
       display: flex;
-      flex-direction: row;
-      justify-content: center; }
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: auto;
+      margin: 2.59vh 0 0 0; }
+      #main #mainpage #detail_block #detail_bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        width: 79.7333vw;
+        height: 3.463vh;
+        margin: 0 0 2.525vh 0; }
+        #main #mainpage #detail_block #detail_bar p {
+          margin: 0 3vw 0 0; }
+      #main #mainpage #detail_block .list {
+        list-style-type: none;
+        background-color: white;
+        width: 92%;
+        border-radius: 10px;
+        margin: 2.0936vh 0 0 0; }
+        #main #mainpage #detail_block .list li {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border-bottom: 0.3px solid #B3B3B3;
+          border-radius: 0; }
+          #main #mainpage #detail_block .list li p {
+            display: block;
+            color: black;
+            width: 75%;
+            padding: 1.724vh 5.6vw 1.724vh 5.6vw;
+            text-decoration: none;
+            font-size: 2vh !important; }
+        #main #mainpage #detail_block .list li:nth-last-child(1) {
+          border-style: none; }
   #main #account {
     display: none; }
   #main #accounting {
@@ -280,7 +363,46 @@ body {
   #main #barcode {
     display: none; }
   #main #project {
-    display: none; }
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
+    #main #project .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #project .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #project .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #project .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #project #type_bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 86.1333vw;
+      height: 4.187vh;
+      margin: 3.69vh 0 0 0; }
+      #main #project #type_bar p {
+        padding: 0 0 12px 0;
+        border-bottom: none; }
   #main #personal_page {
     display: flex;
     flex-direction: column;
@@ -405,15 +527,6 @@ body {
       width: 72.2667vw;
       height: auto;
       margin: 4.31vh 0 0 0; }
-      #main #financial_setting_page #financial input {
-        min-height: 4.31vh;
-        border-style: none;
-        border-radius: 6px;
-        width: 40.16vw;
-        padding: 0;
-        font-size: 1.4778vh;
-        text-align: right;
-        padding: 0 3.733vw 0 0; }
       #main #financial_setting_page #financial .box {
         display: flex;
         flex-direction: row;
@@ -424,6 +537,19 @@ body {
         margin: 0 0 2.586vh 0; }
       #main #financial_setting_page #financial .box:nth-child(4) {
         margin: 0 0 4.187vh 0; }
+      #main #financial_setting_page #financial input {
+        min-height: 4.31vh;
+        border-style: none;
+        border-radius: 6px;
+        width: 40.16vw;
+        padding: 0;
+        font-size: 1.4778vh;
+        text-align: right;
+        padding: 0 3.733vw 0 0; }
+      #main #financial_setting_page #financial .box:nth-child(2) p {
+        margin: 0 9vw 0 0; }
+      #main #financial_setting_page #financial .box:nth-child(2) input {
+        width: 9.5vw; }
       #main #financial_setting_page #financial button {
         background-color: #F4F4F4;
         display: flex;
