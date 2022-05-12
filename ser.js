@@ -98,10 +98,10 @@ app.get('/login',(req,res) => {
 app.get('/username',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
 
-  const search_user = `
+  const search_username = `
     SELECT name FROM user
     WHERE id = ${UID}`
-  connection.query(search_user, (err, row, fields) => {
+  connection.query(search_username, (err, row, fields) => {
     if (err)
       console.log('fail to search: ', err)
     if (row[0]===undefined) {
@@ -114,33 +114,68 @@ app.get('/username',(req,res) => {
 })
 
 
-// financial
-app.get('/income',(req,res) => {
-  connection.query('CREATE TABLE IF NOT EXISTS income (id VARCHAR(30), item VARCHAR(30), date VARCHAR(30), income VARCHAR(30), , repeat VARCHAR(30))')
+// update financial
+app.get('/financial',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), date VARCHAR(30), income VARCHAR(30), repeats VARCHAR(30))')
 
   let UID = "'"+`${req.query.id}`+"'"
+  let TYPE = "'"+`${req.query.type}`+"'"
   let ITEM = "'"+`${req.query.item}`+"'"
   let DATE = "'"+`${req.query.date}`+"'"
-  let INCOME = "'"+`${req.query.income}`+"'"
+  let MONEY = "'"+`${req.query.money}`+"'"
   let REPEAT = "'"+`${req.query.repeat}`+"'"
 
-  const search_user = `
-    SELECT id FROM user
-    WHERE id = ${UID} and password = ${PWD}`
-  connection.query(search_user, (err, row, fields) => {
+  let update_setting = false
+  const update_type = ['income', 'outcome', 'saving']
+  const search_item = `
+    SELECT id FROM financial
+    WHERE id = ${UID} and item =${ITEM}`
+  const update = `INSERT INTO financial (id, type, item, date, income, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${DATE}, ${MONEY}, ${REPEAT})`
+  connection.query(search_item, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
-    //console.log(row)
+    console.log(rows)
+    if (rows[0] === undefined) {
+      update_setting = true
+    }
+    else{
+      res.send("The "+ update_type[`${req.query.type}`] +" have already set.")
+    }
+  })
+  setTimeout(() => {
+    if (update_setting){
+      console.log(update_setting)
+      connection.query(update, (err, result) => {
+        if (err) console.log('fail to insert: ', err)
+      })
+      res.send("You have updated your "+ update_type[`${req.query.type}`] +".")
+    }
+  }, 100)
+})
+
+
+// get information (in financial)
+app.get('/information',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+  let TYPE = "'"+`${req.query.type}`+"'"
+
+  const search_information = `
+    SELECT * FROM financial
+    WHERE id = ${UID} and type = ${TYPE}`
+  connection.query(search_information, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
     if (row[0]===undefined) {
       res.send("failed,try again")
     }
     else{
-      res.send(mod.gettabledata(row,'id',0))
+      console.log(row)
+      let result = [mod.gettabledata(row,'item',0), mod.gettabledata(row,'date',0), mod.gettabledata(row,'income',0), mod.gettabledata(row,'repeats',0)]
+      console.log(result)
+      res.send(result)
     }
   })
 })
-
-
 
 
 

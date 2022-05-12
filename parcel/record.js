@@ -129,7 +129,7 @@ $('#ok').click(function(){
 })
 
 $(function(){
-  $("#da").Datepicker();
+  $("#da").datepicker();
 });
 
 
