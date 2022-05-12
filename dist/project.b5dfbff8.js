@@ -117,87 +117,206 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"module.js":[function(require,module,exports) {
+})({"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+$('#change-to-login').click(function () {
+  $("#SignUp").css("display", "none");
+  $("#Login").css("display", "flex");
+});
+$('#change-to-signup').click(function () {
+  $("#Login").css("display", "none");
+  $("#SignUp").css("display", "flex");
+}); // navbar change page
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+var navbar = ['barcode', 'account', 'mainpage', 'accounting', 'project'];
+var present_page = 'mainpage';
+$('#navbar img:nth-child(1)').click(function () {
+  selected_to_unselected();
+  present_page = navbar[0];
+  unselected_to_selected();
+});
+$('#navbar img:nth-child(2)').click(function () {
+  selected_to_unselected();
+  present_page = navbar[1];
+  unselected_to_selected();
+});
+$('#navbar img:nth-child(3)').click(function () {
+  selected_to_unselected();
+  present_page = navbar[2];
+  unselected_to_selected();
+});
+$('#navbar img:nth-child(4)').click(function () {
+  selected_to_unselected();
+  present_page = navbar[3];
+  unselected_to_selected();
+});
+$('#navbar img:nth-child(5)').click(function () {
+  selected_to_unselected();
+  present_page = navbar[4];
+  unselected_to_selected();
+});
 
-/*
-This is the place to put some module for easy coding
-if you want to use the module in this file, please following the steps below
-    Put this code in the beginning of your js:import * as module from './module.js'
-    when you want to use the mod inside, use 
-        module.functionname()
-    to call the function, some may need to put the parameter in the ()
+function selected_to_unselected() {
+  if (present_page == navbar[0]) {
+    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/unselect/barcode_unselect.png");
+    $('#barcode').css("display", "none");
+  } else if (present_page == navbar[1]) {
+    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/unselect/account_unselect.png");
+    $('#account').css("display", "none");
+  } else if (present_page == navbar[2]) {
+    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/unselect/mainpage_unselect.png");
+    $('#mainpage').css("display", "none");
+  } else if (present_page == navbar[3]) {
+    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/unselect/accounting_unselect.png");
+    $('#accounting').css("display", "none");
+  } else {
+    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/unselect/project_unselect.png");
+    $('#project').css("display", "none");
+  }
 
-
-If anyone want to add some new mod in the file, please set the function name as well-known 
-as possible. Moreover, rememder to export function at the buttom of the code. 
-
-If it is convenient, use the annotation at the buttom of export to let other know what is 
-this function doing
-
-By Maker
-*/
-var today = new Date();
-
-function gettabledata(table, parameter, row) {
-  var result = JSON.stringify(table[row]);
-  result = JSON.parse(result);
-  result = result[parameter];
-  return result;
+  ;
 }
 
-function getMonthlyMoney(ID, type) {
-  $.get('./monthlymoney', {
-    ID: ID,
-    type: type
-  }, function (data) {
-    if (_typeof(data) === Object) {
-      return StringtoInt(gettabledata(data, 'cost', 0), 10);
-    } else return 0;
+;
+
+function unselected_to_selected() {
+  if (present_page == navbar[0]) {
+    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
+    $('#barcode').css("display", "flex");
+  } else if (present_page == navbar[1]) {
+    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
+    $('#account').css("display", "flex");
+  } else if (present_page == navbar[2]) {
+    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/selected/mainpage_select.png");
+    $('#mainpage').css("display", "flex");
+  } else if (present_page == navbar[3]) {
+    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/selected/accounting_select.png");
+    $('#accounting').css("display", "flex");
+  } else {
+    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/selected/project_select.png");
+    $('#project').css("display", "flex");
+  }
+
+  ;
+}
+
+;
+var ID = "";
+$(document).ready(function () {
+  // sign up
+  $('#signup button[type="submit"]').click(function (event) {
+    event.preventDefault();
+    $.get('./signup', {
+      name: $('#signup input[name=name]').val(),
+      id: $('#signup input[name=id]').val(),
+      password: $('#signup input[name=password]').val()
+    }, function (data) {
+      if ("".concat(data) == 'signup') {
+        $('#SignUp').css("display", "none");
+        $('#main').css("display", "flex");
+      } else {
+        $("#signup-output").html("".concat(data));
+        ID;
+      }
+
+      ;
+    });
+  }); // login
+
+  $('#login button[type="submit"]').click(function (event) {
+    event.preventDefault();
+    ID = $('#login input[name=id]').val();
+    $.get('./login', {
+      id: $('#login input[name=id]').val(),
+      password: $('#login input[name=pw]').val()
+    }, function (data) {
+      if ("".concat(data) != 'failed,try again') {
+        $('#Login').css("display", "none");
+        $('#main').css("display", "flex");
+        ID = data;
+      } else {
+        $("#login-output").html("".concat(data));
+      }
+
+      ;
+    });
   });
+});
+
+function transmit() {
+  return ID;
 }
 
-function caltotalmoney(money, type) {
-  var total = 0;
+;
+var _default = transmit;
+exports.default = _default;
+},{}],"project.js":[function(require,module,exports) {
+"use strict";
 
-  for (var i in money) {
-    if (gettabledata(money, 'type', i) === type && gettabledata(money, 'month', i) === today.getMonth() && gettabledata(money, 'year', i) === today.getFullYear()) {
-      total = total + StringtoInt(gettabledata(money, 'cost', i), 10);
+var _signup = _interopRequireDefault(require("./signup.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// type bar (change border-bottom)
+$('#project #type_bar p:nth-child(1)').click(function () {
+  $('#project #type_bar p:nth-child(1)').css("border-bottom", "2px solid #410ADF");
+
+  for (var i = 0; i < 4; i++) {
+    if (i + 1 != 1) {
+      $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
     }
   }
+});
+$('#project #type_bar p:nth-child(2)').click(function () {
+  $('#project #type_bar p:nth-child(2)').css("border-bottom", "2px solid #410ADF");
 
-  return total;
-}
-
-function StringtoInt(x, base) {
-  var parsed = parseInt(x, base);
-
-  if (isNaN(parsed)) {
-    return 0;
+  for (var i = 0; i < 4; i++) {
+    if (i + 1 != 2) {
+      $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
+    }
   }
+});
+$('#project #type_bar p:nth-child(3)').click(function () {
+  $('#project #type_bar p:nth-child(3)').css("border-bottom", "2px solid #410ADF");
 
-  return parsed;
-}
+  for (var i = 0; i < 4; i++) {
+    if (i + 1 != 3) {
+      $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
+    }
+  }
+});
+$('#project #type_bar p:nth-child(4)').click(function () {
+  $('#project #type_bar p:nth-child(4)').css("border-bottom", "2px solid #410ADF");
 
-var _default = {
-  gettabledata: gettabledata,
-  //get id inside the row of column select from database
-  getMonthlyMoney: getMonthlyMoney,
-  //get monthly fixed income(2),expenditure(3),saving(4)
-  caltotalmoney: caltotalmoney,
-  //calculate total money
-  StringtoInt: StringtoInt //transfer string to integer
+  for (var i = 0; i < 4; i++) {
+    if (i + 1 != 4) {
+      $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
+    }
+  }
+}); // add personal project
 
-};
-exports.default = _default;
-},{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+$('#person_project button[type="submit"]').click(function (event) {
+  event.preventDefault();
+  $.get('./person_project', {
+    id: _signup.default,
+    project_personal: $('#person_project input[name=project_personal]').val(),
+    start_year: $('#person_project input[name=start_year]').val(),
+    start_month: $('#person_project input[name=start_month]').val(),
+    start_day: $('#person_project input[name=start_day]').val(),
+    end_year: $('#person_project input[name=end_year]').val(),
+    end_month: $('#person_project input[name=end_month]').val(),
+    end_day: $('#person_project input[name=end_day]').val(),
+    target_number: $('#person_project input[name=target_number]').val()
+  }, function (data) {
+    $("#person_project-output").html("".concat(data));
+  });
+});
+},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -401,5 +520,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","module.js"], null)
-//# sourceMappingURL=module.6672c403.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","project.js"], null)
+//# sourceMappingURL=project.b5dfbff8.js.map

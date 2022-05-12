@@ -341,7 +341,46 @@ body {
   #main #barcode {
     display: none; }
   #main #project {
-    display: none; }
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
+    #main #project .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #project .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #project .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #project .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #project #type_bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 86.1333vw;
+      height: 4.187vh;
+      margin: 3.69vh 0 0 0; }
+      #main #project #type_bar p {
+        padding: 0 0 12px 0;
+        border-bottom: none; }
   #main #personal_page {
     display: flex;
     flex-direction: column;

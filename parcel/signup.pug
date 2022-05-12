@@ -143,9 +143,22 @@ html
         button(type="submit", id="backspace") delete   
         button(type="submit", id="ok") OK
       #barcode
-        h1 Barcode 
+        h1 Barcode
+
       #project
-        h1 Project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_search.png", height = "2.8325%")
+          p 儲蓄專案
+        #type_bar 
+          p 一般儲蓄
+          p 個人專案
+          p 共同專案
+          p 達成成就
+        #personal_project
+          
+
+
       #personal_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
@@ -214,4 +227,5 @@ html
   script(src="./dailymoney.js")
   script(src="./module.js")
   script(src="./record.js")
+  script(src="./project.js")
   

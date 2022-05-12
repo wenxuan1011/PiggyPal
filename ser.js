@@ -12,7 +12,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6165
+const port = 6164
 
 // listen port
 app.listen(port, () => {
@@ -226,6 +226,46 @@ app.get('/monthlymoney',(req,res) =>{
   })
 })
 
+// update person_project
+app.get('/person_project',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS person_project (id VARCHAR(30), project_personal VARCHAR(30), start_year VARCHAR(30), start_month VARCHAR(30), start_day VARCHAR(30), end_year VARCHAR(30), end_month VARCHAR(30), end_day VARCHAR(30), target_number VARCHAR(30))')
 
+  let PID = "'"+`${req.query.id}`+"'"
+  let project_personal = "'"+`${req.query.project_personal}`+"'"
+  let start_year = "'"+`${req.query.start_year}`+"'"
+  let start_month = "'"+`${req.query.start_month}`+"'"
+  let start_day = "'"+`${req.query.start_day}`+"'"
+  let end_year = "'"+`${req.query.end_year}`+"'"
+  let end_month = "'"+`${req.query.end_month}`+"'"
+  let end_day = "'"+`${req.query.end_day}`+"'"
+  let target_number = "'"+`${req.query.target_number}`+"'"
+
+  let update_setting_personal_project = false
+  const search_personal_project = `
+    SELECT project_personal FROM person_project
+    WHERE id = ${PID} and project_personal =${project_personal}`
+  const update_personal_project = `INSERT INTO person_project (id, project_personal, start_year, start_month, start_day, end_year, end_month, end_day, target_number) VALUES (${PID}, ${project_personal}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number})`
+  
+  connection.query(search_personal_project, (err, rows, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    console.log(rows)
+    if (rows[0] === undefined) {
+      update_setting_personal_project = true
+    }
+    else{
+      res.send("The "+ `${req.query.project_personal}` +" have already set.")
+    }
+  })
+  setTimeout(() => {
+    if (update_setting_personal_project){
+      console.log(update_setting_personal_project)
+      connection.query(update_personal_project, (err, result) => {
+        if (err) console.log('fail to insert: ', err)
+      })
+      res.send("You have updated your "+ `${req.query.project_personal}` +".")
+    }
+  }, 100)
+})
 
 //connection.end()
