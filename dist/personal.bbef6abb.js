@@ -216,12 +216,12 @@ $(document).ready(function () {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val()
     }, function (data) {
-      if ("".concat(data) == 'signup') {
+      if ("".concat(data) === "signup") {
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
+        ID = $('#signup input[name=id]').val();
       } else {
         $("#signup-output").html("".concat(data));
-        ID;
       }
 
       ;
@@ -235,7 +235,7 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) != 'failed,try again') {
+      if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data;
@@ -262,20 +262,39 @@ var _signup = _interopRequireDefault(require("./signup.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TYPE = 0; // open/close personal page
+var TYPE = 0;
+var item = document.getElementById("financial_item");
+var year = document.getElementById("financial_year");
+var month = document.getElementById("financial_month");
+var day = document.getElementById("financial_day");
+var money = document.getElementById("financial_money");
+var repeat = document.getElementById("financial_repeat"); // open/close personal page
 
-$('#mainpage img').click(function () {
-  $('#personal_page').css("transform", "translateX(0%)");
+$('#mainpage #personal_btn').click(function () {
+  $('#personal_page').css("display", "flex");
+  setTimeout(function () {
+    $('#personal_page').css("transform", "translateX(0%)");
+  }, 100);
 });
 $('#personal_page .bar img').click(function () {
   $('#personal_page').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#personal_page').css("display", "none");
+  }, 500);
 }); // open/close financial_setting_page
 
 $('#personal_page #financial_setting .list li').click(function () {
-  $('#financial_setting_page').css("transform", "translateX(0%)");
+  $('#financial_setting_page').css("display", "flex");
+  setTimeout(function () {
+    $('#financial_setting_page').css("transform", "translateX(0%)");
+  }, 100);
 });
 $('#financial_setting_page .bar img').click(function () {
   $('#financial_setting_page').css("transform", "translateX(100%)");
+  $("#financial-output").html('');
+  setTimeout(function () {
+    $('#financial_setting_page').css("display", "none");
+  }, 500);
 }); // change the title of the financial_setting_page
 
 $('#personal_page #financial_setting .list li:nth-child(1)').click(function () {
@@ -332,10 +351,12 @@ $(document).ready(function () {
       id: _signup.default,
       type: TYPE
     }, function (data) {
-      for (var i = 0; i < 4; i++) {
-        //big problem
-        $("#financial_setting_page form .box:nth-child(".concat(i + 1, ") input")).html("value", "".concat(data[i + 1]));
-      }
+      item.value = data[0];
+      year.value = data[1];
+      month.value = data[2];
+      day.value = data[3];
+      money.value = data[4];
+      repeat.value = data[5];
     });
   });
 });
@@ -367,7 +388,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46237" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36563" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

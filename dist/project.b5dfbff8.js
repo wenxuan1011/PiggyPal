@@ -216,12 +216,12 @@ $(document).ready(function () {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val()
     }, function (data) {
-      if ("".concat(data) == 'signup') {
+      if ("".concat(data) === "signup") {
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
+        ID = $('#signup input[name=id]').val();
       } else {
         $("#signup-output").html("".concat(data));
-        ID;
       }
 
       ;
@@ -235,7 +235,7 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) != 'failed,try again') {
+      if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data;
@@ -265,55 +265,116 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // type bar (change border-bottom)
 $('#project #type_bar p:nth-child(1)').click(function () {
   $('#project #type_bar p:nth-child(1)').css("border-bottom", "2px solid #410ADF");
+  $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
-    if (i + 1 != 1) {
+    if (i + 1 !== 1) {
       $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
     }
   }
 });
 $('#project #type_bar p:nth-child(2)').click(function () {
   $('#project #type_bar p:nth-child(2)').css("border-bottom", "2px solid #410ADF");
+  $('#personal_project_list').css("display", "flex");
 
   for (var i = 0; i < 4; i++) {
-    if (i + 1 != 2) {
+    if (i + 1 !== 2) {
       $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
     }
   }
 });
 $('#project #type_bar p:nth-child(3)').click(function () {
   $('#project #type_bar p:nth-child(3)').css("border-bottom", "2px solid #410ADF");
+  $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
-    if (i + 1 != 3) {
+    if (i + 1 !== 3) {
       $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
     }
   }
 });
 $('#project #type_bar p:nth-child(4)').click(function () {
   $('#project #type_bar p:nth-child(4)').css("border-bottom", "2px solid #410ADF");
+  $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
-    if (i + 1 != 4) {
+    if (i + 1 !== 4) {
       $('#project #type_bar p:nth-child(' + "".concat(i + 1) + ')').css("border-bottom", "none");
     }
   }
-}); // add personal project
+}); // open/close add_project page
 
-$('#person_project button[type="submit"]').click(function (event) {
-  event.preventDefault();
-  $.get('./person_project', {
-    id: _signup.default,
-    project_personal: $('#person_project input[name=project_personal]').val(),
-    start_year: $('#person_project input[name=start_year]').val(),
-    start_month: $('#person_project input[name=start_month]').val(),
-    start_day: $('#person_project input[name=start_day]').val(),
-    end_year: $('#person_project input[name=end_year]').val(),
-    end_month: $('#person_project input[name=end_month]').val(),
-    end_day: $('#person_project input[name=end_day]').val(),
-    target_number: $('#person_project input[name=target_number]').val()
-  }, function (data) {
-    $("#person_project-output").html("".concat(data));
+$('#mainpage #project_view .add_project .planned_speed img').click(function () {
+  $('#add_project').css("display", "flex");
+  setTimeout(function () {
+    $('#add_project').css("transform", "translateX(0%)");
+  }, 100);
+});
+$('#personal_project_list #add_project_btn').click(function () {
+  $('#add_project').css("display", "flex");
+  setTimeout(function () {
+    $('#add_project').css("transform", "translateX(0%)");
+  }, 100);
+});
+$('#add_project .bar img').click(function () {
+  $('#add_project').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#add_project').css("display", "none");
+  }, 500);
+}); // open/close personal_project page
+
+$('.personal_project').click(function () {
+  $('#show_personal_project').css("display", "flex");
+  setTimeout(function () {
+    $('#show_personal_project').css("transform", "translateX(0%)");
+  }, 100);
+});
+$('#show_personal_project .bar img').click(function () {
+  $('#show_personal_project').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#show_personal_project').css("display", "none");
+  }, 500);
+});
+$(document).ready(function () {
+  // the project have set or not
+  $('#navbar img:nth-child(5)').click(function (event) {
+    event.preventDefault();
+    $.get('./project_or_not', {
+      id: _signup.default
+    }, function (data) {
+      if (data !== false) {
+        $('.project_infor .type_and_date #item').html("".concat(data[0]));
+        $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
+        var date = "".concat(data[1]) + '.' + "".concat(data[2]) + '.' + "".concat(data[3]) + '-' + "".concat(data[4]) + '.' + "".concat(data[5]) + '.' + "".concat(data[6]);
+        $('.project_infor .type_and_date #date').html(date);
+        $('#show_personal_project #project_detail #date_box #date').html(date);
+        var money = '$' + "".concat(data[7]);
+        $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
+        $('#show_personal_project #project_detail #target_money #money').html(money);
+        $('#personal_project_list .personal_project').css("display", "flex");
+        $('#personal_project_list #no_project').css("display", "none");
+      } else {
+        $('#personal_project_list .personal_project').css("display", "none");
+        $('#personal_project_list #no_project').css("display", "flex");
+      }
+    });
+  }); // add personal project
+
+  $('#person_project button[type="submit"]').click(function (event) {
+    event.preventDefault();
+    $.get('./person_project', {
+      id: _signup.default,
+      project_personal: $('#person_project input[name=project_personal]').val(),
+      start_year: $('#person_project input[name=start_year]').val(),
+      start_month: $('#person_project input[name=start_month]').val(),
+      start_day: $('#person_project input[name=start_day]').val(),
+      end_year: $('#person_project input[name=end_year]').val(),
+      end_month: $('#person_project input[name=end_month]').val(),
+      end_day: $('#person_project input[name=end_day]').val(),
+      target_number: $('#person_project input[name=target_number]').val()
+    }, function (data) {
+      $("#person_project-output").html("".concat(data));
+    });
   });
 });
 },{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -344,7 +405,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46237" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33974" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

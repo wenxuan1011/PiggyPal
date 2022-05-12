@@ -216,12 +216,12 @@ $(document).ready(function () {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val()
     }, function (data) {
-      if ("".concat(data) == 'signup') {
+      if ("".concat(data) === "signup") {
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
+        ID = $('#signup input[name=id]').val();
       } else {
         $("#signup-output").html("".concat(data));
-        ID;
       }
 
       ;
@@ -235,7 +235,7 @@ $(document).ready(function () {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, function (data) {
-      if ("".concat(data) != 'failed,try again') {
+      if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data;
@@ -408,7 +408,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46237" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33974" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -89,7 +89,7 @@ function unselected_to_selected(){
   };
 };
 
-var ID="";
+var ID = "";
 $(document).ready(function() {
   
   // sign up
@@ -100,13 +100,14 @@ $(document).ready(function() {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val(),
     }, (data) => {
-      if(`${data}` == 'signup'){
+      if(`${data}` === "signup"){
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
+        ID = $('#signup input[name=id]').val()
       }
       else{
         $("#signup-output").html(`${data}`);
-        ID
+        
       };
     });
   })
@@ -119,11 +120,10 @@ $(document).ready(function() {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, (data) => {
-      if(`${data}` != 'failed,try again'){
+      if(`${data}` !== 'failed,try again'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
-        
-        ID=data
+        ID = data
       }
       else{
         $("#login-output").html(`${data}`);
