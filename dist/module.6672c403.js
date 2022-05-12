@@ -123,14 +123,20 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.StringtoInt = StringtoInt;
+exports.calprojectcomplete = calprojectcomplete;
+exports.caltotalmoney = caltotalmoney;
 exports.default = void 0;
+exports.getMonthlyMoney = getMonthlyMoney;
+exports.gettabledata = gettabledata;
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 /*
 This is the place to put some module for easy coding
 if you want to use the module in this file, please following the steps below
-    Put this code in the beginning of your js:import * as module from './module.js'
+    Put this code in the beginning of your js:
+        import * as mod from './module.js'
     when you want to use the mod inside, use 
         module.functionname()
     to call the function, some may need to put the parameter in the ()
@@ -153,35 +159,72 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getMonthlyMoney(ID, type) {
+function getMonthlyMoney(ID, table, selection, month, type) {
+  var result;
   $.get('./monthlymoney', {
     ID: ID,
+    table: table,
+    selection: selection,
+    month: month,
     type: type
   }, function (data) {
-    if (_typeof(data) === Object) {
-      return StringtoInt(gettabledata(data, 'cost', 0), 10);
-    } else return 0;
+    //var result=0;
+    if (_typeof(data) != String) {
+      var total = 0; //console.log('calculate:')
+      //console.log(typeof(data),selection)
+
+      for (var i in data) {
+        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
+        //console.log(i,data)
+
+        total += StringtoInt(gettabledata(data, "".concat(selection), i));
+        i++;
+      } //total=gettabledata(money,type,0)
+
+
+      console.log("total:".concat(total));
+      result = total;
+    } else {
+      result = 0;
+    }
+
+    console.log(result);
+    return result;
   });
 }
 
-function caltotalmoney(money, type) {
-  var total = 0;
+function caltotalmoney(ID, table, selection, month, type) {
+  var money = getMonthlyMoney(ID, table, selection, month, type);
+  console.log(_typeof(money));
+  var result = 0;
 
-  for (var i in money) {
-    if (gettabledata(money, 'type', i) === type && gettabledata(money, 'month', i) === today.getMonth() && gettabledata(money, 'year', i) === today.getFullYear()) {
-      total = total + StringtoInt(gettabledata(money, 'cost', i), 10);
-    }
-  }
+  if (_typeof(money) != String) {
+    var total = 0;
+    console.log('calculate:');
+    console.log(_typeof(money), selection);
+    /*for (var i in money){
+        let temp=money[i]
+        console.log(1)
+        console.log(i,temp)
+        total=total+StringtoInt(gettabledata(temp, type, 0), 10)
+        //i++;
+    }*/
+    //total=gettabledata(money,type,0)
 
-  return total;
+    result = total;
+  } else {
+    result = 0;
+  } //console.log(result)
+  //return result;
+
 }
 
 function calprojectcomplete(ID) {
   return; //return .1f%
 }
 
-function StringtoInt(x, base) {
-  var parsed = parseInt(x, base);
+function StringtoInt(x) {
+  var parsed = parseInt(x, 10);
 
   if (isNaN(parsed)) {
     return 0;
@@ -191,13 +234,15 @@ function StringtoInt(x, base) {
 }
 
 var _default = {
-  gettabledata: gettabledata,
-  //get id inside the row of column select from database
   getMonthlyMoney: getMonthlyMoney,
-  //get monthly fixed income(2),expenditure(3),saving(4)
+  //get money in each table, remember to use caltotalmoney to get in integer
   caltotalmoney: caltotalmoney,
   //calculate total money
-  StringtoInt: StringtoInt //transfer string to integer
+  calprojectcomplete: calprojectcomplete,
+  //calculate project complete %(in .1f )
+  StringtoInt: StringtoInt,
+  //transfer string to integer
+  gettabledata: gettabledata //get id inside the row of column select from database
 
 };
 exports.default = _default;
@@ -229,7 +274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38891" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38178" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

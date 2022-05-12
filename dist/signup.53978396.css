@@ -261,6 +261,10 @@ body {
     height: 37.44vh;
     background-color: #FF0000;
     opacity: 0.08; }
+    #main #mainpage #project_block t {
+      display: flex;
+      flex-direction: row;
+      justify-content: center; }
   #main #account {
     display: none; }
   #main #accounting {

@@ -155,8 +155,8 @@ app.get('/record',(req,res) => {
   let type = "'" + `${req.query.type}` + "'"
   
   let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
-  let month = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
-  let day = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
+  let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
+  let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
   
   const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
   
@@ -169,19 +169,31 @@ app.get('/record',(req,res) => {
 // monthlymoney
 app.get('/monthlymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
-  var output=[income, expenditure, fixedincome, fixedexpenditure, fixedsaving]
-
+  //var output=['income', 'expenditure', 'fixedincome', 'fixedexpenditure', 'fixedsaving']
+  let search_user=''
   let ID="'"+`${req.query.ID}`+"'"
+  let table=`${req.query.table}`
+  let selection=`${req.query.selection}`
+  let month=`${req.query.month}`
   let type="'"+`${req.query.type}`+"'"
+  if (mod.StringtoInt(month)<10){
+    month=`'0${month}'`
+    search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
+  }
+  else{
+    search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
+  }
 
-  const search_user= `SELECT cost FROM table WHERE id = ${ID} and type= ${type}`
+  //console.log(search_user)
   connection.query(search_user,(err,row,fields) => {
+    console.log(row)
     if (err)
       console.log('failed, to search: ',err)
     if (row[0]===undefined){
-      res.send(`failed, please setup monthly ${output[mod.StringtoInt(req.query.type, 10)-2]}`)
+      res.send(`failed, please setup`)
     }
     else {
+      //console.log(row)
       res.send(row)
     }
   })

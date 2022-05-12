@@ -117,13 +117,149 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"signup.js":[function(require,module,exports) {
+})({"module.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.StringtoInt = StringtoInt;
+exports.calprojectcomplete = calprojectcomplete;
+exports.caltotalmoney = caltotalmoney;
+exports.default = void 0;
+exports.getMonthlyMoney = getMonthlyMoney;
+exports.gettabledata = gettabledata;
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+/*
+This is the place to put some module for easy coding
+if you want to use the module in this file, please following the steps below
+    Put this code in the beginning of your js:
+        import * as mod from './module.js'
+    when you want to use the mod inside, use 
+        module.functionname()
+    to call the function, some may need to put the parameter in the ()
+
+
+If anyone want to add some new mod in the file, please set the function name as well-known 
+as possible. Moreover, rememder to export function at the buttom of the code. 
+
+If it is convenient, use the annotation at the buttom of export to let other know what is 
+this function doing
+
+By Maker
+*/
+var today = new Date();
+
+function gettabledata(table, parameter, row) {
+  var result = JSON.stringify(table[row]);
+  result = JSON.parse(result);
+  result = result[parameter];
+  return result;
+}
+
+function getMonthlyMoney(ID, table, selection, month, type) {
+  var result;
+  $.get('./monthlymoney', {
+    ID: ID,
+    table: table,
+    selection: selection,
+    month: month,
+    type: type
+  }, function (data) {
+    //var result=0;
+    if (_typeof(data) != String) {
+      var total = 0; //console.log('calculate:')
+      //console.log(typeof(data),selection)
+
+      for (var i in data) {
+        console.log(StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
+        //console.log(i,data)
+
+        total += StringtoInt(gettabledata(data, "".concat(selection), i));
+        i++;
+      } //total=gettabledata(money,type,0)
+
+
+      console.log("total:".concat(total));
+      result = total;
+    } else {
+      result = 0;
+    }
+
+    console.log(result);
+    return result;
+  });
+}
+
+function caltotalmoney(ID, table, selection, month, type) {
+  var money = getMonthlyMoney(ID, table, selection, month, type);
+  console.log(_typeof(money));
+  var result = 0;
+
+  if (_typeof(money) != String) {
+    var total = 0;
+    console.log('calculate:');
+    console.log(_typeof(money), selection);
+    /*for (var i in money){
+        let temp=money[i]
+        console.log(1)
+        console.log(i,temp)
+        total=total+StringtoInt(gettabledata(temp, type, 0), 10)
+        //i++;
+    }*/
+    //total=gettabledata(money,type,0)
+
+    result = total;
+  } else {
+    result = 0;
+  } //console.log(result)
+  //return result;
+
+}
+
+function calprojectcomplete(ID) {
+  return; //return .1f%
+}
+
+function StringtoInt(x) {
+  var parsed = parseInt(x, 10);
+
+  if (isNaN(parsed)) {
+    return 0;
+  }
+
+  return parsed;
+}
+
+var _default = {
+  getMonthlyMoney: getMonthlyMoney,
+  //get money in each table, remember to use caltotalmoney to get in integer
+  caltotalmoney: caltotalmoney,
+  //calculate total money
+  calprojectcomplete: calprojectcomplete,
+  //calculate project complete %(in .1f )
+  StringtoInt: StringtoInt,
+  //transfer string to integer
+  gettabledata: gettabledata //get id inside the row of column select from database
+
+};
+exports.default = _default;
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var mod = _interopRequireWildcard(require("./module.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 $('#change-to-login').click(function () {
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -221,7 +357,7 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
       } else {
         $("#signup-output").html("".concat(data));
-        ID;
+        ID = data;
       }
 
       ;
@@ -255,7 +391,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{}],"record.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"record.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -378,7 +514,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38891" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38178" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

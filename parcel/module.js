@@ -1,7 +1,8 @@
 /*
 This is the place to put some module for easy coding
 if you want to use the module in this file, please following the steps below
-    Put this code in the beginning of your js:import * as module from './module.js'
+    Put this code in the beginning of your js:
+        import * as mod from './module.js'
     when you want to use the mod inside, use 
         module.functionname()
     to call the function, some may need to put the parameter in the ()
@@ -17,50 +18,89 @@ By Maker
 */
 var today=new Date();
 
-function gettabledata(table, parameter, row){
+export function gettabledata(table, parameter, row){
     let result=JSON.stringify(table[row])
     result=JSON.parse(result)
     result=result[parameter]
     
-    return result
+    return result;
 }
 
-function getMonthlyMoney(ID,type){
+export function getMonthlyMoney(ID,table,selection,month,type){
+    var result;
     $.get('./monthlymoney',{
         ID:ID,
+        table:table,
+        selection:selection,
+        month:month,
         type:type
     },(data) =>{
-        if(typeof(data)===Object){
-            return StringtoInt(gettabledata(data, 'cost', 0), 10)
+        //var result=0;
+        if(typeof(data)!=String){
+            var total=0
+            //console.log('calculate:')
+            //console.log(typeof(data),selection)
+            for (var i in data){
+                console.log(StringtoInt(gettabledata(data, `${selection}`, i)))
+                //console.log(1)
+                //console.log(i,data)
+                total+=StringtoInt(gettabledata(data, `${selection}`, i))
+                i++;
+            }
+            //total=gettabledata(money,type,0)
+            console.log(`total:${total}`)
+            result=total
         }
-        else 
-            return 0
+        else{
+            result=0;
+        }
+        console.log(result)
+        return result;
     })
+    
 }
 
+export function caltotalmoney(ID,table,selection,month,type){
+    var money=getMonthlyMoney(ID,table,selection,month,type)
+    console.log(typeof(money))
+    var result=0;
+    
+    if(typeof(money)!=String){
+        var total=0
+        console.log('calculate:')
+        console.log(typeof(money),selection)
+        /*for (var i in money){
+            let temp=money[i]
+            console.log(1)
+            console.log(i,temp)
+            total=total+StringtoInt(gettabledata(temp, type, 0), 10)
+            //i++;
+        }*/
+        //total=gettabledata(money,type,0)
 
-function caltotalmoney(money,type){
-    let total=0
-    for (var i in money){
-        if (gettabledata(money, 'type', i)===type && gettabledata(money, 'month',i)===today.getMonth() && gettabledata(money, 'year',i)===today.getFullYear()){
-            total=total+StringtoInt(gettabledata(money, 'cost', i), 10)
+            result=total
         }
+    else{
+        result=0;
     }
-    return total
+    //console.log(result)
+    //return result;
+    
 }
 
-function calprojectcomplete(ID){
+export function calprojectcomplete(ID){
     return //return .1f%
 }
-function StringtoInt(x, base) {
-    const parsed = parseInt(x, base)
+export function StringtoInt(x) {
+    const parsed = parseInt(x, 10)
     if (isNaN(parsed)) { return 0; }
     return parsed
 }
 
 export default{
-    gettabledata,//get id inside the row of column select from database
-    getMonthlyMoney,//get monthly fixed income(2),expenditure(3),saving(4)
+    getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
     caltotalmoney,//calculate total money
-    StringtoInt//transfer string to integer
+    calprojectcomplete,//calculate project complete %(in .1f )
+    StringtoInt,//transfer string to integer
+    gettabledata//get id inside the row of column select from database
 } 
