@@ -170,7 +170,8 @@ app.get('/information',(req,res) => {
     if (err)
       console.log('fail to search: ', err)
     if (row[0]===undefined) {
-      res.send("failed,try again")
+      let result = ['', '', '', '', '', '']
+      res.send(result)
     }
     else{
       console.log(row)
@@ -222,6 +223,28 @@ app.get('/monthlymoney',(req,res) =>{
     }
     else {
       res.send(row)
+    }
+  })
+})
+
+// get detial in person_project
+app.get('/project_or_not',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+
+  const search_username = `
+    SELECT * FROM person_project
+    WHERE id = ${UID}`
+  connection.query(search_username, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    if (row[0] === undefined) {
+      res.send(false)
+    }
+    else{
+      console.log(row)
+      let detail = [mod.gettabledata(row,'project_personal',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
+      console.log(detail)
+      res.send(detail)
     }
   })
 })

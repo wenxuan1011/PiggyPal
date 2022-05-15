@@ -2,10 +2,10 @@ doctype html
 html
   head
     meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1")
     link(href="./signup.sass", rel="stylesheet")
     link(rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css")
-    title PiggyPal | Login
+    title PiggyPal
   body
   
     #Login
@@ -169,7 +169,75 @@ html
           p 個人專案
           p 共同專案
           p 達成成就
-        #personal_project
+        #personal_project_list
+          #no_project
+            p 尚未建立專案
+          .personal_project
+            .project_infor
+              .type_and_date
+                img(src = "./image/project/Project_colordot_blue.png", height = "35%")
+                p#item 一般儲蓄
+                p#date 2022.04.28-2022.06.14
+              .plannd_speed_infor
+                p#percent 35%
+                //p 剩餘2個月2天
+              img(src = "./image/project/Project_progressBar-bg.png", width = "100%")
+            img#more_infor_btn(src = "./image/btn/btn_arrow_right.png", height = "17%")
+          img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+
+      #add_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.8325%")
+          p 新增專案
+        form#person_project
+          .box
+            p 專案名稱
+            input(type = "text", name = "project_personal")
+          .box
+            p 起始日期
+            input(type = "text", name = "start_year")
+            input(type = "text", name = "start_month")
+            input(type = "text", name = "start_day")
+          .box
+            p 結束日期
+            input(type = "text", name = "end_year")
+            input(type = "text", name = "end_month")
+            input(type = "text", name = "end_day")
+          .box
+            p 目標金額
+            input(type = "text", name = "target_number")
+          .box
+            p 備註
+            input(type = "text", name = "note")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png" height = "100%")
+          #person_project-output
+
+      #show_personal_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.22167%")
+          p 個人專案
+        #graph_box 
+          img(src = "./image/project/Project_month-bg.png", height = "25px")
+          img#graph(src = "./image/project/Project_personalProject_graph.png", height = "67%")
+        #project_detail
+          #title 
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          #planned_speed_graph
+            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            p#money $800
+          #complete_percent 
+           p#percent 35%
+           p Completed
+          #date_box 
+            p 儲蓄時間
+            p#date 2022.04.28-2022.06.14
+          #target_money
+            p 目標金額
+            p#money $800
           
 
 
