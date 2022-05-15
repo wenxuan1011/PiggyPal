@@ -132,6 +132,10 @@ exports.gettabledata = gettabledata;
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /*
 This is the place to put some module for easy coding
 if you want to use the module in this file, please following the steps below
@@ -159,34 +163,52 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    //var result=0;
-    if (_typeof(data) != String) {
-      var total = 0;
+function getMonthlyMoney(_x, _x2, _x3, _x4, _x5) {
+  return _getMonthlyMoney.apply(this, arguments);
+}
 
-      for (var i in data) {
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-      } //total=gettabledata(money,type,0)
+function _getMonthlyMoney() {
+  _getMonthlyMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            $.get('./monthlymoney', {
+              ID: ID,
+              table: table,
+              selection: selection,
+              month: month,
+              type: type
+            }, function (data) {
+              //var result=0;
+              if (_typeof(data) != String) {
+                var total = 0;
+
+                for (var i in data) {
+                  total += StringtoInt(gettabledata(data, "".concat(selection), i));
+                  i++;
+                } //total=gettabledata(money,type,0)
 
 
-      console.log("total:".concat(total));
-      result = total;
-    } else {
-      result = 0;
-    }
+                console.log("total:".concat(total));
+                result = total;
+              } else {
+                result = 0;
+              }
 
-    console.log(result);
-    return result;
-  });
+              console.log(result);
+              return result;
+            });
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _getMonthlyMoney.apply(this, arguments);
 }
 
 function caltotalmoney(ID, table, selection, month, type) {
@@ -402,6 +424,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 var Expenditure = 0;
 var Income = 0;
 var MonthlyExpend = 0;
@@ -449,8 +475,8 @@ function calculate() {
    getMonthlyMoneyI(ID,'financial','money',StringtoInt(today.getMonth())+1,1);
    getMonthlyMoneyS(ID,'financial','money',StringtoInt(today.getMonth())+1,2);
   */
-  //setVariable()
 
+  setVariable();
   var ProjectSaving = 0;
   var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income) / (mod.StringtoInt(totalday - today.getDate()) + 1);
   var actualDailyExpenditure = DailyExpenditure - ProjectSaving / 1;
@@ -469,56 +495,114 @@ function gettabledata(table, parameter, row) {
   result = result[parameter];
   return result;
 }
-/*
-async function setVariable(){
-    try{
-        Expenditure=await getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1,0);
-        Income=await getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1)
-        MonthlyExpend= await getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,0)
-        MonthlyIncome=await getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,1)
-        MonthlySaving= await getMonthlyMoney(ID,'financial','money',StringtoInt(today.getMonth())+1,2)
-    }
-    catch(err){
-        console.log('something went wrong',err)
-    }
-    
+
+function setVariable() {
+  return _setVariable.apply(this, arguments);
+} //use axios
+
+
+function _setVariable() {
+  _setVariable = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return getMonthlyMoney(_signup.default, 'Account', 'cost', StringtoInt(today.getMonth()) + 1, 0);
+
+          case 3:
+            Expenditure = _context.sent;
+            _context.next = 6;
+            return getMonthlyMoney(_signup.default, 'Account', 'cost', StringtoInt(today.getMonth()) + 1);
+
+          case 6:
+            Income = _context.sent;
+            _context.next = 9;
+            return getMonthlyMoney(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 0);
+
+          case 9:
+            MonthlyExpend = _context.sent;
+            _context.next = 12;
+            return getMonthlyMoney(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 1);
+
+          case 12:
+            MonthlyIncome = _context.sent;
+            _context.next = 15;
+            return getMonthlyMoney(_signup.default, 'financial', 'money', StringtoInt(today.getMonth()) + 1, 2);
+
+          case 15:
+            MonthlySaving = _context.sent;
+            _context.next = 21;
+            break;
+
+          case 18:
+            _context.prev = 18;
+            _context.t0 = _context["catch"](0);
+            console.log('something went wrong', _context.t0);
+
+          case 21:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 18]]);
+  }));
+  return _setVariable.apply(this, arguments);
 }
-*/
+
+function getMonthlyMoney(_x, _x2, _x3, _x4, _x5) {
+  return _getMonthlyMoney.apply(this, arguments);
+}
+
+function _getMonthlyMoney() {
+  _getMonthlyMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            result = 0;
+            $.get('./monthlymoney', {
+              ID: ID,
+              table: table,
+              selection: selection,
+              month: month,
+              type: type
+            }, function (data) {
+              if (_typeof(data) != String) {
+                var total = 0; //console.log('calculate:')
+                //console.log(typeof(data),selection)
+
+                for (var i in data) {
+                  console.log(mod.StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
+                  //console.log(i,data)
+
+                  total += mod.StringtoInt(gettabledata(data, "".concat(selection), i));
+                  i++;
+                  result = total; //console.log(result)
+                } //total=gettabledata(money,type,0)
 
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result = 0;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    if (_typeof(data) != String) {
-      var total = 0; //console.log('calculate:')
-      //console.log(typeof(data),selection)
+                console.log("total:".concat(total));
+              } else {
+                result = 0;
+              }
 
-      for (var i in data) {
-        console.log(mod.StringtoInt(gettabledata(data, "".concat(selection), i))); //console.log(1)
-        //console.log(i,data)
+              setTimeout(function () {
+                console.log("'test':".concat(result));
+              }, 100);
+            });
+            return _context2.abrupt("return", result);
 
-        total += mod.StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-        result = total; //console.log(result)
-      } //total=gettabledata(money,type,0)
-
-
-      console.log("total:".concat(total));
-    } else {
-      result = 0;
-    }
-
-    setTimeout(function () {
-      console.log("'test':".concat(result));
-    }, 100);
-  });
-  return result;
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _getMonthlyMoney.apply(this, arguments);
 }
 },{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -548,7 +632,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43812" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43246" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

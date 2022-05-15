@@ -36,13 +36,13 @@ function calculate(){
         console.log(`totalday:${totalday},remain:${totalday-today.getDate()+1}`)
     }
     
-    
+    /*
     Expenditure = mod.getMonthlyMoney(ID,'Account','cost',mod.StringtoInt(today.getMonth())+1,0);
     Income = mod.getMonthlyMoney(ID,'Account','cost',mod.StringtoInt(today.getMonth())+1,1)
     MonthlyExpend = mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,0)
     MonthlyIncome = mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,1)
     MonthlySaving = mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,2)
-    
+    */
    /*
     getMonthlyMoneyEE(ID,'Account','cost',StringtoInt(today.getMonth())+1,0);
     getMonthlyMoneyII(ID,'Account','cost',StringtoInt(today.getMonth())+1,1);
@@ -50,7 +50,7 @@ function calculate(){
     getMonthlyMoneyI(ID,'financial','money',StringtoInt(today.getMonth())+1,1);
     getMonthlyMoneyS(ID,'financial','money',StringtoInt(today.getMonth())+1,2);
 */
-    //setVariable()
+    setVariable()
     var ProjectSaving=0
     var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income)/(mod.StringtoInt(totalday-today.getDate())+1)
     var actualDailyExpenditure=DailyExpenditure-ProjectSaving/1
@@ -71,7 +71,7 @@ function gettabledata(table, parameter, row){
     return result;
 }
 
-/*
+
 async function setVariable(){
     try{
         Expenditure=await getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1,0);
@@ -85,9 +85,9 @@ async function setVariable(){
     }
     
 }
-*/
 
-function getMonthlyMoney(ID,table,selection,month,type){
+//use axios
+async function getMonthlyMoney(ID,table,selection,month,type){
     var result= 0;
 
     $.get('./monthlymoney',{

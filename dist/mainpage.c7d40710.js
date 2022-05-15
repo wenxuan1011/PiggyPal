@@ -132,6 +132,10 @@ exports.gettabledata = gettabledata;
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /*
 This is the place to put some module for easy coding
 if you want to use the module in this file, please following the steps below
@@ -159,34 +163,52 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result;
-  $.get('./monthlymoney', {
-    ID: ID,
-    table: table,
-    selection: selection,
-    month: month,
-    type: type
-  }, function (data) {
-    //var result=0;
-    if (_typeof(data) != String) {
-      var total = 0;
+function getMonthlyMoney(_x, _x2, _x3, _x4, _x5) {
+  return _getMonthlyMoney.apply(this, arguments);
+}
 
-      for (var i in data) {
-        total += StringtoInt(gettabledata(data, "".concat(selection), i));
-        i++;
-      } //total=gettabledata(money,type,0)
+function _getMonthlyMoney() {
+  _getMonthlyMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            $.get('./monthlymoney', {
+              ID: ID,
+              table: table,
+              selection: selection,
+              month: month,
+              type: type
+            }, function (data) {
+              //var result=0;
+              if (_typeof(data) != String) {
+                var total = 0;
+
+                for (var i in data) {
+                  total += StringtoInt(gettabledata(data, "".concat(selection), i));
+                  i++;
+                } //total=gettabledata(money,type,0)
 
 
-      console.log("total:".concat(total));
-      result = total;
-    } else {
-      result = 0;
-    }
+                console.log("total:".concat(total));
+                result = total;
+              } else {
+                result = 0;
+              }
 
-    console.log(result);
-    return result;
-  });
+              console.log(result);
+              return result;
+            });
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _getMonthlyMoney.apply(this, arguments);
 }
 
 function caltotalmoney(ID, table, selection, month, type) {
@@ -406,15 +428,6 @@ $('#accounting #record #save').click(function (event) {
   getdetail();
 });
 
-function addlist(obj) {
-  var ul = document.getElementByClassName(obj);
-  var li = document.createElement("li"); //設定 li 屬性，如 id
-
-  li.setAttribute("id", "newli");
-  li.innerHTML = "js 動態新增li";
-  ul.appendChild(li);
-}
-
 function getdetail() {
   var today = new Date();
   $.get('./getmainpagedetail', {
@@ -435,7 +448,6 @@ function getdetail() {
         var _container = document.querySelector('.list');
 
         var paragraph = document.createElement('P');
-        var space = '                ';
         paragraph.textContent = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "".concat(item) + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "$".concat(value);
         paragraph.setAttribute('class', 'text');
 
@@ -472,7 +484,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45098" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43246" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

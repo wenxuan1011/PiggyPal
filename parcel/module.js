@@ -26,7 +26,7 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
-export function getMonthlyMoney(ID,table,selection,month,type){
+export async function getMonthlyMoney(ID,table,selection,month,type){
     var result;
     $.get('./monthlymoney',{
         ID:ID,

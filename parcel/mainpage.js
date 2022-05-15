@@ -8,19 +8,6 @@ $('#accounting #record #save').click((event) => {
     getdetail()
 })
 
-
-function addlist(obj) {
-    var ul = document.getElementByClassName(obj)
-    var li = document.createElement("li")
-
-    //設定 li 屬性，如 id
-    li.setAttribute("id", "newli")
-
-    li.innerHTML = "js 動態新增li"
-    ul.appendChild(li)
-}
-
-
 function getdetail(){
     var today= new Date()
     $.get('./getmainpagedetail',{
@@ -40,7 +27,6 @@ function getdetail(){
 
                 const container = document.querySelector('.list')
                 const paragraph = document.createElement('P')
-                const space ='                '
                 paragraph.textContent= '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+`${item}`+
                 '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+
                 `$${value}`
