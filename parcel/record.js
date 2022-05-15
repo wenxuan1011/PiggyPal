@@ -3,7 +3,12 @@ import ID from './signup.js'
 var money="";
 // 0支出 1收入
 var click_op = 0;
+//spend
 var t = document.getElementById("spend");
+//name
+var n = document.getElementById("na");
+//date
+var d = document.getElementById("da")
 
 
 $(document).ready(function() {
@@ -12,23 +17,30 @@ $(document).ready(function() {
     event.preventDefault()
     $.get('./record', {
       id: ID,
-      items: $('#record input[name=items]').val(),
-      cost: $('#record input[name=cost]').val(),
-      date: $('#record input[name=date]').val(),
+      items: $('#fin input[name=items]').val(),
+      cost: $('#fin input[name=cost]').val(),
+      date: $('#fin input[name=date]').val(),
       type: click_op
     });
+    t.value = ""
+    n.value = ""
+    d.value = "05/13/2022"
   })
   
 });
 
-  $('#expend').click((event)=> {
-    event.preventDefault()
-    click_op=0
-  })
-  $('#income').click((event)=> {
-    event.preventDefault()
-    click_op=1
-  })
+$('#expend').click((event)=> {
+  $('#expend').css("border-bottom", "0.3px solid #410ADF")
+  $('#income').css("border-bottom", "none")
+  event.preventDefault()
+  click_op=0
+})
+$('#income').click((event)=> {
+  $('#income').css("border-bottom", "0.3px solid #410ADF")
+  $('#expend').css("border-bottom", "none")
+  event.preventDefault()
+  click_op=1
+})
 
 $('#zero').click(function(){
   money = money + "0"
@@ -85,15 +97,8 @@ $('#backspace').click(function(){
   t.value = money;
 })
 
-$('#Display').click(function(){
-  $('#record').toggle();
-  $('#keyboard').hide();
-  $('#ok').hide();
-  $('#backspace').hide();
-})
-
 $('#spend').click(function(){
-  $('#keyboard').show();
+  $('#keyboard').css("display", "flex")
   $('#ok').show();
   $('#backspace').show();
   document.activeElement.blur()

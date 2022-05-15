@@ -196,7 +196,8 @@ app.get('/information',(req,res) => {
     if (err)
       console.log('fail to search: ', err)
     if (row[0]===undefined) {
-      res.send("failed,try again")
+      let result = ['', '', '', '', '', '']
+      res.send(result)
     }
     else{
       console.log(row)
@@ -264,6 +265,28 @@ app.get('/monthlymoney',(req,res) =>{
   })
 })
 
+// get detial in person_project
+app.get('/project_or_not',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+
+  const search_username = `
+    SELECT * FROM person_project
+    WHERE id = ${UID}`
+  connection.query(search_username, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    if (row[0] === undefined) {
+      res.send(false)
+    }
+    else{
+      console.log(row)
+      let detail = [mod.gettabledata(row,'project_personal',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
+      console.log(detail)
+      res.send(detail)
+    }
+  })
+})
+
 // update person_project
 app.get('/person_project',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS person_project (id VARCHAR(30), project_personal VARCHAR(30), start_year VARCHAR(30), start_month VARCHAR(30), start_day VARCHAR(30), end_year VARCHAR(30), end_month VARCHAR(30), end_day VARCHAR(30), target_number VARCHAR(30))')
@@ -304,6 +327,34 @@ app.get('/person_project',(req,res) => {
       res.send("You have updated your "+ `${req.query.project_personal}` +".")
     }
   }, 100)
+})
+
+
+app.get('/getmainpagedetail',(req,res) => {
+  let UID = "'"+`${req.query.id}`+"'"
+  let month= `${req.query.month}`
+  let date= "'"+`${req.query.date}`+"'"
+  let year= "'"+`${req.query.year}`+"'"
+  var search_user=""
+  if (mod.StringtoInt(month)<10){
+    month=`'0${month}'`
+    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+  }
+  else{
+    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+  }
+  
+  console.log(search_user)
+  connection.query(search_user, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
 })
 
 //connection.end()

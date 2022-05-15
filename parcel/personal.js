@@ -1,23 +1,43 @@
 import ID from './signup.js'
 
 var TYPE = 0
+var item = document.getElementById("financial_item")
+var year = document.getElementById("financial_year")
+var month = document.getElementById("financial_month")
+var day = document.getElementById("financial_day")
+var money = document.getElementById("financial_money")
+var repeat = document.getElementById("financial_repeat")
 
 // open/close personal page
-$('#mainpage img').click(function(){
-  $('#personal_page').css("transform", "translateX(0%)")
+$('#mainpage #personal_btn').click(function(){
+  $('#personal_page').css("display", "flex")
+  setTimeout(() => {
+    $('#personal_page').css("transform", "translateX(0%)")
+  }, 100)
+  
 })
 
 $('#personal_page .bar img').click(function(){
   $('#personal_page').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#personal_page').css("display", "none")
+  }, 500)
 })
 
 // open/close financial_setting_page
 $('#personal_page #financial_setting .list li').click(function(){
-  $('#financial_setting_page').css("transform", "translateX(0%)")
+  $('#financial_setting_page').css("display", "flex")
+  setTimeout(() => {
+    $('#financial_setting_page').css("transform", "translateX(0%)")
+  }, 100)
 })
 
 $('#financial_setting_page .bar img').click(function(){
   $('#financial_setting_page').css("transform", "translateX(100%)")
+  $("#financial-output").html('')
+  setTimeout(() => {
+    $('#financial_setting_page').css("display", "none")
+  }, 500)
 })
 
 // change the title of the financial_setting_page
@@ -79,9 +99,12 @@ $(document).ready(function() {
         id: ID,
         type: TYPE,
       }, (data) => {
-        for(let i =0;i<4;i++)  //big problem
-          $(`#financial_setting_page form .box:nth-child(${i+1}) input`).html("value",`${data[i+1]}`);
+        item.value = data[0]
+        year.value = data[1]
+        month.value = data[2]
+        day.value = data[3]
+        money.value = data[4]
+        repeat.value = data[5]
       });
     })
 });
-

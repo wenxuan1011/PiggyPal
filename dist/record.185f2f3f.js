@@ -418,25 +418,37 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var money = ""; // 0支出 1收入
 
-var click_op = 0;
-var t = document.getElementById("spend");
+var click_op = 0; //spend
+
+var t = document.getElementById("spend"); //name
+
+var n = document.getElementById("na"); //date
+
+var d = document.getElementById("da");
 $(document).ready(function () {
   $('#save').click(function (event) {
     event.preventDefault();
     $.get('./record', {
       id: _signup.default,
-      items: $('#record input[name=items]').val(),
-      cost: $('#record input[name=cost]').val(),
-      date: $('#record input[name=date]').val(),
+      items: $('#fin input[name=items]').val(),
+      cost: $('#fin input[name=cost]').val(),
+      date: $('#fin input[name=date]').val(),
       type: click_op
     });
+    t.value = "";
+    n.value = "";
+    d.value = "05/13/2022";
   });
 });
 $('#expend').click(function (event) {
+  $('#expend').css("border-bottom", "0.3px solid #410ADF");
+  $('#income').css("border-bottom", "none");
   event.preventDefault();
   click_op = 0;
 });
 $('#income').click(function (event) {
+  $('#income').css("border-bottom", "0.3px solid #410ADF");
+  $('#expend').css("border-bottom", "none");
   event.preventDefault();
   click_op = 1;
 });
@@ -484,14 +496,8 @@ $('#backspace').click(function () {
   money = money.slice(0, -1);
   t.value = money;
 });
-$('#Display').click(function () {
-  $('#record').toggle();
-  $('#keyboard').hide();
-  $('#ok').hide();
-  $('#backspace').hide();
-});
 $('#spend').click(function () {
-  $('#keyboard').show();
+  $('#keyboard').css("display", "flex");
   $('#ok').show();
   $('#backspace').show();
   document.activeElement.blur();
@@ -532,7 +538,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "43246" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45771" + '/');
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 
   ws.onmessage = function (event) {
     checkedAssets = {};

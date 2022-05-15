@@ -117,6 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
+<<<<<<< HEAD
 })({"module.js":[function(require,module,exports) {
 "use strict";
 
@@ -265,12 +266,16 @@ var _default = {
 };
 exports.default = _default;
 },{}],"signup.js":[function(require,module,exports) {
+=======
+})({"signup.js":[function(require,module,exports) {
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+<<<<<<< HEAD
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
@@ -278,6 +283,8 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+=======
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 $('#change-to-login').click(function () {
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -375,7 +382,11 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
       } else {
         $("#signup-output").html("".concat(data));
+<<<<<<< HEAD
         ID = data;
+=======
+        ID;
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
       }
 
       ;
@@ -409,7 +420,91 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
+<<<<<<< HEAD
 },{"./module.js":"module.js"}],"mainpage.js":[function(require,module,exports) {
+=======
+},{}],"module.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+/*
+This is the place to put some module for easy coding
+if you want to use the module in this file, please following the steps below
+    Put this code in the beginning of your js:import * as module from './module.js'
+    when you want to use the mod inside, use 
+        module.functionname()
+    to call the function, some may need to put the parameter in the ()
+
+
+If anyone want to add some new mod in the file, please set the function name as well-known 
+as possible. Moreover, rememder to export function at the buttom of the code. 
+
+If it is convenient, use the annotation at the buttom of export to let other know what is 
+this function doing
+
+By Maker
+*/
+var today = new Date();
+
+function gettabledata(table, parameter, row) {
+  var result = JSON.stringify(table[row]);
+  result = JSON.parse(result);
+  result = result[parameter];
+  return result;
+}
+
+function getMonthlyMoney(ID, type) {
+  $.get('./monthlymoney', {
+    ID: ID,
+    type: type
+  }, function (data) {
+    if (_typeof(data) === Object) {
+      return StringtoInt(gettabledata(data, 'cost', 0), 10);
+    } else return 0;
+  });
+}
+
+function caltotalmoney(money, type) {
+  var total = 0;
+
+  for (var i in money) {
+    if (gettabledata(money, 'type', i) === type && gettabledata(money, 'month', i) === today.getMonth() && gettabledata(money, 'year', i) === today.getFullYear()) {
+      total = total + StringtoInt(gettabledata(money, 'cost', i), 10);
+    }
+  }
+
+  return total;
+}
+
+function StringtoInt(x, base) {
+  var parsed = parseInt(x, base);
+
+  if (isNaN(parsed)) {
+    return 0;
+  }
+
+  return parsed;
+}
+
+var _default = {
+  gettabledata: gettabledata,
+  //get id inside the row of column select from database
+  getMonthlyMoney: getMonthlyMoney,
+  //get monthly fixed income(2),expenditure(3),saving(4)
+  caltotalmoney: caltotalmoney,
+  //calculate total money
+  StringtoInt: StringtoInt //transfer string to integer
+
+};
+exports.default = _default;
+},{}],"mainpage.js":[function(require,module,exports) {
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -422,12 +517,28 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+<<<<<<< HEAD
 $('#accounting #record #save').click(function (event) {
+=======
+$('#save').click(function (event) {
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
   event.preventDefault();
   console.log(1);
   getdetail();
 });
 
+<<<<<<< HEAD
+=======
+function addlist(obj) {
+  var ul = document.getElementByClassName(obj);
+  var li = document.createElement("li"); //�]�w li �ݩʡA�p id
+
+  li.setAttribute("id", "newli");
+  li.innerHTML = "js �ʺA�s�Wli";
+  ul.appendChild(li);
+}
+
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 function getdetail() {
   var today = new Date();
   $.get('./getmainpagedetail', {
@@ -441,13 +552,22 @@ function getdetail() {
       container.innerHTML = "<p></p>";
 
       for (var i in data) {
+<<<<<<< HEAD
         var item = mod.gettabledata(data, 'items', i);
         var value = mod.gettabledata(data, 'cost', i);
+=======
+        var item = gettabledata(data, 'items', i);
+        var value = gettabledata(data, 'cost', i);
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
         console.log(item, value);
 
         var _container = document.querySelector('.list');
 
         var paragraph = document.createElement('P');
+<<<<<<< HEAD
+=======
+        var space = '                ';
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
         paragraph.textContent = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "".concat(item) + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "$".concat(value);
         paragraph.setAttribute('class', 'text');
 
@@ -456,6 +576,18 @@ function getdetail() {
     } else {}
   });
 }
+<<<<<<< HEAD
+=======
+
+function gettabledata(table, parameter, row) {
+  var result = JSON.stringify(table[row]);
+  result = JSON.parse(result);
+  result = result[parameter];
+  return result;
+}
+
+;
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 },{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -484,7 +616,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "43246" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45771" + '/');
+>>>>>>> 516338956a1c54f791cd6520e24fa7c3095dec5f
 
   ws.onmessage = function (event) {
     checkedAssets = {};
