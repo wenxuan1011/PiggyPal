@@ -232,6 +232,34 @@ app.get('/record',(req,res) => {
   
 })
 
+//todaymoney
+app.get('/todaymoney',(req,res) =>{
+  //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
+  //var output=['income', 'expenditure', 'fixedincome', 'fixedexpenditure', 'fixedsaving']
+  let search_user=''
+  let ID="'"+`${req.query.ID}`+"'"
+  let table=`${req.query.table}`
+  let selection=`${req.query.selection}`
+  let month=mod.datetransfer(req.query.month)
+  let date=mod.datetransfer(req.query.date)
+  let type="'"+`${req.query.type}`+"'"
+  
+  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and day = ${date}`
+  //console.log(search_user)
+  connection.query(search_user,(err,row,fields) => {
+    //console.log(row)
+    if (err)
+      console.log('failed, to search: ',err)
+    if (row[0]===undefined){
+      res.send(`failed, please setup`)
+    }
+    else {
+      //console.log(row)
+      res.send(row)
+    }
+  })
+})
+
 // monthlymoney
 app.get('/monthlymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')

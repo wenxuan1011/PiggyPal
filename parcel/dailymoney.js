@@ -1,6 +1,8 @@
 import ID from './signup.js' 
 import * as mod from './module.js'
 
+var todayExpenditure=0
+var todayIncome=0
 var Expenditure=0
 var Income=0
 var MonthlyExpend=0
@@ -18,19 +20,17 @@ async function process(ID){
     var totalday=setremainDay(today,totalday);
     
     await setVariable(ID)
-
-    //console.log(getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1,0))
-    //await test(totalday,today)
     
     setTimeout(function(){
         
-        var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income)/(mod.StringtoInt(totalday-today.getDate())+1)
-        var actualDailyExpenditure=DailyExpenditure-ProjectSaving/1
+        var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
+        var actualDailyExpenditure=DailyExpenditure-ProjectSaving-todayExpenditure
         if(actualDailyExpenditure<0){
             //daily avaliable expenditure warning
         }
+        $('#daily_expend p').html(`今天還可以花${Math.floor(actualDailyExpenditure)}，今天已為專案存下${ProjectSaving}`)
         console.log(Expenditure,111)
-        console.log(Math.floor(DailyExpenditure),"actually money : ",Math.floor(actualDailyExpenditure))
+        console.log("DailyExpenditure: ", Math.floor(DailyExpenditure),"actually money : ",Math.floor(actualDailyExpenditure))
     },1000)
     
 }
@@ -48,62 +48,42 @@ function setremainDay(today,totalday){
             }
         }
         totalday=MonthlyTotalDay[today.getMonth()]
-        console.log(`totalday:${totalday},remain:${totalday-today.getDate()+1}`)
     }
     else{
         totalday=MonthlyTotalDay[today.getMonth()]
-        console.log(`totalday:${totalday},remain:${totalday-today.getDate()+1}`)
     }
     return totalday;
-}
-function test(totalday,today){
-
-    var DailyExpenditure=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income)/(mod.StringtoInt(totalday-today.getDate())+1)
-        var actualDailyExpenditure=DailyExpenditure-ProjectSaving/1
-        if(actualDailyExpenditure<0){
-            //daily avaliable expenditure warning
-        }
-        console.log(Expenditure,111)
-        console.log(Math.floor(DailyExpenditure),"actually money : ",Math.floor(actualDailyExpenditure))
 }
 
 function setVariable(ID){
     var today=new Date();
+        todayExpenditure=mod.getTodayMoney(ID,'Account','cost',mod.StringtoInt(today.getMonth())+1,0);
         Expenditure= mod.getMonthlyMoney(ID,'Account','cost',mod.StringtoInt(today.getMonth())+1,0);
         Income= mod.getMonthlyMoney(ID,'Account','cost',mod.StringtoInt(today.getMonth())+1,1)
         MonthlyIncome= mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,0)
         MonthlyExpend= mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,1)
         MonthlySaving= mod.getMonthlyMoney(ID,'financial','money',mod.StringtoInt(today.getMonth())+1,2)
         ProjectSaving= mod.getProjectMoney(ID)
+        todayExpenditure.then(res => {
+            todayExpenditure=Math.ceil(res)
+        })
         Expenditure.then(res => {
-            console.log(res)
             Expenditure=Math.ceil(res)
-            console.log(Expenditure,222)
         })
         Income.then(res => {
-            console.log(res)
             Income=Math.ceil(res)
-            console.log(Income,222)
         })
         MonthlyExpend.then(res => {
-            console.log(res)
             MonthlyExpend=Math.ceil(res)
-            console.log(MonthlyExpend,222)
         })
         MonthlyIncome.then(res => {
-            console.log(res)
             MonthlyIncome=Math.ceil(res)
-            console.log(MonthlyIncome,222)
         })
         MonthlySaving.then(res => {
-            console.log(res)
             MonthlySaving=Math.ceil(res)
-            console.log(MonthlySaving,222)
         })
         ProjectSaving.then(res => {
-            console.log(res)
             ProjectSaving=Math.ceil(res)
-            console.log(ProjectSaving,222)
         })
 }
 

@@ -29,6 +29,44 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
+export function getTodayMoney(ID,table,selection,month,type){
+    var result= caltodaymoney(ID,table,selection,month,type)
+    return result
+}
+
+export async function caltodaymoney(ID,table,selection,month,type){
+    var results=0
+    var today=new Date()
+    console.log(today.getDate())
+    await $.get('./todaymoney',{
+        ID:ID,
+        table:table,
+        selection:selection,
+        month:month,
+        date:today.getDate(),
+        type:type
+    },(data) =>{
+        var result=0;
+        if(typeof(data)!=String){
+            var total=0
+            for (var i in data){
+                total+=StringtoInt(gettabledata(data, `${selection}`, i))
+                i++;
+            }
+            //total=gettabledata(money,type,0)
+            console.log(`total:${total}`)
+            result=total
+        }
+        else{
+            result=0;
+        }
+        console.log(result)
+        results=result
+    });
+    //console.log(results)
+    return results;
+}
+
 export function getMonthlyMoney(ID,table,selection,month,type){
     var result= caltotalmoney(ID,table,selection,month,type)
 

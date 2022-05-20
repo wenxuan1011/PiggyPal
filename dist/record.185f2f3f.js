@@ -900,11 +900,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.StringtoInt = StringtoInt;
 exports.calprojectcomplete = calprojectcomplete;
+exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
+exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
 
 require("regenerator-runtime/runtime.js");
@@ -924,6 +926,69 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
+function getTodayMoney(ID, table, selection, month, type) {
+  var result = caltodaymoney(ID, table, selection, month, type);
+  return result;
+}
+
+function caltodaymoney(_x, _x2, _x3, _x4, _x5) {
+  return _caltodaymoney.apply(this, arguments);
+}
+
+function _caltodaymoney() {
+  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+    var results, today;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            results = 0;
+            today = new Date();
+            console.log(today.getDate());
+            _context.next = 5;
+            return $.get('./todaymoney', {
+              ID: ID,
+              table: table,
+              selection: selection,
+              month: month,
+              date: today.getDate(),
+              type: type
+            }, function (data) {
+              var result = 0;
+
+              if (_typeof(data) != String) {
+                var total = 0;
+
+                for (var i in data) {
+                  total += StringtoInt(gettabledata(data, "".concat(selection), i));
+                  i++;
+                } //total=gettabledata(money,type,0)
+
+
+                //total=gettabledata(money,type,0)
+                console.log("total:".concat(total));
+                result = total;
+              } else {
+                result = 0;
+              }
+
+              console.log(result);
+              results = result;
+            });
+
+          case 5:
+            return _context.abrupt("return", results);
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _caltodaymoney.apply(this, arguments);
+}
+
 function getMonthlyMoney(ID, table, selection, month, type) {
   var result = caltotalmoney(ID, table, selection, month, type);
   /*
@@ -938,20 +1003,20 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   return result;
 }
 
-function caltotalmoney(_x, _x2, _x3, _x4, _x5) {
+function caltotalmoney(_x6, _x7, _x8, _x9, _x10) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
 function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
     var results;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             results = 0;
-            _context.next = 3;
+            _context2.next = 3;
             return $.get('./monthlymoney', {
               ID: ID,
               table: table,
@@ -982,31 +1047,31 @@ function _caltotalmoney() {
             });
 
           case 3:
-            return _context.abrupt("return", results);
+            return _context2.abrupt("return", results);
 
           case 4:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x6) {
+function getProjectMoney(_x11) {
   return _getProjectMoney.apply(this, arguments);
 }
 
 function _getProjectMoney() {
-  _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID) {
+  _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
     var results;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             results = 0;
-            _context2.next = 3;
+            _context3.next = 3;
             return $.get('./getProjectMoney', {
               ID: ID
             }, function (data) {
@@ -1029,14 +1094,14 @@ function _getProjectMoney() {
             });
 
           case 3:
-            return _context2.abrupt("return", results);
+            return _context3.abrupt("return", results);
 
           case 4:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _getProjectMoney.apply(this, arguments);
 }

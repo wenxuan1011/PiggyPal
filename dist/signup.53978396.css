@@ -312,6 +312,8 @@ body {
         align-items: center;
         width: 90vw;
         margin: 0 0 0 0; }
+        #main #mainpage #project_block #daily_expend p {
+          font-size: 14px; }
     #main #mainpage #detail_block {
       display: flex;
       flex-direction: column;

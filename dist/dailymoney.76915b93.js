@@ -900,11 +900,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.StringtoInt = StringtoInt;
 exports.calprojectcomplete = calprojectcomplete;
+exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
+exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
 
 require("regenerator-runtime/runtime.js");
@@ -924,6 +926,69 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
+function getTodayMoney(ID, table, selection, month, type) {
+  var result = caltodaymoney(ID, table, selection, month, type);
+  return result;
+}
+
+function caltodaymoney(_x, _x2, _x3, _x4, _x5) {
+  return _caltodaymoney.apply(this, arguments);
+}
+
+function _caltodaymoney() {
+  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+    var results, today;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            results = 0;
+            today = new Date();
+            console.log(today.getDate());
+            _context.next = 5;
+            return $.get('./todaymoney', {
+              ID: ID,
+              table: table,
+              selection: selection,
+              month: month,
+              date: today.getDate(),
+              type: type
+            }, function (data) {
+              var result = 0;
+
+              if (_typeof(data) != String) {
+                var total = 0;
+
+                for (var i in data) {
+                  total += StringtoInt(gettabledata(data, "".concat(selection), i));
+                  i++;
+                } //total=gettabledata(money,type,0)
+
+
+                //total=gettabledata(money,type,0)
+                console.log("total:".concat(total));
+                result = total;
+              } else {
+                result = 0;
+              }
+
+              console.log(result);
+              results = result;
+            });
+
+          case 5:
+            return _context.abrupt("return", results);
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _caltodaymoney.apply(this, arguments);
+}
+
 function getMonthlyMoney(ID, table, selection, month, type) {
   var result = caltotalmoney(ID, table, selection, month, type);
   /*
@@ -938,20 +1003,20 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   return result;
 }
 
-function caltotalmoney(_x, _x2, _x3, _x4, _x5) {
+function caltotalmoney(_x6, _x7, _x8, _x9, _x10) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
 function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
     var results;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             results = 0;
-            _context.next = 3;
+            _context2.next = 3;
             return $.get('./monthlymoney', {
               ID: ID,
               table: table,
@@ -982,31 +1047,31 @@ function _caltotalmoney() {
             });
 
           case 3:
-            return _context.abrupt("return", results);
+            return _context2.abrupt("return", results);
 
           case 4:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x6) {
+function getProjectMoney(_x11) {
   return _getProjectMoney.apply(this, arguments);
 }
 
 function _getProjectMoney() {
-  _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID) {
+  _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
     var results;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             results = 0;
-            _context2.next = 3;
+            _context3.next = 3;
             return $.get('./getProjectMoney', {
               ID: ID
             }, function (data) {
@@ -1029,14 +1094,14 @@ function _getProjectMoney() {
             });
 
           case 3:
-            return _context2.abrupt("return", results);
+            return _context3.abrupt("return", results);
 
           case 4:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _getProjectMoney.apply(this, arguments);
 }
@@ -1457,6 +1522,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var todayExpenditure = 0;
+var todayIncome = 0;
 var Expenditure = 0;
 var Income = 0;
 var MonthlyExpend = 0;
@@ -1485,17 +1552,16 @@ function _process() {
             return setVariable(ID);
 
           case 4:
-            //console.log(getMonthlyMoney(ID,'Account','cost',StringtoInt(today.getMonth())+1,0))
-            //await test(totalday,today)
             setTimeout(function () {
-              var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-              var actualDailyExpenditure = DailyExpenditure - ProjectSaving / 1;
+              var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+              var actualDailyExpenditure = DailyExpenditure - ProjectSaving - todayExpenditure;
 
               if (actualDailyExpenditure < 0) {//daily avaliable expenditure warning
               }
 
+              $('#daily_expend p').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyExpenditure), "\uFF0C\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B").concat(ProjectSaving));
               console.log(Expenditure, 111);
-              console.log(Math.floor(DailyExpenditure), "actually money : ", Math.floor(actualDailyExpenditure));
+              console.log("DailyExpenditure: ", Math.floor(DailyExpenditure), "actually money : ", Math.floor(actualDailyExpenditure));
             }, 1000);
 
           case 5:
@@ -1525,63 +1591,42 @@ function setremainDay(today, totalday) {
     }
 
     totalday = MonthlyTotalDay[today.getMonth()];
-    console.log("totalday:".concat(totalday, ",remain:").concat(totalday - today.getDate() + 1));
   } else {
     totalday = MonthlyTotalDay[today.getMonth()];
-    console.log("totalday:".concat(totalday, ",remain:").concat(totalday - today.getDate() + 1));
   }
 
   return totalday;
 }
 
-function test(totalday, today) {
-  var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-  var actualDailyExpenditure = DailyExpenditure - ProjectSaving / 1;
-
-  if (actualDailyExpenditure < 0) {//daily avaliable expenditure warning
-  }
-
-  console.log(Expenditure, 111);
-  console.log(Math.floor(DailyExpenditure), "actually money : ", Math.floor(actualDailyExpenditure));
-}
-
 function setVariable(ID) {
   var today = new Date();
+  todayExpenditure = mod.getTodayMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 0);
   Expenditure = mod.getMonthlyMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 0);
   Income = mod.getMonthlyMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 1);
   MonthlyIncome = mod.getMonthlyMoney(ID, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 0);
   MonthlyExpend = mod.getMonthlyMoney(ID, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 1);
   MonthlySaving = mod.getMonthlyMoney(ID, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 2);
   ProjectSaving = mod.getProjectMoney(ID);
+  todayExpenditure.then(function (res) {
+    todayExpenditure = Math.ceil(res);
+  });
   Expenditure.then(function (res) {
-    console.log(res);
     Expenditure = Math.ceil(res);
-    console.log(Expenditure, 222);
   });
   Income.then(function (res) {
-    console.log(res);
     Income = Math.ceil(res);
-    console.log(Income, 222);
   });
   MonthlyExpend.then(function (res) {
-    console.log(res);
     MonthlyExpend = Math.ceil(res);
-    console.log(MonthlyExpend, 222);
   });
   MonthlyIncome.then(function (res) {
-    console.log(res);
     MonthlyIncome = Math.ceil(res);
-    console.log(MonthlyIncome, 222);
   });
   MonthlySaving.then(function (res) {
-    console.log(res);
     MonthlySaving = Math.ceil(res);
-    console.log(MonthlySaving, 222);
   });
   ProjectSaving.then(function (res) {
-    console.log(res);
     ProjectSaving = Math.ceil(res);
-    console.log(ProjectSaving, 222);
   });
 } //export default process
 },{"./signup.js":"signup.js","./module.js":"module.js","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
