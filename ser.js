@@ -240,16 +240,10 @@ app.get('/monthlymoney',(req,res) =>{
   let ID="'"+`${req.query.ID}`+"'"
   let table=`${req.query.table}`
   let selection=`${req.query.selection}`
-  let month=`${req.query.month}`
+  let month=mod.datetransfer(req.query.month)
   let type="'"+`${req.query.type}`+"'"
-  if (mod.StringtoInt(month)<10){
-    month=`'0${month}'`
-    search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
-  }
-  else{
-    search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
-  }
-
+  
+  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
   //console.log(search_user)
   connection.query(search_user,(err,row,fields) => {
     //console.log(row)
@@ -265,7 +259,7 @@ app.get('/monthlymoney',(req,res) =>{
   })
 })
 
-// get detial in person_project
+// get detail in person_project
 app.get('/project_or_not',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
 
@@ -279,9 +273,9 @@ app.get('/project_or_not',(req,res) => {
       res.send(false)
     }
     else{
-      console.log(row)
+      //console.log(row)
       let detail = [mod.gettabledata(row,'project_personal',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
-      console.log(detail)
+      //console.log(detail)
       res.send(detail)
     }
   })
@@ -345,6 +339,22 @@ app.get('/getmainpagedetail',(req,res) => {
   }
   
   console.log(search_user)
+  connection.query(search_user, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
+})
+///get project goal 
+app.get('/getProjectMoney',(req,res) =>{
+  let UID="'"+`${req.query.ID}`+"'"
+  var search_user=""
+  search_user=`SELECT * FROM person_project WHERE id = ${UID}`
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)

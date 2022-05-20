@@ -25,8 +25,8 @@ function getdetail(){
     var today= new Date()
     $.get('./getmainpagedetail',{
         id:ID,
-        date:today.getDate(),
-        month:today.getMonth()+1,
+        date: today.getDate(),
+        month: today.getMonth()+1,
         year: today.getFullYear()
     },(data)=>{
         if(data!="nothing"){

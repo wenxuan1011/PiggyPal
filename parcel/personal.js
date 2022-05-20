@@ -1,5 +1,5 @@
 import ID from './signup.js'
-
+//need to export to signup.js
 var TYPE = 0
 var item = document.getElementById("financial_item")
 var year = document.getElementById("financial_year")

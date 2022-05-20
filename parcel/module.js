@@ -16,6 +16,9 @@ this function doing
 
 By Maker
 */
+"use strict";
+import 'regenerator-runtime/runtime.js'
+
 var today=new Date();
 
 export function gettabledata(table, parameter, row){
@@ -26,16 +29,30 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
-export async function getMonthlyMoney(ID,table,selection,month,type){
-    var result;
-    $.get('./monthlymoney',{
+export function getMonthlyMoney(ID,table,selection,month,type){
+    var result= caltotalmoney(ID,table,selection,month,type)
+
+/*
+    result.then(res => {
+        result=res
+        console.log ("hi",result)
+        
+    })
+
+*/
+    return result
+}
+
+export async function caltotalmoney(ID,table,selection,month,type){
+    var results=0
+    await $.get('./monthlymoney',{
         ID:ID,
         table:table,
         selection:selection,
         month:month,
         type:type
     },(data) =>{
-        //var result=0;
+        var result=0;
         if(typeof(data)!=String){
             var total=0
             for (var i in data){
@@ -50,41 +67,37 @@ export async function getMonthlyMoney(ID,table,selection,month,type){
             result=0;
         }
         console.log(result)
-        return result;
-    })
-    
+        results=result
+
+    });
+    //console.log(results)
+    return results;
 }
-
-export function caltotalmoney(ID,table,selection,month,type){
-    var money=getMonthlyMoney(ID,table,selection,month,type)
-    console.log(typeof(money))
-    var result=0;
-    
-    if(typeof(money)!=String){
-        var total=0
-        console.log('calculate:')
-        console.log(typeof(money),selection)
-        /*for (var i in money){
-            let temp=money[i]
-            console.log(1)
-            console.log(i,temp)
-            total=total+StringtoInt(gettabledata(temp, type, 0), 10)
-            //i++;
-        }*/
-        //total=gettabledata(money,type,0)
-
-            result=total
+//need to check what is the detail in table
+export async function getProjectMoney(ID){
+    var results=0
+    await $.get('./getProjectMoney',{
+        ID:ID
+    },(data) =>{
+        var totalremain = 0
+        for (let i in data){
+            let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
+            let startday = new Date()
+            var remainday= Math.abs(lastday-startday)
+            remainday= remainday/(1000*3600*24)
+            let money= StringtoInt(gettabledata(data, `target_number`,i))-0//0 is for simulating money already save for this project
+            money+= money
+            money= money/remainday
+            totalremain+=money
         }
-    else{
-        result=0;
-    }
-    //console.log(result)
-    //return result;
+        results=totalremain
+    });
     
+    //console.log(results)
+    return results;
 }
-
 export function calprojectcomplete(ID){
-    return //return .1f%
+    return //return .1f% use roungDecimal(variable,位數)
 }
 export function StringtoInt(x) {
     const parsed = parseInt(x, 10)
@@ -92,10 +105,22 @@ export function StringtoInt(x) {
     return parsed
 }
 
+export function datetransfer(date){
+    if (StringtoInt(date)<10){
+        date=`'0${date}'`
+      }
+      else{
+        date=date
+      }
+    return date
+}
+
 export default{
+    gettabledata,//get id inside the row of column select from database
     getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
     caltotalmoney,//calculate total money
+    getProjectMoney,//get daily project saving
     calprojectcomplete,//calculate project complete %(in .1f )
     StringtoInt,//transfer string to integer
-    gettabledata//get id inside the row of column select from database
+    datetransfer//tranfer date to 0date if date<10
 } 
