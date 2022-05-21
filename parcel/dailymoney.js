@@ -19,7 +19,7 @@ async function process(ID){
     var today=new Date();
     var totalday=setremainDay(today,totalday);
     
-    await setVariable(ID)
+    await setVariable(ID)x
     
     setTimeout(function(){
         
