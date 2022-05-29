@@ -390,6 +390,7 @@ body
 
                     p
                         font-size: 16px
+                        color: white
                         margin: 0 0 0 0
                 
 
@@ -699,7 +700,7 @@ body
             p:nth-child(2)
                 border-bottom: 2px solid #410ADF
 
-        #personal_project_list
+        #project_list
             display: flex
             flex-direction: column
             align-items: center
@@ -719,7 +720,7 @@ body
                 border-radius: 8px
                 margin: 0 0 7.88vh 0
 
-            .personal_project
+            .project_block
                 display: none
                 flex-direction: row
                 justify-content: space-between
@@ -812,7 +813,7 @@ body
                 top: 6.0345vh
                 margin: 0
 
-        #person_project
+        #project_form
             display: flex
             flex-direction: column
             align-items: center
@@ -829,24 +830,76 @@ body
                 width: 100%
                 margin: 0 0 2.586vh 0
 
-            .box:nth-child(5)
-                margin: 0 0 4.187vh 0
+            .box:nth-child(8)
+                align-items: start
+                margin: 0 0 6.48vh 0
+                height: 7vh
+
+                p 
+                    margin: 10px 0
+
+                textarea
+                    width: 40vw
+                    height: 7vh
+                    border-style: none
+                    border-radius: 6px
+                    padding: 8px
 
             input
                 min-height: 4.31vh
                 border-style: none
                 border-radius: 6px
                 width: 40.16vw
-                padding: 0
                 font-size: 1.4778vh
                 text-align: right
                 padding: 0 3.733vw 0 0
+                color: #737474
 
-            .box:nth-child(2), .box:nth-child(3)
+            .box:nth-child(3)
+                .date_box
+                    display: flex
+                    flex-direction: row
+                    justify-content: space-between
+                    align-items: center
+                    width: 50vw
+                    max-width: 44vw
+
+                    input
+                        text-align: center
+                        padding: 0
+                        width: 20vw
+            
+            .color_selector
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                height: 4.31vh
+                width: 18.1333vw
+                border-style: none
+                border-radius: 6px
+                background-color: white
+
+                img:nth-child(1)
+                    margin: 0 3.7333vw 0 0
+
+            #distribute_setting
+                display: flex
+                flex-direction: row
+                justify-content: right
+                align-items: center
+                height: 4.31vh
+                width: 40.16vw
+                padding: 0 3.733vw 0 0
+                border-style: none
+                border-radius: 6px
+                background-color: white
+
                 p
-                    margin: 0 9vw 0 0                
-                input
-                    width: 9.5vw
+                    font-size: 12px
+                    margin: 0 3.2vw 0 0
+                    color: #CECECE
+
 
             button
                 background-color: #F4F4F4
@@ -858,6 +911,102 @@ body
                 
                 img
                     margin: 0
+
+    #add_member
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid
+
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                right: 6.9333vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #search_box
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+            align-items: center
+            width: 72.2667vw
+            height: 4.187vh
+            margin: 6.28vh 0 9.65vh 0
+
+            p
+                font-size: 13px
+
+            #id_box
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 46.4vw
+                height: 4.187vh
+                background-color: white
+                border-radius: 6px
+
+                input
+                    min-height: 4.31vh
+                    border-style: none
+                    border-radius: 6px
+                    width: 30vw
+                    font-size: 1.4778vh
+                    padding: 0 0 0 3.733vw
+                    color: #737474
+
+                img
+                    margin: 0 2.3vw 0 0
+
+        #result
+            display: none
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: auto
+
+            p
+                font-size: 16px
+                margin: 2.09vh 0 3.85vh 0
+
+        #wrong
+            display: none
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: auto
+
+            p
+               font-size: 16px 
+
+        
 
     #show_personal_project
         display: none
@@ -1164,7 +1313,61 @@ body
                 
                 img
                     margin: 0
-            
+
+
+    .color_select_box
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 23vh
+        position: fixed
+        bottom: 0
+        background: #FFFFFF
+        transition: 0.5s
+        transform: translateY(100%)
+        box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25)
+        border-radius: 20px 20px 0px 0px
+        z-index: 1
+
+        p
+            font-size: 16px
+            color: #8E5FF4
+            padding: 24px 0 0 0
+            border-top: 4px solid #737474 
+        
+        #color_bar
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+            align-items: center
+            width: 70vw
+            height: 2.5vh
+            margin: 2.586vh 0 0 0
+
+
+    // not yet
+    .selector_box
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: auto
+        position: fixed
+        bottom: 0
+        background: #FFFFFF
+        transition: 0.5s
+        transform: translateY(100%)
+        box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25)
+        border-radius: 20px 20px 0px 0px
+        z-index: 1
+
+        p
+            font-size: 16px
+            color: #8E5FF4
+            padding: 24px 0 0 0
+            border-top: 4px solid #737474
+
 
     #navbar
         background-color: white

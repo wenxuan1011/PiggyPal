@@ -31,6 +31,13 @@ $(document).ready(function() {
 
     //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
+
+  $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
+    event.preventDefault()
+    t.value = ""
+    n.value = ""
+    d.value = "05/13/2022"
+  })
   
   $('#add_deals .bar').click((event) => {
     event.preventDefault()
@@ -43,6 +50,7 @@ $(document).ready(function() {
   })
 
 });
+
 
 $('#expend').click((event)=> {
   $('#expend').css("border-bottom", "0.3px solid #410ADF")

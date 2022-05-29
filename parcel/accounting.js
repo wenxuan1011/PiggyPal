@@ -1,5 +1,5 @@
-// open/close 新增交易
-$('#accounting #everyday_earn img').click(function(){
+// open/close accounting
+$('#accounting #everyday_earn #add_deals_btn').click(function(){
   $('#add_deals').css("display", "flex")
   setTimeout(() => {
       $('#add_deals').css("transform", "translateX(0%)")

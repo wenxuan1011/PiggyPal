@@ -118,8 +118,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"accounting.js":[function(require,module,exports) {
-// open/close �s�W���
-$('#accounting #everyday_earn img').click(function () {
+// open/close accounting
+$('#accounting #everyday_earn #add_deals_btn').click(function () {
   $('#add_deals').css("display", "flex");
   setTimeout(function () {
     $('#add_deals').css("transform", "translateX(0%)");
@@ -159,7 +159,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39593" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37110" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

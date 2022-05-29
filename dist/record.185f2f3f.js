@@ -1364,6 +1364,12 @@ $(document).ready(function () {
     n.value = "";
     d.value = "05/13/2022"; //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   });
+  $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
+    event.preventDefault();
+    t.value = "";
+    n.value = "";
+    d.value = "05/13/2022";
+  });
   $('#add_deals .bar').click(function (event) {
     event.preventDefault();
     console.log(3);
@@ -1565,7 +1571,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39593" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37110" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

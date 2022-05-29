@@ -93,6 +93,7 @@ app.get('/login',(req,res) => {
   })
 })
 
+// update mainpage detail
 app.get('/getmainpagedetail',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
   let month= `${req.query.month}`
@@ -119,6 +120,7 @@ app.get('/getmainpagedetail',(req,res) => {
     }
   })
 })
+
 
 // get username
 app.get('/username',(req,res) => {
@@ -209,7 +211,6 @@ app.get('/information',(req,res) => {
 })
 
 
-
 // record
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS Account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
@@ -231,6 +232,7 @@ app.get('/record',(req,res) => {
     })
   }
 })
+
 
 //todaymoney
 app.get('/todaymoney',(req,res) =>{
@@ -261,6 +263,7 @@ app.get('/todaymoney',(req,res) =>{
   })
 })
 
+
 // monthlymoney
 app.get('/monthlymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
@@ -288,7 +291,9 @@ app.get('/monthlymoney',(req,res) =>{
   })
 })
 
-// get detail in person_project
+
+// get detail in project
+// 要加顏色還有備註（未改）
 app.get('/project_or_not',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
 
@@ -303,56 +308,72 @@ app.get('/project_or_not',(req,res) => {
     }
     else{
       //console.log(row)
-      let detail = [mod.gettabledata(row,'project_personal',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
+      let detail = [mod.gettabledata(row,'project_name',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
       //console.log(detail)
       res.send(detail)
     }
   })
 })
 
-// update person_project
-app.get('/person_project',(req,res) => {
-  connection.query('CREATE TABLE IF NOT EXISTS person_project (id VARCHAR(30), project_personal VARCHAR(30), start_year VARCHAR(30), start_month VARCHAR(30), start_day VARCHAR(30), end_year VARCHAR(30), end_month VARCHAR(30), end_day VARCHAR(30), target_number VARCHAR(30))')
+// add personal/joint project
+app.get('/project',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS project (id VARCHAR(30), project_name VARCHAR(30), color VARCHAR(30),\
+   start_year VARCHAR(30), start_month VARCHAR(30), start_day VARCHAR(30), end_year VARCHAR(30), end_month VARCHAR(30),\
+   end_day VARCHAR(30), target_number VARCHAR(30), member VARCHAR(30), distribute VARCHAR(30), notes VARCHAR(30), personal_or_joint VARCHAR(30))')
 
   let PID = "'"+`${req.query.id}`+"'"
-  let project_personal = "'"+`${req.query.project_personal}`+"'"
-  let start_year = "'"+`${req.query.start_year}`+"'"
-  let start_month = "'"+`${req.query.start_month}`+"'"
-  let start_day = "'"+`${req.query.start_day}`+"'"
-  let end_year = "'"+`${req.query.end_year}`+"'"
-  let end_month = "'"+`${req.query.end_month}`+"'"
-  let end_day = "'"+`${req.query.end_day}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  let color = "'"+`${req.query.color}`+"'"
+  let start_date = `${req.query.start_date}`
+  let end_date = `${req.query.end_date}`
   let target_number = "'"+`${req.query.target_number}`+"'"
+  let member = req.query.member
+  let distribute = "'"+`${req.query.distribute}`+"'"
+  let notes = "'"+`${req.query.note}`+"'"
+  let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"
 
-  let update_setting_personal_project = false
-  const search_personal_project = `
-    SELECT project_personal FROM person_project
-    WHERE id = ${PID} and project_personal =${project_personal}`
-  const update_personal_project = `INSERT INTO person_project (id, project_personal, start_year, start_month, start_day, end_year, end_month, end_day, target_number) VALUES (${PID}, ${project_personal}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number})`
+  let start_year = "'" + `${start_date[6]}` + `${start_date[7]}` + `${start_date[8]}` + `${start_date[9]}` + "'"
+  let start_month = "'" + `${start_date[0]}` + `${start_date[1]}` + "'"
+  let start_day = "'" + `${start_date[3]}` + `${start_date[4]}` + "'"
+  let end_year = "'" + `${end_date[6]}` + `${end_date[7]}` + `${end_date[8]}` + `${end_date[9]}` + "'"
+  let end_month = "'" + `${end_date[0]}` + `${end_date[1]}` + "'"
+  let end_day = "'" + `${end_date[3]}` + `${end_date[4]}` + "'"
+
+  let update_setting_project = false
+  const search_project = `
+    SELECT project_name FROM project
+    WHERE id = ${PID} and project_name = ${project_name}`
   
-  connection.query(search_personal_project, (err, rows, fields) => {
+  connection.query(search_project, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
-    //console.log(rows)
-    if (rows[0] === undefined) {
-      update_setting_personal_project = true
+    console.log(rows)
+    if (rows[1] === undefined) {
+      update_setting_project = true
     }
     else{
-      res.send("The "+ `${req.query.project_personal}` +" have already set.")
+      res.send("The "+ `${req.query.project_name}` +" have already set.")
     }
   })
   setTimeout(() => {
-    if (update_setting_personal_project){
-      console.log(update_setting_personal_project)
-      connection.query(update_personal_project, (err, result) => {
-        if (err) console.log('fail to insert: ', err)
-      })
-      res.send("You have updated your "+ `${req.query.project_personal}` +".")
+    if (update_setting_project){
+      console.log(update_setting_project)
+      for(let i=0;i<member.length;i++){
+        var member_string = "'" + `${req.query.member[i]}` + "'"
+        let update_project = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint)
+        VALUES (${PID}, ${project_name}, ${color}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number}, ${member_string}, ${distribute}, ${notes}, ${personal_or_joint})`
+        connection.query(update_project, (err, result) => {
+          if (err) console.log('fail to insert: ', err)
+        })
+      }
+      res.send("You have updated your "+ `${req.query.project_name}` +".")
     }
   }, 100)
 })
 
 
+
+// get mainpage detail
 app.get('/getmainpagedetail',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
   let month= `${mod.datetransfer(mod.StringtoInt(req.query.month))}`
@@ -373,6 +394,7 @@ app.get('/getmainpagedetail',(req,res) => {
     }
   })
 })
+
 ///get project goal 
 app.get('/getProjectMoney',(req,res) =>{
   let UID="'"+`${req.query.ID}`+"'"

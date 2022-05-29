@@ -18,7 +18,7 @@ html
             input(type="text", name="id", placeholder = "E-mail")
           .box
             img(src = "./image/login/icon_password.png", height = "100%")
-            input(type="text", name="pw", placeholder = "Password")
+            input(type="password", name="pw", placeholder = "Password")
           .forget
             p Forget password?
           button(type="submit")
@@ -46,7 +46,7 @@ html
             input(type="text", name="id", placeholder = "E-mail")
           .box
             img(src = "./image/signup/icon_password.png", height = "100%")
-            input(type="text", name="password", placeholder = "Password")
+            input(type="password", name="password", placeholder = "Password")
           .check
             input(type='checkbox', name='check') 
             label I read and agree to terms and condition.
@@ -110,7 +110,7 @@ html
           #today_earn
             p 本日損益
             p +0
-          img(src = "./image/Accounting/btn_add.png", height = "19.355%")
+          img#add_deals_btn(src = "./image/Accounting/btn_add.png", height = "19.355%")
         br
         #today_detail
           .bars
@@ -179,10 +179,10 @@ html
           p 個人專案
           p 共同專案
           p 達成成就
-        #personal_project_list
+        #project_list
           #no_project
             p 尚未建立專案
-          .personal_project
+          .project_block
             .project_infor
               .type_and_date
                 img(src = "./image/project/Project_colordot_blue.png", height = "35%")
@@ -200,29 +200,59 @@ html
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           img(src = "./image/btn/btn_close.png", height = "2.8325%")
           p 新增專案
-        form#person_project
+        form#project_form
           .box
             p 專案名稱
-            input(type = "text", name = "project_personal")
+            input(type = "text", name = "project_name")
           .box
-            p 起始日期
-            input(type = "text", name = "start_year")
-            input(type = "text", name = "start_month")
-            input(type = "text", name = "start_day")
+            p 分類顏色
+            .color_selector
+              img(src = "./image/project/Project_colordot_orange.png", height = "50.535%")
+              img(src = "./image/btn/btn_arrow_down.png", height = "17.836%")
           .box
-            p 結束日期
-            input(type = "text", name = "end_year")
-            input(type = "text", name = "end_month")
-            input(type = "text", name = "end_day")
+            p 日期
+            .date_box 
+              input(type = "text", name = "start_date", class = "calendar")
+              p -
+              input(type = "text", name = "end_date", class = "calendar")
           .box
             p 目標金額
             input(type = "text", name = "target_number")
           .box
+            p 參與成員
+            p#member
+            img#add_mem(src = "./image/MainPage/addcircle.png", height = "85.7%")
+          .box
+            p 分配設定
+            #distribute_setting
+              p （預設）均分
+              img(src = "./image/btn/btn_arrow_down.png", height = "17.836%")
+          .box
+            p 提醒
+            img(src = "./image/project/btn_switch.png", height = "68.57%")
+          .box
             p 備註
-            input(type = "text", name = "note")
+            textarea(name = "note")
           button(type="submit")
-            img(src = "./image/btn/btn_save.png" height = "100%")
-          #person_project-output
+            img(src = "./image/btn/btn_save.png", height = "100%")
+          #add_project-output
+
+      #add_member
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.8325%")
+          p 新增成員
+        #search_box 
+          p 請輸入好友ID 
+          #id_box 
+            input(type = "text", name = "userid")
+            img(src = "./image/btn/btn_search.png", height = "47.56%")
+        #result
+          img(src = "./image/project/project_adduser_laila.png", height = "28.2667%")
+          p USER
+          img#add_mem_btn(src = "./image/btn/btn_save.png", width = "52%")
+        #wrong
+          p 查無此人
 
       #show_personal_project
         .bar
@@ -305,6 +335,23 @@ html
         #financial-output
       
       
+      .color_select_box
+        p 請選擇分類顏色
+        #color_bar
+          img(src = "./image/project/Project_colordot_red.png", height = "100%")
+          img(src = "./image/project/Project_colordot_orange.png", height = "100%")
+          img(src = "./image/project/Project_colordot_yellow.png", height = "100%")
+          img(src = "./image/project/Project_colordot_green.png", height = "100%")
+          img(src = "./image/project/Project_colordot_blue.png", height = "100%")
+          img(src = "./image/project/Project_colordot_purple.png", height = "100%")
+          img(src = "./image/project/Project_colordot_pink.png", height = "100%")
+
+
+      .selector_box
+        p 選單的名字
+        .selection_list
+
+
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
         img(src="./image/navbar/unselect/account_unselect.png", height = "77.647%")

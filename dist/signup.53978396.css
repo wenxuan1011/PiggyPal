@@ -326,6 +326,7 @@ body {
           margin-right: 24vw; }
           #main #mainpage #project_block #daily_expend #word_block p {
             font-size: 16px;
+            color: white;
             margin: 0 0 0 0; }
     #main #mainpage #detail_block {
       display: flex;
@@ -586,14 +587,14 @@ body {
         border-bottom: none; }
       #main #project #type_bar p:nth-child(2) {
         border-bottom: 2px solid #410ADF; }
-    #main #project #personal_project_list {
+    #main #project #project_list {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 80.2667vw;
       height: auto;
       margin: 5.17vh 0 0 0; }
-      #main #project #personal_project_list #no_project {
+      #main #project #project_list #no_project {
         display: none;
         flex-direction: row;
         justify-content: center;
@@ -604,7 +605,7 @@ body {
         box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         margin: 0 0 7.88vh 0; }
-      #main #project #personal_project_list .personal_project {
+      #main #project #project_list .project_block {
         display: none;
         flex-direction: row;
         justify-content: space-between;
@@ -615,9 +616,9 @@ body {
         box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         margin: 0 0 7.88vh 0; }
-        #main #project #personal_project_list .personal_project #more_infor_btn {
+        #main #project #project_list .project_block #more_infor_btn {
           margin: 0 4vw 0 0; }
-        #main #project #personal_project_list .personal_project .project_infor {
+        #main #project #project_list .project_block .project_infor {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -625,7 +626,7 @@ body {
           height: auto;
           margin: 0 0 0 5.33vw;
           font-size: 12px; }
-          #main #project #personal_project_list .personal_project .project_infor .type_and_date {
+          #main #project #project_list .project_block .project_infor .type_and_date {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -633,13 +634,13 @@ body {
             width: 100%;
             height: 1.847vh;
             margin: 0 0 15px 0; }
-            #main #project #personal_project_list .personal_project .project_infor .type_and_date img {
+            #main #project #project_list .project_block .project_infor .type_and_date img {
               margin: 0 2.133vw 0 0; }
-            #main #project #personal_project_list .personal_project .project_infor .type_and_date p {
+            #main #project #project_list .project_block .project_infor .type_and_date p {
               margin: 0; }
-            #main #project #personal_project_list .personal_project .project_infor .type_and_date #item {
+            #main #project #project_list .project_block .project_infor .type_and_date #item {
               margin: 0 12.5vw 0 0; }
-          #main #project #personal_project_list .personal_project .project_infor .plannd_speed_infor {
+          #main #project #project_list .project_block .project_infor .plannd_speed_infor {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -647,7 +648,7 @@ body {
             width: 100%;
             height: 1.847vh;
             margin: 0 0 15px 5px; }
-            #main #project #personal_project_list .personal_project .project_infor .plannd_speed_infor #percent {
+            #main #project #project_list .project_block .project_infor .plannd_speed_infor #percent {
               font-family: Roboto Bold;
               font-size: 24px; }
   #main #add_project {
@@ -684,14 +685,14 @@ body {
         position: relative;
         top: 6.0345vh;
         margin: 0; }
-    #main #add_project #person_project {
+    #main #add_project #project_form {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 72.2667vw;
       height: auto;
       margin: 4.31vh 0 0 0; }
-      #main #add_project #person_project .box {
+      #main #add_project #project_form .box {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -699,30 +700,154 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
-      #main #add_project #person_project .box:nth-child(5) {
-        margin: 0 0 4.187vh 0; }
-      #main #add_project #person_project input {
+      #main #add_project #project_form .box:nth-child(8) {
+        align-items: start;
+        margin: 0 0 6.48vh 0;
+        height: 7vh; }
+        #main #add_project #project_form .box:nth-child(8) p {
+          margin: 10px 0; }
+        #main #add_project #project_form .box:nth-child(8) textarea {
+          width: 40vw;
+          height: 7vh;
+          border-style: none;
+          border-radius: 6px;
+          padding: 8px; }
+      #main #add_project #project_form input {
         min-height: 4.31vh;
         border-style: none;
         border-radius: 6px;
         width: 40.16vw;
-        padding: 0;
         font-size: 1.4778vh;
         text-align: right;
-        padding: 0 3.733vw 0 0; }
-      #main #add_project #person_project .box:nth-child(2) p, #main #add_project #person_project .box:nth-child(3) p {
-        margin: 0 9vw 0 0; }
-      #main #add_project #person_project .box:nth-child(2) input, #main #add_project #person_project .box:nth-child(3) input {
-        width: 9.5vw; }
-      #main #add_project #person_project button {
+        padding: 0 3.733vw 0 0;
+        color: #737474; }
+      #main #add_project #project_form .box:nth-child(3) .date_box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 50vw;
+        max-width: 44vw; }
+        #main #add_project #project_form .box:nth-child(3) .date_box input {
+          text-align: center;
+          padding: 0;
+          width: 20vw; }
+      #main #add_project #project_form .color_selector {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 4.31vh;
+        width: 18.1333vw;
+        border-style: none;
+        border-radius: 6px;
+        background-color: white; }
+        #main #add_project #project_form .color_selector img:nth-child(1) {
+          margin: 0 3.7333vw 0 0; }
+      #main #add_project #project_form #distribute_setting {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        align-items: center;
+        height: 4.31vh;
+        width: 40.16vw;
+        padding: 0 3.733vw 0 0;
+        border-style: none;
+        border-radius: 6px;
+        background-color: white; }
+        #main #add_project #project_form #distribute_setting p {
+          font-size: 12px;
+          margin: 0 3.2vw 0 0;
+          color: #CECECE; }
+      #main #add_project #project_form button {
         background-color: #F4F4F4;
         display: flex;
         align-items: center;
         height: 3.94vh;
         border: none;
         padding: 0; }
-        #main #add_project #person_project button img {
+        #main #add_project #project_form button img {
           margin: 0; }
+  #main #add_member {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid; }
+    #main #add_member .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #add_member .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #add_member .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #add_member .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #add_member #search_box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 72.2667vw;
+      height: 4.187vh;
+      margin: 6.28vh 0 9.65vh 0; }
+      #main #add_member #search_box p {
+        font-size: 13px; }
+      #main #add_member #search_box #id_box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 46.4vw;
+        height: 4.187vh;
+        background-color: white;
+        border-radius: 6px; }
+        #main #add_member #search_box #id_box input {
+          min-height: 4.31vh;
+          border-style: none;
+          border-radius: 6px;
+          width: 30vw;
+          font-size: 1.4778vh;
+          padding: 0 0 0 3.733vw;
+          color: #737474; }
+        #main #add_member #search_box #id_box img {
+          margin: 0 2.3vw 0 0; }
+    #main #add_member #result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: auto; }
+      #main #add_member #result p {
+        font-size: 16px;
+        margin: 2.09vh 0 3.85vh 0; }
+    #main #add_member #wrong {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: auto; }
+      #main #add_member #wrong p {
+        font-size: 16px; }
   #main #show_personal_project {
     display: none;
     flex-direction: column;
@@ -983,6 +1108,52 @@ body {
         padding: 0; }
         #main #financial_setting_page #financial button img {
           margin: 0; }
+  #main .color_select_box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 23vh;
+    position: fixed;
+    bottom: 0;
+    background: #FFFFFF;
+    transition: 0.5s;
+    transform: translateY(100%);
+    box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
+    border-radius: 20px 20px 0px 0px;
+    z-index: 1; }
+    #main .color_select_box p {
+      font-size: 16px;
+      color: #8E5FF4;
+      padding: 24px 0 0 0;
+      border-top: 4px solid #737474; }
+    #main .color_select_box #color_bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 70vw;
+      height: 2.5vh;
+      margin: 2.586vh 0 0 0; }
+  #main .selector_box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    background: #FFFFFF;
+    transition: 0.5s;
+    transform: translateY(100%);
+    box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
+    border-radius: 20px 20px 0px 0px;
+    z-index: 1; }
+    #main .selector_box p {
+      font-size: 16px;
+      color: #8E5FF4;
+      padding: 24px 0 0 0;
+      border-top: 4px solid #737474; }
   #main #navbar {
     background-color: white;
     display: flex;
