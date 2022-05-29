@@ -902,12 +902,14 @@ exports.StringtoInt = StringtoInt;
 exports.calprojectcomplete = calprojectcomplete;
 exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
+exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
+exports.jumpblock = jumpblock;
 
 require("regenerator-runtime/runtime.js");
 
@@ -1136,6 +1138,28 @@ function datetransfer(date) {
   return date;
 }
 
+function checkBlank() {
+  var lengths = 1;
+
+  for (var _len = arguments.length, input = new Array(_len), _key = 0; _key < _len; _key++) {
+    input[_key] = arguments[_key];
+  }
+
+  for (var j = 0; j < input.length; j++) {
+    lengths = lengths * (input[j].length - 2);
+
+    if (lengths === 0) {
+      return 0;
+    }
+
+    if (lengths > 1 && j === input.length - 1) {
+      return 1;
+    }
+  }
+}
+
+function jumpblock(type) {}
+
 var _default = {
   gettabledata: gettabledata,
   //get id inside the row of column select from database
@@ -1149,7 +1173,9 @@ var _default = {
   //calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
   //transfer string to integer
-  datetransfer: datetransfer //tranfer date to 0date if date<10
+  datetransfer: datetransfer,
+  //tranfer date to 0date if date<10
+  checkBlank: checkBlank //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
 
 };
 exports.default = _default;
@@ -1329,7 +1355,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39326" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39593" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

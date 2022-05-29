@@ -223,13 +223,13 @@ app.get('/record',(req,res) => {
   let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
   let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
   let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
-  
-  const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
-  
-  connection.query(add_record, (err) => {
-    if (err) console.log('fail to insert: ', err)
-  })
-  
+
+  if(mod.checkBlank(items,cost,temp_date,type)){
+    const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
+    connection.query(add_record, (err) => {
+      if (err) console.log('fail to insert: ', err)
+    })
+  }
 })
 
 //todaymoney

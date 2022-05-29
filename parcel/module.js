@@ -64,6 +64,7 @@ export async function caltodaymoney(ID,table,selection,type){
         results=result
     });
     //console.log(results)
+    
     return results;
 }
 
@@ -160,6 +161,23 @@ export function datetransfer(date){
     return date
 }
 
+export function checkBlank(...input){
+    var lengths=1
+    for (var j =0; j<input.length; j++){
+        lengths=lengths*(input[j].length-2)
+        if(lengths===0){
+            return 0;
+        }
+        if(lengths>1&&j===input.length-1){
+            return 1;
+        }
+    }
+}
+
+export function jumpblock(type){
+
+}
+
 export default{
     gettabledata,//get id inside the row of column select from database
     getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
@@ -167,5 +185,6 @@ export default{
     getProjectMoney,//get daily project saving
     calprojectcomplete,//calculate project complete %(in .1f )
     StringtoInt,//transfer string to integer
-    datetransfer//tranfer date to 0date if date<10
+    datetransfer,//tranfer date to 0date if date<10
+    checkBlank//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
 } 
