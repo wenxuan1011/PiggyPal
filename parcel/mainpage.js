@@ -2,24 +2,22 @@ import ID from './signup.js'
 import * as mod from './module.js'
 
 
-$('#save').click((event) => {
+$('#navbar').click((event) => {
     event.preventDefault()
-    console.log(1)
+    //console.log(1)
     getdetail()
 })
 
+$('#add_project_btn').click((event) => {
+    event.preventDefault()    
+    $('#add_deals').css("display", "flex")
+    $('#add_deals').css("transform", "translateX(0%)")
 
-function addlist(obj) {
-    var ul = document.getElementByClassName(obj)
-    var li = document.createElement("li")
-
-    //�]�w li �ݩʡA�p id
-    li.setAttribute("id", "newli")
-
-    li.innerHTML = "js �ʺA�s�Wli"
-    ul.appendChild(li)
-}
-
+    setTimeout(function(){       
+        $('#mainpage').css("display", "none")
+    },100)
+    
+})
 
 function getdetail(){
     var today= new Date()
@@ -33,20 +31,28 @@ function getdetail(){
             const container = document.querySelector('.list')
             container.innerHTML=`<p></p>`
             for (var i in data){
-                var item= gettabledata(data,'items',i)
-                var value = gettabledata(data, 'cost',i)
-
-                console.log(item,value)
-
+                var item= mod.gettabledata(data,'items',i)
+                var value = mod.gettabledata(data, 'cost',i)
+                if(item == ''||value == ''){
+                    continue;
+                }
+                //create element
                 const container = document.querySelector('.list')
-                const paragraph = document.createElement('P')
-                const space ='                '
-                paragraph.textContent= '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+`${item}`+
-                '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+
-                `$${value}`
-                paragraph.setAttribute('class','text')
-                container.appendChild(paragraph)
-            } 
+                const box= document.createElement('a')
+                const paragraphone = document.createElement('P')
+                const paragraphtwo = document.createElement('P')
+                //set text
+                paragraphone.textContent= `${item}`
+                paragraphtwo.textContent=`$${value}`
+                //set attribute
+                box.setAttribute('id','a')
+                paragraphone.setAttribute('class','text')
+                paragraphtwo.setAttribute('class','text')
+                //append child
+                container.appendChild(box)
+                box.appendChild(paragraphone)
+                box.appendChild(paragraphtwo)
+            }
         }
         else{
 
@@ -54,10 +60,3 @@ function getdetail(){
     }
     )
 }
-
-function gettabledata(table, parameter, row){
-    let result=JSON.stringify(table[row])
-    result=JSON.parse(result)
-    result=result[parameter]
-    return result
-};

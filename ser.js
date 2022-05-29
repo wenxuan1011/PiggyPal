@@ -107,7 +107,7 @@ app.get('/getmainpagedetail',(req,res) => {
     search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
   }
   
-  console.log(search_user)
+  //console.log(search_user)
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)
@@ -242,9 +242,10 @@ app.get('/todaymoney',(req,res) =>{
   let selection=`${req.query.selection}`
   let month=mod.datetransfer(req.query.month)
   let date=mod.datetransfer(req.query.date)
+  let year=req.query.year
   let type="'"+`${req.query.type}`+"'"
   
-  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and day = ${date}`
+  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and day = ${date} and year= ${year}`
   //console.log(search_user)
   connection.query(search_user,(err,row,fields) => {
     //console.log(row)
@@ -263,15 +264,15 @@ app.get('/todaymoney',(req,res) =>{
 // monthlymoney
 app.get('/monthlymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
-  //var output=['income', 'expenditure', 'fixedincome', 'fixedexpenditure', 'fixedsaving']
   let search_user=''
   let ID="'"+`${req.query.ID}`+"'"
   let table=`${req.query.table}`
   let selection=`${req.query.selection}`
-  let month=mod.datetransfer(req.query.month)
+  let month=`${req.query.month}`
+  let year=`${req.query.year}` 
   let type="'"+`${req.query.type}`+"'"
   
-  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month}`
+  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and year = ${year}`
   //console.log(search_user)
   connection.query(search_user,(err,row,fields) => {
     //console.log(row)
@@ -332,7 +333,7 @@ app.get('/person_project',(req,res) => {
   connection.query(search_personal_project, (err, rows, fields) => {
     if (err)
       console.log('fail to search: ', err)
-    console.log(rows)
+    //console.log(rows)
     if (rows[0] === undefined) {
       update_setting_personal_project = true
     }
@@ -354,19 +355,13 @@ app.get('/person_project',(req,res) => {
 
 app.get('/getmainpagedetail',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
-  let month= `${req.query.month}`
-  let date= "'"+`${req.query.date}`+"'"
+  let month= `${mod.datetransfer(mod.StringtoInt(req.query.month))}`
+  let date= "'"+`${mod.datetransfer(mod.StringtoInt(req.query.date))}`+"'"
   let year= "'"+`${req.query.year}`+"'"
   var search_user=""
-  if (mod.StringtoInt(month)<10){
-    month=`'0${month}'`
-    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
-  }
-  else{
-    search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
-  }
-  
-  console.log(search_user)
+
+  search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)

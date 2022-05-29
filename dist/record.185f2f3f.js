@@ -926,17 +926,17 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, selection, month, type) {
-  var result = caltodaymoney(ID, table, selection, month, type);
+function getTodayMoney(ID, table, selection, type) {
+  var result = caltodaymoney(ID, table, selection, type);
   return result;
 }
 
-function caltodaymoney(_x, _x2, _x3, _x4, _x5) {
+function caltodaymoney(_x, _x2, _x3, _x4) {
   return _caltodaymoney.apply(this, arguments);
 }
 
 function _caltodaymoney() {
-  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, type) {
     var results, today;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -944,14 +944,14 @@ function _caltodaymoney() {
           case 0:
             results = 0;
             today = new Date();
-            console.log(today.getDate());
-            _context.next = 5;
+            _context.next = 4;
             return $.get('./todaymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: StringtoInt(today.getMonth()) + 1,
               date: today.getDate(),
+              year: today.getFullYear(),
               type: type
             }, function (data) {
               var result = 0;
@@ -976,10 +976,10 @@ function _caltodaymoney() {
               results = result;
             });
 
-          case 5:
+          case 4:
             return _context.abrupt("return", results);
 
-          case 6:
+          case 5:
           case "end":
             return _context.stop();
         }
@@ -989,8 +989,8 @@ function _caltodaymoney() {
   return _caltodaymoney.apply(this, arguments);
 }
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result = caltotalmoney(ID, table, selection, month, type);
+function getMonthlyMoney(ID, table, selection, type) {
+  var result = caltotalmoney(ID, table, selection, type);
   /*
       result.then(res => {
           result=res
@@ -1003,25 +1003,27 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   return result;
 }
 
-function caltotalmoney(_x6, _x7, _x8, _x9, _x10) {
+function caltotalmoney(_x5, _x6, _x7, _x8) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
 function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
-    var results;
+  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, type) {
+    var results, today;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             results = 0;
-            _context2.next = 3;
+            today = new Date();
+            _context2.next = 4;
             return $.get('./monthlymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: datetransfer(today.getMonth() + 1),
+              year: StringtoInt(today.getFullYear()),
               type: type
             }, function (data) {
               var result = 0;
@@ -1046,10 +1048,10 @@ function _caltotalmoney() {
               results = result;
             });
 
-          case 3:
+          case 4:
             return _context2.abrupt("return", results);
 
-          case 4:
+          case 5:
           case "end":
             return _context2.stop();
         }
@@ -1059,7 +1061,7 @@ function _caltotalmoney() {
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x11) {
+function getProjectMoney(_x9) {
   return _getProjectMoney.apply(this, arguments);
 }
 
@@ -1080,14 +1082,18 @@ function _getProjectMoney() {
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
+                console.log(lastday, startday);
                 var remainday = Math.abs(lastday - startday);
-                remainday = remainday / (1000 * 3600 * 24);
-                var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
 
-                //0 is for simulating money already save for this project
-                money += money;
-                money = money / remainday;
-                totalremain += money;
+                if (remainday > 0 || remainday !== undefined) {
+                  remainday = remainday / (1000 * 3600 * 24);
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
+
+                  //0 is for simulating money already save for this project
+                  money += money;
+                  money = money / remainday;
+                  totalremain += money;
+                } else continue;
               }
 
               results = totalremain;
@@ -1122,7 +1128,7 @@ function StringtoInt(x) {
 
 function datetransfer(date) {
   if (StringtoInt(date) < 10) {
-    date = "'0".concat(date, "'");
+    date = "0".concat(date);
   } else {
     date = date;
   }
@@ -1300,6 +1306,12 @@ exports.default = _default;
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
+var mod = _interopRequireWildcard(require("./module.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var money = ""; // 0支出 1收入
@@ -1311,6 +1323,7 @@ var t = document.getElementById("spend"); //name
 var n = document.getElementById("na"); //date
 
 var d = document.getElementById("da");
+var today = new Date();
 $(document).ready(function () {
   $('#save').click(function (event) {
     event.preventDefault();
@@ -1323,7 +1336,16 @@ $(document).ready(function () {
     });
     t.value = "";
     n.value = "";
-    d.value = "05/13/2022";
+    d.value = "05/13/2022"; //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+  });
+  $('#add_deals .bar').click(function (event) {
+    event.preventDefault();
+    console.log(3);
+    $('#mainpage').css("display", "flex");
+    setTimeout(function () {
+      $('#add_deals').css("display", "none");
+      $('#add_deals').css("transform", "translateX(100%)");
+    }, 100);
   });
 });
 $('#expend').click(function (event) {
@@ -1396,7 +1418,102 @@ $('#ok').click(function () {
 $(function () {
   $("#da").datepicker();
 });
-},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+$('#navbar').click(function (event) {
+  event.preventDefault();
+  getdetailincome();
+  getdetailexpenditure();
+});
+
+function getdetailincome() {
+  var today = new Date();
+  $.get('./getmainpagedetail', {
+    id: _signup.default,
+    date: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear()
+  }, function (data) {
+    if (data != "nothing") {
+      var container = document.querySelector('#main #accounting .income');
+      container.innerHTML = "<p></p>";
+
+      for (var i in data) {
+        var item = mod.gettabledata(data, 'items', i);
+        var value = mod.gettabledata(data, 'cost', i);
+        var type = mod.gettabledata(data, 'type', i);
+        console.log(item, value, type);
+
+        if (item == '' || value == '' || type === '0') {
+          continue;
+        } //create element
+
+
+        var _container = document.querySelector('#main #accounting .income');
+
+        var box = document.createElement('a');
+        var paragraphone = document.createElement('P');
+        var paragraphtwo = document.createElement('P'); //set text
+
+        paragraphone.textContent = "".concat(item);
+        paragraphtwo.textContent = "+".concat(value); //set attribute
+
+        box.setAttribute('id', 'a');
+        paragraphone.setAttribute('class', 'text');
+        paragraphtwo.setAttribute('class', 'text'); //append child
+
+        _container.appendChild(box);
+
+        box.appendChild(paragraphone);
+        box.appendChild(paragraphtwo);
+      }
+    } else {}
+  });
+}
+
+function getdetailexpenditure() {
+  var today = new Date();
+  $.get('./getmainpagedetail', {
+    id: _signup.default,
+    date: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear()
+  }, function (data) {
+    if (data != "nothing") {
+      var container = document.querySelector('#main #accounting .expenditure');
+      container.innerHTML = "<p></p>";
+
+      for (var i in data) {
+        var item = mod.gettabledata(data, 'items', i);
+        var value = mod.gettabledata(data, 'cost', i);
+        var type = mod.gettabledata(data, 'type', i);
+        console.log(type);
+
+        if (item == '' || value == '' || type === '1') {
+          continue;
+        } //create element
+
+
+        var _container2 = document.querySelector('#main #accounting .expenditure');
+
+        var box = document.createElement('a');
+        var paragraphone = document.createElement('P');
+        var paragraphtwo = document.createElement('P'); //set text
+
+        paragraphone.textContent = "".concat(item);
+        paragraphtwo.textContent = "-".concat(value); //set attribute
+
+        box.setAttribute('id', 'a');
+        paragraphone.setAttribute('class', 'text');
+        paragraphtwo.setAttribute('class', 'text'); //append child
+
+        _container2.appendChild(box);
+
+        box.appendChild(paragraphone);
+        box.appendChild(paragraphtwo);
+      }
+    } else {}
+  });
+}
+},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1424,7 +1541,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46151" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39326" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

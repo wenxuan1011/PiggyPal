@@ -1553,15 +1553,27 @@ function _process() {
 
           case 4:
             setTimeout(function () {
-              var DailyExpenditure = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-              var actualDailyExpenditure = DailyExpenditure - ProjectSaving - todayExpenditure;
+              var DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+              var actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
 
-              if (actualDailyExpenditure < 0) {//daily avaliable expenditure warning
+              if (todayIncome - todayExpenditure >= 0) {
+                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
+              } else {
+                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
               }
 
-              $('#daily_expend p').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyExpenditure), "\uFF0C\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B").concat(ProjectSaving));
-              console.log(Expenditure, 111);
-              console.log("DailyExpenditure: ", Math.floor(DailyExpenditure), "actually money : ", Math.floor(actualDailyExpenditure));
+              if (actualDailyRemain < 0) {
+                //daily avaliable expenditure warning
+                ProjectSaving = ProjectSaving + actualDailyRemain;
+                actualDailyRemain = 0;
+
+                if (ProjectSaving < 0) {//use money in every month saving
+                }
+              }
+
+              $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
+              $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(ProjectSaving));
+              console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
             }, 1000);
 
           case 5:
@@ -1601,6 +1613,7 @@ function setremainDay(today, totalday) {
 function setVariable(ID) {
   var today = new Date();
   todayExpenditure = mod.getTodayMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 0);
+  todayIncome = mod.getTodayMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 1);
   Expenditure = mod.getMonthlyMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 0);
   Income = mod.getMonthlyMoney(ID, 'Account', 'cost', mod.StringtoInt(today.getMonth()) + 1, 1);
   MonthlyIncome = mod.getMonthlyMoney(ID, 'financial', 'money', mod.StringtoInt(today.getMonth()) + 1, 0);
@@ -1609,6 +1622,9 @@ function setVariable(ID) {
   ProjectSaving = mod.getProjectMoney(ID);
   todayExpenditure.then(function (res) {
     todayExpenditure = Math.ceil(res);
+  });
+  todayIncome.then(function (res) {
+    todayIncome = Math.ceil(res);
   });
   Expenditure.then(function (res) {
     Expenditure = Math.ceil(res);
@@ -1657,7 +1673,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46151" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35222" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

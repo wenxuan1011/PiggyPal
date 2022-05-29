@@ -89,14 +89,16 @@ html
               .planned_speed
                 img(src = "./image/MainPage/addcircle.png", height = "100%")
           #daily_expend
-            img(src = "./image/MainPage/MainPage_helper.png", width = "100%")
-            p
+            #word_block
+              p
+              p
         #detail_block
           #detail_bar
             p 當日明細
             img(src = "./image/btn/btn_arrow_right.png", height = "40%")
           .list
         .add_button
+
       #account
         h1 Account
       #accounting 
@@ -107,9 +109,16 @@ html
           img(src = "./image/Accounting/box_SelectDate.png", height = "30.10752688%")
           #today_earn
             p 本日損益
-            p +1920
+            p +0
           img(src = "./image/Accounting/btn_add.png", height = "19.355%")
         br
+        #today_detail
+          .bars
+            p 收入
+          .income 
+          .bars
+            p 支出
+          .expenditure 
        
       #add_deals
         .bar
@@ -308,7 +317,7 @@ html
   script(src="./signup.js")
   script(src="./personal.js")
   script(src="./mainpage.js")
-  script(src="./dailymoney.js")
+  script(src="./calculatemoney.js")
   script(src="./module.js")
   script(src="./record.js")
   script(src="./project.js")

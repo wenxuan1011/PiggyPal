@@ -1,4 +1,5 @@
 import ID from './signup.js'
+import * as mod from './module.js'
 
 var money="";
 // 0支出 1收入
@@ -9,6 +10,8 @@ var t = document.getElementById("spend");
 var n = document.getElementById("na");
 //date
 var d = document.getElementById("da")
+
+var today = new Date()
 
 
 $(document).ready(function() {
@@ -25,8 +28,20 @@ $(document).ready(function() {
     t.value = ""
     n.value = ""
     d.value = "05/13/2022"
+
+    //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
   
+  $('#add_deals .bar').click((event) => {
+    event.preventDefault()
+    console.log(3)
+    $('#mainpage').css("display", "flex")
+    setTimeout(function(){       
+        $('#add_deals').css("display", "none")
+        $('#add_deals').css("transform", "translateX(100%)")
+    },100)
+  })
+
 });
 
 $('#expend').click((event)=> {
@@ -113,3 +128,97 @@ $('#ok').click(function(){
 $(function(){
   $("#da").datepicker();
 });
+
+
+$('#navbar').click((event) => {
+  event.preventDefault()
+  getdetailincome()
+  getdetailexpenditure()
+})
+
+function getdetailincome(){
+  var today= new Date()
+  $.get('./getmainpagedetail',{
+      id:ID,
+      date: today.getDate(),
+      month: today.getMonth()+1,
+      year: today.getFullYear()
+  },(data)=>{
+      if(data!="nothing"){
+          const container = document.querySelector('#main #accounting .income')
+          container.innerHTML=`<p></p>`
+          for (var i in data){
+              var item= mod.gettabledata(data,'items',i)
+              var value = mod.gettabledata(data, 'cost',i)
+              var type = mod.gettabledata(data, 'type', i)
+              console.log(item, value, type)
+              if(item == ''||value == ''|| type === '0'){
+                  continue;
+              }
+              //create element
+              const container = document.querySelector('#main #accounting .income')
+              const box= document.createElement('a')
+              const paragraphone = document.createElement('P')
+              const paragraphtwo = document.createElement('P')
+              //set text
+              paragraphone.textContent= `${item}`
+              paragraphtwo.textContent=`+${value}`
+              //set attribute
+              box.setAttribute('id','a')
+              paragraphone.setAttribute('class','text')
+              paragraphtwo.setAttribute('class','text')
+              //append child
+              container.appendChild(box)
+              box.appendChild(paragraphone)
+              box.appendChild(paragraphtwo)
+          }
+      }
+      else{
+
+      }
+  }
+  )
+}
+function getdetailexpenditure(){
+  var today= new Date()
+  $.get('./getmainpagedetail',{
+      id:ID,
+      date: today.getDate(),
+      month: today.getMonth()+1,
+      year: today.getFullYear()
+  },(data)=>{
+      if(data!="nothing"){
+          const container = document.querySelector('#main #accounting .expenditure')
+          container.innerHTML=`<p></p>`
+          for (var i in data){
+              var item= mod.gettabledata(data,'items',i)
+              var value = mod.gettabledata(data, 'cost',i)
+              var type = mod.gettabledata(data, 'type', i)
+              console.log(type)
+              if(item == ''||value == ''|| type === '1'){
+                  continue;
+              }
+              //create element
+              const container = document.querySelector('#main #accounting .expenditure')
+              const box= document.createElement('a')
+              const paragraphone = document.createElement('P')
+              const paragraphtwo = document.createElement('P')
+              //set text
+              paragraphone.textContent= `${item}`
+              paragraphtwo.textContent=`-${value}`
+              //set attribute
+              box.setAttribute('id','a')
+              paragraphone.setAttribute('class','text')
+              paragraphtwo.setAttribute('class','text')
+              //append child
+              container.appendChild(box)
+              box.appendChild(paragraphone)
+              box.appendChild(paragraphtwo)
+          }
+      }
+      else{
+
+      }
+  }
+  )
+}

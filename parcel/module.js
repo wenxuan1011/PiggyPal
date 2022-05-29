@@ -29,21 +29,21 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
-export function getTodayMoney(ID,table,selection,month,type){
-    var result= caltodaymoney(ID,table,selection,month,type)
+export function getTodayMoney(ID,table,selection,type){
+    var result= caltodaymoney(ID,table,selection,type)
     return result
 }
 
-export async function caltodaymoney(ID,table,selection,month,type){
+export async function caltodaymoney(ID,table,selection,type){
     var results=0
     var today=new Date()
-    console.log(today.getDate())
     await $.get('./todaymoney',{
         ID:ID,
         table:table,
         selection:selection,
-        month:month,
+        month:StringtoInt(today.getMonth())+1,
         date:today.getDate(),
+        year:today.getFullYear(),
         type:type
     },(data) =>{
         var result=0;
@@ -67,8 +67,8 @@ export async function caltodaymoney(ID,table,selection,month,type){
     return results;
 }
 
-export function getMonthlyMoney(ID,table,selection,month,type){
-    var result= caltotalmoney(ID,table,selection,month,type)
+export function getMonthlyMoney(ID,table,selection,type){
+    var result= caltotalmoney(ID,table,selection,type)
 
 /*
     result.then(res => {
@@ -81,13 +81,15 @@ export function getMonthlyMoney(ID,table,selection,month,type){
     return result
 }
 
-export async function caltotalmoney(ID,table,selection,month,type){
+export async function caltotalmoney(ID,table,selection,type){
     var results=0
+    var today= new Date()
     await $.get('./monthlymoney',{
         ID:ID,
         table:table,
         selection:selection,
-        month:month,
+        month:datetransfer(today.getMonth()+1),
+        year:StringtoInt(today.getFullYear()),
         type:type
     },(data) =>{
         var result=0;
@@ -121,12 +123,17 @@ export async function getProjectMoney(ID){
         for (let i in data){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
+            console.log(lastday, startday)
             var remainday= Math.abs(lastday-startday)
-            remainday= remainday/(1000*3600*24)
-            let money= StringtoInt(gettabledata(data, `target_number`,i))-0//0 is for simulating money already save for this project
-            money+= money
-            money= money/remainday
-            totalremain+=money
+            if(remainday>0 || remainday !== undefined){
+                remainday= remainday/(1000*3600*24)
+
+                let money= StringtoInt(gettabledata(data, `target_number`,i))-0//0 is for simulating money already save for this project
+                money+= money
+                money= money/remainday
+                totalremain+=money
+            }
+            else continue
         }
         results=totalremain
     });
@@ -145,8 +152,8 @@ export function StringtoInt(x) {
 
 export function datetransfer(date){
     if (StringtoInt(date)<10){
-        date=`'0${date}'`
-      }
+        date=`0${date}`
+    }
       else{
         date=date
       }

@@ -1301,113 +1301,360 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"personal.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"../node_modules/process/browser.js":[function(require,module,exports) {
+
+// shim for using process in browser
+var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+  throw new Error('setTimeout has not been defined');
+}
+
+function defaultClearTimeout() {
+  throw new Error('clearTimeout has not been defined');
+}
+
+(function () {
+  try {
+    if (typeof setTimeout === 'function') {
+      cachedSetTimeout = setTimeout;
+    } else {
+      cachedSetTimeout = defaultSetTimout;
+    }
+  } catch (e) {
+    cachedSetTimeout = defaultSetTimout;
+  }
+
+  try {
+    if (typeof clearTimeout === 'function') {
+      cachedClearTimeout = clearTimeout;
+    } else {
+      cachedClearTimeout = defaultClearTimeout;
+    }
+  } catch (e) {
+    cachedClearTimeout = defaultClearTimeout;
+  }
+})();
+
+function runTimeout(fun) {
+  if (cachedSetTimeout === setTimeout) {
+    //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+  } // if setTimeout wasn't available but was latter defined
+
+
+  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+    cachedSetTimeout = setTimeout;
+    return setTimeout(fun, 0);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedSetTimeout(fun, 0);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+      return cachedSetTimeout.call(null, fun, 0);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+      return cachedSetTimeout.call(this, fun, 0);
+    }
+  }
+}
+
+function runClearTimeout(marker) {
+  if (cachedClearTimeout === clearTimeout) {
+    //normal enviroments in sane situations
+    return clearTimeout(marker);
+  } // if clearTimeout wasn't available but was latter defined
+
+
+  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+    cachedClearTimeout = clearTimeout;
+    return clearTimeout(marker);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedClearTimeout(marker);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+      return cachedClearTimeout.call(null, marker);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+      return cachedClearTimeout.call(this, marker);
+    }
+  }
+}
+
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+  if (!draining || !currentQueue) {
+    return;
+  }
+
+  draining = false;
+
+  if (currentQueue.length) {
+    queue = currentQueue.concat(queue);
+  } else {
+    queueIndex = -1;
+  }
+
+  if (queue.length) {
+    drainQueue();
+  }
+}
+
+function drainQueue() {
+  if (draining) {
+    return;
+  }
+
+  var timeout = runTimeout(cleanUpNextTick);
+  draining = true;
+  var len = queue.length;
+
+  while (len) {
+    currentQueue = queue;
+    queue = [];
+
+    while (++queueIndex < len) {
+      if (currentQueue) {
+        currentQueue[queueIndex].run();
+      }
+    }
+
+    queueIndex = -1;
+    len = queue.length;
+  }
+
+  currentQueue = null;
+  draining = false;
+  runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+  var args = new Array(arguments.length - 1);
+
+  if (arguments.length > 1) {
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
+  }
+
+  queue.push(new Item(fun, args));
+
+  if (queue.length === 1 && !draining) {
+    runTimeout(drainQueue);
+  }
+}; // v8 likes predictible objects
+
+
+function Item(fun, array) {
+  this.fun = fun;
+  this.array = array;
+}
+
+Item.prototype.run = function () {
+  this.fun.apply(null, this.array);
+};
+
+process.title = 'browser';
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) {
+  return [];
+};
+
+process.binding = function (name) {
+  throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () {
+  return '/';
+};
+
+process.chdir = function (dir) {
+  throw new Error('process.chdir is not supported');
+};
+
+process.umask = function () {
+  return 0;
+};
+},{}],"calculatemoney.js":[function(require,module,exports) {
+
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
+var mod = _interopRequireWildcard(require("./module.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//need to export to signup.js
-var TYPE = 0;
-var item = document.getElementById("financial_item");
-var year = document.getElementById("financial_year");
-var month = document.getElementById("financial_month");
-var day = document.getElementById("financial_day");
-var money = document.getElementById("financial_money");
-var repeat = document.getElementById("financial_repeat"); // open/close personal page
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-$('#mainpage #personal_btn').click(function () {
-  $('#personal_page').css("display", "flex");
-  setTimeout(function () {
-    $('#personal_page').css("transform", "translateX(0%)");
-  }, 100);
-});
-$('#personal_page .bar img').click(function () {
-  $('#personal_page').css("transform", "translateX(100%)");
-  setTimeout(function () {
-    $('#personal_page').css("display", "none");
-  }, 500);
-}); // open/close financial_setting_page
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-$('#personal_page #financial_setting .list li').click(function () {
-  $('#financial_setting_page').css("display", "flex");
-  setTimeout(function () {
-    $('#financial_setting_page').css("transform", "translateX(0%)");
-  }, 100);
+var todayExpenditure = 0;
+var todayIncome = 0;
+var Expenditure = 0;
+var Income = 0;
+var MonthlyExpend = 0;
+var MonthlyIncome = 0;
+var MonthlySaving = 0;
+var ProjectSaving = 0;
+$('#navbar').click(function (event) {
+  event.preventDefault();
+  process(_signup.default);
 });
-$('#financial_setting_page .bar img').click(function () {
-  $('#financial_setting_page').css("transform", "translateX(100%)");
-  $("#financial-output").html('');
-  setTimeout(function () {
-    $('#financial_setting_page').css("display", "none");
-  }, 500);
-}); // change the title of the financial_setting_page
 
-$('#personal_page #financial_setting .list li:nth-child(1)').click(function () {
-  $('#financial_setting_page .bar p').html("固定收入");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("收入項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("入帳日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("收入金額");
-  TYPE = 0;
-});
-$('#personal_page #financial_setting .list li:nth-child(2)').click(function () {
-  $('#financial_setting_page .bar p').html("固定支出");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("支出項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("支出日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("支出金額");
-  TYPE = 1;
-});
-$('#personal_page #financial_setting .list li:nth-child(3)').click(function () {
-  $('#financial_setting_page .bar p').html("固定儲蓄");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("儲蓄項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("儲蓄日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額");
-  TYPE = 2;
-});
-$(document).ready(function () {
-  // change username
-  $('#mainpage img').click(function (event) {
-    event.preventDefault();
-    $.get('./username', {
-      id: _signup.default
-    }, function (data) {
-      $('#personal_page #photo_and_name p').html("".concat(data));
-    });
-  }); // update income
+function process(_x) {
+  return _process.apply(this, arguments);
+}
 
-  $('#financial button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./financial', {
-      id: _signup.default,
-      type: TYPE,
-      item: $('#financial input[name=item]').val(),
-      year: $('#financial input[name=year]').val(),
-      month: $('#financial input[name=month]').val(),
-      day: $('#financial input[name=day]').val(),
-      money: $('#financial input[name=money]').val(),
-      repeat: $('#financial input[name=repeat]').val()
-    }, function (data) {
-      $("#financial-output").html("".concat(data));
-    });
-  }); // update information
+function _process() {
+  _process = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID) {
+    var today, totalday;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            today = new Date();
+            totalday = setremainDay(today, totalday);
+            _context.next = 4;
+            return setVariable(ID);
 
-  $('#personal_page #financial_setting .list li').click(function (event) {
-    event.preventDefault();
-    $.get('./information', {
-      id: _signup.default,
-      type: TYPE
-    }, function (data) {
-      item.value = data[0];
-      year.value = data[1];
-      month.value = data[2];
-      day.value = data[3];
-      money.value = data[4];
-      repeat.value = data[5];
-    });
+          case 4:
+            setTimeout(function () {
+              var DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+              console.log("DailyRemain:", DailyRemain);
+              var actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
+              console.log("ProjectSaving:", ProjectSaving);
+              console.log("actualDailyRemain:", actualDailyRemain);
+
+              if (todayIncome - todayExpenditure >= 0) {
+                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
+              } else {
+                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
+              }
+
+              if (actualDailyRemain < 0) {
+                //daily avaliable expenditure warning
+                ProjectSaving = ProjectSaving + actualDailyRemain;
+                actualDailyRemain = 0;
+
+                if (ProjectSaving < 0) {//use money in every month saving
+                }
+              }
+
+              $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
+              $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(ProjectSaving));
+              console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
+            }, 1000);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _process.apply(this, arguments);
+}
+
+function setremainDay(today, totalday) {
+  var MonthlyTotalDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (today.getMonth() == 2) {
+    if (today.getFullYear() % 4 == 0) {
+      totalday = 29;
+
+      if (today.getFullYear() % 100 == 0) {
+        totalday = 28;
+
+        if (today.getFullYear() % 400 == 0) {
+          totalday = 29;
+        }
+      }
+    }
+
+    totalday = MonthlyTotalDay[today.getMonth()];
+  } else {
+    totalday = MonthlyTotalDay[today.getMonth()];
+  }
+
+  return totalday;
+}
+
+function setVariable(ID) {
+  var today = new Date();
+  todayExpenditure = mod.getTodayMoney(ID, 'Account', 'cost', 0);
+  todayIncome = mod.getTodayMoney(ID, 'Account', 'cost', 1);
+  Expenditure = mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+  Income = mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+  MonthlyIncome = mod.getMonthlyMoney(ID, 'financial', 'money', 0);
+  MonthlyExpend = mod.getMonthlyMoney(ID, 'financial', 'money', 1);
+  MonthlySaving = mod.getMonthlyMoney(ID, 'financial', 'money', 2);
+  ProjectSaving = mod.getProjectMoney(ID);
+  todayExpenditure.then(function (res) {
+    todayExpenditure = Math.ceil(res);
   });
-});
-},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  todayIncome.then(function (res) {
+    todayIncome = Math.ceil(res);
+  });
+  Expenditure.then(function (res) {
+    Expenditure = Math.ceil(res);
+  });
+  Income.then(function (res) {
+    Income = Math.ceil(res);
+  });
+  MonthlyExpend.then(function (res) {
+    MonthlyExpend = Math.ceil(res);
+  });
+  MonthlyIncome.then(function (res) {
+    MonthlyIncome = Math.ceil(res);
+  });
+  MonthlySaving.then(function (res) {
+    MonthlySaving = Math.ceil(res);
+  });
+  ProjectSaving.then(function (res) {
+    ProjectSaving = Math.ceil(res);
+  });
+} //export default process
+},{"./signup.js":"signup.js","./module.js":"module.js","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1611,5 +1858,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","personal.js"], null)
-//# sourceMappingURL=personal.bbef6abb.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","calculatemoney.js"], null)
+//# sourceMappingURL=calculatemoney.3f3fc232.js.map
