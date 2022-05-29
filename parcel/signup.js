@@ -1,3 +1,6 @@
+import * as mod from './module.js'
+//import process from './dailymoney.js'
+
 $('#change-to-login').click(function(){
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -47,6 +50,7 @@ function selected_to_unselected(){
   if(present_page == navbar[0]){
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/unselect/barcode_unselect.png");
     $('#barcode').css("display", "none");
+
   }
   else if(present_page == navbar[1]){
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/unselect/account_unselect.png");
@@ -59,6 +63,7 @@ function selected_to_unselected(){
   else if(present_page == navbar[3]){
     $('#navbar img:nth-child(4)').attr("src", "./image/navbar/unselect/accounting_unselect.png");
     $('#accounting').css("display", "none");
+
   }
   else{
     $('#navbar img:nth-child(5)').attr("src", "./image/navbar/unselect/project_unselect.png");
@@ -70,6 +75,7 @@ function unselected_to_selected(){
   if(present_page == navbar[0]){
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
     $('#barcode').css("display", "flex");
+    window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html#/';
   }
   else if(present_page == navbar[1]){
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
@@ -89,7 +95,7 @@ function unselected_to_selected(){
   };
 };
 
-var ID="";
+var ID = "";
 $(document).ready(function() {
   
   // sign up
@@ -100,13 +106,15 @@ $(document).ready(function() {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val(),
     }, (data) => {
-      if(`${data}` == 'signup'){
+      if(`${data}` === "signup"){
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
+        ID = $('#signup input[name=id]').val()
       }
       else{
         $("#signup-output").html(`${data}`);
-        ID
+        ID= data
+        //process(ID)
       };
     });
   })
@@ -119,11 +127,11 @@ $(document).ready(function() {
       id: $('#login input[name=id]').val(),
       password: $('#login input[name=pw]').val()
     }, (data) => {
-      if(`${data}` != 'failed,try again'){
+      if(`${data}` !== 'failed,try again'){
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
-        
-        ID=data
+        ID = data
+        //process(ID)
       }
       else{
         $("#login-output").html(`${data}`);
