@@ -888,7 +888,7 @@ if you want to use the module in this file, please following the steps below
 If anyone want to add some new mod in the file, please set the function name as well-known 
 as possible. Moreover, rememder to export function at the buttom of the code. 
 
-If it is convenient, use the annotation at the buttom of export to let other know what is 
+If it is convenient, use the annotation at the buttom of export to let others know what is 
 this function doing
 
 By Maker
@@ -899,7 +899,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.StringtoInt = StringtoInt;
-exports.calprojectcomplete = calprojectcomplete;
+exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
@@ -909,7 +909,6 @@ exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
-exports.jumpblock = jumpblock;
 
 require("regenerator-runtime/runtime.js");
 
@@ -1085,14 +1084,19 @@ function _getProjectMoney() {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
                 console.log(lastday, startday);
+
+                if (lastday - startday < 0) {
+                  continue;
+                }
+
                 var remainday = Math.abs(lastday - startday);
 
                 if (remainday > 0 || remainday !== undefined) {
-                  remainday = remainday / (1000 * 3600 * 24);
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
+                  console.log(remainday);
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
-                  money += money;
                   money = money / remainday;
                   totalremain += money;
                 } else continue;
@@ -1114,8 +1118,38 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectcomplete(ID) {
-  return; //return .1f% use roungDecimal(variable,位數)
+function calprojectpercent(_x10, _x11) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            result = 0;
+            _context4.next = 3;
+            return $.get('./getprojectmoney', {
+              ID: ID
+            }, function (data) {
+              for (var i in data) {
+                if (project_name === data[i].project_name) {}
+              }
+            });
+
+          case 3:
+            return _context4.abrupt("return");
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _calprojectpercent.apply(this, arguments);
 }
 
 function StringtoInt(x) {
@@ -1138,17 +1172,31 @@ function datetransfer(date) {
   return date;
 }
 
-function checkBlank() {
+function checkBlank(page) {
   var lengths = 1;
+  var recordmessage = ["日期", "金額", "類別"];
+  var projectmessage = ["專案名稱", "日期", "目標金額"];
+  var pages = [];
 
-  for (var _len = arguments.length, input = new Array(_len), _key = 0; _key < _len; _key++) {
-    input[_key] = arguments[_key];
+  switch (page) {
+    case 'record':
+      pages = recordmessage;
+      return;
+
+    case 'project':
+      pages = projectmessage;
+      return;
+  }
+
+  for (var _len = arguments.length, input = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    input[_key - 1] = arguments[_key];
   }
 
   for (var j = 0; j < input.length; j++) {
     lengths = lengths * (input[j].length - 2);
 
     if (lengths === 0) {
+      //PopUpMessage(pages[j])
       return 0;
     }
 
@@ -1158,7 +1206,20 @@ function checkBlank() {
   }
 }
 
-function jumpblock(type) {}
+function PopUpMessage(type) {
+  var pop = document.getElementsById("popup");
+  pop.css('display', 'flex');
+  var word = document.querySelector('#popup #background #box #message p');
+  word.textContent(type);
+}
+
+function dailyToDo() {//save everyone daily money in project
+  //
+}
+
+function monthlyToDo() {//save monthly remain in monthly saving
+  //
+}
 
 var _default = {
   gettabledata: gettabledata,
@@ -1169,13 +1230,15 @@ var _default = {
   //calculate total money
   getProjectMoney: getProjectMoney,
   //get daily project saving
-  calprojectcomplete: calprojectcomplete,
+  calprojectpercent: calprojectpercent,
   //calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
   //transfer string to integer
   datetransfer: datetransfer,
   //tranfer date to 0date if date<10
-  checkBlank: checkBlank //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  checkBlank: checkBlank,
+  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  dailyToDo: dailyToDo //for server to run daily
 
 };
 exports.default = _default;
@@ -1424,7 +1487,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37110" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36739" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

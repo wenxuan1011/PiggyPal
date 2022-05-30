@@ -230,3 +230,7 @@ function getdetailexpenditure(){
   }
   )
 }
+
+$('#popup #background #box #confirm').click(function(){
+  $('#popup').css('display', 'none')
+})

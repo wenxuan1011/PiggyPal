@@ -11,7 +11,7 @@ if you want to use the module in this file, please following the steps below
 If anyone want to add some new mod in the file, please set the function name as well-known 
 as possible. Moreover, rememder to export function at the buttom of the code. 
 
-If it is convenient, use the annotation at the buttom of export to let other know what is 
+If it is convenient, use the annotation at the buttom of export to let others know what is 
 this function doing
 
 By Maker
@@ -115,6 +115,7 @@ export async function caltotalmoney(ID,table,selection,type){
     return results;
 }
 //need to check what is the detail in table
+
 export async function getProjectMoney(ID){
     var results=0
     await $.get('./getProjectMoney',{
@@ -125,12 +126,15 @@ export async function getProjectMoney(ID){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
             console.log(lastday, startday)
+            if(lastday-startday<0){
+                continue;
+            }
             var remainday= Math.abs(lastday-startday)
+            
             if(remainday>0 || remainday !== undefined){
-                remainday= remainday/(1000*3600*24)
-
+                remainday= Math.ceil(remainday/(1000*3600*24))+1
+                console.log(remainday)
                 let money= StringtoInt(gettabledata(data, `target_number`,i))-0//0 is for simulating money already save for this project
-                money+= money
                 money= money/remainday
                 totalremain+=money
             }
@@ -142,8 +146,20 @@ export async function getProjectMoney(ID){
     //console.log(results)
     return results;
 }
-export function calprojectcomplete(ID){
-    return //return .1f% use roungDecimal(variable,位數)
+export async function calprojectpercent(ID, project_name){
+    var result=0
+    await $.get('./getprojectmoney', {
+        ID:ID
+    },(data) =>{
+        for(var i in data){
+            if(project_name === data[i].project_name){
+                result=StringtoInt(data[i].saved_money)/StringtoInt(goal_number)
+                result=result/100
+            }
+        }
+    })
+    
+    return Math.round(result,-1)
 }
 export function StringtoInt(x) {
     const parsed = parseInt(x, 10)
@@ -161,11 +177,23 @@ export function datetransfer(date){
     return date
 }
 
-export function checkBlank(...input){
+export function checkBlank(page, ...input){
     var lengths=1
+    var recordmessage = ["日期", "金額", "類別"]
+    var projectmessage = ["專案名稱", "日期", "目標金額"]
+    var pages = []
+    switch(page){
+        case 'record':
+            pages = recordmessage
+            return
+        case 'project':
+            pages = projectmessage
+            return
+    }
     for (var j =0; j<input.length; j++){
         lengths=lengths*(input[j].length-2)
         if(lengths===0){
+            //PopUpMessage(pages[j])
             return 0;
         }
         if(lengths>1&&j===input.length-1){
@@ -174,17 +202,30 @@ export function checkBlank(...input){
     }
 }
 
-export function jumpblock(type){
-
+function PopUpMessage(type){
+    var pop= document.getElementsById("popup")
+    pop.css('display','flex')
+    const word = document.querySelector('#popup #background #box #message p')
+    word.textContent(type)
 }
 
+function dailyToDo(){
+    //save everyone daily money in project
+    //
+}
+
+function monthlyToDo(){
+    //save monthly remain in monthly saving
+    //
+}
 export default{
     gettabledata,//get id inside the row of column select from database
     getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
     caltotalmoney,//calculate total money
     getProjectMoney,//get daily project saving
-    calprojectcomplete,//calculate project complete %(in .1f )
+    calprojectpercent,//calculate project complete %(in .1f )
     StringtoInt,//transfer string to integer
     datetransfer,//tranfer date to 0date if date<10
-    checkBlank//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+    checkBlank,//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+    dailyToDo,//for server to run daily
 } 

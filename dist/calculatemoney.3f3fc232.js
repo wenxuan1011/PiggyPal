@@ -888,7 +888,7 @@ if you want to use the module in this file, please following the steps below
 If anyone want to add some new mod in the file, please set the function name as well-known 
 as possible. Moreover, rememder to export function at the buttom of the code. 
 
-If it is convenient, use the annotation at the buttom of export to let other know what is 
+If it is convenient, use the annotation at the buttom of export to let others know what is 
 this function doing
 
 By Maker
@@ -899,7 +899,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.StringtoInt = StringtoInt;
-exports.calprojectcomplete = calprojectcomplete;
+exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
@@ -909,7 +909,6 @@ exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
-exports.jumpblock = jumpblock;
 
 require("regenerator-runtime/runtime.js");
 
@@ -1085,14 +1084,19 @@ function _getProjectMoney() {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
                 console.log(lastday, startday);
+
+                if (lastday - startday < 0) {
+                  continue;
+                }
+
                 var remainday = Math.abs(lastday - startday);
 
                 if (remainday > 0 || remainday !== undefined) {
-                  remainday = remainday / (1000 * 3600 * 24);
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
+                  console.log(remainday);
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
-                  money += money;
                   money = money / remainday;
                   totalremain += money;
                 } else continue;
@@ -1114,8 +1118,38 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectcomplete(ID) {
-  return; //return .1f% use roungDecimal(variable,位數)
+function calprojectpercent(_x10, _x11) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            result = 0;
+            _context4.next = 3;
+            return $.get('./getprojectmoney', {
+              ID: ID
+            }, function (data) {
+              for (var i in data) {
+                if (project_name === data[i].project_name) {}
+              }
+            });
+
+          case 3:
+            return _context4.abrupt("return");
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _calprojectpercent.apply(this, arguments);
 }
 
 function StringtoInt(x) {
@@ -1138,17 +1172,31 @@ function datetransfer(date) {
   return date;
 }
 
-function checkBlank() {
+function checkBlank(page) {
   var lengths = 1;
+  var recordmessage = ["日期", "金額", "類別"];
+  var projectmessage = ["專案名稱", "日期", "目標金額"];
+  var pages = [];
 
-  for (var _len = arguments.length, input = new Array(_len), _key = 0; _key < _len; _key++) {
-    input[_key] = arguments[_key];
+  switch (page) {
+    case 'record':
+      pages = recordmessage;
+      return;
+
+    case 'project':
+      pages = projectmessage;
+      return;
+  }
+
+  for (var _len = arguments.length, input = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    input[_key - 1] = arguments[_key];
   }
 
   for (var j = 0; j < input.length; j++) {
     lengths = lengths * (input[j].length - 2);
 
     if (lengths === 0) {
+      //PopUpMessage(pages[j])
       return 0;
     }
 
@@ -1158,7 +1206,20 @@ function checkBlank() {
   }
 }
 
-function jumpblock(type) {}
+function PopUpMessage(type) {
+  var pop = document.getElementsById("popup");
+  pop.css('display', 'flex');
+  var word = document.querySelector('#popup #background #box #message p');
+  word.textContent(type);
+}
+
+function dailyToDo() {//save everyone daily money in project
+  //
+}
+
+function monthlyToDo() {//save monthly remain in monthly saving
+  //
+}
 
 var _default = {
   gettabledata: gettabledata,
@@ -1169,13 +1230,15 @@ var _default = {
   //calculate total money
   getProjectMoney: getProjectMoney,
   //get daily project saving
-  calprojectcomplete: calprojectcomplete,
+  calprojectpercent: calprojectpercent,
   //calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
   //transfer string to integer
   datetransfer: datetransfer,
   //tranfer date to 0date if date<10
-  checkBlank: checkBlank //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  checkBlank: checkBlank,
+  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  dailyToDo: dailyToDo //for server to run daily
 
 };
 exports.default = _default;
@@ -1584,34 +1647,10 @@ function _process() {
             return setVariable(ID);
 
           case 4:
-            setTimeout(function () {
-              var DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-              console.log("DailyRemain:", DailyRemain);
-              var actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
-              console.log("ProjectSaving:", ProjectSaving);
-              console.log("actualDailyRemain:", actualDailyRemain);
+            _context.next = 6;
+            return calculatemoney(today, totalday);
 
-              if (todayIncome - todayExpenditure >= 0) {
-                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
-              } else {
-                $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
-              }
-
-              if (actualDailyRemain < 0) {
-                //daily avaliable expenditure warning
-                ProjectSaving = ProjectSaving + actualDailyRemain;
-                actualDailyRemain = 0;
-
-                if (ProjectSaving < 0) {//use money in every month saving
-                }
-              }
-
-              $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
-              $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(ProjectSaving));
-              console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
-            }, 1000);
-
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -1645,40 +1684,94 @@ function setremainDay(today, totalday) {
   return totalday;
 }
 
-function setVariable(ID) {
-  var today = new Date();
-  todayExpenditure = mod.getTodayMoney(ID, 'Account', 'cost', 0);
-  todayIncome = mod.getTodayMoney(ID, 'Account', 'cost', 1);
-  Expenditure = mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
-  Income = mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
-  MonthlyIncome = mod.getMonthlyMoney(ID, 'financial', 'money', 0);
-  MonthlyExpend = mod.getMonthlyMoney(ID, 'financial', 'money', 1);
-  MonthlySaving = mod.getMonthlyMoney(ID, 'financial', 'money', 2);
-  ProjectSaving = mod.getProjectMoney(ID);
-  todayExpenditure.then(function (res) {
-    todayExpenditure = Math.ceil(res);
-  });
-  todayIncome.then(function (res) {
-    todayIncome = Math.ceil(res);
-  });
-  Expenditure.then(function (res) {
-    Expenditure = Math.ceil(res);
-  });
-  Income.then(function (res) {
-    Income = Math.ceil(res);
-  });
-  MonthlyExpend.then(function (res) {
-    MonthlyExpend = Math.ceil(res);
-  });
-  MonthlyIncome.then(function (res) {
-    MonthlyIncome = Math.ceil(res);
-  });
-  MonthlySaving.then(function (res) {
-    MonthlySaving = Math.ceil(res);
-  });
-  ProjectSaving.then(function (res) {
-    ProjectSaving = Math.ceil(res);
-  });
+function setVariable(_x2) {
+  return _setVariable.apply(this, arguments);
+}
+
+function _setVariable() {
+  _setVariable = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID) {
+    var today;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            today = new Date();
+            _context2.next = 3;
+            return mod.getTodayMoney(ID, 'Account', 'cost', 0);
+
+          case 3:
+            todayExpenditure = _context2.sent;
+            _context2.next = 6;
+            return mod.getTodayMoney(ID, 'Account', 'cost', 1);
+
+          case 6:
+            todayIncome = _context2.sent;
+            _context2.next = 9;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+
+          case 9:
+            Expenditure = _context2.sent;
+            _context2.next = 12;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+
+          case 12:
+            Income = _context2.sent;
+            _context2.next = 15;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 0);
+
+          case 15:
+            MonthlyIncome = _context2.sent;
+            _context2.next = 18;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 1);
+
+          case 18:
+            MonthlyExpend = _context2.sent;
+            _context2.next = 21;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 2);
+
+          case 21:
+            MonthlySaving = _context2.sent;
+            _context2.next = 24;
+            return mod.getProjectMoney(ID);
+
+          case 24:
+            ProjectSaving = _context2.sent;
+
+          case 25:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _setVariable.apply(this, arguments);
+}
+
+function calculatemoney(today, totalday) {
+  var DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+  console.log("DailyRemain:", DailyRemain);
+  var actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
+  console.log("ProjectSaving:", ProjectSaving);
+  console.log("actualDailyRemain:", actualDailyRemain);
+
+  if (todayIncome - todayExpenditure >= 0) {
+    $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
+  } else {
+    $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
+  }
+
+  if (actualDailyRemain < 0) {
+    //daily avaliable expenditure warning
+    ProjectSaving = ProjectSaving + actualDailyRemain;
+    actualDailyRemain = 0;
+
+    if (ProjectSaving < 0) {//use money in every month saving
+    }
+  }
+
+  $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
+  $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(ProjectSaving));
+  console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
 } //export default process
 },{"./signup.js":"signup.js","./module.js":"module.js","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -1708,7 +1801,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37110" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36739" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -117,20 +117,25 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"accounting.js":[function(require,module,exports) {
-// open/close accounting
-$('#accounting #everyday_earn #add_deals_btn').click(function () {
-  $('#add_deals').css("display", "flex");
-  setTimeout(function () {
-    $('#add_deals').css("transform", "translateX(0%)");
-  }, 100);
+})({"module_jquery.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-$('#add_deals .bar img').click(function () {
-  $('#add_deals').css("transform", "translateX(100%)");
-  setTimeout(function () {
-    $('#add_deals').css("display", "none");
-  }, 500);
-});
+exports.PopUpMessage = PopUpMessage;
+exports.default = void 0;
+
+function PopUpMessage(type) {
+  $('#popup').css('display', 'flex');
+  var word = document.querySelector('#popup #background #box #message p');
+  word.textContent(type);
+}
+
+var _default = {
+  PopUpMessage: PopUpMessage
+};
+exports.default = _default;
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -159,7 +164,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36739" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38659" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -335,5 +340,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","accounting.js"], null)
-//# sourceMappingURL=accounting.e1da89a3.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","module_jquery.js"], null)
+//# sourceMappingURL=module_jquery.85542a7b.js.map

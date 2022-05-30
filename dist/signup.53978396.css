@@ -1169,5 +1169,53 @@ body {
     #main #navbar img:nth-child(5) {
       margin: 0; }
 
+#popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100vw; }
+  #popup #background {
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    color: #B3B3B3;
+    opacity: 1; }
+    #popup #background #box {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      height: 13.9vh;
+      width: 65.6vw;
+      border-radius: 12px;
+      top: 38.05vh;
+      left: 17.06vw;
+      border-radius: 12px;
+      opacity: 1; }
+      #popup #background #box #message {
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+        align-items: center;
+        height: 9.36vh;
+        width: 65.6vw;
+        border-bottom: 0.3px solid #B3B3B3; }
+        #popup #background #box #message p {
+          color: black;
+          font-size: 16px;
+          opacity: 1; }
+      #popup #background #box #confirm {
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+        align-items: center; }
+        #popup #background #box #confirm p {
+          color: #474EF2;
+          font-size: 16px;
+          opacity: 1; }
+
 
 /*# sourceMappingURL=signup.53978396.css.map */

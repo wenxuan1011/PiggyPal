@@ -168,6 +168,7 @@ $(document).ready(function() {
       distribute: '均分',
       note: $('#project_form textarea[name=note]').val(),
       personal_or_joint : PERSONAL_OR_JOINT,
+      
     }, (data) => {
       $('#project_form input[name=project_name]').val('')
       $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")

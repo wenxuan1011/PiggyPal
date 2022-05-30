@@ -20,7 +20,8 @@ async function process(ID){
     var totalday=setremainDay(today,totalday);
     
     await setVariable(ID)
-    
+    await calculatemoney(today,totalday)
+    /*
     setTimeout(function(){
         
         var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
@@ -40,6 +41,7 @@ async function process(ID){
             ProjectSaving=ProjectSaving+actualDailyRemain
             actualDailyRemain=0
             if(ProjectSaving<0){
+                
                 //use money in every month saving
             }
         }
@@ -48,7 +50,7 @@ async function process(ID){
         $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${ProjectSaving}`)
         console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
     },1000)
-    
+    */
 }
 
 function setremainDay(today,totalday){
@@ -71,16 +73,17 @@ function setremainDay(today,totalday){
     return totalday;
 }
 
-function setVariable(ID){
+async function setVariable(ID){
     var today=new Date();
-        todayExpenditure=mod.getTodayMoney(ID,'Account','cost',0);
-        todayIncome=mod.getTodayMoney(ID,'Account','cost',1);
-        Expenditure= mod.getMonthlyMoney(ID,'Account','cost',0);
-        Income= mod.getMonthlyMoney(ID,'Account','cost',1)
-        MonthlyIncome= mod.getMonthlyMoney(ID,'financial','money',0)
-        MonthlyExpend= mod.getMonthlyMoney(ID,'financial','money',1)
-        MonthlySaving= mod.getMonthlyMoney(ID,'financial','money',2)
-        ProjectSaving= mod.getProjectMoney(ID)
+        todayExpenditure= await mod.getTodayMoney(ID,'Account','cost',0);
+        todayIncome= await mod.getTodayMoney(ID,'Account','cost',1);
+        Expenditure= await mod.getMonthlyMoney(ID,'Account','cost',0);
+        Income= await mod.getMonthlyMoney(ID,'Account','cost',1)
+        MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
+        MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
+        MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
+        ProjectSaving= await mod.getProjectMoney(ID)
+        /*
         todayExpenditure.then(res => {
             todayExpenditure=Math.ceil(res)
         })
@@ -104,7 +107,36 @@ function setVariable(ID){
         })
         ProjectSaving.then(res => {
             ProjectSaving=Math.ceil(res)
+            console.log(ProjectSaving)
         })
+        */
 }
 
+function calculatemoney(today,totalday){
+    var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
+    console.log("DailyRemain:",DailyRemain)
+    var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
+    console.log("ProjectSaving:", ProjectSaving)
+    console.log("actualDailyRemain:",actualDailyRemain)
+    if((todayIncome-todayExpenditure)>=0){
+        $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`+${todayIncome-todayExpenditure}`)
+    }
+    else{
+        $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`${todayIncome-todayExpenditure}`)
+    }
+    
+    if(actualDailyRemain<0){
+        //daily avaliable expenditure warning
+        ProjectSaving=ProjectSaving+actualDailyRemain
+        actualDailyRemain=0
+        if(ProjectSaving<0){
+            
+            //use money in every month saving
+        }
+    }
+    
+    $('#daily_expend p:nth-child(1)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
+    $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${ProjectSaving}`)
+    console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
+}
 //export default process

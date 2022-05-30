@@ -319,7 +319,7 @@ app.get('/project_or_not',(req,res) => {
 app.get('/project',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS project (id VARCHAR(30), project_name VARCHAR(30), color VARCHAR(30),\
    start_year VARCHAR(30), start_month VARCHAR(30), start_day VARCHAR(30), end_year VARCHAR(30), end_month VARCHAR(30),\
-   end_day VARCHAR(30), target_number VARCHAR(30), member VARCHAR(30), distribute VARCHAR(30), notes VARCHAR(30), personal_or_joint VARCHAR(30))')
+   end_day VARCHAR(30), target_number VARCHAR(30), member VARCHAR(30), distribute VARCHAR(30), notes VARCHAR(30), personal_or_joint VARCHAR(30), saved_money VARCHAR(30))')
 
   let PID = "'"+`${req.query.id}`+"'"
   let project_name = "'"+`${req.query.project_name}`+"'"
@@ -330,7 +330,8 @@ app.get('/project',(req,res) => {
   let member = req.query.member
   let distribute = "'"+`${req.query.distribute}`+"'"
   let notes = "'"+`${req.query.note}`+"'"
-  let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"
+  let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"//true for multimember, false for single member
+  let saved_money="'"+0+"'"
 
   let start_year = "'" + `${start_date[6]}` + `${start_date[7]}` + `${start_date[8]}` + `${start_date[9]}` + "'"
   let start_month = "'" + `${start_date[0]}` + `${start_date[1]}` + "'"
@@ -343,32 +344,35 @@ app.get('/project',(req,res) => {
   const search_project = `
     SELECT project_name FROM project
     WHERE id = ${PID} and project_name = ${project_name}`
-  
-  connection.query(search_project, (err, rows, fields) => {
-    if (err)
-      console.log('fail to search: ', err)
-    console.log(rows)
-    if (rows[1] === undefined) {
-      update_setting_project = true
-    }
-    else{
-      res.send("The "+ `${req.query.project_name}` +" have already set.")
-    }
-  })
-  setTimeout(() => {
-    if (update_setting_project){
-      console.log(update_setting_project)
-      for(let i=0;i<member.length;i++){
-        var member_string = "'" + `${req.query.member[i]}` + "'"
-        let update_project = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint)
-        VALUES (${PID}, ${project_name}, ${color}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number}, ${member_string}, ${distribute}, ${notes}, ${personal_or_joint})`
-        connection.query(update_project, (err, result) => {
-          if (err) console.log('fail to insert: ', err)
-        })
+  if(mod.checkBlank(project_name,start_date,end_date,target_number,distribute)){
+    connection.query(search_project, (err, rows, fields) => {
+      if (err)
+        console.log('fail to search: ', err)
+      console.log(rows)
+      if (rows[1] === undefined) {
+        update_setting_project = true
       }
-      res.send("You have updated your "+ `${req.query.project_name}` +".")
-    }
-  }, 100)
+      else{
+        res.send("The "+ `${req.query.project_name}` +" have already set.")
+      }
+    })
+    setTimeout(() => {
+      if (update_setting_project){
+        console.log(update_setting_project)
+        for(let i=0;i<member.length;i++){
+          var member_string = "'" + `${req.query.member[i]}` + "'"
+          let update_project = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money)
+          VALUES (${PID}, ${project_name}, ${color}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number}, ${member_string}, ${distribute}, ${notes}, ${personal_or_joint},${saved_money})`
+          connection.query(update_project, (err, result) => {
+            if (err) console.log('fail to insert: ', err)
+          })
+        }
+        res.send("You have updated your "+ `${req.query.project_name}` +".")
+      }
+    }, 100)
+  }
+  
+  
 })
 
 
@@ -399,7 +403,7 @@ app.get('/getmainpagedetail',(req,res) => {
 app.get('/getProjectMoney',(req,res) =>{
   let UID="'"+`${req.query.ID}`+"'"
   var search_user=""
-  search_user=`SELECT * FROM person_project WHERE id = ${UID}`
+  search_user=`SELECT * FROM project WHERE member = ${UID}`
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)
