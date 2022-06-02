@@ -2,13 +2,13 @@ import ID from './signup.js'
 import * as mod from './module.js'
 
 var todayExpenditure=0
-var todayIncome=0
-var Expenditure=0
-var Income=0
-var MonthlyExpend=0
-var MonthlyIncome=0
-var MonthlySaving=0
-var ProjectSaving=0
+var todayIncome = 0
+var Expenditure = 0
+var Income = 0
+var MonthlyExpend = 0
+var MonthlyIncome = 0
+var MonthlySaving = 0
+var ProjectSaving = 0
 
 $('#navbar').click((event) =>{
     event.preventDefault()
@@ -21,6 +21,7 @@ async function process(ID){
     
     await setVariable(ID)
     await calculatemoney(today,totalday)
+    
     /*
     setTimeout(function(){
         
@@ -82,7 +83,8 @@ async function setVariable(ID){
         MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
         MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
         MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
-        ProjectSaving= await mod.getProjectMoney(ID)
+        ProjectSaving= await mod.getProjectMoney(ID,"goal")
+
         /*
         todayExpenditure.then(res => {
             todayExpenditure=Math.ceil(res)
@@ -112,7 +114,7 @@ async function setVariable(ID){
         */
 }
 
-function calculatemoney(today,totalday){
+async function calculatemoney(today,totalday){
     var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
     console.log("DailyRemain:",DailyRemain)
     var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
@@ -136,7 +138,7 @@ function calculatemoney(today,totalday){
     }
     
     $('#daily_expend p:nth-child(1)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
-    $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${ProjectSaving}`)
+    $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${Math.floor(ProjectSaving)}`)
     console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
 }
 //export default process

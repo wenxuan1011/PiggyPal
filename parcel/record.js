@@ -42,7 +42,7 @@ $(document).ready(function() {
   $('#add_deals .bar').click((event) => {
     event.preventDefault()
     console.log(3)
-    $('#mainpage').css("display", "flex")
+    $('#accounting').css("display", "flex")
     setTimeout(function(){       
         $('#add_deals').css("display", "none")
         $('#add_deals').css("transform", "translateX(100%)")

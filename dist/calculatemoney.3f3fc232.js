@@ -1075,7 +1075,7 @@ function _getProjectMoney() {
           case 0:
             results = 0;
             _context3.next = 3;
-            return $.get('./getProjectMoney', {
+            return $.get('./getProject', {
               ID: ID
             }, function (data) {
               var totalremain = 0;
@@ -1093,8 +1093,8 @@ function _getProjectMoney() {
 
                 if (remainday > 0 || remainday !== undefined) {
                   remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  console.log(remainday);
-                  var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
+                  console.log("Projectremainday:", remainday);
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
                   money = money / remainday;
@@ -1131,16 +1131,19 @@ function _calprojectpercent() {
           case 0:
             result = 0;
             _context4.next = 3;
-            return $.get('./getprojectmoney', {
+            return $.get('./getproject', {
               ID: ID
             }, function (data) {
               for (var i in data) {
-                if (project_name === data[i].project_name) {}
+                if (project_name === data[i].project_name) {
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = result / 100;
+                }
               }
             });
 
           case 3:
-            return _context4.abrupt("return");
+            return _context4.abrupt("return", Math.round(result, -1));
 
           case 4:
           case "end":
@@ -1176,6 +1179,7 @@ function checkBlank(page) {
   var lengths = 1;
   var recordmessage = ["日期", "金額", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
+  var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
   var pages = [];
 
   switch (page) {
@@ -1185,6 +1189,10 @@ function checkBlank(page) {
 
     case 'project':
       pages = projectmessage;
+      return;
+
+    case 'financial':
+      pages = financial;
       return;
   }
 
@@ -1196,7 +1204,7 @@ function checkBlank(page) {
     lengths = lengths * (input[j].length - 2);
 
     if (lengths === 0) {
-      //PopUpMessage(pages[j])
+      PopUpMessage(pages[j]);
       return 0;
     }
 
@@ -1207,18 +1215,11 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
+  console.log(123);
   var pop = document.getElementsById("popup");
   pop.css('display', 'flex');
   var word = document.querySelector('#popup #background #box #message p');
   word.textContent(type);
-}
-
-function dailyToDo() {//save everyone daily money in project
-  //
-}
-
-function monthlyToDo() {//save monthly remain in monthly saving
-  //
 }
 
 var _default = {
@@ -1236,9 +1237,7 @@ var _default = {
   //transfer string to integer
   datetransfer: datetransfer,
   //tranfer date to 0date if date<10
-  checkBlank: checkBlank,
-  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
-  dailyToDo: dailyToDo //for server to run daily
+  checkBlank: checkBlank //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
 
 };
 exports.default = _default;
@@ -1732,7 +1731,7 @@ function _setVariable() {
           case 21:
             MonthlySaving = _context2.sent;
             _context2.next = 24;
-            return mod.getProjectMoney(ID);
+            return mod.getProjectMoney(ID, "goal");
 
           case 24:
             ProjectSaving = _context2.sent;
@@ -1747,32 +1746,52 @@ function _setVariable() {
   return _setVariable.apply(this, arguments);
 }
 
-function calculatemoney(today, totalday) {
-  var DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-  console.log("DailyRemain:", DailyRemain);
-  var actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
-  console.log("ProjectSaving:", ProjectSaving);
-  console.log("actualDailyRemain:", actualDailyRemain);
-
-  if (todayIncome - todayExpenditure >= 0) {
-    $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
-  } else {
-    $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
-  }
-
-  if (actualDailyRemain < 0) {
-    //daily avaliable expenditure warning
-    ProjectSaving = ProjectSaving + actualDailyRemain;
-    actualDailyRemain = 0;
-
-    if (ProjectSaving < 0) {//use money in every month saving
-    }
-  }
-
-  $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
-  $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(ProjectSaving));
-  console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
+function calculatemoney(_x3, _x4) {
+  return _calculatemoney.apply(this, arguments);
 } //export default process
+
+
+function _calculatemoney() {
+  _calculatemoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(today, totalday) {
+    var DailyRemain, actualDailyRemain;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+            console.log("DailyRemain:", DailyRemain);
+            actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
+            console.log("ProjectSaving:", ProjectSaving);
+            console.log("actualDailyRemain:", actualDailyRemain);
+
+            if (todayIncome - todayExpenditure >= 0) {
+              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
+            } else {
+              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(todayIncome - todayExpenditure));
+            }
+
+            if (actualDailyRemain < 0) {
+              //daily avaliable expenditure warning
+              ProjectSaving = ProjectSaving + actualDailyRemain;
+              actualDailyRemain = 0;
+
+              if (ProjectSaving < 0) {//use money in every month saving
+              }
+            }
+
+            $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
+            $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(Math.floor(ProjectSaving)));
+            console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _calculatemoney.apply(this, arguments);
+}
 },{"./signup.js":"signup.js","./module.js":"module.js","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1801,7 +1820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36739" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45804" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

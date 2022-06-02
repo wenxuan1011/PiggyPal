@@ -118,8 +118,8 @@ export async function caltotalmoney(ID,table,selection,type){
 
 export async function getProjectMoney(ID){
     var results=0
-    await $.get('./getProjectMoney',{
-        ID:ID
+    await $.get('./getProject',{
+        ID:ID,
     },(data) =>{
         var totalremain = 0
         for (let i in data){
@@ -133,8 +133,8 @@ export async function getProjectMoney(ID){
             
             if(remainday>0 || remainday !== undefined){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
-                console.log(remainday)
-                let money= StringtoInt(gettabledata(data, `target_number`,i))-0//0 is for simulating money already save for this project
+                console.log("Projectremainday:",remainday)
+                let money= StringtoInt(gettabledata(data, `target_number`,i))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
                 money= money/remainday
                 totalremain+=money
             }
@@ -148,12 +148,12 @@ export async function getProjectMoney(ID){
 }
 export async function calprojectpercent(ID, project_name){
     var result=0
-    await $.get('./getprojectmoney', {
+    await $.get('./getproject', {
         ID:ID
     },(data) =>{
         for(var i in data){
             if(project_name === data[i].project_name){
-                result=StringtoInt(data[i].saved_money)/StringtoInt(goal_number)
+                result=StringtoInt(gettabledata(data, 'saved_money', i))/StringtoInt(gettabledata(data, 'target_goal', i))
                 result=result/100
             }
         }
@@ -181,6 +181,7 @@ export function checkBlank(page, ...input){
     var lengths=1
     var recordmessage = ["日期", "金額", "類別"]
     var projectmessage = ["專案名稱", "日期", "目標金額"]
+    var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"]
     var pages = []
     switch(page){
         case 'record':
@@ -189,11 +190,14 @@ export function checkBlank(page, ...input){
         case 'project':
             pages = projectmessage
             return
+        case 'financial':
+            pages = financial
+            return
     }
     for (var j =0; j<input.length; j++){
         lengths=lengths*(input[j].length-2)
         if(lengths===0){
-            //PopUpMessage(pages[j])
+            PopUpMessage(pages[j])
             return 0;
         }
         if(lengths>1&&j===input.length-1){
@@ -203,21 +207,15 @@ export function checkBlank(page, ...input){
 }
 
 function PopUpMessage(type){
+    console.log(123)
     var pop= document.getElementsById("popup")
     pop.css('display','flex')
     const word = document.querySelector('#popup #background #box #message p')
     word.textContent(type)
 }
 
-function dailyToDo(){
-    //save everyone daily money in project
-    //
-}
 
-function monthlyToDo(){
-    //save monthly remain in monthly saving
-    //
-}
+
 export default{
     gettabledata,//get id inside the row of column select from database
     getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
@@ -227,5 +225,4 @@ export default{
     StringtoInt,//transfer string to integer
     datetransfer,//tranfer date to 0date if date<10
     checkBlank,//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
-    dailyToDo,//for server to run daily
 } 

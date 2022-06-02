@@ -7,6 +7,8 @@ import {fileURLToPath} from 'url'
 import config from './config.js'
 import mysql from 'mysql'
 import mod from './parcel/module.js'
+import cron from 'node-cron'
+import { connect } from 'http2'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -19,16 +21,27 @@ app.listen(port, () => {
   console.log(`listening on port: ${port}`)
 })
 
+//run everyday
+cron.schedule("0 0 * * *", function() {
+  var today = new Date()
+  console.log(today);
+});
+
+cron.schedule("59 23 * * *", function() {
+  var today = new Date()
+  console.log(today);
+});
+
 // static
 app.use(express.static(`${__dirname}/dist`))
 
 // connect to database
-  connection.connect(err => {
-    if (err) {
-      console.log('fail to connect:', err)
-      process.exit()
-    }
-  })
+connection.connect(err => {
+  if (err) {
+    console.log('fail to connect:', err)
+    process.exit()
+  }
+})
 
 // sign up
 app.get('/signup', (req, res) => {
@@ -160,27 +173,30 @@ app.get('/financial',(req,res) => {
   const search_item = `
     SELECT id FROM financial
     WHERE id = ${UID} and item =${ITEM}`
-  const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
-  connection.query(search_item, (err, rows, fields) => {
-    if (err)
-      console.log('fail to search: ', err)
-    console.log(rows)
-    if (rows[0] === undefined) {
-      update_setting = true
-    }
-    else{
-      res.send("The "+ update_type[`${req.query.type}`] +" have already set.")
-    }
-  })
-  setTimeout(() => {
-    if (update_setting){
-      console.log(update_setting)
-      connection.query(update, (err, result) => {
-        if (err) console.log('fail to insert: ', err)
-      })
-      res.send("You have updated your "+ update_type[`${req.query.type}`] +".")
-    }
-  }, 100)
+  if (mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)){
+    const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
+    connection.query(search_item, (err, rows, fields) => {
+      if (err)
+        console.log('fail to search: ', err)
+      console.log(rows)
+      if (rows[0] === undefined) {
+        update_setting = true
+      }
+      else{
+        res.send("The "+ update_type[`${req.query.type}`] +" have already set.")
+      }
+    })
+    setTimeout(() => {
+      if (update_setting){
+        console.log(update_setting)
+        connection.query(update, (err, result) => {
+          if (err) console.log('fail to insert: ', err)
+        })
+        res.send("You have updated your "+ update_type[`${req.query.type}`] +".")
+      }
+    }, 100)
+  }
+  
 })
 
 
@@ -225,7 +241,7 @@ app.get('/record',(req,res) => {
   let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
   let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
 
-  if(mod.checkBlank(items,cost,temp_date,type)){
+  if(mod.checkBlank('record',items,cost,temp_date,type)){
     const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
     connection.query(add_record, (err) => {
       if (err) console.log('fail to insert: ', err)
@@ -399,8 +415,8 @@ app.get('/getmainpagedetail',(req,res) => {
   })
 })
 
-///get project goal 
-app.get('/getProjectMoney',(req,res) =>{
+///get project table
+app.get('/getProject',(req,res) =>{
   let UID="'"+`${req.query.ID}`+"'"
   var search_user=""
   search_user=`SELECT * FROM project WHERE member = ${UID}`
@@ -416,4 +432,46 @@ app.get('/getProjectMoney',(req,res) =>{
   })
 })
 
+/////////////////please add your code above,below are the codes that server need to do every day//////////////////////////////////
+//update monthly financial
+app.get('./sergetfinancial', (req,res) =>{
+  var today = new Date()
+  var search_all = 'SELECT * FROM project'
+  connect.query(search_all , (err, row, fields) =>{
+    if (err)
+      console.log('server went wrong')
+    for(var i in row){
+      
+      if (today.getDate() == mod.gettabledata(row, 'day',i) && today.getMonth() == mod.gettabledata(row, 'month', i) && (today.getFullYear() == mod.gettabledata(row, year, i) || today.getMonth() ==0)){
+        let UID = "'"+`${mod.gettabledata(row, 'id', i)}`+"'"
+        let TYPE = "'"+`${mod.gettabledata(row, 'type', i)}`+"'"
+        let ITEM = "'"+`${mod.gettabledata(row, 'item', i)}`+"'"
+        let YEAR = "'"+`${today.getFullYear()}`+"'"
+        let MONTH = "'"+`${mod.StringtoInt(today.getMonth())+1}`+"'"
+        let DAY = "'"+`${today.getDate()}`+"'"
+        let MONEY = "'"+`${mod.gettabledata(row, 'money', i)}`+"'"
+        let REPEAT = "'"+`${mod.gettabledata(row, 'repeat', i)}`+"'"
+        const update_type = ['income', 'outcome', 'saving']
+        if (mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)){
+          const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
+          connection.query(update, (err, rows, fields) => {
+            if (err)
+              console.log('server went wrong ', err)
+            console.log(rows)
+            if (rows[0] === undefined) {
+              console.log(`${UID}'s ${ITEM} is updated`)
+            }
+            else{
+              res.send("The "+ update_type[`${req.query.type}`] +" have already set.")
+            }
+          })
+        }
+      }
+    }
+  })
+})
+/////////above is updated at 00:00,below is updated at 23:59////////////////////////////////////
+app.get('./serdailyprojectsaving', (req,res) => {
+
+})
 //connection.end()
