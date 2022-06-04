@@ -888,7 +888,7 @@ if you want to use the module in this file, please following the steps below
 If anyone want to add some new mod in the file, please set the function name as well-known 
 as possible. Moreover, rememder to export function at the buttom of the code. 
 
-If it is convenient, use the annotation at the buttom of export to let other know what is 
+If it is convenient, use the annotation at the buttom of export to let others know what is 
 this function doing
 
 By Maker
@@ -898,12 +898,15 @@ By Maker
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
-exports.calprojectcomplete = calprojectcomplete;
+exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
+exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
@@ -926,17 +929,17 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, selection, month, type) {
-  var result = caltodaymoney(ID, table, selection, month, type);
+function getTodayMoney(ID, table, selection, type) {
+  var result = caltodaymoney(ID, table, selection, type);
   return result;
 }
 
-function caltodaymoney(_x, _x2, _x3, _x4, _x5) {
+function caltodaymoney(_x, _x2, _x3, _x4) {
   return _caltodaymoney.apply(this, arguments);
 }
 
 function _caltodaymoney() {
-  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, type) {
     var results, today;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -944,14 +947,14 @@ function _caltodaymoney() {
           case 0:
             results = 0;
             today = new Date();
-            console.log(today.getDate());
-            _context.next = 5;
+            _context.next = 4;
             return $.get('./todaymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: StringtoInt(today.getMonth()) + 1,
               date: today.getDate(),
+              year: today.getFullYear(),
               type: type
             }, function (data) {
               var result = 0;
@@ -976,10 +979,10 @@ function _caltodaymoney() {
               results = result;
             });
 
-          case 5:
+          case 4:
             return _context.abrupt("return", results);
 
-          case 6:
+          case 5:
           case "end":
             return _context.stop();
         }
@@ -989,8 +992,8 @@ function _caltodaymoney() {
   return _caltodaymoney.apply(this, arguments);
 }
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result = caltotalmoney(ID, table, selection, month, type);
+function getMonthlyMoney(ID, table, selection, type) {
+  var result = caltotalmoney(ID, table, selection, type);
   /*
       result.then(res => {
           result=res
@@ -1003,25 +1006,27 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   return result;
 }
 
-function caltotalmoney(_x6, _x7, _x8, _x9, _x10) {
+function caltotalmoney(_x5, _x6, _x7, _x8) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
 function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
-    var results;
+  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, type) {
+    var results, today;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             results = 0;
-            _context2.next = 3;
+            today = new Date();
+            _context2.next = 4;
             return $.get('./monthlymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: datetransfer(today.getMonth() + 1),
+              year: StringtoInt(today.getFullYear()),
               type: type
             }, function (data) {
               var result = 0;
@@ -1046,10 +1051,10 @@ function _caltotalmoney() {
               results = result;
             });
 
-          case 3:
+          case 4:
             return _context2.abrupt("return", results);
 
-          case 4:
+          case 5:
           case "end":
             return _context2.stop();
         }
@@ -1059,7 +1064,7 @@ function _caltotalmoney() {
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x11) {
+function getProjectMoney(_x9) {
   return _getProjectMoney.apply(this, arguments);
 }
 
@@ -1072,7 +1077,7 @@ function _getProjectMoney() {
           case 0:
             results = 0;
             _context3.next = 3;
-            return $.get('./getProjectMoney', {
+            return $.get('./getProject', {
               ID: ID
             }, function (data) {
               var totalremain = 0;
@@ -1080,14 +1085,23 @@ function _getProjectMoney() {
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
-                var remainday = Math.abs(lastday - startday);
-                remainday = remainday / (1000 * 3600 * 24);
-                var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
+                console.log(lastday, startday);
 
-                //0 is for simulating money already save for this project
-                money += money;
-                money = money / remainday;
-                totalremain += money;
+                if (lastday - startday < 0) {
+                  continue;
+                }
+
+                var remainday = Math.abs(lastday - startday);
+
+                if (remainday > 0 || remainday !== undefined) {
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
+                  console.log("Projectremainday:", remainday);
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
+
+                  //0 is for simulating money already save for this project
+                  money = money / remainday;
+                  totalremain += money;
+                } else continue;
               }
 
               results = totalremain;
@@ -1106,8 +1120,41 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectcomplete(ID) {
-  return; //return .1f% use roungDecimal(variable,位數)
+function calprojectpercent(_x10, _x11) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            result = 0;
+            _context4.next = 3;
+            return $.get('./getproject', {
+              ID: ID
+            }, function (data) {
+              for (var i in data) {
+                if (project_name === data[i].project_name) {
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = result / 100;
+                }
+              }
+            });
+
+          case 3:
+            return _context4.abrupt("return", Math.round(result, -1));
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _calprojectpercent.apply(this, arguments);
 }
 
 function StringtoInt(x) {
@@ -1122,12 +1169,67 @@ function StringtoInt(x) {
 
 function datetransfer(date) {
   if (StringtoInt(date) < 10) {
-    date = "'0".concat(date, "'");
+    date = "0".concat(date);
   } else {
     date = date;
   }
 
   return date;
+}
+
+function checkBlank(page) {
+  var lengths = 1;
+  var recordmessage = ["日期", "金額", "類別"];
+  var projectmessage = ["專案名稱", "日期", "目標金額"];
+  var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var pages = [];
+
+  switch (page) {
+    case 'record':
+      pages = recordmessage;
+      break;
+
+    case 'project':
+      pages = projectmessage;
+      break;
+
+    case 'financial':
+      pages = financial;
+      break;
+  }
+
+  for (var _len = arguments.length, input = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    input[_key - 1] = arguments[_key];
+  }
+
+  for (var j = 0; j < input.length; j++) {
+    lengths = lengths * (input[j].length - 2);
+
+    if (lengths === 0) {
+      return pages[j];
+    }
+
+    if (lengths > 1 && j === input.length - 1) {
+      return 1;
+    }
+  }
+}
+
+function PopUpMessage(type) {
+  console.log(123);
+  $('#popup').css('display', 'flex');
+  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
+}
+
+function getColor(color) {
+  var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+  var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  for (var i = 0; i < 7; i++) {
+    if (color === ColorCode[i]) {
+      return ColorImgSrc[i];
+    }
+  }
 }
 
 var _default = {
@@ -1139,11 +1241,17 @@ var _default = {
   //calculate total money
   getProjectMoney: getProjectMoney,
   //get daily project saving
-  calprojectcomplete: calprojectcomplete,
+  calprojectpercent: calprojectpercent,
   //calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
   //transfer string to integer
-  datetransfer: datetransfer //tranfer date to 0date if date<10
+  datetransfer: datetransfer,
+  //tranfer date to 0date if date<10
+  checkBlank: checkBlank,
+  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  PopUpMessage: PopUpMessage,
+  //popup message, need to input the word you want to show
+  getColor: getColor //turn the color code into the color, need to input the color code of the project
 
 };
 exports.default = _default;
@@ -1300,12 +1408,15 @@ exports.default = _default;
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
+var _module = _interopRequireDefault(require("./module.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var COLOR = '#F6A93B'; // project color
 
 var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 
+var SHOW_PERSONAL_OR_JOINT = 'false';
 var MEMBER = [_signup.default];
 var TIME = new Date(); // type bar (change border-bottom)
 
@@ -1314,11 +1425,16 @@ var _loop = function _loop(i) {
     $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("border-bottom", "2px solid #410ADF");
 
     if (i === 2) {
+      SHOW_PERSONAL_OR_JOINT = 'false';
       $('#project_list').css("display", "flex");
+      $('#project #add_project_btn').css("display", "block");
     } else if (i === 3) {
+      SHOW_PERSONAL_OR_JOINT = 'true';
       $('#project_list').css("display", "flex");
+      $('#project #add_project_btn').css("display", "block");
     } else {
       $('#project_list').css("display", "none");
+      $('#project #add_project_btn').css("display", "none");
     }
 
     for (var j = 1; j < 5; j++) {
@@ -1341,7 +1457,7 @@ $('#mainpage #project_view .add_project .planned_speed img').click(function () {
     $('#add_project').css("transform", "translateX(0%)");
   }, 100);
 });
-$('#project_list #add_project_btn').click(function () {
+$('#project #add_project_btn').click(function () {
   MEMBER = [_signup.default];
   $('#add_project').css("display", "flex");
   setTimeout(function () {
@@ -1353,14 +1469,17 @@ $('#add_project .bar img').click(function () {
   setTimeout(function () {
     $('#add_project').css("display", "none");
   }, 500);
-}); // open/close personal_project page
+}); // open/close personal/joint project page
 
-$('.project_block').click(function () {
+var hi = function open_project() {
+  console.log(1);
   $('#show_personal_project').css("display", "flex");
   setTimeout(function () {
     $('#show_personal_project').css("transform", "translateX(0%)");
-  }, 100);
-});
+  }, 100); //showProjectDetail(project_name)
+}; // close personal_project page (project detail page)
+
+
 $('#show_personal_project .bar img').click(function () {
   $('#show_personal_project').css("transform", "translateX(100%)");
   setTimeout(function () {
@@ -1420,31 +1539,149 @@ $('#add_member .bar img').click(function () {
     $('#add_member').css("display", "none");
   }, 500);
 });
-$(document).ready(function () {
-  // update the project box 
-  $('#navbar img:nth-child(5), #project_form button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./project_or_not', {
-      id: _signup.default
-    }, function (data) {
-      if (data !== false) {
-        $('.project_infor .type_and_date #item').html("".concat(data[0]));
-        $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
-        var date = "".concat(data[1]) + '.' + "".concat(data[2]) + '.' + "".concat(data[3]) + '-' + "".concat(data[4]) + '.' + "".concat(data[5]) + '.' + "".concat(data[6]);
-        $('.project_infor .type_and_date #date').html(date);
-        $('#show_personal_project #project_detail #date_box #date').html(date);
-        var money = '$' + "".concat(data[7]);
-        $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
-        $('#show_personal_project #project_detail #target_money #money').html(money);
-        $('#project_list .project_block').css("display", "flex");
-        $('#project_list #no_project').css("display", "none");
-      } else {
-        $('#project_list .project_block').css("display", "none");
-        $('#project_list #no_project').css("display", "flex");
-      }
-    });
-  }); // add project
 
+function showProjectDetail(project_name) {
+  console.log('show1');
+  $.get('./getProjectDetail', {
+    id: _signup.default,
+    name: project_name
+  }, function (data) {
+    console.log('show2');
+
+    if (data !== false) {
+      $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
+      var percent = data[9] / data[8] / 100;
+      percent = Math.round(percent, -1);
+      $('#show_personal_project #project_detail #percent').html("".concat(percent, "%"));
+      var date = "".concat(data[2], ".").concat(data[3], ".").concat(data[4], " - ").concat(data[5], ".").concat(data[6], ".").concat(data[7]);
+      $('#show_personal_project #project_detail #date_box #date').html(date);
+      var money = '$' + "".concat(data[8]);
+      $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
+      $('#show_personal_project #project_detail #target_money #money').html(money);
+    } else {}
+  });
+} // show personal/joint project box
+
+
+$('#navbar img:nth-child(5), #project #type_bar').click(function (event) {
+  event.preventDefault();
+  getallproject(SHOW_PERSONAL_OR_JOINT);
+});
+
+function getallproject(TF) {
+  var show_no_project = true;
+  $.get('./getProject', {
+    ID: _signup.default
+  }, function (data) {
+    if (data != "nothing") {
+      var container = document.querySelector('#main #project #project_list');
+      container.innerHTML = "<div></div>";
+      var project_list = [];
+
+      for (var i in data) {
+        var project_name = _module.default.gettabledata(data, 'project_name', i);
+
+        var color = _module.default.gettabledata(data, 'color', i);
+
+        var start_year = _module.default.gettabledata(data, 'start_year', i);
+
+        var start_month = _module.default.gettabledata(data, 'start_month', i);
+
+        var start_day = _module.default.gettabledata(data, 'start_day', i);
+
+        var end_year = _module.default.gettabledata(data, 'end_year', i);
+
+        var end_month = _module.default.gettabledata(data, 'end_month', i);
+
+        var end_day = _module.default.gettabledata(data, 'end_day', i);
+
+        var percent = _module.default.StringtoInt(_module.default.gettabledata(data, 'saved_money', i)) / _module.default.StringtoInt(_module.default.gettabledata(data, 'target_number', i)) / 100;
+        percent = Math.round(percent, -1);
+
+        var type = _module.default.gettabledata(data, 'personal_or_joint', i);
+
+        project_list[i] = project_name;
+
+        if (type !== TF) {
+          continue;
+        } //create element
+
+
+        var _container = document.querySelector('#main #project #project_list');
+
+        var block = document.createElement('div');
+        var infor_1 = document.createElement('div');
+        var infor_2 = document.createElement('div');
+        var dot = document.createElement('img');
+        var name = document.createElement('p');
+        var date = document.createElement('p');
+        var infor_3 = document.createElement('div');
+        var speed = document.createElement('p');
+        var bar = document.createElement('img');
+        var btn = document.createElement('img'); //set text
+
+        name.textContent = "".concat(project_name);
+        date.textContent = "".concat(start_year, ".").concat(start_month, ".").concat(start_day, "-").concat(end_year, ".").concat(end_month, ".").concat(end_day);
+        speed.textContent = "".concat(percent, "%"); //set attribute
+
+        block.setAttribute('class', 'project_block');
+        block.setAttribute('id', "".concat(project_name));
+        infor_1.setAttribute('class', 'project_infor');
+        infor_2.setAttribute('class', 'type_and_date');
+        infor_3.setAttribute('class', 'plannd_speed_infor');
+        dot.setAttribute('src', "./image/project/Project_colordot_".concat(_module.default.getColor(color), ".png"));
+        dot.setAttribute('height', '35%');
+        bar.setAttribute('src', './image/project/Project_progressBar-bg.png');
+        bar.setAttribute('width', '100%');
+        btn.setAttribute('src', './image/btn/btn_arrow_right.png');
+        btn.setAttribute('height', '17%');
+        btn.setAttribute('id', 'right_btn');
+        name.setAttribute('id', 'item');
+        speed.setAttribute('id', 'percent'); //append child
+
+        _container.appendChild(block);
+
+        block.appendChild(infor_1);
+        block.appendChild(btn);
+        infor_1.appendChild(infor_2);
+        infor_1.appendChild(infor_3);
+        infor_1.appendChild(bar);
+        infor_2.appendChild(dot);
+        infor_2.appendChild(name);
+        infor_2.appendChild(date);
+        infor_3.appendChild(speed); // display no_project box or not
+
+        show_no_project = false;
+      } ////////// big problem ////////// (done)
+
+
+      var _loop3 = function _loop3(_i2) {
+        $("#" + "".concat(project_list[_i2])).click(function (e) {
+          $('#show_personal_project').css("display", "flex");
+          setTimeout(function () {
+            $('#show_personal_project').css("transform", "translateX(0%)");
+          }, 100);
+          event.preventDefault(); // I'm not sure is it right or not
+
+          showProjectDetail(project_list[_i2]);
+        });
+      };
+
+      for (var _i2 = 0; _i2 < project_list.length; _i2++) {
+        _loop3(_i2);
+      }
+    }
+
+    if (show_no_project === true) {
+      $('#no_project').css("display", "flex");
+    } else {
+      $('#no_project').css("display", "none");
+    }
+  });
+}
+
+$(document).ready(function () {
+  // add project
   $('#project_form button[type="submit"]').click(function (event) {
     event.preventDefault();
 
@@ -1466,16 +1703,20 @@ $(document).ready(function () {
       note: $('#project_form textarea[name=note]').val(),
       personal_or_joint: PERSONAL_OR_JOINT
     }, function (data) {
-      $('#project_form input[name=project_name]').val('');
-      $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
-      COLOR = '#F6A93B';
-      $('#project_form input[name=start_date]').val('');
-      $('#project_form input[name=end_day]').val('');
-      $('#project_form input[name=target_number]').val('');
-      MEMBER = [_signup.default]; // 還沒加入均分
+      if (data === '0') {
+        $('#project_form input[name=project_name]').val('');
+        $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
+        COLOR = '#F6A93B';
+        $('#project_form input[name=start_date]').val('');
+        $('#project_form input[name=end_day]').val('');
+        $('#project_form input[name=target_number]').val('');
+        MEMBER = [_signup.default]; // 還沒加入均分
 
-      $('#project_form textarea[name=note]').val('');
-      $("#add_project_-output").html("".concat(data));
+        $('#project_form textarea[name=note]').val('');
+        $("#add_project_-output").html("".concat(data));
+      } else {
+        _module.default.PopUpMessage(data);
+      }
     });
   }); // clean the input value in the add_project page
 
@@ -1513,7 +1754,7 @@ $(document).ready(function () {
 $(function () {
   $(".calendar").datepicker();
 });
-},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1541,7 +1782,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45644" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39488" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

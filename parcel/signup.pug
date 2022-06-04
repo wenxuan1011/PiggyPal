@@ -21,7 +21,7 @@ html
             input(type="password", name="pw", placeholder = "Password")
           .forget
             p Forget password?
-          button(type="submit")
+          button#login_btn(type="submit")
             img(src = "./image/login/btn_Login.png" height = "100%")
       .other_choice
         img(src="./image/login/line_OrLogWith.png", height = "10%")
@@ -89,27 +89,36 @@ html
               .planned_speed
                 img(src = "./image/MainPage/addcircle.png", height = "100%")
           #daily_expend
-            img(src = "./image/MainPage/MainPage_helper.png", width = "100%")
-            p
+            #word_block
+              p
+              p
         #detail_block
           #detail_bar
             p 當日明細
             img(src = "./image/btn/btn_arrow_right.png", height = "40%")
           .list
         .add_button
+
       #account
         h1 Account
       #accounting 
         .bar
-          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img#back(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 記帳
         #everyday_earn
           img(src = "./image/Accounting/box_SelectDate.png", height = "30.10752688%")
           #today_earn
             p 本日損益
-            p +1920
+            p +0
           img#add_deals_btn(src = "./image/Accounting/btn_add.png", height = "19.355%")
         br
+        #today_detail
+          .bars
+            p 收入
+          .income 
+          .bars
+            p 支出
+          .expenditure 
        
       #add_deals
         .bar
@@ -171,20 +180,9 @@ html
           p 共同專案
           p 達成成就
         #project_list
-          #no_project
-            p 尚未建立專案
-          .project_block
-            .project_infor
-              .type_and_date
-                img(src = "./image/project/Project_colordot_blue.png", height = "35%")
-                p#item 一般儲蓄
-                p#date 2022.04.28-2022.06.14
-              .plannd_speed_infor
-                p#percent 35%
-                //p 剩餘2個月2天
-              img(src = "./image/project/Project_progressBar-bg.png", width = "100%")
-            img#more_infor_btn(src = "./image/btn/btn_arrow_right.png", height = "17%")
-          img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+        #no_project
+          p 尚未建立專案
+        img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
 
       #add_project
         .bar
@@ -349,13 +347,21 @@ html
         img(src="./image/navbar/selected/mainpage_select.png", height = "77.647%")
         img(src="./image/navbar/unselect/accounting_unselect.png", height = "77.647%")
         img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
+    
+    #popup
+      #background 
+        #box
+          #message
+            p Hi
+          p#confirm 確認
+          
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="./signup.js")
   script(src="./personal.js")
   script(src="./mainpage.js")
-  script(src="./dailymoney.js")
+  script(src="./calculatemoney.js")
   script(src="./module.js")
   script(src="./record.js")
   script(src="./project.js")

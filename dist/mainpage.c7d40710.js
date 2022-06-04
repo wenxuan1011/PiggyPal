@@ -888,7 +888,7 @@ if you want to use the module in this file, please following the steps below
 If anyone want to add some new mod in the file, please set the function name as well-known 
 as possible. Moreover, rememder to export function at the buttom of the code. 
 
-If it is convenient, use the annotation at the buttom of export to let other know what is 
+If it is convenient, use the annotation at the buttom of export to let others know what is 
 this function doing
 
 By Maker
@@ -898,12 +898,15 @@ By Maker
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
-exports.calprojectcomplete = calprojectcomplete;
+exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
+exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
@@ -926,17 +929,17 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, selection, month, type) {
-  var result = caltodaymoney(ID, table, selection, month, type);
+function getTodayMoney(ID, table, selection, type) {
+  var result = caltodaymoney(ID, table, selection, type);
   return result;
 }
 
-function caltodaymoney(_x, _x2, _x3, _x4, _x5) {
+function caltodaymoney(_x, _x2, _x3, _x4) {
   return _caltodaymoney.apply(this, arguments);
 }
 
 function _caltodaymoney() {
-  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, month, type) {
+  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, type) {
     var results, today;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -944,14 +947,14 @@ function _caltodaymoney() {
           case 0:
             results = 0;
             today = new Date();
-            console.log(today.getDate());
-            _context.next = 5;
+            _context.next = 4;
             return $.get('./todaymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: StringtoInt(today.getMonth()) + 1,
               date: today.getDate(),
+              year: today.getFullYear(),
               type: type
             }, function (data) {
               var result = 0;
@@ -976,10 +979,10 @@ function _caltodaymoney() {
               results = result;
             });
 
-          case 5:
+          case 4:
             return _context.abrupt("return", results);
 
-          case 6:
+          case 5:
           case "end":
             return _context.stop();
         }
@@ -989,8 +992,8 @@ function _caltodaymoney() {
   return _caltodaymoney.apply(this, arguments);
 }
 
-function getMonthlyMoney(ID, table, selection, month, type) {
-  var result = caltotalmoney(ID, table, selection, month, type);
+function getMonthlyMoney(ID, table, selection, type) {
+  var result = caltotalmoney(ID, table, selection, type);
   /*
       result.then(res => {
           result=res
@@ -1003,25 +1006,27 @@ function getMonthlyMoney(ID, table, selection, month, type) {
   return result;
 }
 
-function caltotalmoney(_x6, _x7, _x8, _x9, _x10) {
+function caltotalmoney(_x5, _x6, _x7, _x8) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
 function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, month, type) {
-    var results;
+  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID, table, selection, type) {
+    var results, today;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             results = 0;
-            _context2.next = 3;
+            today = new Date();
+            _context2.next = 4;
             return $.get('./monthlymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: month,
+              month: datetransfer(today.getMonth() + 1),
+              year: StringtoInt(today.getFullYear()),
               type: type
             }, function (data) {
               var result = 0;
@@ -1046,10 +1051,10 @@ function _caltotalmoney() {
               results = result;
             });
 
-          case 3:
+          case 4:
             return _context2.abrupt("return", results);
 
-          case 4:
+          case 5:
           case "end":
             return _context2.stop();
         }
@@ -1059,7 +1064,7 @@ function _caltotalmoney() {
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x11) {
+function getProjectMoney(_x9) {
   return _getProjectMoney.apply(this, arguments);
 }
 
@@ -1072,7 +1077,7 @@ function _getProjectMoney() {
           case 0:
             results = 0;
             _context3.next = 3;
-            return $.get('./getProjectMoney', {
+            return $.get('./getProject', {
               ID: ID
             }, function (data) {
               var totalremain = 0;
@@ -1080,14 +1085,23 @@ function _getProjectMoney() {
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
-                var remainday = Math.abs(lastday - startday);
-                remainday = remainday / (1000 * 3600 * 24);
-                var money = StringtoInt(gettabledata(data, "target_number", i)) - 0; //0 is for simulating money already save for this project
+                console.log(lastday, startday);
 
-                //0 is for simulating money already save for this project
-                money += money;
-                money = money / remainday;
-                totalremain += money;
+                if (lastday - startday < 0) {
+                  continue;
+                }
+
+                var remainday = Math.abs(lastday - startday);
+
+                if (remainday > 0 || remainday !== undefined) {
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
+                  console.log("Projectremainday:", remainday);
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
+
+                  //0 is for simulating money already save for this project
+                  money = money / remainday;
+                  totalremain += money;
+                } else continue;
               }
 
               results = totalremain;
@@ -1106,8 +1120,41 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectcomplete(ID) {
-  return; //return .1f% use roungDecimal(variable,位數)
+function calprojectpercent(_x10, _x11) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            result = 0;
+            _context4.next = 3;
+            return $.get('./getproject', {
+              ID: ID
+            }, function (data) {
+              for (var i in data) {
+                if (project_name === data[i].project_name) {
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = result / 100;
+                }
+              }
+            });
+
+          case 3:
+            return _context4.abrupt("return", Math.round(result, -1));
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _calprojectpercent.apply(this, arguments);
 }
 
 function StringtoInt(x) {
@@ -1122,12 +1169,67 @@ function StringtoInt(x) {
 
 function datetransfer(date) {
   if (StringtoInt(date) < 10) {
-    date = "'0".concat(date, "'");
+    date = "0".concat(date);
   } else {
     date = date;
   }
 
   return date;
+}
+
+function checkBlank(page) {
+  var lengths = 1;
+  var recordmessage = ["日期", "金額", "類別"];
+  var projectmessage = ["專案名稱", "日期", "目標金額"];
+  var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var pages = [];
+
+  switch (page) {
+    case 'record':
+      pages = recordmessage;
+      break;
+
+    case 'project':
+      pages = projectmessage;
+      break;
+
+    case 'financial':
+      pages = financial;
+      break;
+  }
+
+  for (var _len = arguments.length, input = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    input[_key - 1] = arguments[_key];
+  }
+
+  for (var j = 0; j < input.length; j++) {
+    lengths = lengths * (input[j].length - 2);
+
+    if (lengths === 0) {
+      return pages[j];
+    }
+
+    if (lengths > 1 && j === input.length - 1) {
+      return 1;
+    }
+  }
+}
+
+function PopUpMessage(type) {
+  console.log(123);
+  $('#popup').css('display', 'flex');
+  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
+}
+
+function getColor(color) {
+  var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+  var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  for (var i = 0; i < 7; i++) {
+    if (color === ColorCode[i]) {
+      return ColorImgSrc[i];
+    }
+  }
 }
 
 var _default = {
@@ -1139,11 +1241,17 @@ var _default = {
   //calculate total money
   getProjectMoney: getProjectMoney,
   //get daily project saving
-  calprojectcomplete: calprojectcomplete,
+  calprojectpercent: calprojectpercent,
   //calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
   //transfer string to integer
-  datetransfer: datetransfer //tranfer date to 0date if date<10
+  datetransfer: datetransfer,
+  //tranfer date to 0date if date<10
+  checkBlank: checkBlank,
+  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  PopUpMessage: PopUpMessage,
+  //popup message, need to input the word you want to show
+  getColor: getColor //turn the color code into the color, need to input the color code of the project
 
 };
 exports.default = _default;
@@ -1308,20 +1416,20 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-$('#save').click(function (event) {
+$('#login_btn, #save').click(function (event) {
   event.preventDefault();
-  console.log(1);
-  getdetail();
+  setTimeout(function () {
+    getdetail();
+  }, 100);
 });
-
-function addlist(obj) {
-  var ul = document.getElementByClassName(obj);
-  var li = document.createElement("li"); //�]�w li �ݩʡA�p id
-
-  li.setAttribute("id", "newli");
-  li.innerHTML = "js �ʺA�s�Wli";
-  ul.appendChild(li);
-}
+$('#add_project_btn').click(function (event) {
+  event.preventDefault();
+  $('#add_deals').css("display", "flex");
+  $('#add_deals').css("transform", "translateX(0%)");
+  setTimeout(function () {
+    $('#mainpage').css("display", "none");
+  }, 100);
+});
 
 function getdetail() {
   var today = new Date();
@@ -1336,31 +1444,35 @@ function getdetail() {
       container.innerHTML = "<p></p>";
 
       for (var i in data) {
-        var item = gettabledata(data, 'items', i);
-        var value = gettabledata(data, 'cost', i);
-        console.log(item, value);
+        var item = mod.gettabledata(data, 'items', i);
+        var value = mod.gettabledata(data, 'cost', i);
+
+        if (item == '' || value == '') {
+          continue;
+        } //create element
+
 
         var _container = document.querySelector('.list');
 
-        var paragraph = document.createElement('P');
-        var space = '                ';
-        paragraph.textContent = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "".concat(item) + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + "$".concat(value);
-        paragraph.setAttribute('class', 'text');
+        var box = document.createElement('a');
+        var paragraphone = document.createElement('P');
+        var paragraphtwo = document.createElement('P'); //set text
 
-        _container.appendChild(paragraph);
+        paragraphone.textContent = "".concat(item);
+        paragraphtwo.textContent = "$".concat(value); //set attribute
+
+        box.setAttribute('id', 'a');
+        paragraphone.setAttribute('class', 'text');
+        paragraphtwo.setAttribute('class', 'text'); //append child
+
+        _container.appendChild(box);
+
+        box.appendChild(paragraphone);
+        box.appendChild(paragraphtwo);
       }
     } else {}
   });
 }
-
-function gettabledata(table, parameter, row) {
-  var result = JSON.stringify(table[row]);
-  result = JSON.parse(result);
-  result = result[parameter];
-  return result;
-}
-
-;
 },{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1389,7 +1501,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45644" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43099" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

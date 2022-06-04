@@ -307,11 +307,26 @@ body {
         width: 100%;
         height: 58.235%; }
       #main #mainpage #project_block #daily_expend {
+        background: url("MainPage_helper.05acf22c.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
         width: 90vw;
+        height: 11.45vh;
         margin: 0 0 0 0; }
+        #main #mainpage #project_block #daily_expend #word_block {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: flex-start;
+          flex-direction: column;
+          height: 8vh; }
+          #main #mainpage #project_block #daily_expend #word_block p {
+            font-size: 16px;
+            color: white;
+            margin: 0 0 0 0; }
     #main #mainpage #detail_block {
       display: flex;
       flex-direction: column;
@@ -335,21 +350,18 @@ body {
         width: 92%;
         border-radius: 10px;
         margin: 2.0936vh 0 10vh 0; }
-        #main #mainpage #detail_block .list li {
+        #main #mainpage #detail_block .list a {
           display: flex;
           flex-direction: row;
-          align-items: center;
+          justify-content: space-between;
           border-bottom: 0.3px solid #B3B3B3;
           border-radius: 0; }
-          #main #mainpage #detail_block .list li p {
-            display: block;
-            color: black;
+          #main #mainpage #detail_block .list a p {
             width: 75%;
             padding: 1.724vh 5.6vw 1.724vh 5.6vw;
             text-decoration: none;
-            font-size: 2vh !important; }
-        #main #mainpage #detail_block .list li:nth-last-child(1) {
-          border-style: none; }
+            font-size: 2vh !important;
+            margin: 0 0 0 0; }
   #main #account {
     display: none; }
   #main #accounting {
@@ -401,8 +413,37 @@ body {
           font-size: 4.4335vh;
           margin: 0;
           color: #8E5FF4; }
-      #main #accounting #everyday_earn img:nth-child(2) {
-        margin-top: 3.694vh; }
+        #main #accounting #everyday_earn #today_earn img:nth-child(2) {
+          margin-top: 3.694vh; }
+    #main #accounting #today_detail {
+      background-color: white;
+      border-radius: 10px;
+      width: 92vw; }
+      #main #accounting #today_detail .income, #main #accounting #today_detail .expenditure {
+        background-color: white;
+        border-radius: 10px;
+        margin: 0 0 0 0;
+        border-bottom: 0.3px solid #B3B3B3; }
+        #main #accounting #today_detail .income p, #main #accounting #today_detail .expenditure p {
+          margin: 0 0 0 0; }
+        #main #accounting #today_detail .income a, #main #accounting #today_detail .expenditure a {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin: 0 8.53vw 0 0;
+          width: 85.87%;
+          font-size: 2vh !important;
+          margin: 1.36vh 0 2.09vh 8.53vw; }
+      #main #accounting #today_detail .bars {
+        display: flex;
+        background-color: white;
+        border-radius: 10px;
+        margin: 0 0 0 0; }
+        #main #accounting #today_detail .bars p {
+          font-size: 2vh;
+          margin: 2.09vh 0 2.09vh 8.53vw;
+          color: #8E5FF4;
+          font-family: 'Roboto'; }
   #main #add_deals {
     display: none;
     flex-direction: column;
@@ -545,6 +586,17 @@ body {
         border-bottom: none; }
       #main #project #type_bar p:nth-child(2) {
         border-bottom: 2px solid #410ADF; }
+    #main #project #no_project {
+      display: none;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 80.2667vw;
+      height: 10vh;
+      background-color: white;
+      box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin: 0 0 7.88vh 0; }
     #main #project #project_list {
       display: flex;
       flex-direction: column;
@@ -552,19 +604,8 @@ body {
       width: 80.2667vw;
       height: auto;
       margin: 5.17vh 0 0 0; }
-      #main #project #project_list #no_project {
-        display: none;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 80.2667vw;
-        height: 10vh;
-        background-color: white;
-        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        margin: 0 0 7.88vh 0; }
       #main #project #project_list .project_block {
-        display: none;
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -574,7 +615,7 @@ body {
         box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         margin: 0 0 7.88vh 0; }
-        #main #project #project_list .project_block #more_infor_btn {
+        #main #project #project_list .project_block #right_btn {
           margin: 0 4vw 0 0; }
         #main #project #project_list .project_block .project_infor {
           display: flex;
@@ -597,7 +638,7 @@ body {
             #main #project #project_list .project_block .project_infor .type_and_date p {
               margin: 0; }
             #main #project #project_list .project_block .project_infor .type_and_date #item {
-              margin: 0 12.5vw 0 0; }
+              margin: 0 auto 0 0; }
           #main #project #project_list .project_block .project_infor .plannd_speed_infor {
             display: flex;
             flex-direction: row;
@@ -609,6 +650,8 @@ body {
             #main #project #project_list .project_block .project_infor .plannd_speed_infor #percent {
               font-family: Roboto Bold;
               font-size: 24px; }
+    #main #project #add_project_btn {
+      margin: 0 0 20vh 0; }
   #main #add_project {
     display: none;
     flex-direction: column;
@@ -811,7 +854,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
     background-color: #F4F4F4;
     transform: translateX(100%);
     transition: 0.5s;
@@ -1126,6 +1170,51 @@ body {
       margin: 0 8vw 0 0; }
     #main #navbar img:nth-child(5) {
       margin: 0; }
+
+#popup {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  backdrop-filter: blur(5px);
+  z-index: 2; }
+  #popup #background {
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5); }
+    #popup #background #box {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      width: 65.6vw;
+      height: 13.9vh;
+      border-radius: 12px;
+      background-color: white;
+      opacity: 1; }
+      #popup #background #box #message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 66.7%;
+        border-bottom: 0.3px solid #B3B3B3; }
+        #popup #background #box #message p {
+          color: black;
+          font-size: 16px; }
+      #popup #background #box #confirm {
+        color: #474EF2;
+        font-size: 16px;
+        margin: auto 0; }
 
 
 /*# sourceMappingURL=signup.53978396.css.map */
