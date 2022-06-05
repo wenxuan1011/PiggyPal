@@ -1631,7 +1631,7 @@ function getdetailincome() {
         var value = mod.gettabledata(data, 'cost', i);
         var type = mod.gettabledata(data, 'type', i); //console.log(item, value, type)
 
-        if (item == '' || value == '' || type === '0') {
+        if (item == '' || value == '' || type === '0' || type == '3') {
           continue;
         } //create element
 
@@ -1675,7 +1675,7 @@ function getdetailexpenditure() {
         var value = mod.gettabledata(data, 'cost', i);
         var type = mod.gettabledata(data, 'type', i); //console.log(type)
 
-        if (item == '' || value == '' || type === '1') {
+        if (item == '' || value == '' || type === '1' || type == '3') {
           continue;
         } //create element
 
@@ -1733,7 +1733,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "33082" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36840" + '/');
+>>>>>>> 10e2a806d162192778fe7aed7a223e83f8f67b33
 
   ws.onmessage = function (event) {
     checkedAssets = {};

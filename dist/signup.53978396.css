@@ -368,11 +368,16 @@ body {
     display: none;
     flex-direction: column;
     align-items: center;
-    background-color: #F4F4F4;
     width: 100vw;
     height: auto;
     min-height: 100vh;
+<<<<<<< HEAD
     font-family: Roboto Regular; }
+=======
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
+>>>>>>> 10e2a806d162192778fe7aed7a223e83f8f67b33
     #main #accounting .bar {
       display: flex;
       flex-direction: column;
@@ -398,7 +403,7 @@ body {
       height: auto;
       margin-top: 2.59vh;
       margin-bottom: 3.325123vh; }
-      #main #accounting #everyday_earn img {
+      #main #accounting #everyday_earn img:nth-child(1) {
         margin-bottom: 2vh; }
       #main #accounting #everyday_earn #today_earn {
         display: flex;
@@ -420,7 +425,9 @@ body {
     #main #accounting #today_detail {
       background-color: white;
       border-radius: 10px;
-      width: 92vw; }
+      width: 92vw;
+      height: auto;
+      margin: 0 0 15vh 0; }
       #main #accounting #today_detail .income, #main #accounting #today_detail .expenditure {
         background-color: white;
         border-radius: 10px;

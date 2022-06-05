@@ -167,7 +167,7 @@ function getdetailincome(){
               var value = mod.gettabledata(data, 'cost',i)
               var type = mod.gettabledata(data, 'type', i)
               //console.log(item, value, type)
-              if(item == ''||value == ''|| type === '0'){
+              if(item == ''||value == ''|| type === '0' ||type =='3'){
                   continue;
               }
               //create element
@@ -210,7 +210,7 @@ function getdetailexpenditure(){
               var value = mod.gettabledata(data, 'cost',i)
               var type = mod.gettabledata(data, 'type', i)
               //console.log(type)
-              if(item == ''||value == ''|| type === '1'){
+              if(item == ''||value == ''|| type === '1' || type =='3'){
                   continue;
               }
               //create element

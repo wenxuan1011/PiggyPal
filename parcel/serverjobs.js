@@ -11,13 +11,14 @@ var MonthlySaving = 0
 var ProjectSaving = 0
 var ProjectSaved = 0
 
-
+/*
 $('#Login #login-form #login button').click((event) => {
     event.preventDefault()
     setTimeout(async function(){
         dailyprocess()
     },0)
 })
+*/
 async function dailyprocess(){
     var today=new Date();
     var totalday=setremainDay(today,totalday);
@@ -142,7 +143,7 @@ async function calculatemoney(today,totalday){
 
 }
 
-async function saveMoneytoProject(ID){//still need to add saved_money from table//////////
+async function saveMoneytoProject(ID){
     var all_project = await mod.sergetProject(ID)
     var count = 0
     var today= new Date()
@@ -179,6 +180,17 @@ async function saveMoneytoProject(ID){//still need to add saved_money from table
         count++
     }
 }
+
+async function setfinancial(){
+    var all_user = await mod.getAllUser()
+    for (var id in all_user){
+        await $.get('./setfinancial',{
+            id:id
+        },(data) => {
+
+        })
+    }
+}
 async function getdailymoney(){
     var all_user=await mod.getAllUser()
     for (var id in all_user){
@@ -190,4 +202,12 @@ function monthlyTodo(){
     if(DailyRemain>0){
         //save in monthly saving
     }
+}
+
+
+
+
+
+export default{
+    dailyprocess
 }

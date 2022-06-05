@@ -7,6 +7,7 @@ import {fileURLToPath} from 'url'
 import config from './config.js'
 import mysql from 'mysql'
 import mod from './parcel/module.js'
+import serverjob from './parcel/serverjobs.js'
 import cron from 'node-cron'
 import { connect } from 'http2'
 import { rmSync } from 'fs'
@@ -16,7 +17,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6164
+const port = 6162
 
 // listen port
 app.listen(port, () => {
@@ -27,11 +28,13 @@ app.listen(port, () => {
 cron.schedule("0 0 * * *", function() {
   var today = new Date()
   console.log(today);
+
 });
 
-cron.schedule("59 23 * * *", function() {
+cron.schedule("58 23 * * *", function() {
   var today = new Date()
   console.log(today);
+  serverjob.dailyprocess();
 });
 
 // static
@@ -508,7 +511,6 @@ app.get('/sergetProject',(req,res) => {
 })
 //save money in project
 app.get('/saveMoneytoProject',(req,res) =>{
-  var today = new Date()
   let id="'"+`${req.query.id}`+"'"
   let member="'"+`${req.query.member}`+"'"
   let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"
@@ -530,6 +532,28 @@ app.get('/saveMoneytoProject',(req,res) =>{
   connection.query(update, (err, rows, fields)=>{
     if(err)console.log("There must be some same data",err)
     res.send(update)
+  })
+})
+
+app.get('/setfinancial',(req, res) =>{
+  var today = new Date()
+  let UID = req.query.id
+  const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
+  connection.query(setfinancial, (err, rows, fields)=>{
+    if(err)console.log("There are something wrong: ",err)
+    for(let i in rows){
+      let UID = mod.gettabledata(rows,'id', i)
+      let type = mod.gettabledata(rows,'type', i)
+      let item = mod.gettabledata(rows, 'item', i)
+      let year = mod.gettabledata(rows, 'year', i)
+      let month = mod.gettabledata(rows, 'month', i)
+      let date = mod.gettabledata(rows, 'day', i)
+      let money = mod.gettabledata(rows, 'money', i)
+      let repeats = mod.gettabledata(rows, 'repeats', i)
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${mod.datetransfer(today.getFullYear())},1)`
+      }
+    }
   })
 })
 //connection.end()
