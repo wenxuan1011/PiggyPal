@@ -28,7 +28,7 @@ $(document).ready(function() {
     t.value = ""
     n.value = ""
     d.value = "05/13/2022"
-
+    $('#fin ')
     //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
 

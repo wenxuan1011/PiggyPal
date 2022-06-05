@@ -179,7 +179,7 @@ $(document).ready(function() {
       MEMBER = [ID]
       // 還沒加入均分
       $('#project_form textarea[name=note]').val('')
-      $("#add_project_-output").html(`${data}`);
+      //$("#add_project_-output").html(`${data}`);
     });
   })
 
@@ -220,7 +220,6 @@ $(document).ready(function() {
     MEMBER.push($('#add_member #id_box input[name=userid]').val())
     console.log(MEMBER)
   })
-
 });
 
 $(function(){

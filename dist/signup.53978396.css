@@ -1167,54 +1167,53 @@ body {
       margin: 0 8vw 0 0; }
     #main #navbar img:nth-child(5) {
       margin: 0; }
-
-#popup {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  width: 100vw; }
-  #popup #background {
-    display: flex;
-    justify-content: space-around;
-    align-content: space-around;
+  #main #popup {
+    display: none;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
-    width: 100vw;
-    color: #B3B3B3;
-    opacity: 1; }
-    #popup #background #box {
+    width: 100vw; }
+    #main #popup #background {
       display: flex;
-      flex-direction: column;
-      color: white;
-      height: 13.9vh;
-      width: 65.6vw;
-      border-radius: 12px;
-      top: 38.05vh;
-      left: 17.06vw;
-      border-radius: 12px;
+      justify-content: space-around;
+      align-content: space-around;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      color: #B3B3B3;
       opacity: 1; }
-      #popup #background #box #message {
+      #main #popup #background #box {
         display: flex;
-        justify-content: space-around;
-        align-content: space-around;
-        align-items: center;
-        height: 9.36vh;
+        flex-direction: column;
+        color: white;
+        height: 13.9vh;
         width: 65.6vw;
-        border-bottom: 0.3px solid #B3B3B3; }
-        #popup #background #box #message p {
-          color: black;
-          font-size: 16px;
-          opacity: 1; }
-      #popup #background #box #confirm {
-        display: flex;
-        justify-content: space-around;
-        align-content: space-around;
-        align-items: center; }
-        #popup #background #box #confirm p {
-          color: #474EF2;
-          font-size: 16px;
-          opacity: 1; }
+        border-radius: 12px;
+        top: 38.05vh;
+        left: 17.06vw;
+        border-radius: 12px;
+        opacity: 1; }
+        #main #popup #background #box #message {
+          display: flex;
+          justify-content: space-around;
+          align-content: space-around;
+          align-items: center;
+          height: 9.36vh;
+          width: 65.6vw;
+          border-bottom: 0.3px solid #B3B3B3; }
+          #main #popup #background #box #message p {
+            color: black;
+            font-size: 16px;
+            opacity: 1; }
+        #main #popup #background #box #confirm {
+          display: flex;
+          justify-content: space-around;
+          align-content: space-around;
+          align-items: center; }
+          #main #popup #background #box #confirm p {
+            color: #474EF2;
+            font-size: 16px;
+            opacity: 1; }
 
 
 /*# sourceMappingURL=signup.53978396.css.map */
