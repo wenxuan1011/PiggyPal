@@ -207,15 +207,10 @@ export function checkBlank(page, ...input){
     }
 }
 
-function PopUpMessage(type){
+export function PopUpMessage(type){
     console.log(123)
-    if(typeof window!== 'undefined'){
-        var pop= document.getElementById("popup")
-        pop.css('display','flex')
-        const word = document.querySelector('#popup #background #box #message p')
-        word.textContent(type)
-    }
-    
+    $('#popup').css('display','flex')
+    $('#popup #background #box #message p').html(`尚未填寫${type}`)
 }
 
 export async function getAllUser(){
@@ -242,6 +237,15 @@ export async function sergetProject(user){
     return all_project
 }
 
+export function getColor(color){
+    const ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE']
+    const ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink']
+    for(let i=0;i<7;i++){
+        if(color === ColorCode[i]){
+            return ColorImgSrc[i]
+        }
+    }
+}
 
 export default{
     gettabledata,//get id inside the row of column select from database
@@ -254,4 +258,6 @@ export default{
     checkBlank,//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
     getAllUser,//get all users' id
     sergetProject,//FOR SERVER TO GET PROJECT
+    PopUpMessage,//popup message, need to input the word you want to show
+    getColor,//turn the color code into the color, need to input the color code of the project
 } 

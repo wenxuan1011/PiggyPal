@@ -21,7 +21,7 @@ html
             input(type="password", name="pw", placeholder = "Password")
           .forget
             p Forget password?
-          button(type="submit")
+          button#login_btn(type="submit")
             img(src = "./image/login/btn_Login.png" height = "100%")
       .other_choice
         img(src="./image/login/line_OrLogWith.png", height = "10%")
@@ -180,20 +180,9 @@ html
           p 共同專案
           p 達成成就
         #project_list
-          #no_project
-            p 尚未建立專案
-          .project_block
-            .project_infor
-              .type_and_date
-                img(src = "./image/project/Project_colordot_blue.png", height = "35%")
-                p#item 一般儲蓄
-                p#date 2022.04.28-2022.06.14
-              .plannd_speed_infor
-                p#percent 35%
-                //p 剩餘2個月2天
-              img(src = "./image/project/Project_progressBar-bg.png", width = "100%")
-            img#more_infor_btn(src = "./image/btn/btn_arrow_right.png", height = "17%")
-          img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+        #no_project
+          p 尚未建立專案
+        img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
 
       #add_project
         .bar
@@ -358,13 +347,14 @@ html
         img(src="./image/navbar/selected/mainpage_select.png", height = "77.647%")
         img(src="./image/navbar/unselect/accounting_unselect.png", height = "77.647%")
         img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
-      #popup
-        #background 
-          #box 
-            #message
-              p Hi
-            #confirm
-              p 確認
+    
+    #popup
+      #background 
+        #box
+          #message
+            p Hi
+          p#confirm 確認
+          
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")

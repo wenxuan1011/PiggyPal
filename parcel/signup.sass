@@ -699,6 +699,18 @@ body
             p:nth-child(2)
                 border-bottom: 2px solid #410ADF
 
+        #no_project
+            display: none
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            width: 80.2667vw
+            height: 10vh
+            background-color: white
+            box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+            border-radius: 8px
+            margin: 0 0 7.88vh 0
+        
         #project_list
             display: flex
             flex-direction: column
@@ -707,20 +719,8 @@ body
             height: auto
             margin: 5.17vh 0 0 0
 
-            #no_project
-                display: none
-                flex-direction: row
-                justify-content: center
-                align-items: center
-                width: 80.2667vw
-                height: 10vh
-                background-color: white
-                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
-                border-radius: 8px
-                margin: 0 0 7.88vh 0
-
             .project_block
-                display: none
+                display: flex
                 flex-direction: row
                 justify-content: space-between
                 align-items: center
@@ -731,8 +731,8 @@ body
                 border-radius: 8px
                 margin: 0 0 7.88vh 0
 
-                #more_infor_btn
-                    margin: 0 4vw 0 0
+                #right_btn
+                    margin: 0 4vw 0 0 
 
                 .project_infor
                     display: flex
@@ -758,7 +758,7 @@ body
                         p
                             margin: 0
                         #item
-                            margin: 0 12.5vw 0 0
+                            margin: 0 auto 0 0
                             
                     .plannd_speed_infor
                         display: flex
@@ -772,6 +772,9 @@ body
                         #percent
                             font-family: Roboto Bold
                             font-size: 24px
+
+        #add_project_btn
+            margin: 0 0 20vh 0
 
     #add_project
         display: none
@@ -1012,7 +1015,8 @@ body
         flex-direction: column
         align-items: center
         width: 100vw
-        height: 100vh
+        height: auto
+        min-height: 100vh
         background-color: #F4F4F4
         transform: translateX(100%)
         transition: 0.5s
@@ -1385,53 +1389,53 @@ body
         img:nth-child(5)
             margin: 0 
 
-    #popup
-        display: none
-        flex-direction: column
+#popup
+    display: none
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    position: absolute
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100vw
+    backdrop-filter: blur(5px)
+    z-index: 2
+
+    #background
+        display: flex
+        justify-content: space-around
+        align-content: space-around
         align-items: center
         height: 100vh
         width: 100vw
-        #background
+        background-color: rgba(0, 0, 0, 0.5)
+        
+        #box
             display: flex
-            justify-content: space-around
-            align-content: space-around
             align-items: center
-            height: 100vh
-            width: 100vw
-            color: #B3B3B3
+            flex-direction: column
+            color: white
+            width: 65.6vw
+            height: 13.9vh
+            border-radius: 12px
+            background-color: white
             opacity: 1
-            #box
-                display: flex
-                flex-direction: column
-                color: white
-                height: 13.9vh
-                width: 65.6vw
-                border-radius: 12px
-                top: 38.05vh
-                left: 17.06vw
-                border-radius: 12px
-                opacity: 1 
 
-                #message
-                    display: flex
-                    justify-content: space-around
-                    align-content: space-around
-                    align-items: center
-                    height: 9.36vh
-                    width: 65.6vw
-                    border-bottom: 0.3px solid #B3B3B3
+            #message
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 100%
+                height: 66.7%
+                border-bottom: 0.3px solid #B3B3B3
+                p
+                    color: black
+                    font-size: 16px
                     
-                    p
-                        color: black
-                        font-size: 16px
-                        opacity: 1
-                #confirm
-                    display: flex
-                    justify-content: space-around
-                    align-content: space-around
-                    align-items: center
-                    p
-                        color: #474EF2
-                        font-size: 16px
-                        opacity: 1
-                            
+                
+            #confirm
+                color: #474EF2
+                font-size: 16px
+                margin: auto 0
+                        

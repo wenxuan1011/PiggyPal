@@ -898,6 +898,7 @@ By Maker
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
 exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
@@ -905,7 +906,11 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+<<<<<<< HEAD
 exports.getAllUser = getAllUser;
+=======
+exports.getColor = getColor;
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
@@ -1222,6 +1227,7 @@ function checkBlank(page) {
 
 function PopUpMessage(type) {
   console.log(123);
+<<<<<<< HEAD
 
   if (typeof window !== 'undefined') {
     var pop = document.getElementById("popup");
@@ -1293,6 +1299,21 @@ function _sergetProject() {
     }, _callee6);
   }));
   return _sergetProject.apply(this, arguments);
+=======
+  $('#popup').css('display', 'flex');
+  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
+}
+
+function getColor(color) {
+  var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+  var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  for (var i = 0; i < 7; i++) {
+    if (color === ColorCode[i]) {
+      return ColorImgSrc[i];
+    }
+  }
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 }
 
 var _default = {
@@ -1312,9 +1333,15 @@ var _default = {
   //tranfer date to 0date if date<10
   checkBlank: checkBlank,
   //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+<<<<<<< HEAD
   getAllUser: getAllUser,
   //get all users' id
   sergetProject: sergetProject //FOR SERVER TO GET PROJECT
+=======
+  PopUpMessage: PopUpMessage,
+  //popup message, need to input the word you want to show
+  getColor: getColor //turn the color code into the color, need to input the color code of the project
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
 };
 exports.default = _default;
@@ -1471,12 +1498,15 @@ exports.default = _default;
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
+var _module = _interopRequireDefault(require("./module.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var COLOR = '#F6A93B'; // project color
 
 var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 
+var SHOW_PERSONAL_OR_JOINT = 'false';
 var MEMBER = [_signup.default];
 var TIME = new Date(); // type bar (change border-bottom)
 
@@ -1485,11 +1515,16 @@ var _loop = function _loop(i) {
     $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("border-bottom", "2px solid #410ADF");
 
     if (i === 2) {
+      SHOW_PERSONAL_OR_JOINT = 'false';
       $('#project_list').css("display", "flex");
+      $('#project #add_project_btn').css("display", "block");
     } else if (i === 3) {
+      SHOW_PERSONAL_OR_JOINT = 'true';
       $('#project_list').css("display", "flex");
+      $('#project #add_project_btn').css("display", "block");
     } else {
       $('#project_list').css("display", "none");
+      $('#project #add_project_btn').css("display", "none");
     }
 
     for (var j = 1; j < 5; j++) {
@@ -1512,7 +1547,7 @@ $('#mainpage #project_view .add_project .planned_speed img').click(function () {
     $('#add_project').css("transform", "translateX(0%)");
   }, 100);
 });
-$('#project_list #add_project_btn').click(function () {
+$('#project #add_project_btn').click(function () {
   MEMBER = [_signup.default];
   $('#add_project').css("display", "flex");
   setTimeout(function () {
@@ -1524,14 +1559,17 @@ $('#add_project .bar img').click(function () {
   setTimeout(function () {
     $('#add_project').css("display", "none");
   }, 500);
-}); // open/close personal_project page
+}); // open/close personal/joint project page
 
-$('.project_block').click(function () {
+var hi = function open_project() {
+  console.log(1);
   $('#show_personal_project').css("display", "flex");
   setTimeout(function () {
     $('#show_personal_project').css("transform", "translateX(0%)");
-  }, 100);
-});
+  }, 100); //showProjectDetail(project_name)
+}; // close personal_project page (project detail page)
+
+
 $('#show_personal_project .bar img').click(function () {
   $('#show_personal_project').css("transform", "translateX(100%)");
   setTimeout(function () {
@@ -1591,31 +1629,149 @@ $('#add_member .bar img').click(function () {
     $('#add_member').css("display", "none");
   }, 500);
 });
-$(document).ready(function () {
-  // update the project box 
-  $('#navbar img:nth-child(5), #project_form button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./project_or_not', {
-      id: _signup.default
-    }, function (data) {
-      if (data !== false) {
-        $('.project_infor .type_and_date #item').html("".concat(data[0]));
-        $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
-        var date = "".concat(data[1]) + '.' + "".concat(data[2]) + '.' + "".concat(data[3]) + '-' + "".concat(data[4]) + '.' + "".concat(data[5]) + '.' + "".concat(data[6]);
-        $('.project_infor .type_and_date #date').html(date);
-        $('#show_personal_project #project_detail #date_box #date').html(date);
-        var money = '$' + "".concat(data[7]);
-        $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
-        $('#show_personal_project #project_detail #target_money #money').html(money);
-        $('#project_list .project_block').css("display", "flex");
-        $('#project_list #no_project').css("display", "none");
-      } else {
-        $('#project_list .project_block').css("display", "none");
-        $('#project_list #no_project').css("display", "flex");
-      }
-    });
-  }); // add project
 
+function showProjectDetail(project_name) {
+  console.log('show1');
+  $.get('./getProjectDetail', {
+    id: _signup.default,
+    name: project_name
+  }, function (data) {
+    console.log('show2');
+
+    if (data !== false) {
+      $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
+      var percent = data[9] / data[8] / 100;
+      percent = Math.round(percent, -1);
+      $('#show_personal_project #project_detail #percent').html("".concat(percent, "%"));
+      var date = "".concat(data[2], ".").concat(data[3], ".").concat(data[4], " - ").concat(data[5], ".").concat(data[6], ".").concat(data[7]);
+      $('#show_personal_project #project_detail #date_box #date').html(date);
+      var money = '$' + "".concat(data[8]);
+      $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
+      $('#show_personal_project #project_detail #target_money #money').html(money);
+    } else {}
+  });
+} // show personal/joint project box
+
+
+$('#navbar img:nth-child(5), #project #type_bar').click(function (event) {
+  event.preventDefault();
+  getallproject(SHOW_PERSONAL_OR_JOINT);
+});
+
+function getallproject(TF) {
+  var show_no_project = true;
+  $.get('./getProject', {
+    ID: _signup.default
+  }, function (data) {
+    if (data != "nothing") {
+      var container = document.querySelector('#main #project #project_list');
+      container.innerHTML = "<div></div>";
+      var project_list = [];
+
+      for (var i in data) {
+        var project_name = _module.default.gettabledata(data, 'project_name', i);
+
+        var color = _module.default.gettabledata(data, 'color', i);
+
+        var start_year = _module.default.gettabledata(data, 'start_year', i);
+
+        var start_month = _module.default.gettabledata(data, 'start_month', i);
+
+        var start_day = _module.default.gettabledata(data, 'start_day', i);
+
+        var end_year = _module.default.gettabledata(data, 'end_year', i);
+
+        var end_month = _module.default.gettabledata(data, 'end_month', i);
+
+        var end_day = _module.default.gettabledata(data, 'end_day', i);
+
+        var percent = _module.default.StringtoInt(_module.default.gettabledata(data, 'saved_money', i)) / _module.default.StringtoInt(_module.default.gettabledata(data, 'target_number', i)) / 100;
+        percent = Math.round(percent, -1);
+
+        var type = _module.default.gettabledata(data, 'personal_or_joint', i);
+
+        project_list[i] = project_name;
+
+        if (type !== TF) {
+          continue;
+        } //create element
+
+
+        var _container = document.querySelector('#main #project #project_list');
+
+        var block = document.createElement('div');
+        var infor_1 = document.createElement('div');
+        var infor_2 = document.createElement('div');
+        var dot = document.createElement('img');
+        var name = document.createElement('p');
+        var date = document.createElement('p');
+        var infor_3 = document.createElement('div');
+        var speed = document.createElement('p');
+        var bar = document.createElement('img');
+        var btn = document.createElement('img'); //set text
+
+        name.textContent = "".concat(project_name);
+        date.textContent = "".concat(start_year, ".").concat(start_month, ".").concat(start_day, "-").concat(end_year, ".").concat(end_month, ".").concat(end_day);
+        speed.textContent = "".concat(percent, "%"); //set attribute
+
+        block.setAttribute('class', 'project_block');
+        block.setAttribute('id', "".concat(project_name));
+        infor_1.setAttribute('class', 'project_infor');
+        infor_2.setAttribute('class', 'type_and_date');
+        infor_3.setAttribute('class', 'plannd_speed_infor');
+        dot.setAttribute('src', "./image/project/Project_colordot_".concat(_module.default.getColor(color), ".png"));
+        dot.setAttribute('height', '35%');
+        bar.setAttribute('src', './image/project/Project_progressBar-bg.png');
+        bar.setAttribute('width', '100%');
+        btn.setAttribute('src', './image/btn/btn_arrow_right.png');
+        btn.setAttribute('height', '17%');
+        btn.setAttribute('id', 'right_btn');
+        name.setAttribute('id', 'item');
+        speed.setAttribute('id', 'percent'); //append child
+
+        _container.appendChild(block);
+
+        block.appendChild(infor_1);
+        block.appendChild(btn);
+        infor_1.appendChild(infor_2);
+        infor_1.appendChild(infor_3);
+        infor_1.appendChild(bar);
+        infor_2.appendChild(dot);
+        infor_2.appendChild(name);
+        infor_2.appendChild(date);
+        infor_3.appendChild(speed); // display no_project box or not
+
+        show_no_project = false;
+      } ////////// big problem ////////// (done)
+
+
+      var _loop3 = function _loop3(_i2) {
+        $("#" + "".concat(project_list[_i2])).click(function (e) {
+          $('#show_personal_project').css("display", "flex");
+          setTimeout(function () {
+            $('#show_personal_project').css("transform", "translateX(0%)");
+          }, 100);
+          event.preventDefault(); // I'm not sure is it right or not
+
+          showProjectDetail(project_list[_i2]);
+        });
+      };
+
+      for (var _i2 = 0; _i2 < project_list.length; _i2++) {
+        _loop3(_i2);
+      }
+    }
+
+    if (show_no_project === true) {
+      $('#no_project').css("display", "flex");
+    } else {
+      $('#no_project').css("display", "none");
+    }
+  });
+}
+
+$(document).ready(function () {
+  // add project
   $('#project_form button[type="submit"]').click(function (event) {
     event.preventDefault();
 
@@ -1637,15 +1793,24 @@ $(document).ready(function () {
       note: $('#project_form textarea[name=note]').val(),
       personal_or_joint: PERSONAL_OR_JOINT
     }, function (data) {
-      $('#project_form input[name=project_name]').val('');
-      $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
-      COLOR = '#F6A93B';
-      $('#project_form input[name=start_date]').val('');
-      $('#project_form input[name=end_day]').val('');
-      $('#project_form input[name=target_number]').val('');
-      MEMBER = [_signup.default]; // 還沒加入均分
+      if (data === '0') {
+        $('#project_form input[name=project_name]').val('');
+        $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
+        COLOR = '#F6A93B';
+        $('#project_form input[name=start_date]').val('');
+        $('#project_form input[name=end_day]').val('');
+        $('#project_form input[name=target_number]').val('');
+        MEMBER = [_signup.default]; // 還沒加入均分
 
+<<<<<<< HEAD
       $('#project_form textarea[name=note]').val(''); //$("#add_project_-output").html(`${data}`);
+=======
+        $('#project_form textarea[name=note]').val('');
+        $("#add_project_-output").html("".concat(data));
+      } else {
+        _module.default.PopUpMessage(data);
+      }
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
     });
   }); // clean the input value in the add_project page
 
@@ -1683,7 +1848,7 @@ $(document).ready(function () {
 $(function () {
   $(".calendar").datepicker();
 });
-},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1711,7 +1876,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "41695" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39488" + '/');
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
   ws.onmessage = function (event) {
     checkedAssets = {};

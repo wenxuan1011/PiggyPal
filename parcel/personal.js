@@ -88,7 +88,13 @@ $(document).ready(function() {
         money: $('#financial input[name=money]').val(),
         repeat: $('#financial input[name=repeat]').val(),
       }, (data) => {
-        $("#financial-output").html(`${data}`);
+        if(data === '0'){
+          $("#financial-output").html(`${data}`);
+        }
+        else{
+          mod.PopUpMessage(data)
+        }
+        
       });
     })
 

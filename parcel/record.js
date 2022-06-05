@@ -24,11 +24,16 @@ $(document).ready(function() {
       cost: $('#fin input[name=cost]').val(),
       date: $('#fin input[name=date]').val(),
       type: click_op
+    },(data)=>{
+      if(data === '0'){
+        t.value = ""
+        n.value = ""
+        d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+      }
+      else{
+        mod.PopUpMessage(data)
+      }
     });
-    t.value = ""
-    n.value = ""
-    d.value = "05/13/2022"
-    $('#fin ')
     //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
 
@@ -138,10 +143,12 @@ $(function(){
 });
 
 
-$('#navbar').click((event) => {
+$('#login_btn, #save').click((event) => {
   event.preventDefault()
-  getdetailincome()
-  getdetailexpenditure()
+  setTimeout(() => {
+    getdetailincome()
+    getdetailexpenditure()
+}, 100)
 })
 
 function getdetailincome(){

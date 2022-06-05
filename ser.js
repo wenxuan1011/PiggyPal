@@ -16,7 +16,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6162
+const port = 6164
 
 // listen port
 app.listen(port, () => {
@@ -169,7 +169,7 @@ app.get('/financial',(req,res) => {
   const search_item = `
     SELECT id FROM financial
     WHERE id = ${UID} and item =${ITEM}`
-  if (mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)){
+  if (mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)===1){
     const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
     connection.query(search_item, (err, rows, fields) => {
       if (err)
@@ -188,9 +188,11 @@ app.get('/financial',(req,res) => {
         connection.query(update, (err, result) => {
           if (err) console.log('fail to insert: ', err)
         })
-        res.send("You have updated your "+ update_type[`${req.query.type}`] +".")
+        res.send('0')
       }
     }, 100)
+  }else{
+    res.send(mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT))
   }
   
 })
@@ -236,11 +238,17 @@ app.get('/record',(req,res) => {
   let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
   let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
   let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
-  if(mod.checkBlank('record',items,cost,temp_date,type)){
+
+  if(mod.checkBlank('record',items,temp_date,cost,type)===1){
     const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
     connection.query(add_record, (err) => {
       if (err) console.log('fail to insert: ', err)
+      
     })
+    res.send('0')
+  }
+  else{
+    res.send(mod.checkBlank('record',items,temp_date,cost,type))
   }
 })
 
@@ -304,23 +312,23 @@ app.get('/monthlymoney',(req,res) =>{
 
 
 // get detail in project
-// 要加顏色還有備註（未改）
-app.get('/project_or_not',(req,res) => {
+app.get('/getProjectDetail',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
+  let project_name = "'"+`${req.query.name}`+"'"
 
-  const search_username = `
-    SELECT * FROM person_project
-    WHERE id = ${UID}`
-  connection.query(search_username, (err, row, fields) => {
+  const search_project = `
+    SELECT * FROM project
+    WHERE member = ${UID} and project_name = ${project_name}`  
+  connection.query(search_project, (err, row, fields) => {
     if (err)
       console.log('fail to search: ', err)
     if (row[0] === undefined) {
       res.send(false)
     }
     else{
-      //console.log(row)
-      let detail = [mod.gettabledata(row,'project_name',0), mod.gettabledata(row,'start_year',0), mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0), mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0)]
-      //console.log(detail)
+      let detail = [mod.gettabledata(row,'project_name',0), mod.gettabledata(row,'color',0), mod.gettabledata(row,'start_year',0),
+        mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0),
+        mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0), mod.gettabledata(row,'saved_money',0)]
       res.send(detail)
     }
   })
@@ -355,7 +363,7 @@ app.get('/project',(req,res) => {
   const search_project = `
     SELECT project_name FROM project
     WHERE id = ${PID} and project_name = ${project_name}`
-  if(mod.checkBlank(project_name,start_date,end_date,target_number,distribute)){
+  if(mod.checkBlank('project',project_name,start_date,end_date,target_number,distribute) === 1){
     connection.query(search_project, (err, rows, fields) => {
       if (err)
         console.log('fail to search: ', err)
@@ -373,30 +381,28 @@ app.get('/project',(req,res) => {
         for(let i=0;i<member.length;i++){
           var member_string = "'" + `${req.query.member[i]}` + "'"
           let update_project = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money)
-          VALUES (${PID}, ${project_name}, ${color}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number}, ${member_string}, ${distribute}, ${notes}, ${personal_or_joint},${saved_money})`
+          VALUES (${PID}, ${project_name}, ${color}, ${start_year}, ${start_month}, ${start_day}, ${end_year}, ${end_month}, ${end_day}, ${target_number}, ${member_string}, ${distribute}, ${notes}, ${personal_or_joint}, ${saved_money})`
           connection.query(update_project, (err, result) => {
             if (err) console.log('fail to insert: ', err)
           })
         }
-        res.send("You have updated your "+ `${req.query.project_name}` +".")
+        res.send('0')
       }
     }, 100)
   }
   else{
-    res.send(mod.checkBlank(project_name,start_date,end_date,target_number,distribute))
+    res.send(mod.checkBlank('project',project_name,start_date,end_date,target_number,distribute))
   }
-  
   
 })
 
 
 
-
 ///get project table
 app.get('/getProject',(req,res) =>{
-  let UID="'"+`${req.query.ID}`+"'"
-  var search_user=""
-  search_user=`SELECT * FROM project WHERE member = ${UID}`
+  let UID = "'"+`${req.query.ID}`+"'"
+  var search_user = ""
+  search_user = `SELECT * FROM project WHERE member = ${UID}`
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)
@@ -409,7 +415,7 @@ app.get('/getProject',(req,res) =>{
   })
 })
 
-/////////////////please add your code above,below are the codes that server need to do every day//////////////////////////////////
+/////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////
 //update monthly financial
 app.get('/sergetfinancial', (req,res) =>{
   var today = new Date()

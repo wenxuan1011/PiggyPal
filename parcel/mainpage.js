@@ -2,10 +2,11 @@ import ID from './signup.js'
 import * as mod from './module.js'
 
 
-$('#navbar').click((event) => {
+$('#login_btn, #save').click((event) => {
     event.preventDefault()
-    //console.log(1)
-    getdetail()
+    setTimeout(() => {
+        getdetail()
+    }, 100)
 })
 
 $('#add_project_btn').click((event) => {

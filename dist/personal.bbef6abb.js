@@ -898,6 +898,7 @@ By Maker
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
 exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
@@ -905,7 +906,11 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+<<<<<<< HEAD
 exports.getAllUser = getAllUser;
+=======
+exports.getColor = getColor;
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
@@ -1222,6 +1227,7 @@ function checkBlank(page) {
 
 function PopUpMessage(type) {
   console.log(123);
+<<<<<<< HEAD
 
   if (typeof window !== 'undefined') {
     var pop = document.getElementById("popup");
@@ -1293,6 +1299,21 @@ function _sergetProject() {
     }, _callee6);
   }));
   return _sergetProject.apply(this, arguments);
+=======
+  $('#popup').css('display', 'flex');
+  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
+}
+
+function getColor(color) {
+  var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+  var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  for (var i = 0; i < 7; i++) {
+    if (color === ColorCode[i]) {
+      return ColorImgSrc[i];
+    }
+  }
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 }
 
 var _default = {
@@ -1312,9 +1333,15 @@ var _default = {
   //tranfer date to 0date if date<10
   checkBlank: checkBlank,
   //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+<<<<<<< HEAD
   getAllUser: getAllUser,
   //get all users' id
   sergetProject: sergetProject //FOR SERVER TO GET PROJECT
+=======
+  PopUpMessage: PopUpMessage,
+  //popup message, need to input the word you want to show
+  getColor: getColor //turn the color code into the color, need to input the color code of the project
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
 };
 exports.default = _default;
@@ -1553,7 +1580,11 @@ $(document).ready(function () {
       money: $('#financial input[name=money]').val(),
       repeat: $('#financial input[name=repeat]').val()
     }, function (data) {
-      $("#financial-output").html("".concat(data));
+      if (data === '0') {
+        $("#financial-output").html("".concat(data));
+      } else {
+        mod.PopUpMessage(data);
+      }
     });
   }); // update information
 
@@ -1600,7 +1631,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "41695" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43099" + '/');
+>>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
   ws.onmessage = function (event) {
     checkedAssets = {};
