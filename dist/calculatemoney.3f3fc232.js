@@ -906,11 +906,13 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.getAllUser = getAllUser;
 exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
+exports.sergetProject = sergetProject;
 
 require("regenerator-runtime/runtime.js");
 
@@ -966,16 +968,18 @@ function _caltodaymoney() {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
                 } //total=gettabledata(money,type,0)
+                //console.log(`total:${total}`)
 
 
                 //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
+                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              }
+              } //console.log(result)
 
-              console.log(result);
+
+              //console.log(result)
               results = result;
             });
 
@@ -1038,16 +1042,18 @@ function _caltotalmoney() {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
                 } //total=gettabledata(money,type,0)
+                //console.log(`total:${total}`)
 
 
                 //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
+                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              }
+              } //console.log(result)
 
-              console.log(result);
+
+              //console.log(result)
               results = result;
             });
 
@@ -1084,9 +1090,9 @@ function _getProjectMoney() {
 
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
-                var startday = new Date();
-                console.log(lastday, startday);
+                var startday = new Date(); //console.log(lastday, startday)
 
+                //console.log(lastday, startday)
                 if (lastday - startday < 0) {
                   continue;
                 }
@@ -1094,8 +1100,9 @@ function _getProjectMoney() {
                 var remainday = Math.abs(lastday - startday);
 
                 if (remainday > 0 || remainday !== undefined) {
-                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  console.log("Projectremainday:", remainday);
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1; //console.log("Projectremainday:",remainday)
+
+                  //console.log("Projectremainday:",remainday)
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
@@ -1138,7 +1145,7 @@ function _calprojectpercent() {
             }, function (data) {
               for (var i in data) {
                 if (project_name === data[i].project_name) {
-                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_number', i));
                   result = result / 100;
                 }
               }
@@ -1179,7 +1186,7 @@ function datetransfer(date) {
 
 function checkBlank(page) {
   var lengths = 1;
-  var recordmessage = ["日期", "金額", "類別"];
+  var recordmessage = ["項目", "日期", "金額", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
   var pages = [];
@@ -1221,6 +1228,70 @@ function PopUpMessage(type) {
   $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
 }
 
+function getAllUser() {
+  return _getAllUser.apply(this, arguments);
+}
+
+function _getAllUser() {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+    var all_user;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            all_user = [];
+            _context5.next = 3;
+            return $.get('./getAllUser', {}, function (data) {
+              all_user = data; //console.log(data)
+            });
+
+          case 3:
+            return _context5.abrupt("return", all_user);
+
+          case 4:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _getAllUser.apply(this, arguments);
+}
+
+function sergetProject(_x12) {
+  return _sergetProject.apply(this, arguments);
+}
+
+function _sergetProject() {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(user) {
+    var all_project;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return $.get('./sergetProject', {
+              user: user
+            }, function (data) {
+              all_project = data;
+              all_project = all_project.sort(function (a, b) {
+                return a.remainday - b.remainday;
+              });
+            });
+
+          case 2:
+            return _context6.abrupt("return", all_project);
+
+          case 3:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+  return _sergetProject.apply(this, arguments);
+}
+
 function getColor(color) {
   var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
   var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
@@ -1249,6 +1320,10 @@ var _default = {
   //tranfer date to 0date if date<10
   checkBlank: checkBlank,
   //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  getAllUser: getAllUser,
+  //get all users' id
+  sergetProject: sergetProject,
+  //FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
   //popup message, need to input the word you want to show
   getColor: getColor //turn the color code into the color, need to input the color code of the project
@@ -1638,6 +1713,35 @@ var MonthlyExpend = 0;
 var MonthlyIncome = 0;
 var MonthlySaving = 0;
 var ProjectSaving = 0;
+var ProjectSaved = 0;
+$('#Login #login-form #login button').click(function (event) {
+  event.preventDefault();
+  setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var test, i;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            process(_signup.default);
+            _context.next = 3;
+            return mod.sergetProject(_signup.default);
+
+          case 3:
+            test = _context.sent;
+            console.log('test:', test[0]);
+
+            for (i in test) {
+              console.log('test:', test[i].remainday);
+            }
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  })), 0);
+});
 $('#navbar').click(function (event) {
   event.preventDefault();
   process(_signup.default);
@@ -1648,27 +1752,27 @@ function process(_x) {
 }
 
 function _process() {
-  _process = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID) {
+  _process = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID) {
     var today, totalday;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             today = new Date();
             totalday = setremainDay(today, totalday);
-            _context.next = 4;
+            _context2.next = 4;
             return setVariable(ID);
 
           case 4:
-            _context.next = 6;
+            _context2.next = 6;
             return calculatemoney(today, totalday);
 
           case 6:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _process.apply(this, arguments);
 }
@@ -1702,81 +1806,113 @@ function setVariable(_x2) {
 }
 
 function _setVariable() {
-  _setVariable = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(ID) {
+  _setVariable = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
     var today;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             today = new Date();
-            _context2.next = 3;
+            _context3.next = 3;
             return mod.getTodayMoney(ID, 'Account', 'cost', 0);
 
           case 3:
-            todayExpenditure = _context2.sent;
-            _context2.next = 6;
+            todayExpenditure = _context3.sent;
+            _context3.next = 6;
             return mod.getTodayMoney(ID, 'Account', 'cost', 1);
 
           case 6:
-            todayIncome = _context2.sent;
-            _context2.next = 9;
+            todayIncome = _context3.sent;
+            _context3.next = 9;
             return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
 
           case 9:
-            Expenditure = _context2.sent;
-            _context2.next = 12;
+            Expenditure = _context3.sent;
+            _context3.next = 12;
             return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
 
           case 12:
-            Income = _context2.sent;
-            _context2.next = 15;
-            return mod.getMonthlyMoney(ID, 'financial', 'money', 0);
+            Income = _context3.sent;
+            _context3.next = 15;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 3);
 
           case 15:
-            MonthlyIncome = _context2.sent;
-            _context2.next = 18;
-            return mod.getMonthlyMoney(ID, 'financial', 'money', 1);
+            ProjectSaved = _context3.sent;
+            _context3.next = 18;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 0);
 
           case 18:
-            MonthlyExpend = _context2.sent;
-            _context2.next = 21;
-            return mod.getMonthlyMoney(ID, 'financial', 'money', 2);
+            MonthlyIncome = _context3.sent;
+            _context3.next = 21;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 1);
 
           case 21:
-            MonthlySaving = _context2.sent;
-            _context2.next = 24;
-            return mod.getProjectMoney(ID, "goal");
+            MonthlyExpend = _context3.sent;
+            _context3.next = 24;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 2);
 
           case 24:
-            ProjectSaving = _context2.sent;
+            MonthlySaving = _context3.sent;
+            _context3.next = 27;
+            return mod.getProjectMoney(ID, "goal");
 
-          case 25:
+          case 27:
+            ProjectSaving = _context3.sent;
+            console.log(ProjectSaved);
+            /*
+            todayExpenditure.then(res => {
+                todayExpenditure=Math.ceil(res)
+            })
+            todayIncome.then(res => {
+                todayIncome=Math.ceil(res)
+            })
+            Expenditure.then(res => {
+                Expenditure=Math.ceil(res)
+            })
+            Income.then(res => {
+                Income=Math.ceil(res)
+            })
+            MonthlyExpend.then(res => {
+                MonthlyExpend=Math.ceil(res)
+            })
+            MonthlyIncome.then(res => {
+                MonthlyIncome=Math.ceil(res)
+            })
+            MonthlySaving.then(res => {
+                MonthlySaving=Math.ceil(res)
+            })
+            ProjectSaving.then(res => {
+                ProjectSaving=Math.ceil(res)
+                console.log(ProjectSaving)
+            })
+            */
+
+          case 29:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _setVariable.apply(this, arguments);
 }
 
 function calculatemoney(_x3, _x4) {
   return _calculatemoney.apply(this, arguments);
-} //export default process
-
+}
 
 function _calculatemoney() {
-  _calculatemoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(today, totalday) {
+  _calculatemoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(today, totalday) {
     var DailyRemain, actualDailyRemain;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
-            console.log("DailyRemain:", DailyRemain);
-            actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure;
-            console.log("ProjectSaving:", ProjectSaving);
-            console.log("actualDailyRemain:", actualDailyRemain);
+            $('#main #mainpage #balance_bar p:nth-child(1)').html("$".concat(MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income - ProjectSaved)); //console.log("DailyRemain:",DailyRemain)
+
+            actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure; //console.log("ProjectSaving:", ProjectSaving)
+            //console.log("actualDailyRemain:",actualDailyRemain)
 
             if (todayIncome - todayExpenditure >= 0) {
               $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(todayIncome - todayExpenditure));
@@ -1794,15 +1930,14 @@ function _calculatemoney() {
             }
 
             $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
-            $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(Math.floor(ProjectSaving)));
-            console.log("DailyExpenditure: ", Math.floor(DailyRemain), "actually money : ", Math.floor(actualDailyRemain));
+            $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(Math.floor(ProjectSaving))); //console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
 
-          case 10:
+          case 7:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return _calculatemoney.apply(this, arguments);
 }
@@ -1834,7 +1969,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33860" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33082" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

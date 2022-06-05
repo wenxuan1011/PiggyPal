@@ -2,7 +2,7 @@ import ID from './signup.js'
 import mod from './module.js'
 var COLOR = '#F6A93B'  // project color
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
-var SHOW_PERSONAL_OR_JOINT = 'false'
+var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
 
@@ -12,12 +12,12 @@ for(let i=1;i<5;i++){
   $('#project #type_bar p:nth-child('+`${i}`+')').click(function(){
     $('#project #type_bar p:nth-child('+`${i}`+')').css("border-bottom", "2px solid #410ADF")
     if(i===2){
-      SHOW_PERSONAL_OR_JOINT = 'false'
+      SHOW_PERSONAL_OR_JOINT = false
       $('#project_list').css("display", "flex")
       $('#project #add_project_btn').css("display", "block")
     }
     else if(i===3){
-      SHOW_PERSONAL_OR_JOINT = 'true'
+      SHOW_PERSONAL_OR_JOINT = true
       $('#project_list').css("display", "flex")
       $('#project #add_project_btn').css("display", "block")
     }
@@ -77,6 +77,13 @@ $('#show_personal_project .bar img').click(function(){
   }, 500)
 })
 
+// close joint_project page (project detail page)
+$('#show_joint_project .bar img').click(function(){
+  $('#show_joint_project').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#show_joint_project').css("display", "none")
+  }, 500)
+})
 
 
 
@@ -134,23 +141,22 @@ $('#add_member .bar img').click(function(){
 })
 
 
-function showProjectDetail(project_name){
-  console.log('show1')
+function showProjectDetail(project_name, personal_or_joint){
   $.get('./getProjectDetail',{
     id: ID,
     name: project_name,
   },(data)=>{
-    console.log('show2')
+    let page_tag = `#show_${personal_or_joint}_project`
     if(data !== false){
-      $('#show_personal_project #project_detail #title #item').html(`${data[0]}`)
+      $(`${page_tag} .project_detail .title #item`).html(`${data[0]}`)
       let percent = data[9]/data[8]/100
       percent = Math.round(percent, -1)
-      $('#show_personal_project #project_detail #percent').html(`${percent}%`)
+      $(`${page_tag} .project_detail #percent`).html(`${percent}%`)
       let date = `${data[2]}.${data[3]}.${data[4]} - ${data[5]}.${data[6]}.${data[7]}`
-      $('#show_personal_project #project_detail #date_box #date').html(date)
+      $(`${page_tag} .project_detail .date_box #date`).html(date)
       let money = '$' + `${data[8]}`
-      $('#show_personal_project #project_detail #planned_speed_graph #money').html(money)
-      $('#show_personal_project #project_detail #target_money #money').html(money)
+      $(`${page_tag} .project_detail .planned_speed_graph #money`).html(money)
+      $(`${page_tag} .project_detail .target_money #money`).html(money)
     }
     else{
     }
@@ -163,6 +169,7 @@ $('#navbar img:nth-child(5), #project #type_bar').click((event) => {
   getallproject(SHOW_PERSONAL_OR_JOINT)
 })
 
+// create getallproject function
 function getallproject(TF){
   var show_no_project = true
   $.get('./getProject',{
@@ -185,7 +192,7 @@ function getallproject(TF){
               percent = Math.round(percent, -1)
               var type = mod.gettabledata(data, 'personal_or_joint', i)
               project_list[i] = project_name
-              if(type !== TF){
+              if(type !== `${TF}`){
                 continue;
               }
               //create element
@@ -235,14 +242,26 @@ function getallproject(TF){
           }
           ////////// big problem ////////// (done)
           for(let i=0;i<project_list.length;i++){
-            $("#"+`${project_list[i]}`).click(function(e){
-              $('#show_personal_project').css("display", "flex")
-              setTimeout(() => {
-                $('#show_personal_project').css("transform", "translateX(0%)")
-              }, 100)
-              event.preventDefault()  // I'm not sure is it right or not
-              showProjectDetail(project_list[i])
-            })
+            if(SHOW_PERSONAL_OR_JOINT === false){
+              $("#"+`${project_list[i]}`).click(function(e){
+                $('#show_personal_project').css("display", "flex")
+                setTimeout(() => {
+                  $('#show_personal_project').css("transform", "translateX(0%)")
+                }, 100)
+                event.preventDefault()  // I'm not sure is it right or not
+                showProjectDetail(project_list[i], 'personal')
+              })
+            }
+            else{
+              $("#"+`${project_list[i]}`).click(function(e){
+                $('#show_joint_project').css("display", "flex")
+                setTimeout(() => {
+                  $('#show_joint_project').css("transform", "translateX(0%)")
+                }, 100)
+                event.preventDefault()  // I'm not sure is it right or not
+                showProjectDetail(project_list[i], 'joint')
+              })
+            }
           }
       }
       if(show_no_project===true){
@@ -333,7 +352,6 @@ $(document).ready(function() {
     MEMBER.push($('#add_member #id_box input[name=userid]').val())
     console.log(MEMBER)
   })
-
 });
 
 $(function(){

@@ -9,6 +9,8 @@ import mysql from 'mysql'
 import mod from './parcel/module.js'
 import cron from 'node-cron'
 import { connect } from 'http2'
+import { rmSync } from 'fs'
+import { userInfo } from 'os'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -157,8 +159,8 @@ app.get('/financial',(req,res) => {
   let TYPE = "'"+`${req.query.type}`+"'"
   let ITEM = "'"+`${req.query.item}`+"'"
   let YEAR = "'"+`${req.query.year}`+"'"
-  let MONTH = "'"+`${req.query.month}`+"'"
-  let DAY = "'"+`${req.query.day}`+"'"
+  let MONTH = "'"+`${mod.datetransfer(req.query.month)}`+"'"
+  let DAY = "'"+`${mod.datetransfer(req.query.day)}`+"'"
   let MONEY = "'"+`${req.query.money}`+"'"
   let REPEAT = "'"+`${req.query.repeat}`+"'"
 
@@ -395,27 +397,6 @@ app.get('/project',(req,res) => {
 })
 
 
-// get mainpage detail
-app.get('/getmainpagedetail',(req,res) => {
-  let UID = "'"+`${req.query.id}`+"'"
-  let month= `${mod.datetransfer(mod.StringtoInt(req.query.month))}`
-  let date= "'"+`${mod.datetransfer(mod.StringtoInt(req.query.date))}`+"'"
-  let year= "'"+`${req.query.year}`+"'"
-  var search_user=""
-
-  search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
-
-  connection.query(search_user, (err, row, fields) => {
-    if(err)
-      console.log('fail to search: ', err)
-    if(row[0]===undefined){
-      res.send("nothing")
-    }
-    else{
-      res.send(row)
-    }
-  })
-})
 
 ///get project table
 app.get('/getProject',(req,res) =>{
@@ -436,7 +417,7 @@ app.get('/getProject',(req,res) =>{
 
 /////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////
 //update monthly financial
-app.get('./sergetfinancial', (req,res) =>{
+app.get('/sergetfinancial', (req,res) =>{
   var today = new Date()
   var search_all = 'SELECT * FROM project'
   connect.query(search_all , (err, row, fields) =>{
@@ -473,7 +454,82 @@ app.get('./sergetfinancial', (req,res) =>{
   })
 })
 /////////above is updated at 00:00,below is updated at 23:59////////////////////////////////////
-app.get('./serdailyprojectsaving', (req,res) => {
+//get all users' id in database
+app.get('/getAllUser', (req,res) => {
+  //search all user
+  var all_user=[]
+  const search_code = 'SELECT id FROM user'
+  connection.query(search_code, (err, rows, fields) => {
+    if(err)
+      console.log('server went wrong ', err)
+    for(let i in rows){
+      all_user.push(mod.gettabledata(rows, 'id', i))
+    }
+    res.send(all_user)
+  })
+  
+})
 
+//get specific user's projects
+app.get('/sergetProject',(req,res) => {
+  var result = []
+  var user = req.query.user
+  
+  const getAllproject= `SELECT * FROM project WHERE member = '${user}'`
+  connection.query(getAllproject, (err, rows, fields) => {
+    if (err) console.log('server went wrong', err)
+    for(let i in rows){
+      let lastday = new Date(`${mod.gettabledata(rows, `end_month`, i)}/${mod.gettabledata(rows, `end_day`, i)}/${mod.gettabledata(rows, `end_year`, i)}`)
+      let startday = new Date()
+      //console.log(lastday, startday)
+      var remainday= (lastday-startday)
+
+      //reamin money
+      let remain_money = mod.StringtoInt(mod.gettabledata(rows, 'target_number', i))-mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
+      if(remainday>0){
+        remainday= Math.ceil(remainday/(1000*3600*24))+1
+      }
+      else{
+        remainday = -1
+      }
+      var buffer = new Object
+      buffer["id"] = mod.gettabledata(rows, 'id', i)
+      buffer["project_name"] = mod.gettabledata(rows, 'project_name', i)
+      buffer["member"] = mod.gettabledata(rows, 'member', i)
+      buffer["personal_or_joint"] = mod.gettabledata(rows, 'personal_or_joint', i)
+      buffer["saved_money"] = Math.floor(mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i)))
+      buffer["remain_money"] = Math.round(remain_money/remainday)
+      buffer["remainday"] = remainday
+      result.push(buffer)
+    }
+    res.send(result)
+  })
+  
+})
+//save money in project
+app.get('/saveMoneytoProject',(req,res) =>{
+  var today = new Date()
+  let id="'"+`${req.query.id}`+"'"
+  let member="'"+`${req.query.member}`+"'"
+  let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  let saved_money = "'"+`${req.query.saving_money}`+"'"
+  let saveded_money = "'"+`${mod.StringtoInt(req.query.saving_money)-mod.StringtoInt(req.query.saved_money)}`+"'"
+  let date = "'"+`${req.query.date}`+"'"
+  let month = "'"+`${req.query.month}`+"'"
+  let year = "'"+`${req.query.year}`+"'"
+
+  const accounting = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${member}, ${project_name}, ${saveded_money}, ${date}, ${month}, ${year}, '3')`
+  connection.query(accounting, (err,rows,fields)=>{
+  
+    if(err)console.log("There are some problem: ",err)
+  })
+  
+  const update=`UPDATE project SET saved_money=${saved_money} 
+  WHERE id=${id} and member = ${member} and personal_or_joint =${personal_or_joint} and project_name = ${project_name}`
+  connection.query(update, (err, rows, fields)=>{
+    if(err)console.log("There must be some same data",err)
+    res.send(update)
+  })
 })
 //connection.end()

@@ -906,11 +906,13 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.getAllUser = getAllUser;
 exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
+exports.sergetProject = sergetProject;
 
 require("regenerator-runtime/runtime.js");
 
@@ -966,16 +968,18 @@ function _caltodaymoney() {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
                 } //total=gettabledata(money,type,0)
+                //console.log(`total:${total}`)
 
 
                 //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
+                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              }
+              } //console.log(result)
 
-              console.log(result);
+
+              //console.log(result)
               results = result;
             });
 
@@ -1038,16 +1042,18 @@ function _caltotalmoney() {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
                 } //total=gettabledata(money,type,0)
+                //console.log(`total:${total}`)
 
 
                 //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
+                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              }
+              } //console.log(result)
 
-              console.log(result);
+
+              //console.log(result)
               results = result;
             });
 
@@ -1084,9 +1090,9 @@ function _getProjectMoney() {
 
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
-                var startday = new Date();
-                console.log(lastday, startday);
+                var startday = new Date(); //console.log(lastday, startday)
 
+                //console.log(lastday, startday)
                 if (lastday - startday < 0) {
                   continue;
                 }
@@ -1094,8 +1100,9 @@ function _getProjectMoney() {
                 var remainday = Math.abs(lastday - startday);
 
                 if (remainday > 0 || remainday !== undefined) {
-                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  console.log("Projectremainday:", remainday);
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1; //console.log("Projectremainday:",remainday)
+
+                  //console.log("Projectremainday:",remainday)
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
@@ -1138,7 +1145,7 @@ function _calprojectpercent() {
             }, function (data) {
               for (var i in data) {
                 if (project_name === data[i].project_name) {
-                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_number', i));
                   result = result / 100;
                 }
               }
@@ -1179,7 +1186,7 @@ function datetransfer(date) {
 
 function checkBlank(page) {
   var lengths = 1;
-  var recordmessage = ["日期", "金額", "類別"];
+  var recordmessage = ["項目", "日期", "金額", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
   var pages = [];
@@ -1221,6 +1228,70 @@ function PopUpMessage(type) {
   $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
 }
 
+function getAllUser() {
+  return _getAllUser.apply(this, arguments);
+}
+
+function _getAllUser() {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+    var all_user;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            all_user = [];
+            _context5.next = 3;
+            return $.get('./getAllUser', {}, function (data) {
+              all_user = data; //console.log(data)
+            });
+
+          case 3:
+            return _context5.abrupt("return", all_user);
+
+          case 4:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _getAllUser.apply(this, arguments);
+}
+
+function sergetProject(_x12) {
+  return _sergetProject.apply(this, arguments);
+}
+
+function _sergetProject() {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(user) {
+    var all_project;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return $.get('./sergetProject', {
+              user: user
+            }, function (data) {
+              all_project = data;
+              all_project = all_project.sort(function (a, b) {
+                return a.remainday - b.remainday;
+              });
+            });
+
+          case 2:
+            return _context6.abrupt("return", all_project);
+
+          case 3:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+  return _sergetProject.apply(this, arguments);
+}
+
 function getColor(color) {
   var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
   var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
@@ -1249,6 +1320,10 @@ var _default = {
   //tranfer date to 0date if date<10
   checkBlank: checkBlank,
   //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  getAllUser: getAllUser,
+  //get all users' id
+  sergetProject: sergetProject,
+  //FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
   //popup message, need to input the word you want to show
   getColor: getColor //turn the color code into the color, need to input the color code of the project
@@ -1541,7 +1616,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33860" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33082" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

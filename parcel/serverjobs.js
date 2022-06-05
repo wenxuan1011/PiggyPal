@@ -1,7 +1,7 @@
-import ID from './signup.js' 
 import * as mod from './module.js'
 
-var todayExpenditure=0
+var all_user = []
+var todayExpenditure= 0
 var todayIncome = 0
 var Expenditure = 0
 var Income = 0
@@ -11,32 +11,24 @@ var MonthlySaving = 0
 var ProjectSaving = 0
 var ProjectSaved = 0
 
+
 $('#Login #login-form #login button').click((event) => {
     event.preventDefault()
     setTimeout(async function(){
-        process(ID)
-        let test = await mod.sergetProject(ID)
-        console.log('test:', test[0])
-        
-        for(var i in test){
-            console.log('test:', test[i].remainday)
-        }
-        
+        dailyprocess()
     },0)
-    
 })
-
-$('#navbar').click((event) =>{
-    event.preventDefault()
-    process(ID)
-})
-
-async function process(ID){
+async function dailyprocess(){
     var today=new Date();
     var totalday=setremainDay(today,totalday);
+    var all_user = await mod.getAllUser()
+    for(let i in all_user){
+        console.log('now update',all_user[i],'data')
+        await setVariable(all_user[i])
+        await calculatemoney(today,totalday)
+        await saveMoneytoProject(all_user[i])
+    }
     
-    await setVariable(ID)
-    await calculatemoney(today,totalday)
     
     /*
     setTimeout(function(){
@@ -92,17 +84,16 @@ function setremainDay(today,totalday){
 
 async function setVariable(ID){
     var today=new Date();
-        todayExpenditure= await mod.getTodayMoney(ID,'Account','cost',0);
-        todayIncome= await mod.getTodayMoney(ID,'Account','cost',1);
-        Expenditure= await mod.getMonthlyMoney(ID,'Account','cost',0);
-        Income= await mod.getMonthlyMoney(ID,'Account','cost',1)
-        ProjectSaved = await mod.getMonthlyMoney(ID, 'Account', 'cost', 3)
-        MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
-        MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
-        MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
-        ProjectSaving= await mod.getProjectMoney(ID,"goal")
-        console.log(ProjectSaved)
-
+    todayExpenditure= await mod.getTodayMoney(ID,'Account','cost',0);
+    todayIncome= await mod.getTodayMoney(ID,'Account','cost',1);
+    Expenditure= await mod.getMonthlyMoney(ID,'Account','cost',0);
+    ProjectSaved = await mod.getMonthlyMoney(ID, 'Account', 'cost',3)
+    Income= await mod.getMonthlyMoney(ID,'Account','cost',1)
+    MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
+    MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
+    MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
+    ProjectSaving= await mod.getProjectMoney(ID)
+    ProjectSaving= Math.ceil(ProjectSaving)
         /*
         todayExpenditure.then(res => {
             todayExpenditure=Math.ceil(res)
@@ -134,29 +125,69 @@ async function setVariable(ID){
 
 async function calculatemoney(today,totalday){
     var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
-    $('#main #mainpage #balance_bar p:nth-child(1)').html(`$${MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income-ProjectSaved}`)
     //console.log("DailyRemain:",DailyRemain)
     var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
     //console.log("ProjectSaving:", ProjectSaving)
     //console.log("actualDailyRemain:",actualDailyRemain)
-    if((todayIncome-todayExpenditure)>=0){
-        $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`+${todayIncome-todayExpenditure}`)
-    }
-    else{
-        $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`${todayIncome-todayExpenditure}`)
-    }
     
     if(actualDailyRemain<0){
         //daily avaliable expenditure warning
         ProjectSaving=ProjectSaving+actualDailyRemain
         actualDailyRemain=0
         if(ProjectSaving<0){
-            
+            ProjectSaving = 0
             //use money in every month saving
         }
     }
-    
-    $('#daily_expend p:nth-child(1)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
-    $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${Math.floor(ProjectSaving)}`)
-    //console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
+
+}
+
+async function saveMoneytoProject(ID){//still need to add saved_money from table//////////
+    var all_project = await mod.sergetProject(ID)
+    var count = 0
+    var today= new Date()
+    while(ProjectSaving>0 && count<all_project.length){
+        console.log(all_project[count])
+        var saving_money = all_project[count].remain_money
+        if(ProjectSaving-saving_money>=0){
+            ProjectSaving=ProjectSaving-saving_money
+        }
+        else{
+            saving_money=ProjectSaving
+            ProjectSaving=0
+        }
+        saving_money = saving_money + all_project[count].saved_money
+        console.log(all_project[count].saved_money,saving_money,ProjectSaving)
+        var date=mod.datetransfer(today.getDate())
+        var month=mod.datetransfer(today.getMonth()+1)
+        var year=today.getFullYear()
+        console.log(date,month)
+        
+        await $.get('./saveMoneytoProject',{
+            id:all_project[count].id,
+            member:all_project[count].member,
+            personal_or_joint:all_project[count].personal_or_joint,
+            project_name:all_project[count].project_name,
+            saving_money:saving_money,
+            saved_money:all_project[count].saved_money,
+            date:date,
+            month:month,
+            year:year
+        },(data)=>{
+            console.log(data)
+        })
+        count++
+    }
+}
+async function getdailymoney(){
+    var all_user=await mod.getAllUser()
+    for (var id in all_user){
+        saveMoneytoProject(id)
+    }
+}
+function monthlyTodo(){
+    var today = new Date()
+    if(DailyRemain>0){
+        //save in monthly saving
+    }
 }

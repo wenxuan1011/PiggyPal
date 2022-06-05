@@ -1330,13 +1330,8 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"serverjobs.js":[function(require,module,exports) {
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
@@ -1344,368 +1339,356 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-//import process from './dailymoney.js'
-$('#change-to-login').click(function () {
-  $("#SignUp").css("display", "none");
-  $("#Login").css("display", "flex");
-});
-$('#change-to-signup').click(function () {
-  $("#Login").css("display", "none");
-  $("#SignUp").css("display", "flex");
-}); // navbar change page
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var navbar = ['barcode', 'account', 'mainpage', 'accounting', 'project'];
-var present_page = 'mainpage';
-$('#navbar img:nth-child(1)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[0];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(2)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[1];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(3)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[2];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(4)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[3];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(5)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[4];
-  unselected_to_selected();
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var all_user = [];
+var todayExpenditure = 0;
+var todayIncome = 0;
+var Expenditure = 0;
+var Income = 0;
+var MonthlyExpend = 0;
+var MonthlyIncome = 0;
+var MonthlySaving = 0;
+var ProjectSaving = 0;
+var ProjectSaved = 0;
+$('#Login #login-form #login button').click(function (event) {
+  event.preventDefault();
+  setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            dailyprocess();
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  })), 0);
 });
 
-function selected_to_unselected() {
-  if (present_page == navbar[0]) {
-    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/unselect/barcode_unselect.png");
-    $('#barcode').css("display", "none");
-  } else if (present_page == navbar[1]) {
-    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/unselect/account_unselect.png");
-    $('#account').css("display", "none");
-  } else if (present_page == navbar[2]) {
-    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/unselect/mainpage_unselect.png");
-    $('#mainpage').css("display", "none");
-  } else if (present_page == navbar[3]) {
-    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/unselect/accounting_unselect.png");
-    $('#accounting').css("display", "none");
+function dailyprocess() {
+  return _dailyprocess.apply(this, arguments);
+}
+
+function _dailyprocess() {
+  _dailyprocess = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    var today, totalday, all_user, i;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            today = new Date();
+            totalday = setremainDay(today, totalday);
+            _context2.next = 4;
+            return mod.getAllUser();
+
+          case 4:
+            all_user = _context2.sent;
+            _context2.t0 = regeneratorRuntime.keys(all_user);
+
+          case 6:
+            if ((_context2.t1 = _context2.t0()).done) {
+              _context2.next = 17;
+              break;
+            }
+
+            i = _context2.t1.value;
+            console.log('now update', all_user[i], 'data');
+            _context2.next = 11;
+            return setVariable(all_user[i]);
+
+          case 11:
+            _context2.next = 13;
+            return calculatemoney(today, totalday);
+
+          case 13:
+            _context2.next = 15;
+            return saveMoneytoProject(all_user[i]);
+
+          case 15:
+            _context2.next = 6;
+            break;
+
+          case 17:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _dailyprocess.apply(this, arguments);
+}
+
+function setremainDay(today, totalday) {
+  var MonthlyTotalDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (today.getMonth() == 2) {
+    if (today.getFullYear() % 4 == 0) {
+      totalday = 29;
+
+      if (today.getFullYear() % 100 == 0) {
+        totalday = 28;
+
+        if (today.getFullYear() % 400 == 0) {
+          totalday = 29;
+        }
+      }
+    }
+
+    totalday = MonthlyTotalDay[today.getMonth()];
   } else {
-    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/unselect/project_unselect.png");
-    $('#project').css("display", "none");
+    totalday = MonthlyTotalDay[today.getMonth()];
   }
 
-  ;
+  return totalday;
 }
 
-;
+function setVariable(_x) {
+  return _setVariable.apply(this, arguments);
+}
 
-function unselected_to_selected() {
-  if (present_page == navbar[0]) {
-    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
-    $('#barcode').css("display", "flex");
-    window.location.href = 'https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html#/';
-  } else if (present_page == navbar[1]) {
-    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
-    $('#account').css("display", "flex");
-  } else if (present_page == navbar[2]) {
-    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/selected/mainpage_select.png");
-    $('#mainpage').css("display", "flex");
-  } else if (present_page == navbar[3]) {
-    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/selected/accounting_select.png");
-    $('#accounting').css("display", "flex");
-  } else {
-    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/selected/project_select.png");
-    $('#project').css("display", "flex");
+function _setVariable() {
+  _setVariable = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
+    var today;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            today = new Date();
+            _context3.next = 3;
+            return mod.getTodayMoney(ID, 'Account', 'cost', 0);
+
+          case 3:
+            todayExpenditure = _context3.sent;
+            _context3.next = 6;
+            return mod.getTodayMoney(ID, 'Account', 'cost', 1);
+
+          case 6:
+            todayIncome = _context3.sent;
+            _context3.next = 9;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+
+          case 9:
+            Expenditure = _context3.sent;
+            _context3.next = 12;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 3);
+
+          case 12:
+            ProjectSaved = _context3.sent;
+            _context3.next = 15;
+            return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+
+          case 15:
+            Income = _context3.sent;
+            _context3.next = 18;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 0);
+
+          case 18:
+            MonthlyIncome = _context3.sent;
+            _context3.next = 21;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 1);
+
+          case 21:
+            MonthlyExpend = _context3.sent;
+            _context3.next = 24;
+            return mod.getMonthlyMoney(ID, 'financial', 'money', 2);
+
+          case 24:
+            MonthlySaving = _context3.sent;
+            _context3.next = 27;
+            return mod.getProjectMoney(ID);
+
+          case 27:
+            ProjectSaving = _context3.sent;
+            ProjectSaving = Math.ceil(ProjectSaving);
+            /*
+            todayExpenditure.then(res => {
+                todayExpenditure=Math.ceil(res)
+            })
+            todayIncome.then(res => {
+                todayIncome=Math.ceil(res)
+            })
+            Expenditure.then(res => {
+                Expenditure=Math.ceil(res)
+            })
+            Income.then(res => {
+                Income=Math.ceil(res)
+            })
+            MonthlyExpend.then(res => {
+                MonthlyExpend=Math.ceil(res)
+            })
+            MonthlyIncome.then(res => {
+                MonthlyIncome=Math.ceil(res)
+            })
+            MonthlySaving.then(res => {
+                MonthlySaving=Math.ceil(res)
+            })
+            ProjectSaving.then(res => {
+                ProjectSaving=Math.ceil(res)
+                console.log(ProjectSaving)
+            })
+            */
+
+          case 29:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _setVariable.apply(this, arguments);
+}
+
+function calculatemoney(_x2, _x3) {
+  return _calculatemoney.apply(this, arguments);
+}
+
+function _calculatemoney() {
+  _calculatemoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(today, totalday) {
+    var DailyRemain, actualDailyRemain;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1); //console.log("DailyRemain:",DailyRemain)
+
+            actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure; //console.log("ProjectSaving:", ProjectSaving)
+            //console.log("actualDailyRemain:",actualDailyRemain)
+
+            if (actualDailyRemain < 0) {
+              //daily avaliable expenditure warning
+              ProjectSaving = ProjectSaving + actualDailyRemain;
+              actualDailyRemain = 0;
+
+              if (ProjectSaving < 0) {
+                ProjectSaving = 0; //use money in every month saving
+              }
+            }
+
+          case 3:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _calculatemoney.apply(this, arguments);
+}
+
+function saveMoneytoProject(_x4) {
+  return _saveMoneytoProject.apply(this, arguments);
+}
+
+function _saveMoneytoProject() {
+  _saveMoneytoProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(ID) {
+    var all_project, count, today, saving_money, date, month, year;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return mod.sergetProject(ID);
+
+          case 2:
+            all_project = _context5.sent;
+            count = 0;
+            today = new Date();
+
+          case 5:
+            if (!(ProjectSaving > 0 && count < all_project.length)) {
+              _context5.next = 20;
+              break;
+            }
+
+            console.log(all_project[count]);
+            saving_money = all_project[count].remain_money;
+
+            if (ProjectSaving - saving_money >= 0) {
+              ProjectSaving = ProjectSaving - saving_money;
+            } else {
+              saving_money = ProjectSaving;
+              ProjectSaving = 0;
+            }
+
+            saving_money = saving_money + all_project[count].saved_money;
+            console.log(all_project[count].saved_money, saving_money, ProjectSaving);
+            date = mod.datetransfer(today.getDate());
+            month = mod.datetransfer(today.getMonth() + 1);
+            year = today.getFullYear();
+            console.log(date, month);
+            _context5.next = 17;
+            return $.get('./saveMoneytoProject', {
+              id: all_project[count].id,
+              member: all_project[count].member,
+              personal_or_joint: all_project[count].personal_or_joint,
+              project_name: all_project[count].project_name,
+              saving_money: saving_money,
+              saved_money: all_project[count].saved_money,
+              date: date,
+              month: month,
+              year: year
+            }, function (data) {
+              console.log(data);
+            });
+
+          case 17:
+            count++;
+            _context5.next = 5;
+            break;
+
+          case 20:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _saveMoneytoProject.apply(this, arguments);
+}
+
+function getdailymoney() {
+  return _getdailymoney.apply(this, arguments);
+}
+
+function _getdailymoney() {
+  _getdailymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+    var all_user, id;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return mod.getAllUser();
+
+          case 2:
+            all_user = _context6.sent;
+
+            for (id in all_user) {
+              saveMoneytoProject(id);
+            }
+
+          case 4:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+  return _getdailymoney.apply(this, arguments);
+}
+
+function monthlyTodo() {
+  var today = new Date();
+
+  if (DailyRemain > 0) {//save in monthly saving
   }
-
-  ;
 }
-
-;
-var ID = "";
-$(document).ready(function () {
-  // sign up
-  $('#signup button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./signup', {
-      name: $('#signup input[name=name]').val(),
-      id: $('#signup input[name=id]').val(),
-      password: $('#signup input[name=password]').val()
-    }, function (data) {
-      if ("".concat(data) === "signup") {
-        $('#SignUp').css("display", "none");
-        $('#main').css("display", "flex");
-        ID = $('#signup input[name=id]').val();
-      } else {
-        $("#signup-output").html("".concat(data));
-        ID = data; //process(ID)
-      }
-
-      ;
-    });
-  }); // login
-
-  $('#login button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    ID = $('#login input[name=id]').val();
-    $.get('./login', {
-      id: $('#login input[name=id]').val(),
-      password: $('#login input[name=pw]').val()
-    }, function (data) {
-      if ("".concat(data) !== 'failed,try again') {
-        $('#Login').css("display", "none");
-        $('#main').css("display", "flex");
-        ID = data; //process(ID)
-      } else {
-        $("#login-output").html("".concat(data));
-      }
-
-      ;
-    });
-  });
-});
-
-function transmit() {
-  return ID;
-}
-
-;
-var _default = transmit;
-exports.default = _default;
-},{"./module.js":"module.js"}],"record.js":[function(require,module,exports) {
-"use strict";
-
-var _signup = _interopRequireDefault(require("./signup.js"));
-
-var mod = _interopRequireWildcard(require("./module.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var money = ""; // 0支出 1收入
-
-var click_op = 0; //spend
-
-var t = document.getElementById("spend"); //name
-
-var n = document.getElementById("na"); //date
-
-var d = document.getElementById("da");
-var today = new Date();
-$(document).ready(function () {
-  $('#save').click(function (event) {
-    event.preventDefault();
-    $.get('./record', {
-      id: _signup.default,
-      items: $('#fin input[name=items]').val(),
-      cost: $('#fin input[name=cost]').val(),
-      date: $('#fin input[name=date]').val(),
-      type: click_op
-    }, function (data) {
-      if (data === '0') {
-        t.value = "";
-        n.value = "";
-        d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
-      } else {
-        mod.PopUpMessage(data);
-      }
-    }); //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
-  });
-  $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
-    event.preventDefault();
-    t.value = "";
-    n.value = "";
-    d.value = "05/13/2022";
-  });
-  $('#add_deals .bar').click(function (event) {
-    event.preventDefault();
-    console.log(3);
-    $('#accounting').css("display", "flex");
-    setTimeout(function () {
-      $('#add_deals').css("display", "none");
-      $('#add_deals').css("transform", "translateX(100%)");
-    }, 100);
-  });
-});
-$('#expend').click(function (event) {
-  $('#expend').css("border-bottom", "0.3px solid #410ADF");
-  $('#income').css("border-bottom", "none");
-  event.preventDefault();
-  click_op = 0;
-});
-$('#income').click(function (event) {
-  $('#income').css("border-bottom", "0.3px solid #410ADF");
-  $('#expend').css("border-bottom", "none");
-  event.preventDefault();
-  click_op = 1;
-});
-$('#zero').click(function () {
-  money = money + "0";
-  t.value = money;
-});
-$('#one').click(function () {
-  money = money + "1";
-  t.value = money;
-});
-$('#two').click(function () {
-  money = money + "2";
-  t.value = money;
-});
-$('#three').click(function () {
-  money = money + "3";
-  t.value = money;
-});
-$('#four').click(function () {
-  money = money + "4";
-  t.value = money;
-});
-$('#five').click(function () {
-  money = money + "5";
-  t.value = money;
-});
-$('#six').click(function () {
-  money = money + "6";
-  t.value = money;
-});
-$('#seven').click(function () {
-  money = money + "7";
-  t.value = money;
-});
-$('#eight').click(function () {
-  money = money + "8";
-  t.value = money;
-});
-$('#nine').click(function () {
-  money = money + "9";
-  t.value = money;
-});
-$('#backspace').click(function () {
-  money = money.slice(0, -1);
-  t.value = money;
-});
-$('#spend').click(function () {
-  $('#keyboard').css("display", "flex");
-  $('#ok').show();
-  $('#backspace').show();
-  document.activeElement.blur();
-});
-$('#ok').click(function () {
-  $('#keyboard').hide();
-  $('#ok').hide();
-  $('#backspace').hide();
-});
-$(function () {
-  $("#da").datepicker();
-});
-$('#login_btn, #save').click(function (event) {
-  event.preventDefault();
-  setTimeout(function () {
-    getdetailincome();
-    getdetailexpenditure();
-  }, 100);
-});
-
-function getdetailincome() {
-  var today = new Date();
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: today.getDate(),
-    month: today.getMonth() + 1,
-    year: today.getFullYear()
-  }, function (data) {
-    if (data != "nothing") {
-      var container = document.querySelector('#main #accounting .income');
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i); //console.log(item, value, type)
-
-        if (item == '' || value == '' || type === '0') {
-          continue;
-        } //create element
-
-
-        var _container = document.querySelector('#main #accounting .income');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('P');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        paragraphone.textContent = "".concat(item);
-        paragraphtwo.textContent = "+".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container.appendChild(box);
-
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-function getdetailexpenditure() {
-  var today = new Date();
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: today.getDate(),
-    month: today.getMonth() + 1,
-    year: today.getFullYear()
-  }, function (data) {
-    if (data != "nothing") {
-      var container = document.querySelector('#main #accounting .expenditure');
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i); //console.log(type)
-
-        if (item == '' || value == '' || type === '1') {
-          continue;
-        } //create element
-
-
-        var _container2 = document.querySelector('#main #accounting .expenditure');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('P');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        paragraphone.textContent = "".concat(item);
-        paragraphtwo.textContent = "-".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container2.appendChild(box);
-
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-$('#popup #background #box #confirm').click(function () {
-  $('#popup').css('display', 'none');
-});
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1909,5 +1892,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","record.js"], null)
-//# sourceMappingURL=record.185f2f3f.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","serverjobs.js"], null)
+//# sourceMappingURL=serverjobs.65e1910b.js.map

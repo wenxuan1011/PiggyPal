@@ -65,10 +65,10 @@ html
 
     #main
       #mainpage
-        img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
+        img#personal_btn(src = "./image/MainPage/MainPage_personal.png", width = "21.8667%")
         img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
         #balance_bar
-          p $4560
+          p $0
           p 本月可用
         #project_block
           #project_bar
@@ -106,12 +106,11 @@ html
           img#back(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 記帳
         #everyday_earn
-          img(src = "./image/Accounting/box_SelectDate.png", height = "30.10752688%")
+          img(src = "./image/Accounting/box_SelectDate.png", width = "87.8%")
           #today_earn
             p 本日損益
             p +0
           img#add_deals_btn(src = "./image/Accounting/btn_add.png", height = "19.355%")
-        br
         #today_detail
           .bars
             p 收入
@@ -251,23 +250,46 @@ html
         #graph_box 
           img(src = "./image/project/Project_month-bg.png", height = "25px")
           img#graph(src = "./image/project/Project_personalProject_graph.png", height = "67%")
-        #project_detail
-          #title 
+        .project_detail
+          .title 
             p#item 一般儲蓄
             img(src = "./image/btn/btn_edit.png", height = "18px")
-          #planned_speed_graph
+          .planned_speed_graph
             img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
             p#money $800
-          #complete_percent 
+          .complete_percent 
            p#percent 35%
            p Completed
-          #date_box 
+          .date_box 
             p 儲蓄時間
             p#date 2022.04.28-2022.06.14
-          #target_money
+          .target_money
             p 目標金額
             p#money $800
           
+      #show_joint_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
+          img(src = "./image/btn/btn_close.png", width = "5.33333%")
+          p 共同專案
+        img#drop_down_btn(src = "./image/project/Project_month-bg.png", width = "22.4%")
+        .ranking_list
+        .project_detail
+          .title 
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          .planned_speed_graph
+            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            p#money $800
+          .complete_percent 
+            p#percent 35%
+            p Completed
+          .date_box 
+            p 儲蓄時間
+            p#date 2022.04.28-2022.06.14
+          .target_money
+            p 目標金額
+            p#money $800
 
 
       #personal_page
@@ -367,3 +389,4 @@ html
   script(src="./project.js")
   script(src="./accounting.js")
   script(src="./mainpage.js")
+  script(src="./serverjobs.js")

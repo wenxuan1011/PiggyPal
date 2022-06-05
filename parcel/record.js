@@ -34,7 +34,6 @@ $(document).ready(function() {
         mod.PopUpMessage(data)
       }
     });
-
     //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
 

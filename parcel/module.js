@@ -54,13 +54,13 @@ export async function caltodaymoney(ID,table,selection,type){
                 i++;
             }
             //total=gettabledata(money,type,0)
-            console.log(`total:${total}`)
+            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        console.log(result)
+        //console.log(result)
         results=result
     });
     //console.log(results)
@@ -101,13 +101,13 @@ export async function caltotalmoney(ID,table,selection,type){
                 i++;
             }
             //total=gettabledata(money,type,0)
-            console.log(`total:${total}`)
+            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        console.log(result)
+        //console.log(result)
         results=result
 
     });
@@ -125,7 +125,7 @@ export async function getProjectMoney(ID){
         for (let i in data){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
-            console.log(lastday, startday)
+            //console.log(lastday, startday)
             if(lastday-startday<0){
                 continue;
             }
@@ -133,7 +133,7 @@ export async function getProjectMoney(ID){
             
             if(remainday>0 || remainday !== undefined){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
-                console.log("Projectremainday:",remainday)
+                //console.log("Projectremainday:",remainday)
                 let money= StringtoInt(gettabledata(data, `target_number`,i))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
                 money= money/remainday
                 totalremain+=money
@@ -153,7 +153,7 @@ export async function calprojectpercent(ID, project_name){
     },(data) =>{
         for(var i in data){
             if(project_name === data[i].project_name){
-                result=StringtoInt(gettabledata(data, 'saved_money', i))/StringtoInt(gettabledata(data, 'target_goal', i))
+                result=StringtoInt(gettabledata(data, 'saved_money', i))/StringtoInt(gettabledata(data, 'target_number', i))
                 result=result/100
             }
         }
@@ -179,10 +179,11 @@ export function datetransfer(date){
 
 export function checkBlank(page, ...input){
     var lengths=1
-    var recordmessage = ["日期", "金額", "類別"]
+    var recordmessage = ["項目","日期", "金額", "類別"]
     var projectmessage = ["專案名稱", "日期", "目標金額"]
     var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"]
     var pages = []
+    
     switch(page){
         case 'record':
             pages = recordmessage
@@ -194,6 +195,7 @@ export function checkBlank(page, ...input){
             pages = financial
             break
     }
+
     for (var j =0; j<input.length; j++){
         lengths=lengths*(input[j].length-2)
         if(lengths===0){
@@ -211,6 +213,29 @@ export function PopUpMessage(type){
     $('#popup #background #box #message p').html(`尚未填寫${type}`)
 }
 
+export async function getAllUser(){
+    var all_user=[]
+    await $.get('./getAllUser',{}
+        ,(data) =>{
+            all_user = data
+            //console.log(data)
+        })
+    return all_user
+}
+
+export async function sergetProject(user){
+    var all_project
+    await $.get('./sergetProject',{
+        user : user
+    },(data) => {
+        all_project = data
+        all_project = all_project.sort(function(a,b){
+            return a.remainday - b.remainday
+        })
+        
+    })
+    return all_project
+}
 
 export function getColor(color){
     const ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE']
@@ -231,6 +256,8 @@ export default{
     StringtoInt,//transfer string to integer
     datetransfer,//tranfer date to 0date if date<10
     checkBlank,//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+    getAllUser,//get all users' id
+    sergetProject,//FOR SERVER TO GET PROJECT
     PopUpMessage,//popup message, need to input the word you want to show
     getColor,//turn the color code into the color, need to input the color code of the project
 } 
