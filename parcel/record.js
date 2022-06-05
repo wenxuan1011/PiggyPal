@@ -1,4 +1,5 @@
 import ID from './signup.js'
+import * as mod from './module.js'
 
 var money="";
 // 0支出 1收入
@@ -9,6 +10,8 @@ var t = document.getElementById("spend");
 var n = document.getElementById("na");
 //date
 var d = document.getElementById("da")
+
+var today = new Date()
 
 
 $(document).ready(function() {
@@ -21,13 +24,38 @@ $(document).ready(function() {
       cost: $('#fin input[name=cost]').val(),
       date: $('#fin input[name=date]').val(),
       type: click_op
+    },(data)=>{
+      if(data === '0'){
+        t.value = ""
+        n.value = ""
+        d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+      }
+      else{
+        mod.PopUpMessage(data)
+      }
     });
+    //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+  })
+
+  $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
+    event.preventDefault()
     t.value = ""
     n.value = ""
     d.value = "05/13/2022"
   })
   
+  $('#add_deals .bar').click((event) => {
+    event.preventDefault()
+    console.log(3)
+    $('#accounting').css("display", "flex")
+    setTimeout(function(){       
+        $('#add_deals').css("display", "none")
+        $('#add_deals').css("transform", "translateX(100%)")
+    },100)
+  })
+
 });
+
 
 $('#expend').click((event)=> {
   $('#expend').css("border-bottom", "0.3px solid #410ADF")
@@ -113,3 +141,103 @@ $('#ok').click(function(){
 $(function(){
   $("#da").datepicker();
 });
+
+
+$('#login_btn, #save').click((event) => {
+  event.preventDefault()
+  setTimeout(() => {
+    getdetailincome()
+    getdetailexpenditure()
+}, 100)
+})
+
+function getdetailincome(){
+  var today= new Date()
+  $.get('./getmainpagedetail',{
+      id:ID,
+      date: today.getDate(),
+      month: today.getMonth()+1,
+      year: today.getFullYear()
+  },(data)=>{
+      if(data!="nothing"){
+          const container = document.querySelector('#main #accounting .income')
+          container.innerHTML=`<p></p>`
+          for (var i in data){
+              var item= mod.gettabledata(data,'items',i)
+              var value = mod.gettabledata(data, 'cost',i)
+              var type = mod.gettabledata(data, 'type', i)
+              //console.log(item, value, type)
+              if(item == ''||value == ''|| type === '0'){
+                  continue;
+              }
+              //create element
+              const container = document.querySelector('#main #accounting .income')
+              const box= document.createElement('a')
+              const paragraphone = document.createElement('P')
+              const paragraphtwo = document.createElement('P')
+              //set text
+              paragraphone.textContent= `${item}`
+              paragraphtwo.textContent=`+${value}`
+              //set attribute
+              box.setAttribute('id','a')
+              paragraphone.setAttribute('class','text')
+              paragraphtwo.setAttribute('class','text')
+              //append child
+              container.appendChild(box)
+              box.appendChild(paragraphone)
+              box.appendChild(paragraphtwo)
+          }
+      }
+      else{
+
+      }
+  }
+  )
+}
+function getdetailexpenditure(){
+  var today= new Date()
+  $.get('./getmainpagedetail',{
+      id:ID,
+      date: today.getDate(),
+      month: today.getMonth()+1,
+      year: today.getFullYear()
+  },(data)=>{
+      if(data!="nothing"){
+          const container = document.querySelector('#main #accounting .expenditure')
+          container.innerHTML=`<p></p>`
+          for (var i in data){
+              var item= mod.gettabledata(data,'items',i)
+              var value = mod.gettabledata(data, 'cost',i)
+              var type = mod.gettabledata(data, 'type', i)
+              //console.log(type)
+              if(item == ''||value == ''|| type === '1'){
+                  continue;
+              }
+              //create element
+              const container = document.querySelector('#main #accounting .expenditure')
+              const box= document.createElement('a')
+              const paragraphone = document.createElement('P')
+              const paragraphtwo = document.createElement('P')
+              //set text
+              paragraphone.textContent= `${item}`
+              paragraphtwo.textContent=`-${value}`
+              //set attribute
+              box.setAttribute('id','a')
+              paragraphone.setAttribute('class','text')
+              paragraphtwo.setAttribute('class','text')
+              //append child
+              container.appendChild(box)
+              box.appendChild(paragraphone)
+              box.appendChild(paragraphtwo)
+          }
+      }
+      else{
+
+      }
+  }
+  )
+}
+
+$('#popup #background #box #confirm').click(function(){
+  $('#popup').css('display', 'none')
+})

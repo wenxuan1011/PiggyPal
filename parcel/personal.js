@@ -1,5 +1,5 @@
 import ID from './signup.js'
-
+//need to export to signup.js
 var TYPE = 0
 var item = document.getElementById("financial_item")
 var year = document.getElementById("financial_year")
@@ -88,7 +88,13 @@ $(document).ready(function() {
         money: $('#financial input[name=money]').val(),
         repeat: $('#financial input[name=repeat]').val(),
       }, (data) => {
-        $("#financial-output").html(`${data}`);
+        if(data === '0'){
+          $("#financial-output").html(`${data}`);
+        }
+        else{
+          mod.PopUpMessage(data)
+        }
+        
       });
     })
 

@@ -1,3 +1,6 @@
+import * as mod from './module.js'
+//import process from './dailymoney.js'
+
 $('#change-to-login').click(function(){
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -110,7 +113,8 @@ $(document).ready(function() {
       }
       else{
         $("#signup-output").html(`${data}`);
-        
+        ID= data
+        //process(ID)
       };
     });
   })
@@ -127,6 +131,7 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
+        //process(ID)
       }
       else{
         $("#login-output").html(`${data}`);
