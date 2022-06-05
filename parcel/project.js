@@ -278,18 +278,6 @@ $(document).ready(function() {
       personal_or_joint : PERSONAL_OR_JOINT,
       
     }, (data) => {
-<<<<<<< HEAD
-      $('#project_form input[name=project_name]').val('')
-      $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
-      COLOR = '#F6A93B'
-      $('#project_form input[name=start_date]').val('')
-      $('#project_form input[name=end_day]').val('')
-      $('#project_form input[name=target_number]').val('')
-      MEMBER = [ID]
-      // 還沒加入均分
-      $('#project_form textarea[name=note]').val('')
-      //$("#add_project_-output").html(`${data}`);
-=======
       if(data === '0'){
         $('#project_form input[name=project_name]').val('')
         $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
@@ -305,7 +293,6 @@ $(document).ready(function() {
       else{
         mod.PopUpMessage(data)
       }
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
     });
   })
 

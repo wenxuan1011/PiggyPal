@@ -368,10 +368,12 @@ body {
     display: none;
     flex-direction: column;
     align-items: center;
-    background-color: #F4F4F4;
     width: 100vw;
-    height: 100vh;
-    font-family: Roboto Regular; }
+    height: auto;
+    min-height: 100vh;
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
     #main #accounting .bar {
       display: flex;
       flex-direction: column;
@@ -397,7 +399,7 @@ body {
       height: 22.91vh;
       margin-top: 2.59vh;
       margin-bottom: 3.325123vh; }
-      #main #accounting #everyday_earn img {
+      #main #accounting #everyday_earn img:nth-child(1) {
         margin-bottom: 2vh; }
       #main #accounting #everyday_earn #today_earn {
         display: flex;
@@ -418,7 +420,9 @@ body {
     #main #accounting #today_detail {
       background-color: white;
       border-radius: 10px;
-      width: 92vw; }
+      width: 92vw;
+      height: auto;
+      margin: 0 0 15vh 0; }
       #main #accounting #today_detail .income, #main #accounting #today_detail .expenditure {
         background-color: white;
         border-radius: 10px;
@@ -1170,22 +1174,6 @@ body {
       margin: 0 8vw 0 0; }
     #main #navbar img:nth-child(5) {
       margin: 0; }
-<<<<<<< HEAD
-  #main #popup {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    width: 100vw; }
-    #main #popup #background {
-      display: flex;
-      justify-content: space-around;
-      align-content: space-around;
-      align-items: center;
-      height: 100vh;
-      width: 100vw;
-      color: #B3B3B3;
-=======
 
 #popup {
   display: none;
@@ -1216,42 +1204,9 @@ body {
       height: 13.9vh;
       border-radius: 12px;
       background-color: white;
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
       opacity: 1; }
-      #main #popup #background #box {
+      #popup #background #box #message {
         display: flex;
-<<<<<<< HEAD
-        flex-direction: column;
-        color: white;
-        height: 13.9vh;
-        width: 65.6vw;
-        border-radius: 12px;
-        top: 38.05vh;
-        left: 17.06vw;
-        border-radius: 12px;
-        opacity: 1; }
-        #main #popup #background #box #message {
-          display: flex;
-          justify-content: space-around;
-          align-content: space-around;
-          align-items: center;
-          height: 9.36vh;
-          width: 65.6vw;
-          border-bottom: 0.3px solid #B3B3B3; }
-          #main #popup #background #box #message p {
-            color: black;
-            font-size: 16px;
-            opacity: 1; }
-        #main #popup #background #box #confirm {
-          display: flex;
-          justify-content: space-around;
-          align-content: space-around;
-          align-items: center; }
-          #main #popup #background #box #confirm p {
-            color: #474EF2;
-            font-size: 16px;
-            opacity: 1; }
-=======
         justify-content: center;
         align-items: center;
         width: 100%;
@@ -1264,7 +1219,6 @@ body {
         color: #474EF2;
         font-size: 16px;
         margin: auto 0; }
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
 
 /*# sourceMappingURL=signup.53978396.css.map */

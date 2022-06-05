@@ -14,14 +14,7 @@ var ProjectSaved = 0
 $('#Login #login-form #login button').click((event) => {
     event.preventDefault()
     setTimeout(async function(){
-        process(ID)
-        let test = await mod.sergetProject(ID)
-        console.log('test:', test[0])
-        
-        for(var i in test){
-            console.log('test:', test[i].remainday)
-        }
-        
+        process(ID)        
     },0)
     
 })
@@ -101,8 +94,6 @@ async function setVariable(ID){
         MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
         MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
         ProjectSaving= await mod.getProjectMoney(ID,"goal")
-        console.log(ProjectSaved)
-
         /*
         todayExpenditure.then(res => {
             todayExpenditure=Math.ceil(res)

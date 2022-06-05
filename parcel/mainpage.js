@@ -34,7 +34,8 @@ function getdetail(){
             for (var i in data){
                 var item= mod.gettabledata(data,'items',i)
                 var value = mod.gettabledata(data, 'cost',i)
-                if(item == ''||value == ''){
+                var type = mod.gettabledata(data, 'type',i)
+                if(item == ''||value == ''||type == '3'){
                     continue;
                 }
                 //create element

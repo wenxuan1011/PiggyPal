@@ -906,11 +906,8 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
-<<<<<<< HEAD
 exports.getAllUser = getAllUser;
-=======
 exports.getColor = getColor;
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
@@ -1227,14 +1224,8 @@ function checkBlank(page) {
 
 function PopUpMessage(type) {
   console.log(123);
-<<<<<<< HEAD
-
-  if (typeof window !== 'undefined') {
-    var pop = document.getElementById("popup");
-    pop.css('display', 'flex');
-    var word = document.querySelector('#popup #background #box #message p');
-    word.textContent(type);
-  }
+  $('#popup').css('display', 'flex');
+  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
 }
 
 function getAllUser() {
@@ -1299,9 +1290,6 @@ function _sergetProject() {
     }, _callee6);
   }));
   return _sergetProject.apply(this, arguments);
-=======
-  $('#popup').css('display', 'flex');
-  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
 }
 
 function getColor(color) {
@@ -1313,7 +1301,6 @@ function getColor(color) {
       return ColorImgSrc[i];
     }
   }
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 }
 
 var _default = {
@@ -1333,15 +1320,13 @@ var _default = {
   //tranfer date to 0date if date<10
   checkBlank: checkBlank,
   //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
-<<<<<<< HEAD
   getAllUser: getAllUser,
   //get all users' id
-  sergetProject: sergetProject //FOR SERVER TO GET PROJECT
-=======
+  sergetProject: sergetProject,
+  //FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
   //popup message, need to input the word you want to show
   getColor: getColor //turn the color code into the color, need to input the color code of the project
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
 
 };
 exports.default = _default;
@@ -1732,24 +1717,13 @@ var ProjectSaved = 0;
 $('#Login #login-form #login button').click(function (event) {
   event.preventDefault();
   setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var test, i;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             process(_signup.default);
-            _context.next = 3;
-            return mod.sergetProject(_signup.default);
 
-          case 3:
-            test = _context.sent;
-            console.log('test:', test[0]);
-
-            for (i in test) {
-              console.log('test:', test[i].remainday);
-            }
-
-          case 6:
+          case 1:
           case "end":
             return _context.stop();
         }
@@ -1873,36 +1847,8 @@ function _setVariable() {
 
           case 27:
             ProjectSaving = _context3.sent;
-            console.log(ProjectSaved);
-            /*
-            todayExpenditure.then(res => {
-                todayExpenditure=Math.ceil(res)
-            })
-            todayIncome.then(res => {
-                todayIncome=Math.ceil(res)
-            })
-            Expenditure.then(res => {
-                Expenditure=Math.ceil(res)
-            })
-            Income.then(res => {
-                Income=Math.ceil(res)
-            })
-            MonthlyExpend.then(res => {
-                MonthlyExpend=Math.ceil(res)
-            })
-            MonthlyIncome.then(res => {
-                MonthlyIncome=Math.ceil(res)
-            })
-            MonthlySaving.then(res => {
-                MonthlySaving=Math.ceil(res)
-            })
-            ProjectSaving.then(res => {
-                ProjectSaving=Math.ceil(res)
-                console.log(ProjectSaving)
-            })
-            */
 
-          case 29:
+          case 28:
           case "end":
             return _context3.stop();
         }
@@ -1984,11 +1930,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41695" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43099" + '/');
->>>>>>> 6558b5b33b2ae01bcdb91f4dea9166ca0698b0c7
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36840" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

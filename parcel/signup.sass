@@ -444,11 +444,13 @@ body
         display: none
         flex-direction: column
         align-items: center
-        background-color: #F4F4F4
         width: 100vw
-        height: 100vh
-        font-family: Roboto Regular
-      
+        height: auto
+        min-height: 100vh
+        background-color: #F4F4F4
+        position: absolute
+        top: 0
+
         .bar
             display: flex
             flex-direction: column
@@ -457,7 +459,7 @@ body
             height: 11.9458vh
             background-color: white
             border-bottom: 0.3px solid #B3B3B3
-  
+
             img
                 position: absolute
                 left: 6.6667vw
@@ -477,7 +479,7 @@ body
             height: 22.91vh
             margin-top: 2.59vh
             margin-bottom: 3.325123vh
-            img
+            img:nth-child(1)
                 margin-bottom: 2vh
             #today_earn
                 display: flex
@@ -500,6 +502,9 @@ body
             background-color: white
             border-radius: 10px
             width: 92vw
+            height: auto
+            margin: 0 0 15vh 0
+
             .income,.expenditure
                 background-color: white
                 
