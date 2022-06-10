@@ -1478,20 +1478,89 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"project.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.InitialColor = InitialColor;
+exports.default = void 0;
+var TIME = new Date(); // --------------- color selector in project ---------------
+
+var COLOR = '#F6A93B'; // project color
+// open/close color_select_box
+
+$('#add_project .box:nth-child(2) .color_selector').click(function () {
+  $('.color_select_box').css("display", "flex");
+  setTimeout(function () {
+    $('.color_select_box').css("transform", "translateY(0%)");
+    document.addEventListener("click", clickHidden);
+  }, 100);
+});
+
+function clickHidden(eve) {
+  if (eve.target.class != "color_select_box") {
+    $('.color_select_box').css("transform", "translateY(100%)");
+    setTimeout(function () {
+      $('.color_select_box').css("display", "none");
+    }, 500);
+  }
+
+  document.removeEventListener("click", clickHidden);
+} // setting project color
+
+
+var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+var _loop = function _loop(i) {
+  $('.color_select_box #color_bar img:nth-child(' + "".concat(i) + ')').click(function () {
+    COLOR = ColorCode[i - 1];
+    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_" + "".concat(ColorImgSrc[i - 1]) + ".png");
+  });
+};
+
+for (var i = 1; i < 8; i++) {
+  _loop(i);
+} // initial the color (orange)
+
+
+function InitialColor() {
+  COLOR = '#F6A93B';
+  return;
+} // transmit the COLOR to other project
+
+
+function transmitCOLOR() {
+  // I'm not sure it need 'export' or not
+  return COLOR;
+}
+
+; // --------------- other selectors ---------------
+// open/close selector_box
+// not yet
+
+var _default = {
+  transmitCOLOR: transmitCOLOR,
+  InitialColor: InitialColor
+};
+exports.default = _default;
+},{}],"project.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
 var _module = _interopRequireDefault(require("./module.js"));
 
+var _selectormodule = _interopRequireDefault(require("./selectormodule.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var COLOR = '#F6A93B'; // project color
-
+//var COLOR = '#F6A93B'  // project color
 var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 
-var SHOW_PERSONAL_OR_JOINT = 'false';
+var SHOW_PERSONAL_OR_JOINT = false;
 var MEMBER = [_signup.default];
 var TIME = new Date(); // type bar (change border-bottom)
 
@@ -1500,11 +1569,11 @@ var _loop = function _loop(i) {
     $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("border-bottom", "2px solid #410ADF");
 
     if (i === 2) {
-      SHOW_PERSONAL_OR_JOINT = 'false';
+      SHOW_PERSONAL_OR_JOINT = false;
       $('#project_list').css("display", "flex");
       $('#project #add_project_btn').css("display", "block");
     } else if (i === 3) {
-      SHOW_PERSONAL_OR_JOINT = 'true';
+      SHOW_PERSONAL_OR_JOINT = true;
       $('#project_list').css("display", "flex");
       $('#project #add_project_btn').css("display", "block");
     } else {
@@ -1544,60 +1613,21 @@ $('#add_project .bar img').click(function () {
   setTimeout(function () {
     $('#add_project').css("display", "none");
   }, 500);
-}); // open/close personal/joint project page
-
-var hi = function open_project() {
-  console.log(1);
-  $('#show_personal_project').css("display", "flex");
-  setTimeout(function () {
-    $('#show_personal_project').css("transform", "translateX(0%)");
-  }, 100); //showProjectDetail(project_name)
-}; // close personal_project page (project detail page)
-
+}); // close personal_project page (project detail page)
 
 $('#show_personal_project .bar img').click(function () {
   $('#show_personal_project').css("transform", "translateX(100%)");
   setTimeout(function () {
     $('#show_personal_project').css("display", "none");
   }, 500);
-}); // open/close color_select_box
+}); // close joint_project page (project detail page)
 
-$('#add_project .box:nth-child(2) .color_selector').click(function () {
-  $('.color_select_box').css("display", "flex");
+$('#show_joint_project .bar img').click(function () {
+  $('#show_joint_project').css("transform", "translateX(100%)");
   setTimeout(function () {
-    $('.color_select_box').css("transform", "translateY(0%)");
-    document.addEventListener("click", clickHidden);
-  }, 100);
-});
-
-function clickHidden(eve) {
-  if (eve.target.class != "color_select_box") {
-    $('.color_select_box').css("transform", "translateY(100%)");
-    setTimeout(function () {
-      $('.color_select_box').css("display", "none");
-    }, 500);
-  }
-
-  document.removeEventListener("click", clickHidden);
-} // setting project color
-
-
-var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
-var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
-
-var _loop2 = function _loop2(_i) {
-  $('.color_select_box #color_bar img:nth-child(' + "".concat(_i) + ')').click(function () {
-    COLOR = ColorCode[_i - 1];
-    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_" + "".concat(ColorImgSrc[_i - 1]) + ".png");
-  });
-};
-
-for (var _i = 1; _i < 8; _i++) {
-  _loop2(_i);
-} // open/close selector_box
-// not yet
-// open/close add_member
-
+    $('#show_joint_project').css("display", "none");
+  }, 500);
+}); // open/close add_member
 
 $('#add_project .box:nth-child(5) #add_mem').click(function () {
   $('#add_member').css("display", "flex");
@@ -1615,24 +1645,23 @@ $('#add_member .bar img').click(function () {
   }, 500);
 });
 
-function showProjectDetail(project_name) {
-  console.log('show1');
+function showProjectDetail(project_name, personal_or_joint) {
   $.get('./getProjectDetail', {
     id: _signup.default,
     name: project_name
   }, function (data) {
-    console.log('show2');
+    var page_tag = "#show_".concat(personal_or_joint, "_project");
 
     if (data !== false) {
-      $('#show_personal_project #project_detail #title #item').html("".concat(data[0]));
+      $("".concat(page_tag, " .project_detail .title #item")).html("".concat(data[0]));
       var percent = data[9] / data[8] / 100;
       percent = Math.round(percent, -1);
-      $('#show_personal_project #project_detail #percent').html("".concat(percent, "%"));
+      $("".concat(page_tag, " .project_detail #percent")).html("".concat(percent, "%"));
       var date = "".concat(data[2], ".").concat(data[3], ".").concat(data[4], " - ").concat(data[5], ".").concat(data[6], ".").concat(data[7]);
-      $('#show_personal_project #project_detail #date_box #date').html(date);
+      $("".concat(page_tag, " .project_detail .date_box #date")).html(date);
       var money = '$' + "".concat(data[8]);
-      $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
-      $('#show_personal_project #project_detail #target_money #money').html(money);
+      $("".concat(page_tag, " .project_detail .planned_speed_graph #money")).html(money);
+      $("".concat(page_tag, " .project_detail .target_money #money")).html(money);
     } else {}
   });
 } // show personal/joint project box
@@ -1641,7 +1670,7 @@ function showProjectDetail(project_name) {
 $('#navbar img:nth-child(5), #project #type_bar').click(function (event) {
   event.preventDefault();
   getallproject(SHOW_PERSONAL_OR_JOINT);
-});
+}); // create getallproject function
 
 function getallproject(TF) {
   var show_no_project = true;
@@ -1677,7 +1706,7 @@ function getallproject(TF) {
 
         project_list[i] = project_name;
 
-        if (type !== TF) {
+        if (type !== "".concat(TF)) {
           continue;
         } //create element
 
@@ -1727,23 +1756,34 @@ function getallproject(TF) {
         infor_3.appendChild(speed); // display no_project box or not
 
         show_no_project = false;
-      } ////////// big problem ////////// (done)
+      }
 
+      var _loop2 = function _loop2(_i) {
+        if (SHOW_PERSONAL_OR_JOINT === false) {
+          $("#" + "".concat(project_list[_i])).click(function (e) {
+            $('#show_personal_project').css("display", "flex");
+            setTimeout(function () {
+              $('#show_personal_project').css("transform", "translateX(0%)");
+            }, 100);
+            event.preventDefault(); // I'm not sure is it right or not
 
-      var _loop3 = function _loop3(_i2) {
-        $("#" + "".concat(project_list[_i2])).click(function (e) {
-          $('#show_personal_project').css("display", "flex");
-          setTimeout(function () {
-            $('#show_personal_project').css("transform", "translateX(0%)");
-          }, 100);
-          event.preventDefault(); // I'm not sure is it right or not
+            showProjectDetail(project_list[_i], 'personal');
+          });
+        } else {
+          $("#" + "".concat(project_list[_i])).click(function (e) {
+            $('#show_joint_project').css("display", "flex");
+            setTimeout(function () {
+              $('#show_joint_project').css("transform", "translateX(0%)");
+            }, 100);
+            event.preventDefault(); // I'm not sure is it right or not
 
-          showProjectDetail(project_list[_i2]);
-        });
+            showProjectDetail(project_list[_i], 'joint');
+          });
+        }
       };
 
-      for (var _i2 = 0; _i2 < project_list.length; _i2++) {
-        _loop3(_i2);
+      for (var _i = 0; _i < project_list.length; _i++) {
+        _loop2(_i);
       }
     }
 
@@ -1769,7 +1809,8 @@ $(document).ready(function () {
     $.get('./project', {
       id: _signup.default,
       project_name: $('#project_form input[name=project_name]').val(),
-      color: COLOR,
+      //color: COLOR,
+      color: _selectormodule.default.transmitCOLOR,
       start_date: $('#project_form input[name=start_date]').val(),
       end_date: $('#project_form input[name=end_date]').val(),
       target_number: $('#project_form input[name=target_number]').val(),
@@ -1780,8 +1821,10 @@ $(document).ready(function () {
     }, function (data) {
       if (data === '0') {
         $('#project_form input[name=project_name]').val('');
-        $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
-        COLOR = '#F6A93B';
+        $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png"); //COLOR = '#F6A93B'
+
+        _selectormodule.default.InitialColor();
+
         $('#project_form input[name=start_date]').val('');
         $('#project_form input[name=end_day]').val('');
         $('#project_form input[name=target_number]').val('');
@@ -1795,9 +1838,11 @@ $(document).ready(function () {
     });
   }); // clean the input value in the add_project page
 
-  $('#project_list #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click(function (event) {
-    $('#project_form input[name=project_name]').val(''), $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png");
-    COLOR = '#F6A93B';
+  $('#project #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click(function (event) {
+    $('#project_form input[name=project_name]').val(''), $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png"); //COLOR = '#F6A93B'
+
+    _selectormodule.default.InitialColor();
+
     $('#project_form input[name=start_date]').val('');
     $('#project_form input[name=end_date]').val('');
     $('#project_form input[name=target_number]').val(''); // 還沒加入均分
@@ -1829,7 +1874,7 @@ $(document).ready(function () {
 $(function () {
   $(".calendar").datepicker();
 });
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./signup.js":"signup.js","./module.js":"module.js","./selectormodule.js":"selectormodule.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1857,7 +1902,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40246" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39269" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

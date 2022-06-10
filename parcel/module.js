@@ -53,32 +53,19 @@ export async function caltodaymoney(ID,table,selection,type){
                 total+=StringtoInt(gettabledata(data, `${selection}`, i))
                 i++;
             }
-            //total=gettabledata(money,type,0)
-            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        //console.log(result)
         results=result
     });
-    //console.log(results)
     
     return results;
 }
 
 export function getMonthlyMoney(ID,table,selection,type){
     var result= caltotalmoney(ID,table,selection,type)
-
-/*
-    result.then(res => {
-        result=res
-        console.log ("hi",result)
-        
-    })
-
-*/
     return result
 }
 
@@ -100,18 +87,14 @@ export async function caltotalmoney(ID,table,selection,type){
                 total+=StringtoInt(gettabledata(data, `${selection}`, i))
                 i++;
             }
-            //total=gettabledata(money,type,0)
-            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        //console.log(result)
         results=result
 
     });
-    //console.log(results)
     return results;
 }
 //need to check what is the detail in table
@@ -125,7 +108,6 @@ export async function getProjectMoney(ID){
         for (let i in data){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
-            //console.log(lastday, startday)
             if(lastday-startday<0){
                 continue;
             }
@@ -133,7 +115,6 @@ export async function getProjectMoney(ID){
             
             if(remainday>0 || remainday !== undefined){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
-                //console.log("Projectremainday:",remainday)
                 let money= StringtoInt(gettabledata(data, `target_number`,i))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
                 money= money/remainday
                 totalremain+=money
@@ -142,8 +123,6 @@ export async function getProjectMoney(ID){
         }
         results=totalremain
     });
-    
-    //console.log(results)
     return results;
 }
 export async function calprojectpercent(ID, project_name){
@@ -218,7 +197,6 @@ export async function getAllUser(){
     await $.get('./getAllUser',{}
         ,(data) =>{
             all_user = data
-            //console.log(data)
         })
     return all_user
 }

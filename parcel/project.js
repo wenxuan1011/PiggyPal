@@ -1,23 +1,23 @@
 import ID from './signup.js'
 import mod from './module.js'
-var COLOR = '#F6A93B'  // project color
+import sel from './selectormodule.js'
+//var COLOR = '#F6A93B'  // project color
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
-var SHOW_PERSONAL_OR_JOINT = 'false'
+var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
-
 
 // type bar (change border-bottom)
 for(let i=1;i<5;i++){
   $('#project #type_bar p:nth-child('+`${i}`+')').click(function(){
     $('#project #type_bar p:nth-child('+`${i}`+')').css("border-bottom", "2px solid #410ADF")
     if(i===2){
-      SHOW_PERSONAL_OR_JOINT = 'false'
+      SHOW_PERSONAL_OR_JOINT = false
       $('#project_list').css("display", "flex")
       $('#project #add_project_btn').css("display", "block")
     }
     else if(i===3){
-      SHOW_PERSONAL_OR_JOINT = 'true'
+      SHOW_PERSONAL_OR_JOINT = true
       $('#project_list').css("display", "flex")
       $('#project #add_project_btn').css("display", "block")
     }
@@ -58,17 +58,6 @@ $('#add_project .bar img').click(function(){
 })
 
 
-// open/close personal/joint project page
-var hi = function open_project(){
-  console.log(1)
-  $('#show_personal_project').css("display", "flex")
-  setTimeout(() => {
-    $('#show_personal_project').css("transform", "translateX(0%)")
-  }, 100)
-  //showProjectDetail(project_name)
-}
-
-
 // close personal_project page (project detail page)
 $('#show_personal_project .bar img').click(function(){
   $('#show_personal_project').css("transform", "translateX(100%)")
@@ -77,42 +66,13 @@ $('#show_personal_project .bar img').click(function(){
   }, 500)
 })
 
-
-
-
-// open/close color_select_box
-$('#add_project .box:nth-child(2) .color_selector').click(function(){
-  $('.color_select_box').css("display", "flex")
+// close joint_project page (project detail page)
+$('#show_joint_project .bar img').click(function(){
+  $('#show_joint_project').css("transform", "translateX(100%)")
   setTimeout(() => {
-    $('.color_select_box').css("transform", "translateY(0%)")
-    document.addEventListener("click", clickHidden);
-  }, 100)
+    $('#show_joint_project').css("display", "none")
+  }, 500)
 })
-
-function clickHidden(eve){
-  if( eve.target.class != "color_select_box" ){
-    $('.color_select_box').css("transform", "translateY(100%)")
-    setTimeout(() => {
-      $('.color_select_box').css("display", "none")
-    }, 500)
-  }
-  document.removeEventListener("click", clickHidden);
-}
-
-
-// setting project color
-const ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE']
-const ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink']
-for(let i=1;i<8;i++){
-  $('.color_select_box #color_bar img:nth-child('+`${i}`+')').click(function(){
-    COLOR = ColorCode[i-1]
-    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_"+`${ColorImgSrc[i-1]}`+".png")
-  })
-}
-
-
-// open/close selector_box
-// not yet
 
 
 // open/close add_member
@@ -134,23 +94,22 @@ $('#add_member .bar img').click(function(){
 })
 
 
-function showProjectDetail(project_name){
-  console.log('show1')
+function showProjectDetail(project_name, personal_or_joint){
   $.get('./getProjectDetail',{
     id: ID,
     name: project_name,
   },(data)=>{
-    console.log('show2')
+    let page_tag = `#show_${personal_or_joint}_project`
     if(data !== false){
-      $('#show_personal_project #project_detail #title #item').html(`${data[0]}`)
+      $(`${page_tag} .project_detail .title #item`).html(`${data[0]}`)
       let percent = data[9]/data[8]/100
       percent = Math.round(percent, -1)
-      $('#show_personal_project #project_detail #percent').html(`${percent}%`)
+      $(`${page_tag} .project_detail #percent`).html(`${percent}%`)
       let date = `${data[2]}.${data[3]}.${data[4]} - ${data[5]}.${data[6]}.${data[7]}`
-      $('#show_personal_project #project_detail #date_box #date').html(date)
+      $(`${page_tag} .project_detail .date_box #date`).html(date)
       let money = '$' + `${data[8]}`
-      $('#show_personal_project #project_detail #planned_speed_graph #money').html(money)
-      $('#show_personal_project #project_detail #target_money #money').html(money)
+      $(`${page_tag} .project_detail .planned_speed_graph #money`).html(money)
+      $(`${page_tag} .project_detail .target_money #money`).html(money)
     }
     else{
     }
@@ -163,6 +122,7 @@ $('#navbar img:nth-child(5), #project #type_bar').click((event) => {
   getallproject(SHOW_PERSONAL_OR_JOINT)
 })
 
+// create getallproject function
 function getallproject(TF){
   var show_no_project = true
   $.get('./getProject',{
@@ -185,7 +145,7 @@ function getallproject(TF){
               percent = Math.round(percent, -1)
               var type = mod.gettabledata(data, 'personal_or_joint', i)
               project_list[i] = project_name
-              if(type !== TF){
+              if(type !== `${TF}`){
                 continue;
               }
               //create element
@@ -233,16 +193,27 @@ function getallproject(TF){
               // display no_project box or not
               show_no_project = false
           }
-          ////////// big problem ////////// (done)
           for(let i=0;i<project_list.length;i++){
-            $("#"+`${project_list[i]}`).click(function(e){
-              $('#show_personal_project').css("display", "flex")
-              setTimeout(() => {
-                $('#show_personal_project').css("transform", "translateX(0%)")
-              }, 100)
-              event.preventDefault()  // I'm not sure is it right or not
-              showProjectDetail(project_list[i])
-            })
+            if(SHOW_PERSONAL_OR_JOINT === false){
+              $("#"+`${project_list[i]}`).click(function(e){
+                $('#show_personal_project').css("display", "flex")
+                setTimeout(() => {
+                  $('#show_personal_project').css("transform", "translateX(0%)")
+                }, 100)
+                event.preventDefault()  // I'm not sure is it right or not
+                showProjectDetail(project_list[i], 'personal')
+              })
+            }
+            else{
+              $("#"+`${project_list[i]}`).click(function(e){
+                $('#show_joint_project').css("display", "flex")
+                setTimeout(() => {
+                  $('#show_joint_project').css("transform", "translateX(0%)")
+                }, 100)
+                event.preventDefault()  // I'm not sure is it right or not
+                showProjectDetail(project_list[i], 'joint')
+              })
+            }
           }
       }
       if(show_no_project===true){
@@ -268,7 +239,8 @@ $(document).ready(function() {
     $.get('./project', {
       id: ID,
       project_name: $('#project_form input[name=project_name]').val(),
-      color: COLOR,
+      //color: COLOR,
+      color: sel.transmitCOLOR,
       start_date: $('#project_form input[name=start_date]').val(),
       end_date: $('#project_form input[name=end_date]').val(),
       target_number: $('#project_form input[name=target_number]').val(),
@@ -281,7 +253,8 @@ $(document).ready(function() {
       if(data === '0'){
         $('#project_form input[name=project_name]').val('')
         $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
-        COLOR = '#F6A93B'
+        //COLOR = '#F6A93B'
+        sel.InitialColor()
         $('#project_form input[name=start_date]').val('')
         $('#project_form input[name=end_day]').val('')
         $('#project_form input[name=target_number]').val('')
@@ -298,15 +271,16 @@ $(document).ready(function() {
 
 
   // clean the input value in the add_project page
-  $('#project_list #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click((event)=> {
+  $('#project #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click((event)=> {
     $('#project_form input[name=project_name]').val(''),
-      $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
-      COLOR = '#F6A93B'
-      $('#project_form input[name=start_date]').val('')
-      $('#project_form input[name=end_date]').val('')
-      $('#project_form input[name=target_number]').val('')
-      // 還沒加入均分
-      $('#project_form textarea[name=note]').val('')
+    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
+    //COLOR = '#F6A93B'
+    sel.InitialColor()
+    $('#project_form input[name=start_date]').val('')
+    $('#project_form input[name=end_date]').val('')
+    $('#project_form input[name=target_number]').val('')
+    // 還沒加入均分
+    $('#project_form textarea[name=note]').val('')
   })
 
 
