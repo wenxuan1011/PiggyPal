@@ -552,6 +552,9 @@ app.get('/setfinancial',(req, res) =>{
       let repeats = mod.gettabledata(rows, 'repeats', i)
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
         const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${mod.datetransfer(today.getFullYear())},1)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+
+        })
       }
     }
   })
