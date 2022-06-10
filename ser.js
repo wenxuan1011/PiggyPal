@@ -17,7 +17,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6162
+const port = 6164
 
 // listen port
 app.listen(port, () => {

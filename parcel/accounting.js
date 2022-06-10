@@ -22,3 +22,4 @@ $('#accounting .bar #back').click(function(){
     $('#accounting').css("transform", "translateX(0%)")
   }, 100)
 })*/
+

@@ -371,13 +371,10 @@ body {
     width: 100vw;
     height: auto;
     min-height: 100vh;
-<<<<<<< HEAD
-    font-family: Roboto Regular; }
-=======
+    font-family: Roboto Regular;
     background-color: #F4F4F4;
     position: absolute;
     top: 0; }
->>>>>>> 10e2a806d162192778fe7aed7a223e83f8f67b33
     #main #accounting .bar {
       display: flex;
       flex-direction: column;
@@ -494,7 +491,7 @@ body {
       #main #add_deals #type p {
         margin: 0 3vh 0 3vh; }
       #main #add_deals #type p:nth-child(3) {
-        border-bottom: 0.3px solid #410ADF; }
+        border-bottom: 2px solid #410ADF; }
     #main #add_deals #fin {
       display: flex;
       flex-direction: column;

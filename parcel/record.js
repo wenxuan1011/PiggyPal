@@ -58,13 +58,13 @@ $(document).ready(function() {
 
 
 $('#expend').click((event)=> {
-  $('#expend').css("border-bottom", "0.3px solid #410ADF")
+  $('#expend').css("border-bottom", "2px solid #410ADF")
   $('#income').css("border-bottom", "none")
   event.preventDefault()
   click_op=0
 })
 $('#income').click((event)=> {
-  $('#income').css("border-bottom", "0.3px solid #410ADF")
+  $('#income').css("border-bottom", "2px solid #410ADF")
   $('#expend').css("border-bottom", "none")
   event.preventDefault()
   click_op=1

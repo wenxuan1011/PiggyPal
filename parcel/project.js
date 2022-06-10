@@ -1,11 +1,11 @@
 import ID from './signup.js'
 import mod from './module.js'
-var COLOR = '#F6A93B'  // project color
+import sel from './selectormodule.js'
+//var COLOR = '#F6A93B'  // project color
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
-
 
 // type bar (change border-bottom)
 for(let i=1;i<5;i++){
@@ -58,17 +58,6 @@ $('#add_project .bar img').click(function(){
 })
 
 
-// open/close personal/joint project page
-var hi = function open_project(){
-  console.log(1)
-  $('#show_personal_project').css("display", "flex")
-  setTimeout(() => {
-    $('#show_personal_project').css("transform", "translateX(0%)")
-  }, 100)
-  //showProjectDetail(project_name)
-}
-
-
 // close personal_project page (project detail page)
 $('#show_personal_project .bar img').click(function(){
   $('#show_personal_project').css("transform", "translateX(100%)")
@@ -84,42 +73,6 @@ $('#show_joint_project .bar img').click(function(){
     $('#show_joint_project').css("display", "none")
   }, 500)
 })
-
-
-
-// open/close color_select_box
-$('#add_project .box:nth-child(2) .color_selector').click(function(){
-  $('.color_select_box').css("display", "flex")
-  setTimeout(() => {
-    $('.color_select_box').css("transform", "translateY(0%)")
-    document.addEventListener("click", clickHidden);
-  }, 100)
-})
-
-function clickHidden(eve){
-  if( eve.target.class != "color_select_box" ){
-    $('.color_select_box').css("transform", "translateY(100%)")
-    setTimeout(() => {
-      $('.color_select_box').css("display", "none")
-    }, 500)
-  }
-  document.removeEventListener("click", clickHidden);
-}
-
-
-// setting project color
-const ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE']
-const ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink']
-for(let i=1;i<8;i++){
-  $('.color_select_box #color_bar img:nth-child('+`${i}`+')').click(function(){
-    COLOR = ColorCode[i-1]
-    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_"+`${ColorImgSrc[i-1]}`+".png")
-  })
-}
-
-
-// open/close selector_box
-// not yet
 
 
 // open/close add_member
@@ -240,7 +193,6 @@ function getallproject(TF){
               // display no_project box or not
               show_no_project = false
           }
-          ////////// big problem ////////// (done)
           for(let i=0;i<project_list.length;i++){
             if(SHOW_PERSONAL_OR_JOINT === false){
               $("#"+`${project_list[i]}`).click(function(e){
@@ -287,7 +239,8 @@ $(document).ready(function() {
     $.get('./project', {
       id: ID,
       project_name: $('#project_form input[name=project_name]').val(),
-      color: COLOR,
+      //color: COLOR,
+      color: sel.transmitCOLOR,
       start_date: $('#project_form input[name=start_date]').val(),
       end_date: $('#project_form input[name=end_date]').val(),
       target_number: $('#project_form input[name=target_number]').val(),
@@ -300,7 +253,8 @@ $(document).ready(function() {
       if(data === '0'){
         $('#project_form input[name=project_name]').val('')
         $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
-        COLOR = '#F6A93B'
+        //COLOR = '#F6A93B'
+        sel.InitialColor()
         $('#project_form input[name=start_date]').val('')
         $('#project_form input[name=end_day]').val('')
         $('#project_form input[name=target_number]').val('')
@@ -317,15 +271,16 @@ $(document).ready(function() {
 
 
   // clean the input value in the add_project page
-  $('#project_list #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click((event)=> {
+  $('#project #add_project_btn, #mainpage #project_view .add_project .planned_speed img').click((event)=> {
     $('#project_form input[name=project_name]').val(''),
-      $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
-      COLOR = '#F6A93B'
-      $('#project_form input[name=start_date]').val('')
-      $('#project_form input[name=end_date]').val('')
-      $('#project_form input[name=target_number]').val('')
-      // 還沒加入均分
-      $('#project_form textarea[name=note]').val('')
+    $('#add_project .box:nth-child(2) .color_selector img:nth-child(1)').attr("src", "./image/project/Project_colordot_orange.png")
+    //COLOR = '#F6A93B'
+    sel.InitialColor()
+    $('#project_form input[name=start_date]').val('')
+    $('#project_form input[name=end_date]').val('')
+    $('#project_form input[name=target_number]').val('')
+    // 還沒加入均分
+    $('#project_form textarea[name=note]').val('')
   })
 
 

@@ -1537,13 +1537,13 @@ $(document).ready(function () {
   });
 });
 $('#expend').click(function (event) {
-  $('#expend').css("border-bottom", "0.3px solid #410ADF");
+  $('#expend').css("border-bottom", "2px solid #410ADF");
   $('#income').css("border-bottom", "none");
   event.preventDefault();
   click_op = 0;
 });
 $('#income').click(function (event) {
-  $('#income').css("border-bottom", "0.3px solid #410ADF");
+  $('#income').css("border-bottom", "2px solid #410ADF");
   $('#expend').css("border-bottom", "none");
   event.preventDefault();
   click_op = 1;
@@ -1733,11 +1733,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33082" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36840" + '/');
->>>>>>> 10e2a806d162192778fe7aed7a223e83f8f67b33
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46639" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
