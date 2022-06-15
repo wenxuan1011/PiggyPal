@@ -967,19 +967,13 @@ function _caltodaymoney() {
                 for (var i in data) {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
-                } //total=gettabledata(money,type,0)
-                //console.log(`total:${total}`)
+                }
 
-
-                //total=gettabledata(money,type,0)
-                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              } //console.log(result)
+              }
 
-
-              //console.log(result)
               results = result;
             });
 
@@ -998,15 +992,6 @@ function _caltodaymoney() {
 
 function getMonthlyMoney(ID, table, selection, type) {
   var result = caltotalmoney(ID, table, selection, type);
-  /*
-      result.then(res => {
-          result=res
-          console.log ("hi",result)
-          
-      })
-  
-  */
-
   return result;
 }
 
@@ -1041,19 +1026,13 @@ function _caltotalmoney() {
                 for (var i in data) {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
-                } //total=gettabledata(money,type,0)
-                //console.log(`total:${total}`)
+                }
 
-
-                //total=gettabledata(money,type,0)
-                //console.log(`total:${total}`)
                 result = total;
               } else {
                 result = 0;
-              } //console.log(result)
+              }
 
-
-              //console.log(result)
               results = result;
             });
 
@@ -1090,9 +1069,8 @@ function _getProjectMoney() {
 
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
-                var startday = new Date(); //console.log(lastday, startday)
+                var startday = new Date();
 
-                //console.log(lastday, startday)
                 if (lastday - startday < 0) {
                   continue;
                 }
@@ -1100,9 +1078,7 @@ function _getProjectMoney() {
                 var remainday = Math.abs(lastday - startday);
 
                 if (remainday > 0 || remainday !== undefined) {
-                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1; //console.log("Projectremainday:",remainday)
-
-                  //console.log("Projectremainday:",remainday)
+                  remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
@@ -1242,7 +1218,7 @@ function _getAllUser() {
             all_user = [];
             _context5.next = 3;
             return $.get('./getAllUser', {}, function (data) {
-              all_user = data; //console.log(data)
+              all_user = data;
             });
 
           case 3:
@@ -1577,7 +1553,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39269" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37980" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

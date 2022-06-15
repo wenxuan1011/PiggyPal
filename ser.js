@@ -17,7 +17,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6164
+const port = 6162
 
 // listen port
 app.listen(port, () => {
@@ -28,13 +28,13 @@ app.listen(port, () => {
 cron.schedule("0 0 * * *", function() {
   var today = new Date()
   console.log(today);
-
+  serverjob.dailyStartprocess();
 });
 
 cron.schedule("58 23 * * *", function() {
   var today = new Date()
   console.log(today);
-  serverjob.dailyprocess();
+  serverjob.dailyEndprocess();
 });
 
 // static
@@ -535,7 +535,30 @@ app.get('/saveMoneytoProject',(req,res) =>{
   })
 })
 
-app.get('/setfinancial',(req, res) =>{
+app.get('/setfinancialincome',(req, res) =>{
+  var today = new Date()
+  let UID = req.query.id
+  const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
+  connection.query(setfinancial, (err, rows, fields)=>{
+    if(err)console.log("There are something wrong: ",err)
+    for(let i in rows){
+      let UID = mod.gettabledata(rows,'id', i)
+      let type = mod.gettabledata(rows,'type', i)
+      let item = mod.gettabledata(rows, 'item', i)
+      let date = mod.gettabledata(rows, 'day', i)
+      let money = mod.gettabledata(rows, 'money', i)
+      let repeats = mod.gettabledata(rows, 'repeats', i)
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},1)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+          if(err)console.log("There are something wrong: ",err)
+        })
+      }
+    }
+  })
+})
+
+app.get('/setfinancialexpenditure',(req, res) =>{
   var today = new Date()
   let UID = req.query.id
   const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
@@ -550,10 +573,15 @@ app.get('/setfinancial',(req, res) =>{
       let date = mod.gettabledata(rows, 'day', i)
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
-      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
-        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${mod.datetransfer(today.getFullYear())},1)`
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
         connection.query(addFinancial,(err, rows, fields)=>{
-
+        })
+      }
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+          if(err)console.log("There are something wrong: ",err)
         })
       }
     }

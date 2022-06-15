@@ -1,6 +1,5 @@
 import * as mod from './module.js'
 
-var all_user = []
 var todayExpenditure= 0
 var todayIncome = 0
 var Expenditure = 0
@@ -19,7 +18,8 @@ $('#Login #login-form #login button').click((event) => {
     },0)
 })
 */
-async function dailyprocess(){
+///////////////do before day end///////////////
+async function dailyEndprocess(){
     var today=new Date();
     var totalday=setremainDay(today,totalday);
     var all_user = await mod.getAllUser()
@@ -28,39 +28,8 @@ async function dailyprocess(){
         await setVariable(all_user[i])
         await calculatemoney(today,totalday)
         await saveMoneytoProject(all_user[i])
+        await setfinancialexpenditure(all_user[i])
     }
-    
-    
-    /*
-    setTimeout(function(){
-        
-        var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
-        console.log("DailyRemain:",DailyRemain)
-        var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
-        console.log("ProjectSaving:", ProjectSaving)
-        console.log("actualDailyRemain:",actualDailyRemain)
-        if((todayIncome-todayExpenditure)>=0){
-            $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`+${todayIncome-todayExpenditure}`)
-        }
-        else{
-            $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`${todayIncome-todayExpenditure}`)
-        }
-        
-        if(actualDailyRemain<0){
-            //daily avaliable expenditure warning
-            ProjectSaving=ProjectSaving+actualDailyRemain
-            actualDailyRemain=0
-            if(ProjectSaving<0){
-                
-                //use money in every month saving
-            }
-        }
-        
-        $('#daily_expend p:nth-child(1)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
-        $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${ProjectSaving}`)
-        console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
-    },1000)
-    */
 }
 
 function setremainDay(today,totalday){
@@ -95,49 +64,17 @@ async function setVariable(ID){
     MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
     ProjectSaving= await mod.getProjectMoney(ID)
     ProjectSaving= Math.ceil(ProjectSaving)
-        /*
-        todayExpenditure.then(res => {
-            todayExpenditure=Math.ceil(res)
-        })
-        todayIncome.then(res => {
-            todayIncome=Math.ceil(res)
-        })
-        Expenditure.then(res => {
-            Expenditure=Math.ceil(res)
-        })
-        Income.then(res => {
-            Income=Math.ceil(res)
-        })
-        MonthlyExpend.then(res => {
-            MonthlyExpend=Math.ceil(res)
-        })
-        MonthlyIncome.then(res => {
-            MonthlyIncome=Math.ceil(res)
-        })
-        MonthlySaving.then(res => {
-            MonthlySaving=Math.ceil(res)
-        })
-        ProjectSaving.then(res => {
-            ProjectSaving=Math.ceil(res)
-            console.log(ProjectSaving)
-        })
-        */
 }
 
 async function calculatemoney(today,totalday){
     var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
-    //console.log("DailyRemain:",DailyRemain)
     var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
-    //console.log("ProjectSaving:", ProjectSaving)
-    //console.log("actualDailyRemain:",actualDailyRemain)
     
     if(actualDailyRemain<0){
-        //daily avaliable expenditure warning
         ProjectSaving=ProjectSaving+actualDailyRemain
         actualDailyRemain=0
         if(ProjectSaving<0){
             ProjectSaving = 0
-            //use money in every month saving
         }
     }
 
@@ -180,34 +117,37 @@ async function saveMoneytoProject(ID){
         count++
     }
 }
-
-async function setfinancial(){
+async function setfinancialexpenditure(ID){
     var all_user = await mod.getAllUser()
-    for (var id in all_user){
-        await $.get('./setfinancial',{
-            id:id
-        },(data) => {
-
-        })
-    }
-}
-async function getdailymoney(){
-    var all_user=await mod.getAllUser()
-    for (var id in all_user){
-        saveMoneytoProject(id)
-    }
-}
-function monthlyTodo(){
-    var today = new Date()
-    if(DailyRemain>0){
-        //save in monthly saving
-    }
+    await $.get('./setfinancialexpenditure',{
+        id:ID
+    },(data) => {
+        
+    })
 }
 
 
 
+
+//////do at day start///////////////
+async function dailyStartprocess(){
+    var all_user = await mod.getAllUser()
+    for(var i in all_user){
+        console.log('Now update ', all_user[i],' data')
+        await setfinancialincome(all_user[i])
+    }
+    
+}
+async function setfinancialincome(){
+    await $.get('./setfinancialincome',{
+        id:id
+    },(data) => {
+
+    })
+}
 
 
 export default{
-    dailyprocess
+    dailyEndprocess,
+    dailyStartprocess
 }
