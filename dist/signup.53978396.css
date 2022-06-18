@@ -485,29 +485,50 @@ body {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      width: 100vw;
-      height: 4.1872vh;
+      width: 80.026vw;
+      height: auto;
       margin: 3.69458vh 0 3.202vh 0; }
       #main #add_deals #type p {
-        margin: 0 3vh 0 3vh; }
+        padding: 0 0 12px 0;
+        margin: 0; }
       #main #add_deals #type p:nth-child(3) {
         border-bottom: 2px solid #410ADF; }
     #main #add_deals #fin {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 72.2667vw;
-      height: auto;
-      margin: 4.31vh 0 0 0; }
+      width: 72vw;
+      height: auto; }
       #main #add_deals #fin input {
-        min-height: 4.31vh;
+        min-height: 5.216vh;
         border-style: none;
-        border-radius: 6px;
-        width: 40.16vw;
-        padding: 0;
+        border-radius: 10px;
+        width: 50vw;
         font-size: 1.4778vh;
-        text-align: right;
-        padding: 0 3.733vw 0 0; }
+        text-align: left;
+        color: #737474;
+        padding: 0 0 0 5vw; }
+      #main #add_deals #fin .datebox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 50px;
+        height: 3.325vh;
+        width: 37.6vw;
+        margin: 0 0 26px 0; }
+        #main #add_deals #fin .datebox input {
+          min-height: 2vh;
+          border-style: none;
+          border-radius: 10px;
+          width: 22.133vw;
+          font-family: Roboto Bold;
+          font-size: 1.4778vh;
+          text-align: center;
+          color: black;
+          padding: 0;
+          margin: 0 9px 0 0; }
       #main #add_deals #fin .box {
         display: flex;
         flex-direction: row;
@@ -516,8 +537,22 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
-      #main #add_deals #fin .box:nth-child(4) {
-        margin: 0 0 4.187vh 0; }
+      #main #add_deals #fin .box:nth-child(2) {
+        justify-content: right;
+        height: 7.68vh;
+        width: 100%; }
+        #main #add_deals #fin .box:nth-child(2) input {
+          min-height: 7.68vh;
+          width: 48vw;
+          font-family: Roboto Bold;
+          font-size: 36px;
+          text-align: right;
+          padding: 0 26px 0 0; }
+      #main #add_deals #fin .box:nth-child(5) {
+        height: 7.68vh;
+        margin: 0 0 5.2167vh 0; }
+        #main #add_deals #fin .box:nth-child(5) input {
+          min-height: 7.68vh; }
       #main #add_deals #fin button {
         background-color: #F4F4F4;
         display: flex;

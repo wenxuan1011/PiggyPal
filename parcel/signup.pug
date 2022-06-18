@@ -129,12 +129,11 @@ html
           p#expend 支出
           p 轉帳
         form#fin
-          .box
-            p 日期
+          .datebox
             input(type = "text", name = "date", value = "05/13/2022", id="da")
+            img(src = "./image/btn/btn_arrow_down.png", width = "5.0667%")
           .box
-            p 金錢
-            input(type = "text", name = "cost", id="spend")
+            input(type = "text", name = "cost", value = "0", id="spend")
           .box
             p 名稱
             input(type = "text", name = "items", id="na")

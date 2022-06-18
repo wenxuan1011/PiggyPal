@@ -1512,7 +1512,7 @@ $(document).ready(function () {
       type: click_op
     }, function (data) {
       if (data === '0') {
-        t.value = "";
+        t.value = "0";
         n.value = "";
         d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
       } else {
@@ -1522,7 +1522,7 @@ $(document).ready(function () {
   });
   $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
     event.preventDefault();
-    t.value = "";
+    t.value = "0";
     n.value = "";
     d.value = "05/13/2022";
   });
@@ -1733,7 +1733,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46639" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34243" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

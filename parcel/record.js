@@ -26,7 +26,7 @@ $(document).ready(function() {
       type: click_op
     },(data)=>{
       if(data === '0'){
-        t.value = ""
+        t.value = "0"
         n.value = ""
         d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
       }
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
   $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
     event.preventDefault()
-    t.value = ""
+    t.value = "0"
     n.value = ""
     d.value = "05/13/2022"
   })
