@@ -2,34 +2,430 @@ doctype html
 html
   head
     meta(charset="utf-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1")
     link(href="./signup.sass", rel="stylesheet")
-    title PiggyPal | aboutus
+    link(rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css")
+    title PiggyPal
   body
-    h1 Sign Up
-    form#signup
-      |username: 
-      input(type="text", name="name")
-      br
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="password")
-      br
-      button(type="submit") sign up
-    #signup-output
-    br
-    br
-    h1 Login
-    form#login
-      |ID:
-      input(type="text", name="id")
-      br
-      |password:
-      input(type="text", name="pw")
-      br
-      button(type="submit") login
   
+    #Login
+      img(src = "./image/login/main_image.png", height = "25.246%")
+      #login-form
+        h1 Login
+        form#login
+          .box
+            img(src = "./image/login/icon_email.png", height = "100%")
+            input(type="text", name="id", placeholder = "E-mail")
+          .box
+            img(src = "./image/login/icon_password.png", height = "100%")
+            input(type="password", name="pw", placeholder = "Password")
+          .forget
+            p Forget password?
+          button#login_btn(type="submit")
+            img(src = "./image/login/btn_Login.png" height = "100%")
+      .other_choice
+        img(src="./image/login/line_OrLogWith.png", height = "10%")
+        .icon 
+          img(src = "./image/login/icon_fb.png", height = "100%")
+          img(src = "./image/login/icon_google.png", height = "100%")
+          img(src = "./image/login/icon_twitter.png", height = "100%")
+        #login-output
+          p Don't have an account? &nbsp;
+          p#change-to-signup Sign Up.
+    
+    #SignUp
+      img(src = "./image/signup/main_image.png", height = "24.87%")
+      #signup-form
+        h1 Sign Up
+        form#signup
+          .box
+            img(src = "./image/signup/icon_username.png", height = "100%")
+            input(type="text", name="name", placeholder = "User Name")
+          .box
+            img(src = "./image/signup/icon_email.png", height = "100%")
+            input(type="text", name="id", placeholder = "E-mail")
+          .box
+            img(src = "./image/signup/icon_password.png", height = "100%")
+            input(type="password", name="password", placeholder = "Password")
+          .check
+            input(type='checkbox', name='check') 
+            label I read and agree to terms and condition.
+          button(type="submit")
+            img(src = "./image/signup/btn_SignUp.png" height = "100%")
+      .other_choice
+        img(src="./image/signup/line_OrConnectWith.png", height = "9%")
+        .icon 
+          img(src = "./image/signup/icon_fb.png", height = "100%")
+          img(src = "./image/signup/icon_google.png", height = "100%")
+          img(src = "./image/signup/icon_twitter.png", height = "100%")
+        #signup-output
+          p Already had an account? &nbsp; 
+          p#change-to-login Login.
+
+
+    #main
+      #mainpage
+        img#personal_btn(src = "./image/MainPage/MainPage_personal.png", width = "21.8667%")
+        img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
+        #balance_bar
+          p $0
+          p 本月可用
+        #project_block
+          #project_bar
+            p 儲蓄專案
+            img(src = "./image/btn/btn_arrow_right.png", height = "40%")
+            img(src = "./image/MainPage/btn_arrange.png", height = "95%")
+          #project_view
+            .project
+              .title
+                img(src = "./image/project/Project_colordot_purple.png", height = "17.647%")
+                p 一般儲蓄
+              .planned_speed
+                img(src = "./image/MainPage/MainPage_general savings.png", height = "100%")
+            .add_project
+              .title
+                img(src = "./image/MainPage/Project_colordot_grey.png", height = "17.647%")
+                p 新增儲蓄
+              .planned_speed
+                img(src = "./image/MainPage/addcircle.png", height = "100%")
+          #daily_expend
+            #word_block
+              p
+              p
+        #detail_block
+          #detail_bar
+            p 當日明細
+            img(src = "./image/btn/btn_arrow_right.png", height = "40%")
+          .list
+        .add_button
+
+      #account
+        h1 Account
+      #accounting 
+        .bar
+          img#back(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 記帳
+        #everyday_earn
+          img(src = "./image/Accounting/box_SelectDate.png", width = "87.8%")
+          #today_earn
+            p 本日損益
+            p +0
+          img#add_deals_btn(src = "./image/Accounting/btn_add.png", width = "46.4%")
+        #today_detail
+          .bars
+            p 收入
+          .income 
+          .bars
+            p 支出
+          .expenditure 
+       
+      #add_deals
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
+          p 新增交易
+        #type
+          p 儲蓄
+          p#income 收入
+          p#expend 支出
+          p 轉帳
+        form#fin
+          .datebox
+            input(type = "text", name = "date", value = "05/13/2022", id="da")
+            img(src = "./image/btn/btn_arrow_down.png", width = "5.0667%")
+          .box
+            input(type = "text", name = "cost", value = "0", id = "spend")
+          .box
+            p 分類
+            .input_div
+              p#sort 飲食
+              img(src = "./image/btn/btn_arrow_right.png", width = "4%")
+          .box
+            p 名稱
+            input(type = "text", name = "items", id = "na")
+          .box
+            p 帳戶
+            .input_div
+              p#acc 現金
+              img(src = "./image/btn/btn_arrow_right.png", width = "4%")
+          .box
+            p 備註
+            input(type = "text", name = "deals_note", id = "dn")
+          button(type="submit", id="save")
+            img(src = "./image/btn/btn_save.png" height = "100%") 
+        
+
+      #barcode
+        h1 Barcode
+
+      #project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_search.png", height = "2.8325%")
+          p 儲蓄專案
+        #type_bar 
+          p 一般儲蓄
+          p 個人專案
+          p 共同專案
+          p 達成成就
+        #project_list
+        #no_project
+          p 尚未建立專案
+        img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+
+      #add_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.8325%")
+          p 新增專案
+        form#project_form
+          .box
+            p 專案名稱
+            input(type = "text", name = "project_name")
+          .box
+            p 分類顏色
+            .color_selector
+              img(src = "./image/project/Project_colordot_orange.png", height = "50.535%")
+              img(src = "./image/btn/btn_arrow_down.png", height = "17.836%")
+          .box
+            p 日期
+            .date_box 
+              input(type = "text", name = "start_date", class = "calendar")
+              p -
+              input(type = "text", name = "end_date", class = "calendar")
+          .box
+            p 目標金額
+            input(type = "text", name = "target_number")
+          .box
+            p 參與成員
+            p#member
+            img#add_mem(src = "./image/MainPage/addcircle.png", height = "85.7%")
+          .box
+            p 分配設定
+            #distribute_setting
+              p （預設）均分
+              img(src = "./image/btn/btn_arrow_down.png", height = "17.836%")
+          .box
+            p 提醒
+            img(src = "./image/project/btn_switch.png", height = "68.57%")
+          .box
+            p 備註
+            textarea(name = "note")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png", height = "100%")
+          #add_project-output
+
+      #add_member
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.8325%")
+          p 新增成員
+        #search_box 
+          p 請輸入好友ID 
+          #id_box 
+            input(type = "text", name = "userid")
+            img(src = "./image/btn/btn_search.png", height = "47.56%")
+        #result
+          img(src = "./image/project/project_adduser_laila.png", height = "28.2667%")
+          p USER
+          img#add_mem_btn(src = "./image/btn/btn_save.png", width = "52%")
+        #wrong
+          p 查無此人
+
+      #show_personal_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.22167%")
+          p 個人專案
+        #graph_box 
+          img(src = "./image/project/Project_month-bg.png", height = "25px")
+          img#graph(src = "./image/project/Project_personalProject_graph.png", height = "67%")
+        .project_detail
+          .title 
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          .planned_speed_graph
+            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            p#money $800
+          .complete_percent 
+           p#percent 35%
+           p Completed
+          .date_box 
+            p 儲蓄時間
+            p#date 2022.04.28-2022.06.14
+          .target_money
+            p 目標金額
+            p#money $800
+          
+      #show_joint_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
+          img(src = "./image/btn/btn_close.png", width = "5.33333%")
+          p 共同專案
+        img#drop_down_btn(src = "./image/project/Project_month-bg.png", width = "22.4%")
+        .ranking_list
+        .project_detail
+          .title 
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          .planned_speed_graph
+            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            p#money $800
+          .complete_percent 
+            p#percent 35%
+            p Completed
+          .date_box 
+            p 儲蓄時間
+            p#date 2022.04.28-2022.06.14
+          .target_money
+            p 目標金額
+            p#money $800
+
+
+      #personal_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 個人資料
+        #photo_and_name
+          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%")
+          p USER
+        #financial_setting
+          p 財務設定
+          .list 
+            li
+              p 固定收入
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+            li
+              p 固定支出
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+            li
+              p 固定儲蓄
+              img(src = "./image/btn/btn_arrow_right.png", height = "15px")
+        #account_setting
+          p 帳號設定
+          .list 
+            li
+              p 更改密碼
+            li
+              p 登出
+            li
+              p 刪除所有數據
+            li
+              p 更改密碼
+    
+      #financial_setting_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 固定收入
+        form#financial
+          .box
+            p 收入項目
+            input(type = "text", name = "item")
+          .box
+            p 入帳日期
+            input(type = "text", name = "date", id = "fin_date")
+          .box
+            p 入帳金額
+            input(type = "text", name = "money")
+          .box
+            p 重複
+            //input(type = "text", name = "repeat", value = "重複")
+            .repeat_div
+              p#repeat 每月
+              img(src = "./image/btn/btn_arrow_down.png", width = "6%")
+          button(type="submit")
+            img(src = "./image/btn/btn_save.png" height = "100%")
+        #financial-output
+      
+      
+      .color_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        p 請選擇分類顏色
+        #color_bar
+          img(src = "./image/project/Project_colordot_red.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_orange.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_yellow.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_green.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_blue.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_purple.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_pink.png", width = "9.5%")
+
+
+      .NumKeyBoard_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        .board_box
+          p#seven 7 
+          p#eight 8 
+          p#nine 9 
+        .board_box
+          p#four 4 
+          p#five 5 
+          p#six 6 
+        .board_box
+          p#one 1
+          p#two 2
+          p#three 3
+        .board_box
+          img(src = "./image/Accounting/calculator_btn-c.png", width = "20.39%", id = "backspace")
+          p#zero 0 
+          img(src = "./image/Accounting/calculator_btn-ok.png", width = "20.39%", id = "ok")
+
+
+      .sort_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        p 請選擇分類
+        .sort_bar
+
+
+      .other_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        p 選單名稱
+        .other_bar
+          
+
+      #navbar
+        img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
+        img(src="./image/navbar/unselect/account_unselect.png", height = "77.647%")
+        img(src="./image/navbar/selected/mainpage_select.png", height = "77.647%")
+        img(src="./image/navbar/unselect/accounting_unselect.png", height = "77.647%")
+        img(src="./image/navbar/unselect/project_unselect.png", height = "77.647%")
+    
+    #popup
+      #background 
+        .box_regular
+          .message
+            p Hi
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_eye.gif", width = "58%")
+          p.confirm 確認
+        .box_login
+          .message
+            p 登入失敗！
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_error.gif", width = "58%")
+            p 帳號或密碼有錯誤
+            p 請再試一次
+          p.confirm 確認
+        .box_delete
+          .message
+            p 您確定要刪除帳號嗎？
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_delete.gif", width = "58%")
+          .ConfirmOrDelete
+            .ConfirmBox
+              p.confirm 返回
+            .DeleteBox
+              p.deleteaccount 刪除帳號
+
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="./signup.js")
+  script(src="./personal.js")
+  script(src="./mainpage.js")
+  script(src="./calculatemoney.js")
+  script(src="./module.js")
+  script(src="./record.js")
+  script(src="./project.js")
+  script(src="./accounting.js")
+  script(src="./mainpage.js")
+  script(src="./serverjobs.js")
+  script(src="./selectormodule.js")
