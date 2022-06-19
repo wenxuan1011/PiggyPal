@@ -1162,7 +1162,7 @@ function datetransfer(date) {
 
 function checkBlank(page) {
   var lengths = 1;
-  var recordmessage = ["項目", "日期", "金額", "類別"];
+  var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
   var pages = [];
@@ -1199,9 +1199,24 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
-  console.log(123);
-  $('#popup').css('display', 'flex');
-  $('#popup #background #box #message p').html("\u5C1A\u672A\u586B\u5BEB".concat(type));
+  if (type < 4) {
+    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！'];
+    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses'];
+    $('#popup .box_login, #popup .box_delete').css('display', 'none');
+    $('#popup .box_regular').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+    $('#popup #background .box_regular .message p').html("".concat(PopUpTital[type]));
+    $('#popup #background .box_regular .message figure img').attr("src", "./image/PopUpMessage/PopUpMessage_".concat(PopUpGif[type], ".gif"));
+  } else if (type == 4) {
+    $('#popup .box_regular, #popup .box_delete').css('display', 'none');
+    $('#popup .box_login').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+  } else {
+    console.log('delete');
+    $('#popup .box_regular, #popup .box_login').css('display', 'none');
+    $('#popup .box_delete').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+  }
 }
 
 function getAllUser() {
@@ -1281,28 +1296,28 @@ function getColor(color) {
 
 var _default = {
   gettabledata: gettabledata,
-  //get id inside the row of column select from database
+  // get id inside the row of column select from database
   getMonthlyMoney: getMonthlyMoney,
-  //get money in each table, remember to use caltotalmoney to get in integer
+  // get money in each table, remember to use caltotalmoney to get in integer
   caltotalmoney: caltotalmoney,
-  //calculate total money
+  // calculate total money
   getProjectMoney: getProjectMoney,
-  //get daily project saving
+  // get daily project saving
   calprojectpercent: calprojectpercent,
-  //calculate project complete %(in .1f )
+  // calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
-  //transfer string to integer
+  // transfer string to integer
   datetransfer: datetransfer,
-  //tranfer date to 0date if date<10
+  // tranfer date to 0date if date<10
   checkBlank: checkBlank,
-  //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  // check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
   getAllUser: getAllUser,
-  //get all users' id
+  // get all users' id
   sergetProject: sergetProject,
-  //FOR SERVER TO GET PROJECT
+  // FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
-  //popup message, need to input the word you want to show
-  getColor: getColor //turn the color code into the color, need to input the color code of the project
+  // popup message, need to input the word you want to show
+  getColor: getColor // turn the color code into the color, need to input the color code of the project
 
 };
 exports.default = _default;
@@ -2055,7 +2070,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46833" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -2232,5 +2247,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","project.js"], null)
-//# sourceMappingURL=project.b5dfbff8.js.map                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 //# sourceMappingURL=project.b5dfbff8.js.map
