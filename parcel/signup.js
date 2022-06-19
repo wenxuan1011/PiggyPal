@@ -1,4 +1,5 @@
 import * as mod from './module.js'
+import fs from 'fs'
 //import process from './dailymoney.js'
 
 $('#change-to-login').click(function(){
@@ -96,6 +97,7 @@ function unselected_to_selected(){
 };
 
 var ID = "";
+
 $(document).ready(function() {
   
   // sign up
@@ -110,6 +112,7 @@ $(document).ready(function() {
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
         ID = $('#signup input[name=id]').val()
+        
       }
       else{
         $("#signup-output").html(`${data}`);
@@ -117,6 +120,7 @@ $(document).ready(function() {
         //process(ID)
       };
     });
+    
   })
   
   // login
@@ -131,6 +135,7 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
+        localStorage.setItem("ID", data)
         //process(ID)
       }
       else{
@@ -143,6 +148,7 @@ $(document).ready(function() {
  });
 
 function transmit(){
+  
   return ID
 };
 

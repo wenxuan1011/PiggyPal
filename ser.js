@@ -7,12 +7,16 @@ import {fileURLToPath} from 'url'
 import config from './config.js'
 import mysql from 'mysql'
 import mod from './parcel/module.js'
+import bodyParser from 'body-parser'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6162
+const port = 6173
+
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 
 // listen port
 app.listen(port, () => {
@@ -393,6 +397,42 @@ app.get('/getProjectMoney',(req,res) =>{
       res.send(row)
     }
   })
+})
+
+
+//upload personal picture
+import multer  from 'multer'
+import path  from 'path'
+import fs from 'fs'
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) =>{
+    cb(null, "./dist/image/personal_pic");
+    
+  },
+  filename: (req, file, cb) =>{
+    console.log(file)
+    //console.log(path.extname(file.originalname))
+    cb(null, `1` + `${path.extname(file.originalname)}`);
+  }
+  
+})
+
+const upload = multer({storage: storage})
+
+app.get('/upload', (req, res) =>{
+  res.render("upload");
+});
+
+app.post('/upload', upload.single("image"), (req, res) =>{
+  console.log(req.body.usr_name)
+  console.log(path.extname(req.file.originalname))
+  console.log(123)
+  fs.rename(`./dist/image/personal_pic/1${path.extname(req.file.originalname)}`, `./dist/image/personal_pic/${req.body.usr_name}${path.extname(req.file.originalname)}`, (err) => {
+    if (err) throw err;
+    console.log('Rename complete!');
+  });
+  res.send("Image uploaded");
 })
 
 //connection.end()

@@ -228,10 +228,30 @@ body {
     background-color: #F4F4F4;
     position: absolute;
     top: 0; }
-    #main #mainpage #personal_btn {
+    #main #mainpage .personal_btn_bg {
       position: absolute;
       top: 6.4vh;
-      right: 0; }
+      right: 0;
+      width: 10.1vh;
+      height: 5.91133vh;
+      top: 6.404vh;
+      background: #8E5FF4;
+      border-radius: 10px 0px 0px 10px;
+      margin: 0 0 0 36.1vh;
+      z-index: 0; }
+      #main #mainpage .personal_btn_bg #personal_btn {
+        position: absolute;
+        top: 0.492611vh;
+        right: 4vh;
+        object-fit: cover;
+        z-index: 1;
+        border-radius: 10px; }
+      #main #mainpage .personal_btn_bg #personal_btn_arrow {
+        position: absolute;
+        top: 2.21675vh;
+        right: 1.5vh;
+        object-fit: cover;
+        z-index: 1; }
     #main #mainpage #add_project_btn {
       position: fixed;
       bottom: 13.423vh;
@@ -312,8 +332,6 @@ body {
         align-items: center;
         width: 90vw;
         margin: 0 0 0 0; }
-        #main #mainpage #project_block #daily_expend p {
-          font-size: 14px; }
     #main #mainpage #detail_block {
       display: flex;
       flex-direction: column;
@@ -354,6 +372,13 @@ body {
           border-style: none; }
   #main #account {
     display: none; }
+    #main #account #display-image {
+      display: absolute;
+      width: 400px;
+      height: 225px;
+      border: 1px solid black;
+      background-position: center;
+      background-size: cover; }
   #main #accounting {
     display: none;
     flex-direction: column;
@@ -545,8 +570,80 @@ body {
       #main #project #type_bar p {
         padding: 0 0 12px 0;
         border-bottom: none; }
+      #main #project #type_bar p:nth-child(1) {
+        color: #BEBEBF; }
+      #main #project #type_bar p:nth-child(3) {
+        color: #BEBEBF; }
+      #main #project #type_bar p:nth-child(4) {
+        color: #BEBEBF; }
       #main #project #type_bar p:nth-child(2) {
-        border-bottom: 2px solid #410ADF; }
+        border-bottom: 2px solid #410ADF;
+        color: #0D0E10; }
+    #main #project #normal_save_money_list {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 80.2667vw;
+      height: auto;
+      margin: 5.17vh 0 0 0; }
+      #main #project #normal_save_money_list #no_normal_save_money {
+        display: none;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 80.2667vw;
+        height: 10vh;
+        background-color: white;
+        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0 0 7.88vh 0; }
+      #main #project #normal_save_money_list .normal_save_money {
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 80.2667vw;
+        height: 13.054vh;
+        background-color: white;
+        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0 0 7.88vh 0; }
+        #main #project #normal_save_money_list .normal_save_money #more_sm_infor_btn {
+          margin: 0 4vw 0 0; }
+        #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 80%;
+          height: auto;
+          margin: 0 0 0 5.33vw;
+          font-size: 12px; }
+          #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 1.847vh;
+            margin: 0 0 15px 0; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point img {
+              margin: 0 2.133vw 0 0; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point p {
+              margin: 0;
+              color: #747474; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point #item_sm {
+              margin: 0 40vw 0 0; }
+          #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .save_money_infor {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 1.847vh;
+            margin: 0 0 15px 5px; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .save_money_infor #percent_sm {
+              font-family: Roboto Bold;
+              font-size: 24px; }
     #main #project #personal_project_list {
       display: flex;
       flex-direction: column;
@@ -788,6 +885,96 @@ body {
         margin: 0;
         padding: 2vh 0;
         border-top: 0.2px solid #B3B3B3; }
+  #main #show_normal_save_money {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid; }
+    #main #show_normal_save_money .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #show_normal_save_money .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #show_normal_save_money .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #show_normal_save_money .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #show_normal_save_money #graph_box_sm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 28.82vh;
+      margin: 2.955vh 0 0 0; }
+      #main #show_normal_save_money #graph_box_sm #graph_sm {
+        margin: 3.394vh 0 0 0; }
+    #main #show_normal_save_money #project_detail_sm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      height: 22.1675vh;
+      background-color: white;
+      margin: 2.894vh 0 0 0;
+      border-radius: 10px; }
+      #main #show_normal_save_money #project_detail_sm #title_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 3.2vh 0 0 0; }
+        #main #show_normal_save_money #project_detail_sm #title_sm p {
+          font-size: 15px; }
+      #main #show_normal_save_money #project_detail_sm #date_box_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 4.68vh 0 0 0;
+        padding: 2vh 0; }
+        #main #show_normal_save_money #project_detail_sm #date_box_sm p {
+          font-size: 13px; }
+        #main #show_normal_save_money #project_detail_sm #date_box_sm #money {
+          font-size: 25px;
+          font-family: "Roboto Bold"; }
+      #main #show_normal_save_money #project_detail_sm #target_money_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 0;
+        padding: 1.1084vh 0;
+        border-top: 0.2px solid #B3B3B3; }
+        #main #show_normal_save_money #project_detail_sm #target_money_sm p {
+          font-size: 13px; }
+        #main #show_normal_save_money #project_detail_sm #target_money_sm #money {
+          color: #737474; }
   #main #personal_page {
     display: none;
     flex-direction: column;
@@ -826,7 +1013,9 @@ body {
       height: 13.547vh;
       margin: 4.31vh 0 0 0; }
       #main #personal_page #photo_and_name img {
-        margin: 0 0 1.97vh 0; }
+        margin: 0 0 1.97vh 0;
+        border-radius: 30px;
+        object-fit: cover; }
       #main #personal_page #photo_and_name p {
         font-size: 1.47vh;
         margin: 0; }
@@ -869,6 +1058,44 @@ body {
           font-size: 2vh !important; }
       #main #personal_page .list li:nth-last-child(1) {
         border-style: none; }
+  #main #change_personal_page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid;
+    backdrop-filter: none; }
+    #main #change_personal_page .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3;
+      margin: 0 0 9.36vh 0; }
+      #main #change_personal_page .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #change_personal_page .bar img:nth-child(2) {
+        position: absolute;
+        left: 89.6vw;
+        top: 6.0345vh; }
+      #main #change_personal_page .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #change_personal_page img {
+      object-fit: cover; }
   #main #financial_setting_page {
     display: none;
     flex-direction: column;

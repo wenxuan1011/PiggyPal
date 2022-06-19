@@ -1147,7 +1147,9 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1156,6 +1158,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
+
+var _fs = _interopRequireDefault(require("fs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -1278,7 +1284,8 @@ $(document).ready(function () {
       if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
-        ID = data; //process(ID)
+        ID = data;
+        localStorage.setItem("ID", data); //process(ID)
       } else {
         $("#login-output").html("".concat(data));
       }
@@ -1295,7 +1302,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"personal.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"personal.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -1311,7 +1318,7 @@ var day = document.getElementById("financial_day");
 var money = document.getElementById("financial_money");
 var repeat = document.getElementById("financial_repeat"); // open/close personal page
 
-$('#mainpage #personal_btn').click(function () {
+$('#mainpage .personal_btn_bg').click(function () {
   $('#personal_page').css("display", "flex");
   setTimeout(function () {
     $('#personal_page').css("transform", "translateX(0%)");
@@ -1358,7 +1365,31 @@ $('#personal_page #financial_setting .list li:nth-child(3)').click(function () {
   $('#financial_setting_page #financial .box:nth-child(2) p').html("儲蓄日期");
   $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額");
   TYPE = 2;
+}); // function ReportFileStatus(filespec) {
+//   var fso, s = filespec;
+//   fso = new ActiveXObject("Scripting.FileSystemObject");
+//   if (fso.FileExists(filespec))
+//      s += " exists.";
+//   else 
+//      s += " doesn't exist.";
+//   return(s);
+// }
+//改大頭貼
+
+$('#personal_page #photo_and_name img').click(function () {
+  $('#change_personal_page').css("display", "flex");
+  setTimeout(function () {
+    $('#change_personal_page').css("transform", "translateX(0%)");
+  }, 100); //console.log(ReportFileStatus('../dist/image/personal_pic/F64081127.jpg'))
 });
+$('#change_personal_page .bar img:nth-child(1)').click(function () {
+  $('#change_personal_page').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#change_personal_page').css("display", "none");
+  }, 500);
+}); // $('#change_personal_page .bar img:nth-child(2)').click(function(){
+// })
+
 $(document).ready(function () {
   // change username
   $('#mainpage img').click(function (event) {
@@ -1429,7 +1460,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46151" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35373" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

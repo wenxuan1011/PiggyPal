@@ -9,7 +9,7 @@ var money = document.getElementById("financial_money")
 var repeat = document.getElementById("financial_repeat")
 
 // open/close personal page
-$('#mainpage #personal_btn').click(function(){
+$('#mainpage .personal_btn_bg').click(function(){
   $('#personal_page').css("display", "flex")
   setTimeout(() => {
     $('#personal_page').css("transform", "translateX(0%)")
@@ -62,6 +62,37 @@ $('#personal_page #financial_setting .list li:nth-child(3)').click(function(){
   $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額")
   TYPE = 2
 })
+
+// function ReportFileStatus(filespec) {
+//   var fso, s = filespec;
+//   fso = new ActiveXObject("Scripting.FileSystemObject");
+//   if (fso.FileExists(filespec))
+//      s += " exists.";
+//   else 
+//      s += " doesn't exist.";
+//   return(s);
+// }
+
+//改大頭貼
+$('#personal_page #photo_and_name img').click(function(){
+  $('#change_personal_page').css("display", "flex")
+  setTimeout(() => {
+    $('#change_personal_page').css("transform", "translateX(0%)")
+  }, 100)
+  //console.log(ReportFileStatus('../dist/image/personal_pic/F64081127.jpg'))
+})
+
+$('#change_personal_page .bar img:nth-child(1)').click(function(){
+  $('#change_personal_page').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#change_personal_page').css("display", "none")
+  }, 500)
+})
+
+// $('#change_personal_page .bar img:nth-child(2)').click(function(){
+  
+// })
+
 
 
 $(document).ready(function() {

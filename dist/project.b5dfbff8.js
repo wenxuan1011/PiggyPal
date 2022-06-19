@@ -1147,7 +1147,9 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1156,6 +1158,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
+
+var _fs = _interopRequireDefault(require("fs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -1278,7 +1284,8 @@ $(document).ready(function () {
       if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
-        ID = data; //process(ID)
+        ID = data;
+        localStorage.setItem("ID", data); //process(ID)
       } else {
         $("#login-output").html("".concat(data));
       }
@@ -1295,7 +1302,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"project.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"project.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -1305,6 +1312,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // type bar (change border-bottom)
 $('#project #type_bar p:nth-child(1)').click(function () {
   $('#project #type_bar p:nth-child(1)').css("border-bottom", "2px solid #410ADF");
+  $('#project #type_bar p:nth-child(1)').css("color", "#0D0E10");
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF");
+  $('#normal_save_money_list').css("display", "flex");
   $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
@@ -1315,6 +1327,11 @@ $('#project #type_bar p:nth-child(1)').click(function () {
 });
 $('#project #type_bar p:nth-child(2)').click(function () {
   $('#project #type_bar p:nth-child(2)').css("border-bottom", "2px solid #410ADF");
+  $('#project #type_bar p:nth-child(2)').css("color", "#0D0E10");
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF");
+  $('#normal_save_money_list').css("display", "none");
   $('#personal_project_list').css("display", "flex");
 
   for (var i = 0; i < 4; i++) {
@@ -1325,6 +1342,11 @@ $('#project #type_bar p:nth-child(2)').click(function () {
 });
 $('#project #type_bar p:nth-child(3)').click(function () {
   $('#project #type_bar p:nth-child(3)').css("border-bottom", "2px solid #410ADF");
+  $('#project #type_bar p:nth-child(3)').css("color", "#0D0E10");
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF");
+  $('#normal_save_money_list').css("display", "none");
   $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
@@ -1335,6 +1357,11 @@ $('#project #type_bar p:nth-child(3)').click(function () {
 });
 $('#project #type_bar p:nth-child(4)').click(function () {
   $('#project #type_bar p:nth-child(4)').css("border-bottom", "2px solid #410ADF");
+  $('#project #type_bar p:nth-child(4)').css("color", "#0D0E10");
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF");
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF");
+  $('#normal_save_money_list').css("display", "none");
   $('#personal_project_list').css("display", "none");
 
   for (var i = 0; i < 4; i++) {
@@ -1374,6 +1401,19 @@ $('#show_personal_project .bar img').click(function () {
   setTimeout(function () {
     $('#show_personal_project').css("display", "none");
   }, 500);
+}); // open/close normal_save_money page
+
+$('.normal_save_money').click(function () {
+  $('#show_normal_save_money').css("display", "flex");
+  setTimeout(function () {
+    $('#show_normal_save_money').css("transform", "translateX(0%)");
+  }, 100);
+});
+$('#show_normal_save_money .bar img').click(function () {
+  $('#show_normal_save_money').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#show_normal_save_money').css("display", "none");
+  }, 500);
 });
 $(document).ready(function () {
   // the project have set or not
@@ -1392,16 +1432,21 @@ $(document).ready(function () {
         $('#show_personal_project #project_detail #planned_speed_graph #money').html(money);
         $('#show_personal_project #project_detail #target_money #money').html(money);
         $('#personal_project_list .personal_project').css("display", "flex");
+        $('#normal_save_money_list .normal_save_money').css("display", "flex");
         $('#personal_project_list #no_project').css("display", "none");
+        $('#normal_save_money_list #no_normal_save_money').css("display", "none");
       } else {
         $('#personal_project_list .personal_project').css("display", "none");
+        $('#normal_save_money_list .normal_save_money').css("display", "none");
         $('#personal_project_list #no_project').css("display", "flex");
+        $('#normal_save_money_list #no_normal_save_money').css("display", "none");
       }
     });
   }); // add personal project
 
   $('#person_project button[type="submit"]').click(function (event) {
     event.preventDefault();
+    console.log(_signup.default);
     $.get('./person_project', {
       id: _signup.default,
       project_personal: $('#person_project input[name=project_personal]').val(),
@@ -1445,7 +1490,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46151" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35373" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

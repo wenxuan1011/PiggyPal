@@ -15,6 +15,7 @@ $(document).ready(function() {
   
   $('#save').click((event)=> {
     event.preventDefault()
+
     $.get('./record', {
       id: ID,
       items: $('#fin input[name=items]').val(),

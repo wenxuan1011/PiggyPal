@@ -136,7 +136,6 @@ body
             p#change-to-signup
                 color: rgb(142, 95, 244)
 
-
 #SignUp
     display: none
     flex-direction: column
@@ -253,7 +252,6 @@ body
             #change-to-login
                 color: rgb(142, 95, 244)
     
-
 #main
     display: none
     flex-direction: column
@@ -274,10 +272,31 @@ body
         position: absolute
         top: 0
 
-        #personal_btn
+        .personal_btn_bg
             position: absolute
             top: 6.4vh
             right: 0
+
+            width: 10.1vh
+            height: 5.91133vh
+            top: 6.404vh
+            background: #8E5FF4
+            border-radius: 10px 0px 0px 10px
+            margin: 0 0 0 36.1vh
+            z-index: 0
+            #personal_btn
+                position: absolute
+                top: 0.492611vh
+                right: 4vh
+                object-fit: cover
+                z-index: 1
+                border-radius: 10px
+            #personal_btn_arrow
+                position: absolute
+                top: 2.21675vh
+                right: 1.5vh
+                object-fit: cover
+                z-index: 1
         
         #add_project_btn
             position: fixed
@@ -375,7 +394,6 @@ body
                 width: 90vw
                 margin: 0 0 0 0
                 
-                #
 
         
         #detail_block
@@ -427,7 +445,15 @@ body
         .add_button
     
     #account
-        display: none
+      display: none
+      
+      #display-image
+        display: absolute
+        width: 400px
+        height: 225px
+        border: 1px solid black
+        background-position: center
+        background-size: cover
 
     #accounting
       display: none
@@ -485,6 +511,7 @@ body
             color: #8E5FF4
         img:nth-child(2)
           margin-top: 3.694vh  
+    
     #add_deals
         display: none
         flex-direction: column
@@ -647,9 +674,91 @@ body
             p
                 padding: 0 0 12px 0
                 border-bottom: none
+            p:nth-child(1)
+                color: #BEBEBF
+            p:nth-child(3)
+                color: #BEBEBF
+            p:nth-child(4)
+                color: #BEBEBF
 
             p:nth-child(2)
                 border-bottom: 2px solid #410ADF
+                color: #0D0E10
+
+        #normal_save_money_list
+            display: none
+            flex-direction: column
+            align-items: center
+            width: 80.2667vw
+            height: auto
+            margin: 5.17vh 0 0 0
+
+            #no_normal_save_money
+                display: none
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                width: 80.2667vw
+                height: 10vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 7.88vh 0
+
+            .normal_save_money
+                display: none
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 80.2667vw
+                height: 13.054vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 7.88vh 0
+
+                #more_sm_infor_btn
+                    margin: 0 4vw 0 0
+
+                .normal_save_money_infor
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    width: 80%
+                    height: auto
+                    margin: 0 0 0 5.33vw
+                    font-size: 12px
+
+                    .type_and_point
+                        display: flex
+                        flex-direction: row
+                        justify-content: space-between
+                        align-items: center
+                        width: 100%
+                        height: 1.847vh
+                        margin: 0 0 15px 0 
+
+                        img
+                            margin: 0 2.133vw 0 0
+
+                        p
+                            margin: 0
+                            color: #747474
+                        #item_sm
+                            margin: 0 40vw 0 0
+                            
+                    .save_money_infor
+                        display: flex
+                        flex-direction: row
+                        justify-content: space-between
+                        align-items: center
+                        width: 100%
+                        height: 1.847vh
+                        margin: 0 0 15px 5px
+
+                        #percent_sm
+                            font-family: Roboto Bold
+                            font-size: 24px
 
         #personal_project_list
             display: flex
@@ -931,7 +1040,107 @@ body
                 padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
 
+    #show_normal_save_money
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid
 
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                right: 6.9333vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+        
+        #graph_box_sm
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 28.82vh
+            margin: 2.955vh 0 0 0
+
+            #graph_sm
+                margin: 3.394vh 0 0 0
+        
+        #project_detail_sm
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 90vw
+            height: 22.1675vh
+            background-color: white
+            margin: 2.894vh 0 0 0
+            border-radius: 10px
+
+            #title_sm
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 3.2vh 0 0 0
+
+                p
+                    font-size: 15px
+
+            #date_box_sm
+                display: flex
+                flex-direction: row
+                justify-content: left
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 4.68vh 0 0 0
+                padding: 2vh 0
+                p
+                    font-size: 13px
+                #money
+                    font-size: 25px
+                    font-family: "Roboto Bold"
+    
+            #target_money_sm
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 0
+                padding: 1.1084vh 0
+                border-top: 0.2px solid #B3B3B3
+                p
+                    font-size: 13px
+                #money
+                    color: #737474
 
     #personal_page
         display: none
@@ -977,6 +1186,8 @@ body
             
             img
                 margin: 0 0 1.97vh 0
+                border-radius : 30px
+                object-fit: cover
             
             p
                 font-size: 1.47vh
@@ -1028,6 +1239,49 @@ body
             
             li:nth-last-child(1)
                 border-style: none
+
+    #change_personal_page
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid
+        backdrop-filter: none
+        
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+            margin: 0 0 9.36vh 0
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                left: 89.6vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+        img
+            object-fit: cover
 
     #financial_setting_page
         display: none
@@ -1117,7 +1371,6 @@ body
                 img
                     margin: 0
             
-
     #navbar
         background-color: white
         display: flex

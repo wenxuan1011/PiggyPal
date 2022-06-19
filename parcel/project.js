@@ -3,6 +3,11 @@ import ID from './signup.js'
 // type bar (change border-bottom)
 $('#project #type_bar p:nth-child(1)').click(function(){
   $('#project #type_bar p:nth-child(1)').css("border-bottom", "2px solid #410ADF")
+  $('#project #type_bar p:nth-child(1)').css("color", "#0D0E10")
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF")
+  $('#normal_save_money_list').css("display", "flex")
   $('#personal_project_list').css("display", "none")
   for(let i=0;i<4;i++){
     if(i+1!==1){
@@ -13,6 +18,11 @@ $('#project #type_bar p:nth-child(1)').click(function(){
 
 $('#project #type_bar p:nth-child(2)').click(function(){
   $('#project #type_bar p:nth-child(2)').css("border-bottom", "2px solid #410ADF")
+  $('#project #type_bar p:nth-child(2)').css("color", "#0D0E10")
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF")
+  $('#normal_save_money_list').css("display", "none")
   $('#personal_project_list').css("display", "flex")
   for(let i=0;i<4;i++){
     if(i+1!==2){
@@ -23,6 +33,11 @@ $('#project #type_bar p:nth-child(2)').click(function(){
 
 $('#project #type_bar p:nth-child(3)').click(function(){
   $('#project #type_bar p:nth-child(3)').css("border-bottom", "2px solid #410ADF")
+  $('#project #type_bar p:nth-child(3)').css("color", "#0D0E10")
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(4)').css("color", "#BEBEBF")
+  $('#normal_save_money_list').css("display", "none")
   $('#personal_project_list').css("display", "none")
   for(let i=0;i<4;i++){
     if(i+1!==3){
@@ -33,6 +48,11 @@ $('#project #type_bar p:nth-child(3)').click(function(){
 
 $('#project #type_bar p:nth-child(4)').click(function(){
   $('#project #type_bar p:nth-child(4)').css("border-bottom", "2px solid #410ADF")
+  $('#project #type_bar p:nth-child(4)').css("color", "#0D0E10")
+  $('#project #type_bar p:nth-child(1)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(2)').css("color", "#BEBEBF")
+  $('#project #type_bar p:nth-child(3)').css("color", "#BEBEBF")
+  $('#normal_save_money_list').css("display", "none")
   $('#personal_project_list').css("display", "none")
   for(let i=0;i<4;i++){
     if(i+1!==4){
@@ -80,6 +100,20 @@ $('#show_personal_project .bar img').click(function(){
   }, 500)
 })
 
+// open/close normal_save_money page
+$('.normal_save_money').click(function(){
+  $('#show_normal_save_money').css("display", "flex")
+  setTimeout(() => {
+    $('#show_normal_save_money').css("transform", "translateX(0%)")
+  }, 100)
+})
+
+$('#show_normal_save_money .bar img').click(function(){
+  $('#show_normal_save_money').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#show_normal_save_money').css("display", "none")
+  }, 500)
+})
 
 $(document).ready(function() {
   // the project have set or not
@@ -98,11 +132,15 @@ $(document).ready(function() {
         $('#show_personal_project #project_detail #planned_speed_graph #money').html(money)
         $('#show_personal_project #project_detail #target_money #money').html(money)
         $('#personal_project_list .personal_project').css("display", "flex")
+        $('#normal_save_money_list .normal_save_money').css("display", "flex")
         $('#personal_project_list #no_project').css("display", "none")
+        $('#normal_save_money_list #no_normal_save_money').css("display", "none")
       }
       else{
         $('#personal_project_list .personal_project').css("display", "none")
+        $('#normal_save_money_list .normal_save_money').css("display", "none")
         $('#personal_project_list #no_project').css("display", "flex")
+        $('#normal_save_money_list #no_normal_save_money').css("display", "none")
       }
     });
   })
@@ -111,6 +149,7 @@ $(document).ready(function() {
   // add personal project
   $('#person_project button[type="submit"]').click((event) => {
     event.preventDefault()
+    console.log(ID)
     $.get('./person_project', {
       id: ID,
       project_personal: $('#person_project input[name=project_personal]').val(),
