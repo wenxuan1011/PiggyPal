@@ -139,13 +139,15 @@ $(document).ready(function() {
         //process(ID)
       }
       else{
-        $("#login-output").html(`${data}`);
+        mod.PopUpMessage(4)
       };
     });
   })
-
-
  });
+
+$('#popup #background .confirm').click(function(){
+  $('#popup').css('display', 'none')
+})
 
 function transmit(){
   

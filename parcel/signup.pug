@@ -18,7 +18,7 @@ html
             input(type="text", name="id", placeholder = "E-mail")
           .box
             img(src = "./image/login/icon_password.png", height = "100%")
-            input(type="text", name="pw", placeholder = "Password")
+            input(type="password", name="pw", placeholder = "Password")
           .forget
             p Forget password?
           button(type="submit")
@@ -276,6 +276,30 @@ html
             p 每月固定儲蓄金額
             p#money $800    
       
+      #show_joint_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
+          img(src = "./image/btn/btn_close.png", width = "5.33333%")
+          p 共同專案
+        img#drop_down_btn(src = "./image/project/Project_month-bg.png", width = "22.4%")
+        .ranking_list
+        .project_detail
+          .title 
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          .planned_speed_graph
+            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            p#money $800
+          .complete_percent 
+            p#percent 35%
+            p Completed
+          .date_box 
+            p 儲蓄時間
+            p#date 2022.04.28-2022.06.14
+          .target_money
+            p 目標金額
+            p#money $800
+
       #personal_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
