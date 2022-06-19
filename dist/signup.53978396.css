@@ -456,7 +456,7 @@ body {
     align-items: center;
     width: 100vw;
     height: auto;
-    min-height: 135vh;
+    min-height: 100vh;
     background-color: #F4F4F4;
     transform: translateX(100%);
     transition: 0.5s;
@@ -499,15 +499,6 @@ body {
       align-items: center;
       width: 72vw;
       height: auto; }
-      #main #add_deals #fin input {
-        min-height: 5.216vh;
-        border-style: none;
-        border-radius: 10px;
-        width: 50vw;
-        font-size: 1.4778vh;
-        text-align: left;
-        color: #737474;
-        padding: 0 0 0 5vw; }
       #main #add_deals #fin .datebox {
         display: flex;
         flex-direction: row;
@@ -537,21 +528,45 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
+        #main #add_deals #fin .box .input_div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 57vw;
+          height: 5.216vh;
+          background-color: white;
+          border-radius: 10px; }
+          #main #add_deals #fin .box .input_div p {
+            color: #737474;
+            font-size: 15px;
+            margin: 0 0 0 5vw; }
+          #main #add_deals #fin .box .input_div img {
+            margin: 0 5vw 0 0; }
+        #main #add_deals #fin .box input {
+          min-height: 5.216vh;
+          border-style: none;
+          border-radius: 10px;
+          width: 52vw;
+          font-size: 1.4778vh;
+          text-align: left;
+          color: #737474;
+          padding: 0 0 0 5vw; }
       #main #add_deals #fin .box:nth-child(2) {
         justify-content: right;
         height: 7.68vh;
         width: 100%; }
         #main #add_deals #fin .box:nth-child(2) input {
           min-height: 7.68vh;
-          width: 48vw;
+          width: 50vw;
           font-family: Roboto Bold;
           font-size: 36px;
           text-align: right;
           padding: 0 26px 0 0; }
-      #main #add_deals #fin .box:nth-child(5) {
+      #main #add_deals #fin .box:nth-child(6) {
         height: 7.68vh;
         margin: 0 0 5.2167vh 0; }
-        #main #add_deals #fin .box:nth-child(5) input {
+        #main #add_deals #fin .box:nth-child(6) input {
           min-height: 7.68vh; }
       #main #add_deals #fin button {
         background-color: #F4F4F4;
@@ -562,25 +577,6 @@ body {
         padding: 0; }
         #main #add_deals #fin button img {
           margin: 0; }
-      #main #add_deals #fin #keyboard {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        width: 60vw;
-        height: auto;
-        margin: 4.31vh 0 0 0; }
-        #main #add_deals #fin #keyboard .board_box {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          width: 60vw;
-          height: auto;
-          margin: 4.31vh 0 0 0; }
-      #main #add_deals #fin #ok {
-        display: none; }
-      #main #add_deals #fin #backspace {
-        display: none; }
   #main #barcode {
     display: none; }
   #main #project {
@@ -1203,13 +1199,7 @@ body {
       width: 100vw;
       height: 11.9458vh;
       background-color: white;
-      border-bottom: 0.3px solid #B3B3B3;
-      /*p:nth-child(2)
-                font-size: 1.97vh
-                position: absolute
-                top: 6.0345vh
-                right: 5.333vw
-                margin: 0*/ }
+      border-bottom: 0.3px solid #B3B3B3; }
       #main #financial_setting_page .bar img {
         position: absolute;
         left: 6.6667vw;
@@ -1244,11 +1234,22 @@ body {
         padding: 0;
         font-size: 1.4778vh;
         text-align: right;
+        color: #737474;
         padding: 0 3.733vw 0 0; }
-      #main #financial_setting_page #financial .box:nth-child(2) p {
-        margin: 0 9vw 0 0; }
-      #main #financial_setting_page #financial .box:nth-child(2) input {
-        width: 9.5vw; }
+      #main #financial_setting_page #financial .repeat_div {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        align-items: center;
+        width: 43.8vw;
+        height: 4.31vh;
+        background-color: white;
+        border-radius: 6px; }
+        #main #financial_setting_page #financial .repeat_div p {
+          font-size: 12px;
+          color: #737474; }
+        #main #financial_setting_page #financial .repeat_div img {
+          margin: 0 12px; }
       #main #financial_setting_page #financial button {
         background-color: #F4F4F4;
         display: flex;
@@ -1263,7 +1264,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 23vh;
+    height: 27vh;
     position: fixed;
     bottom: 0;
     background: #FFFFFF;
@@ -1272,20 +1273,98 @@ body {
     box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
     border-radius: 20px 20px 0px 0px;
     z-index: 1; }
+    #main .color_select_box img {
+      margin: 17px 0 20px 0; }
     #main .color_select_box p {
       font-size: 16px;
       color: #8E5FF4;
-      padding: 24px 0 0 0;
-      border-top: 4px solid #737474; }
+      margin: 0 0 2.586vh 0; }
     #main .color_select_box #color_bar {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+      width: 70vw;
+      height: auto;
+      margin: 0; }
+      #main .color_select_box #color_bar img {
+        margin: 10px 34px 10px 0; }
+      #main .color_select_box #color_bar img:nth-child(4) {
+        margin: 0 34px 0 0; }
+      #main .color_select_box #color_bar img:nth-child(5) {
+        margin: 0; }
+  #main .NumKeyBoard_select_box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 43.596vh;
+    position: fixed;
+    bottom: 0;
+    background: #FFFFFF;
+    transition: 0.5s;
+    transform: translateY(100%);
+    box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
+    border-radius: 20px 20px 0px 0px;
+    z-index: 1; }
+    #main .NumKeyBoard_select_box img {
+      margin: 17px 0 27px 0; }
+    #main .NumKeyBoard_select_box .board_box {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      width: 70vw;
-      height: 2.5vh;
-      margin: 2.586vh 0 0 0; }
-  #main .selector_box {
+      width: 59.4667vw;
+      height: auto; }
+      #main .NumKeyBoard_select_box .board_box p {
+        font-size: 24px;
+        color: #737474;
+        margin: 20px 0 20px 0; }
+    #main .NumKeyBoard_select_box .board_box:nth-child(5) {
+      width: 69vw; }
+  #main .sort_select_box {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 39vh;
+    position: fixed;
+    bottom: 0;
+    background: #FFFFFF;
+    transition: 0.5s;
+    transform: translateY(100%);
+    box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
+    border-radius: 20px 20px 0px 0px;
+    z-index: 1; }
+    #main .sort_select_box img {
+      margin: 17px 0 20px 0; }
+    #main .sort_select_box p {
+      font-size: 16px;
+      color: #8E5FF4;
+      margin: 0 0 30px 0; }
+    #main .sort_select_box .sort_bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 84vw;
+      height: auto; }
+      #main .sort_select_box .sort_bar .sort_box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 13.0667vw;
+        height: 9vh;
+        margin: 10px 39px 15px 0; }
+        #main .sort_select_box .sort_bar .sort_box img {
+          margin: 0; }
+        #main .sort_select_box .sort_bar .sort_box p {
+          font-size: 15px;
+          color: #737474;
+          margin: 5px 0 0 0; }
+      #main .sort_select_box .sort_bar .sort_box:nth-child(4n+1) {
+        margin: 10px 0 15px 0; }
+  #main .other_select_box {
     display: none;
     flex-direction: column;
     align-items: center;
@@ -1299,11 +1378,33 @@ body {
     box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25);
     border-radius: 20px 20px 0px 0px;
     z-index: 1; }
-    #main .selector_box p {
+    #main .other_select_box img {
+      margin: 17px 0 20px 0; }
+    #main .other_select_box p {
       font-size: 16px;
       color: #8E5FF4;
-      padding: 24px 0 0 0;
-      border-top: 4px solid #737474; }
+      margin: 0 0 20px 0; }
+    #main .other_select_box .other_bar {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: auto; }
+      #main .other_select_box .other_bar .other_box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80.533vw;
+        height: auto;
+        border-top: 0.2px solid #B3B3B3;
+        margin: 0; }
+        #main .other_select_box .other_bar .other_box p {
+          font-size: 15px;
+          color: #737474;
+          margin: 15px 0; }
+      #main .other_select_box .other_bar .other_box:nth-child(2) {
+        border-top: none; }
   #main #navbar {
     background-color: white;
     display: flex;
@@ -1339,30 +1440,82 @@ body {
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5); }
-    #popup #background #box {
+    #popup #background .box_regular {
       display: flex;
       align-items: center;
       flex-direction: column;
       color: white;
       width: 65.6vw;
-      height: 13.9vh;
+      height: 34vh;
       border-radius: 12px;
       background-color: white;
       opacity: 1; }
-      #popup #background #box #message {
+    #popup #background .box_login {
+      display: none;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      width: 65.6vw;
+      height: 39.778vh;
+      border-radius: 12px;
+      background-color: white;
+      opacity: 1; }
+    #popup #background .box_delete {
+      display: none;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      width: 65.6vw;
+      height: 34vh;
+      border-radius: 12px;
+      background-color: white;
+      opacity: 1; }
+    #popup #background .message {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 84.78%;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #popup #background .message p {
+        color: black;
+        font-size: 12px;
+        margin: 3px; }
+      #popup #background .message p:nth-child(1) {
+        font-size: 17px;
+        margin: 15px 0; }
+      #popup #background .message figure {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 66.7%;
-        border-bottom: 0.3px solid #B3B3B3; }
-        #popup #background #box #message p {
-          color: black;
-          font-size: 16px; }
-      #popup #background #box #confirm {
-        color: #474EF2;
-        font-size: 16px;
-        margin: auto 0; }
+        height: auto;
+        margin: 0; }
+    #popup #background .ConfirmOrDelete {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 5.17vh; }
+      #popup #background .ConfirmOrDelete .ConfirmBox, #popup #background .ConfirmOrDelete .DeleteBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%; }
+      #popup #background .ConfirmOrDelete .ConfirmBox {
+        border-right: 0.3px solid #B3B3B3; }
+    #popup #background .confirm {
+      color: #474EF2;
+      font-size: 16px;
+      margin: auto 0; }
+    #popup #background .deleteaccount {
+      color: red;
+      font-size: 16px;
+      margin: auto 0; }
 
 
 /*# sourceMappingURL=signup.53978396.css.map */

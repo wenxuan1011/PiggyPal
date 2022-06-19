@@ -133,37 +133,27 @@ html
             input(type = "text", name = "date", value = "05/13/2022", id="da")
             img(src = "./image/btn/btn_arrow_down.png", width = "5.0667%")
           .box
-            input(type = "text", name = "cost", value = "0", id="spend")
+            input(type = "text", name = "cost", value = "0", id = "spend")
+          .box
+            p 分類
+            .input_div
+              p#sort 飲食
+              img(src = "./image/btn/btn_arrow_right.png", width = "4%")
           .box
             p 名稱
-            input(type = "text", name = "items", id="na")
+            input(type = "text", name = "items", id = "na")
           .box
             p 帳戶
-            input(type = "text", name = "money", value = "現金")
+            .input_div
+              p#acc 現金
+              img(src = "./image/btn/btn_arrow_right.png", width = "4%")
           .box
             p 備註
-            input(type = "text", name = "repeat")
+            input(type = "text", name = "deals_note", id = "dn")
           button(type="submit", id="save")
             img(src = "./image/btn/btn_save.png" height = "100%") 
-            
-          #keyboard
-            .board_box
-              p#one 1
-              p#two 2
-              p#three 3
-            .board_box
-              p#four 4 
-              p#five 5 
-              p#six 6 
-            .board_box
-              p#seven 7 
-              p#eight 8 
-              p#nine 9 
-            .board_box
-              p#backspace C
-              p#zero 0 
-              p#ok OK
         
+
       #barcode
         h1 Barcode
 
@@ -321,6 +311,7 @@ html
               p 刪除所有數據
             li
               p 更改密碼
+    
       #financial_setting_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
@@ -328,40 +319,68 @@ html
         form#financial
           .box
             p 收入項目
-            input(type = "text", name = "item", value = "薪水")
+            input(type = "text", name = "item")
           .box
             p 入帳日期
-            input(type = "text", name = "year", value = "2022")
-            input(type = "text", name = "month", value = "05")
-            input(type = "text", name = "day", value = "11")
+            input(type = "text", name = "date", id = "fin_date")
           .box
             p 入帳金額
-            input(type = "text", name = "money", value = "10000")
+            input(type = "text", name = "money")
           .box
             p 重複
-            input(type = "text", name = "repeat", value = "重複")
+            //input(type = "text", name = "repeat", value = "重複")
+            .repeat_div
+              p#repeat 每月
+              img(src = "./image/btn/btn_arrow_down.png", width = "6%")
           button(type="submit")
             img(src = "./image/btn/btn_save.png" height = "100%")
         #financial-output
       
       
       .color_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
         p 請選擇分類顏色
         #color_bar
-          img(src = "./image/project/Project_colordot_red.png", height = "100%")
-          img(src = "./image/project/Project_colordot_orange.png", height = "100%")
-          img(src = "./image/project/Project_colordot_yellow.png", height = "100%")
-          img(src = "./image/project/Project_colordot_green.png", height = "100%")
-          img(src = "./image/project/Project_colordot_blue.png", height = "100%")
-          img(src = "./image/project/Project_colordot_purple.png", height = "100%")
-          img(src = "./image/project/Project_colordot_pink.png", height = "100%")
+          img(src = "./image/project/Project_colordot_red.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_orange.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_yellow.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_green.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_blue.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_purple.png", width = "9.5%")
+          img(src = "./image/project/Project_colordot_pink.png", width = "9.5%")
 
 
-      .selector_box
-        p 選單的名字
-        .selection_list
+      .NumKeyBoard_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        .board_box
+          p#seven 7 
+          p#eight 8 
+          p#nine 9 
+        .board_box
+          p#four 4 
+          p#five 5 
+          p#six 6 
+        .board_box
+          p#one 1
+          p#two 2
+          p#three 3
+        .board_box
+          img(src = "./image/Accounting/calculator_btn-c.png", width = "20.39%", id = "backspace")
+          p#zero 0 
+          img(src = "./image/Accounting/calculator_btn-ok.png", width = "20.39%", id = "ok")
 
-      
+
+      .sort_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        p 請選擇分類
+        .sort_bar
+
+
+      .other_select_box
+        img(src = "./image/Accounting/ListLine.png", width = "20.8%")
+        p 選單名稱
+        .other_bar
+          
 
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
@@ -372,11 +391,30 @@ html
     
     #popup
       #background 
-        #box
-          #message
+        .box_regular
+          .message
             p Hi
-          p#confirm 確認
-          
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_eye.gif", width = "58%")
+          p.confirm 確認
+        .box_login
+          .message
+            p 登入失敗！
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_error.gif", width = "58%")
+            p 帳號或密碼有錯誤
+            p 請再試一次
+          p.confirm 確認
+        .box_delete
+          .message
+            p 您確定要刪除帳號嗎？
+            figure
+              img(src = "./image/PopUpMessage/PopUpMessage_delete.gif", width = "58%")
+          .ConfirmOrDelete
+            .ConfirmBox
+              p.confirm 返回
+            .DeleteBox
+              p.deleteaccount 刪除帳號
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")

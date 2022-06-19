@@ -1,5 +1,4 @@
 import * as mod from './module.js'
-//import process from './dailymoney.js'
 
 $('#change-to-login').click(function(){
   $("#SignUp").css("display", "none");
@@ -131,16 +130,17 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
-        //process(ID)
       }
       else{
-        $("#login-output").html(`${data}`);
+        mod.PopUpMessage(4)
       };
     });
   })
-
-
  });
+
+$('#popup #background .confirm').click(function(){
+  $('#popup').css('display', 'none')
+})
 
 function transmit(){
   return ID

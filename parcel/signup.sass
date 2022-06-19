@@ -542,14 +542,14 @@ body
                     color: #8E5FF4
                     font-family: 'Roboto'
 
-            
+
     #add_deals
         display: none
         flex-direction: column
         align-items: center
         width: 100vw
         height: auto
-        min-height: 135vh
+        min-height: 100vh
         background-color: #F4F4F4
         transform: translateX(100%)
         transition: 0.5s
@@ -598,16 +598,6 @@ body
             width: 72vw
             height: auto
 
-            input
-                min-height: 5.216vh
-                border-style: none
-                border-radius: 10px
-                width: 50vw
-                font-size: 1.4778vh
-                text-align: left
-                color: #737474
-                padding: 0 0 0 5vw
-
             .datebox
                 display: flex
                 flex-direction: row
@@ -640,6 +630,34 @@ body
                 width: 100%
                 margin: 0 0 2.586vh 0
 
+                .input_div
+                    display: flex
+                    flex-direction: row
+                    justify-content: space-between
+                    align-items: center
+                    width: 57vw
+                    height: 5.216vh
+                    background-color: white
+                    border-radius: 10px
+
+                    p
+                        color: #737474
+                        font-size: 15px
+                        margin: 0 0 0 5vw
+                    
+                    img
+                        margin: 0 5vw 0 0
+
+                input
+                    min-height: 5.216vh
+                    border-style: none
+                    border-radius: 10px
+                    width: 52vw
+                    font-size: 1.4778vh
+                    text-align: left
+                    color: #737474
+                    padding: 0 0 0 5vw
+
             .box:nth-child(2)
                 justify-content: right
                 height: 7.68vh
@@ -647,19 +665,18 @@ body
 
                 input
                     min-height: 7.68vh
-                    width: 48vw
+                    width: 50vw
                     font-family: Roboto Bold
                     font-size: 36px
                     text-align: right
                     padding: 0 26px 0 0
 
-            .box:nth-child(5)
+            .box:nth-child(6)
                 height: 7.68vh
                 margin: 0 0 5.2167vh 0
 
                 input
                     min-height: 7.68vh
-
 
             button
                 background-color: #F4F4F4
@@ -672,28 +689,8 @@ body
                 img
                     margin: 0
     
-    
-            #keyboard
-                display: none
-                flex-direction: column
-                align-items: center
-                width: 60vw
-                height: auto
-                margin: 4.31vh 0 0 0
-                
-                .board_box
-                    display: flex
-                    flex-direction: row
-                    justify-content: space-between
-                    align-items: center
-                    width: 60vw
-                    height: auto
-                    margin: 4.31vh 0 0 0
-                
-            #ok
-                display: none
-            #backspace
-                display: none      
+        #save
+
         
     #barcode
         display: none
@@ -1438,12 +1435,6 @@ body
                 top: 6.0345vh
                 margin: 0
             
-            /*p:nth-child(2)
-                font-size: 1.97vh
-                position: absolute
-                top: 6.0345vh
-                right: 5.333vw
-                margin: 0*/
 
         #financial
             display: flex
@@ -1473,13 +1464,25 @@ body
                 padding: 0
                 font-size: 1.4778vh
                 text-align: right
+                color: #737474
                 padding: 0 3.733vw 0 0
+            
+            .repeat_div
+                display: flex
+                flex-direction: row
+                justify-content: right
+                align-items: center
+                width: 43.8vw
+                height: 4.31vh
+                background-color: white
+                border-radius: 6px
 
-            .box:nth-child(2)
                 p
-                    margin: 0 9vw 0 0                
-                input
-                    width: 9.5vw
+                    font-size: 12px
+                    color: #737474
+                
+                img
+                    margin: 0 12px
 
             button
                 background-color: #F4F4F4
@@ -1498,7 +1501,7 @@ body
         flex-direction: column
         align-items: center
         width: 100vw
-        height: 23vh
+        height: 27vh
         position: fixed
         bottom: 0
         background: #FFFFFF
@@ -1508,24 +1511,117 @@ body
         border-radius: 20px 20px 0px 0px
         z-index: 1
 
+        img
+            margin: 17px 0 20px 0
+
         p
             font-size: 16px
             color: #8E5FF4
-            padding: 24px 0 0 0
-            border-top: 4px solid #737474 
+            margin: 0 0 2.586vh 0
         
         #color_bar
+            display: flex
+            flex-wrap: wrap
+            flex-direction: row
+            align-items: center
+            width: 70vw
+            height: auto
+            margin: 0
+
+            img
+                margin: 10px 34px 10px 0
+            img:nth-child(4)
+                margin: 0 34px 0 0
+            img:nth-child(5)
+                margin: 0
+
+
+    .NumKeyBoard_select_box
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 43.596vh
+        position: fixed
+        bottom: 0
+        background: #FFFFFF
+        transition: 0.5s
+        transform: translateY(100%)
+        box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25)
+        border-radius: 20px 20px 0px 0px
+        z-index: 1
+
+        img
+            margin: 17px 0 27px 0
+
+        .board_box
             display: flex
             flex-direction: row
             justify-content: space-between
             align-items: center
-            width: 70vw
-            height: 2.5vh
-            margin: 2.586vh 0 0 0
+            width: 59.4667vw
+            height: auto
+
+            p
+                font-size: 24px
+                color: #737474
+                margin: 20px 0 20px 0
+        
+        .board_box:nth-child(5)
+            width: 69vw
 
 
-    // not yet
-    .selector_box
+    .sort_select_box
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 39vh
+        position: fixed
+        bottom: 0
+        background: #FFFFFF
+        transition: 0.5s
+        transform: translateY(100%)
+        box-shadow: 3px 0px 5px 2px rgba(100, 98, 98, 0.25)
+        border-radius: 20px 20px 0px 0px
+        z-index: 1
+
+        img
+            margin: 17px 0 20px 0
+
+        p
+            font-size: 16px
+            color: #8E5FF4
+            margin: 0 0 30px 0
+
+        .sort_bar
+            display: flex
+            flex-direction: row
+            align-items: center
+            flex-wrap: wrap
+            width: 84vw
+            height: auto
+        
+            .sort_box
+                display: flex
+                flex-direction: column
+                align-items: center
+                width: 13.0667vw
+                height: 9vh
+                margin: 10px 39px 15px 0
+
+                img
+                    margin: 0
+
+                p
+                    font-size: 15px
+                    color: #737474
+                    margin: 5px 0 0 0
+
+            .sort_box:nth-child(4n+1)
+                margin: 10px 0 15px 0
+
+    .other_select_box
         display: none
         flex-direction: column
         align-items: center
@@ -1540,12 +1636,38 @@ body
         border-radius: 20px 20px 0px 0px
         z-index: 1
 
+        img
+            margin: 17px 0 20px 0
+
         p
             font-size: 16px
             color: #8E5FF4
-            padding: 24px 0 0 0
-            border-top: 4px solid #737474
+            margin: 0 0 20px 0
 
+        .other_bar
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 100vw
+            height: auto
+        
+            .other_box
+                display: flex
+                flex-direction: column
+                align-items: center
+                width: 80.533vw
+                height: auto
+                border-top: 0.2px solid #B3B3B3
+                margin: 0
+
+                p
+                    font-size: 15px
+                    color: #737474
+                    margin: 15px 0 
+
+            .other_box:nth-child(2)
+                border-top: none
 
     #navbar
         background-color: white
@@ -1586,31 +1708,91 @@ body
         width: 100vw
         background-color: rgba(0, 0, 0, 0.5)
         
-        #box
+        .box_regular
             display: flex
             align-items: center
             flex-direction: column
             color: white
             width: 65.6vw
-            height: 13.9vh
+            height: 34vh
             border-radius: 12px
             background-color: white
             opacity: 1
 
-            #message
+        .box_login
+            display: none
+            align-items: center
+            flex-direction: column
+            color: white
+            width: 65.6vw
+            height: 39.778vh
+            border-radius: 12px
+            background-color: white
+            opacity: 1
+
+        .box_delete
+            display: none
+            align-items: center
+            flex-direction: column
+            color: white
+            width: 65.6vw
+            height: 34vh
+            border-radius: 12px
+            background-color: white
+            opacity: 1
+
+        .message
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 100%
+            height: 84.78%
+            border-bottom: 0.3px solid #B3B3B3
+            
+            p
+                color: black
+                font-size: 12px
+                margin: 3px
+
+            p:nth-child(1)
+                font-size: 17px
+                margin: 15px 0
+
+            figure
                 display: flex
                 justify-content: center
                 align-items: center
                 width: 100%
-                height: 66.7%
-                border-bottom: 0.3px solid #B3B3B3
-                p
-                    color: black
-                    font-size: 16px
-                    
+                height: auto
+                margin: 0
                 
-            #confirm
-                color: #474EF2
-                font-size: 16px
-                margin: auto 0
-                        
+        .ConfirmOrDelete
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            width: 100%
+            height: 5.17vh
+
+            .ConfirmBox, .DeleteBox
+                display: flex
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                width: 50%
+                height: 100%
+            
+            .ConfirmBox
+                border-right: 0.3px solid #B3B3B3
+
+
+        .confirm
+            color: #474EF2
+            font-size: 16px
+            margin: auto 0
+        
+        .deleteaccount
+            color: red
+            font-size: 16px
+            margin: auto 0          

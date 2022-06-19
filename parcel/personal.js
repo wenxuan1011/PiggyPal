@@ -1,4 +1,6 @@
 import ID from './signup.js'
+import * as mod from './module.js'
+
 //need to export to signup.js
 var TYPE = 0
 var item = document.getElementById("financial_item")
@@ -63,6 +65,11 @@ $('#personal_page #financial_setting .list li:nth-child(3)').click(function(){
   TYPE = 2
 })
 
+// use jquery calendar
+$(function(){
+  $("#fin_date").datepicker();
+});
+
 
 $(document).ready(function() {
     // change username
@@ -71,7 +78,7 @@ $(document).ready(function() {
       $.get('./username', {
         id: ID,
       }, (data) => {
-        $('#personal_page #photo_and_name p').html(`${data}`);
+        $('#personal_page #photo_and_name p').html(`${data}`)
       });
     })
 
@@ -82,17 +89,15 @@ $(document).ready(function() {
         id: ID,
         type: TYPE,
         item: $('#financial input[name=item]').val(),
-        year: $('#financial input[name=year]').val(),
-        month: $('#financial input[name=month]').val(),
-        day: $('#financial input[name=day]').val(),
+        date: $('#financial input[name=date]').val(),
         money: $('#financial input[name=money]').val(),
         repeat: $('#financial input[name=repeat]').val(),
       }, (data) => {
         if(data === '0'){
-          $("#financial-output").html(`${data}`);
+          $("#financial-output").html(`${data}`)
         }
         else{
-          mod.PopUpMessage(data)
+          mod.PopUpMessage(2)
         }
         
       });
@@ -104,13 +109,13 @@ $(document).ready(function() {
       $.get('./information', {
         id: ID,
         type: TYPE,
-      }, (data) => {
+      }, (data) => {/*
         item.value = data[0]
         year.value = data[1]
         month.value = data[2]
         day.value = data[3]
         money.value = data[4]
-        repeat.value = data[5]
+        repeat.value = data[5]*/
       });
     })
 });

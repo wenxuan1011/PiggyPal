@@ -134,11 +134,11 @@ $('#add_project .box:nth-child(2) .color_selector').click(function () {
   $('.color_select_box').css("display", "flex");
   setTimeout(function () {
     $('.color_select_box').css("transform", "translateY(0%)");
-    document.addEventListener("click", clickHidden);
+    document.addEventListener("click", clickHiddenColorBox);
   }, 100);
 });
 
-function clickHidden(eve) {
+function clickHiddenColorBox(eve) {
   if (eve.target.class != "color_select_box") {
     $('.color_select_box').css("transform", "translateY(100%)");
     setTimeout(function () {
@@ -146,7 +146,7 @@ function clickHidden(eve) {
     }, 500);
   }
 
-  document.removeEventListener("click", clickHidden);
+  document.removeEventListener("click", clickHiddenColorBox);
 } // setting project color
 
 
@@ -176,9 +176,185 @@ function transmitCOLOR() {
   return COLOR;
 }
 
-; // --------------- other selectors ---------------
-// open/close selector_box
-// not yet
+; // ------------------ number keyboard selector ------------------
+
+var money = '';
+var t = document.getElementById("spend"); // open number keyboard selector
+
+$('#spend').click(function () {
+  $('.NumKeyBoard_select_box').css("display", "flex");
+  setTimeout(function () {
+    $('.NumKeyBoard_select_box').css("transform", "translateY(0%)");
+  }, 100);
+  document.activeElement.blur();
+}); // let every number a button to print number
+
+$('#zero').click(function () {
+  money = money + "0";
+  t.value = money;
+});
+$('#one').click(function () {
+  money = money + "1";
+  t.value = money;
+});
+$('#two').click(function () {
+  money = money + "2";
+  t.value = money;
+});
+$('#three').click(function () {
+  money = money + "3";
+  t.value = money;
+});
+$('#four').click(function () {
+  money = money + "4";
+  t.value = money;
+});
+$('#five').click(function () {
+  money = money + "5";
+  t.value = money;
+});
+$('#six').click(function () {
+  money = money + "6";
+  t.value = money;
+});
+$('#seven').click(function () {
+  money = money + "7";
+  t.value = money;
+});
+$('#eight').click(function () {
+  money = money + "8";
+  t.value = money;
+});
+$('#nine').click(function () {
+  money = money + "9";
+  t.value = money;
+});
+$('#backspace').click(function () {
+  money = money.slice(0, -1);
+  t.value = money;
+});
+$('#ok').click(function () {
+  // close number keyboard selector
+  $('.NumKeyBoard_select_box').css("transform", "translateY(100%)");
+  setTimeout(function () {
+    $('.NumKeyBoard_select_box').css("display", "none");
+    money = '';
+  }, 500);
+}); // ------------------ expend and income sort selector box ------------------
+// open/close sort_select_box
+
+$('#add_deals #fin .box:nth-child(3) .input_div').click(function () {
+  $('.sort_select_box').css("display", "flex");
+  setTimeout(function () {
+    $('.sort_select_box').css("transform", "translateY(0%)");
+    document.addEventListener("click", clickHiddenSortBox);
+  }, 100);
+});
+
+function clickHiddenSortBox(eve) {
+  if (eve.target.class != "sort_select_box") {
+    $('.sort_select_box').css("transform", "translateY(100%)");
+    setTimeout(function () {
+      $('.sort_select_box').css("display", "none");
+    }, 500);
+  }
+
+  document.removeEventListener("click", clickHiddenSortBox);
+}
+
+var ExpendSortName = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他'];
+var IncomeSortName = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他'];
+var ExpendSortImage = ['food', 'shopping', 'house', 'personal', 'transport', 'entertainment', 'hospital', 'other'];
+var IncomeSortImage = ['salary', 'bonus', 'investment', 'repayment', 'win', 'intersest', 'other'];
+$('#expend, #add_deals_btn').click(function (event) {
+  CreateSortBox(ExpendSortImage, ExpendSortName);
+});
+$('#income').click(function (event) {
+  CreateSortBox(IncomeSortImage, IncomeSortName);
+});
+
+function CreateSortBox(image, name) {
+  var container = document.querySelector('.sort_select_box .sort_bar');
+  container.innerHTML = "<div></div>";
+  var ImageList = image;
+  var NameList = name;
+
+  for (var _i = 0; _i < ImageList.length; _i++) {
+    var block = document.createElement('div');
+    var ImageBox = document.createElement('img');
+    var NameBox = document.createElement('p');
+    block.setAttribute("class", "sort_box");
+    ImageBox.setAttribute("src", "./image/Accounting/".concat(ImageList[_i], "_icon.png"));
+    ImageBox.setAttribute("width", "100%");
+    NameBox.textContent = "".concat(NameList[_i]);
+    container.appendChild(block);
+    block.appendChild(ImageBox);
+    block.appendChild(NameBox);
+  }
+
+  var _loop2 = function _loop2(_i2) {
+    $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ")")).click(function () {
+      var sort_word = $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ") p")).text();
+      $('#add_deals #fin #sort').html("".concat(sort_word));
+    });
+  };
+
+  for (var _i2 = 2; _i2 < 10; _i2++) {
+    _loop2(_i2);
+  }
+} // ------------------ other selector boxs ------------------
+// open/close other_select_box
+
+
+$('#financial_setting_page .box:nth-child(4) .repeat_div').click(function () {
+  $('.other_select_box').css("display", "flex");
+  setTimeout(function () {
+    $('.other_select_box').css("transform", "translateY(0%)");
+    document.addEventListener("click", clickHiddenOtherBox);
+  }, 100);
+});
+
+function clickHiddenOtherBox(eve) {
+  if (eve.target.class != "other_select_box") {
+    $('.other_select_box').css("transform", "translateY(100%)");
+    setTimeout(function () {
+      $('.other_select_box').css("display", "none");
+    }, 500);
+  }
+
+  document.removeEventListener("click", clickHiddenOtherBox);
+}
+
+var Repeat = ['重複循環', '不重複', '每天', '每週', '每月', '每年', '自訂'];
+$('#personal_page #financial_setting .list li').click(function (event) {
+  CreateOtherBox(Repeat);
+});
+
+function CreateOtherBox(name) {
+  var container = document.querySelector('.other_select_box .other_bar');
+  container.innerHTML = "<div></div>";
+  var NameList = name;
+
+  for (var _i3 = 1; _i3 < NameList.length; _i3++) {
+    var block = document.createElement('div');
+    var NameBox = document.createElement('p');
+    block.setAttribute("class", "other_box");
+    NameBox.textContent = "".concat(NameList[_i3]);
+    container.appendChild(block);
+    block.appendChild(NameBox);
+  }
+
+  var _loop3 = function _loop3(_i4) {
+    $(".other_select_box .other_bar .other_box:nth-child(".concat(_i4, ")")).click(function () {
+      var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i4, ") p")).text();
+      $('#financial_setting_page #financial .box:nth-child(4) .repeat_div p').html("".concat(word));
+    });
+  };
+
+  for (var _i4 = 1; _i4 < NameList.length; _i4++) {
+    _loop3(_i4);
+  }
+}
 
 var _default = {
   transmitCOLOR: transmitCOLOR,
@@ -213,7 +389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34243" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46833" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

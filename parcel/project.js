@@ -1,7 +1,6 @@
 import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
-//var COLOR = '#F6A93B'  // project color
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
@@ -264,7 +263,7 @@ $(document).ready(function() {
         $("#add_project_-output").html(`${data}`);
       }
       else{
-        mod.PopUpMessage(data)
+        mod.PopUpMessage(2)
       }
     });
   })

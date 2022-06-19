@@ -1,7 +1,6 @@
 import ID from './signup.js'
 import * as mod from './module.js'
 
-var money="";
 // 0支出 1收入
 var click_op = 0;
 //spend
@@ -10,134 +9,137 @@ var t = document.getElementById("spend");
 var n = document.getElementById("na");
 //date
 var d = document.getElementById("da")
+//sort
+var s = document.getElementById("sort")
+//account
+var a = document.getElementById("acc")
+
 
 var today = new Date()
 
 
 $(document).ready(function() {
-  
+
   $('#save').click((event)=> {
     event.preventDefault()
-    $.get('./record', {
-      id: ID,
-      items: $('#fin input[name=items]').val(),
-      cost: $('#fin input[name=cost]').val(),
-      date: $('#fin input[name=date]').val(),
-      type: click_op
-    },(data)=>{
-      if(data === '0'){
-        t.value = "0"
-        n.value = ""
-        d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
-      }
-      else{
-        mod.PopUpMessage(data)
-      }
-    });
+    if(click_op!==2){
+      $.get('./record', {
+        id: ID,
+        date: $('#fin input[name=date]').val(),
+        cost: $('#fin input[name=cost]').val(),
+        sort: $('#fin #sort').text(),
+        items: $('#fin input[name=items]').val(),
+        account: $('#fin #acc').text(),
+        note: $('#fin input[name=deals_note]').val(),
+        type: click_op
+      },(data)=>{
+        if(data === '0'){
+          t.value = "0"
+          n.value = ""
+          if(click_op === 0){
+            s.innerHTML = "飲食"
+          }
+          else{
+            s.innerHTML = "薪水"
+          }
+          a.innerHTML = "現金"
+          d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+        }
+        else{
+          console.log('record: ', click_op)
+          mod.PopUpMessage(2)
+        }
+      });
+    }
+    else{
+      $.get('./record', {
+        id: ID,
+        date: $('#fin input[name=date]').val(),
+        cost: $('#fin input[name=cost]').val(),
+        sort: $('#fin #sort').text(),
+        account: $('#fin #acc').text(),
+        note: $('#fin input[name=deals_note]').val(),
+        type: click_op
+      },(data)=>{
+        if(data === '0'){
+          t.value = "0"
+          n.value = ""
+          s.innerHTML = "每月儲蓄"
+          a.innerHTML = "現金"
+          d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
+        }
+        else{
+          console.log('record: ', click_op)
+          mod.PopUpMessage(2)
+        }
+      });
+    }
     //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
 
+  
+  // --------------- what is this ? ---------------
   $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
     event.preventDefault()
     t.value = "0"
     n.value = ""
+    s.innerHTML = "飲食"
+    a.innerHTML = "現金"
     d.value = "05/13/2022"
   })
   
   $('#add_deals .bar').click((event) => {
     event.preventDefault()
-    console.log(3)
     $('#accounting').css("display", "flex")
     setTimeout(function(){       
         $('#add_deals').css("display", "none")
         $('#add_deals').css("transform", "translateX(100%)")
     },100)
   })
+  // --------------- what is this ? ---------------
 
 });
 
 
-$('#expend').click((event)=> {
-  $('#expend').css("border-bottom", "2px solid #410ADF")
-  $('#income').css("border-bottom", "none")
-  event.preventDefault()
-  click_op=0
-})
-$('#income').click((event)=> {
-  $('#income').css("border-bottom", "2px solid #410ADF")
-  $('#expend').css("border-bottom", "none")
-  event.preventDefault()
-  click_op=1
-})
+// type bar (change border-bottom) and change type to expend, income, saving
+for(let i=1;i<5;i++){
+  $(`#add_deals #type p:nth-child(${i})`).click(function(){
+    if(i!==4){
+      $(`#add_deals #type p:nth-child(${i})`).css("border-bottom", "2px solid #410ADF")
+      if(i===1){
+        event.preventDefault()
+        click_op = 2
+        s.innerHTML = "每月儲蓄"
+        $('#add_deals #fin .box:nth-child(4)').css("display", "none")
+      }
+      else if(i===2){
+        event.preventDefault()
+        click_op = 1
+        s.innerHTML = "薪水"
+        $('#add_deals #fin .box:nth-child(4)').css("display", "flex")
+      }
+      else{
+        event.preventDefault()
+        click_op = 0
+        s.innerHTML = "飲食"
+        $('#add_deals #fin .box:nth-child(4)').css("display", "flex")
+      }
+      for(let j=1;j<5;j++){
+        if(j!==i){
+          $(`#add_deals #type p:nth-child(${j})`).css("border-bottom", "none")
+        }
+      }
+    }
+  else{
+    mod.PopUpMessage(3)
+  }
+  })
+}
 
-$('#zero').click(function(){
-  money = money + "0"
-  t.value = money;
-})
 
-$('#one').click(function(){
-  money = money + "1"
-  t.value = money;
-})
 
-$('#two').click(function(){
-  money = money + "2"
-  t.value = money;
-})
 
-$('#three').click(function(){
-  money = money + "3"
-  t.value = money;
-})
-
-$('#four').click(function(){
-  money = money + "4"
-  t.value = money;
-})
-
-$('#five').click(function(){
-  money = money + "5"
-  t.value = money;
-})
-
-$('#six').click(function(){
-  money = money + "6"
-  t.value = money;
-})
-
-$('#seven').click(function(){
-  money = money + "7"
-  t.value = money;
-})
-
-$('#eight').click(function(){
-  money = money + "8"
-  t.value = money;
-})
-
-$('#nine').click(function(){
-  money = money + "9"
-  t.value = money;
-})
-
-$('#backspace').click(function(){
-  money = money.slice(0, -1)
-  t.value = money;
-})
-
-$('#spend').click(function(){
-  $('#keyboard').css("display", "flex")
-  $('#ok').show();
-  $('#backspace').show();
-  document.activeElement.blur()
-})
-
-$('#ok').click(function(){
-  $('#keyboard').hide();
-  $('#ok').hide();
-  $('#backspace').hide();
-})
-
+// use jquery calendar
 $(function(){
   $("#da").datepicker();
 });
@@ -150,6 +152,7 @@ $('#login_btn, #save').click((event) => {
     getdetailexpenditure()
 }, 100)
 })
+
 
 function getdetailincome(){
   var today= new Date()
@@ -191,9 +194,9 @@ function getdetailincome(){
       else{
 
       }
-  }
-  )
+  })
 }
+
 function getdetailexpenditure(){
   var today= new Date()
   $.get('./getmainpagedetail',{
@@ -234,10 +237,13 @@ function getdetailexpenditure(){
       else{
 
       }
-  }
-  )
+  })
 }
 
-$('#popup #background #box #confirm').click(function(){
-  $('#popup').css('display', 'none')
-})
+
+
+function transmitIncomeOrExpend(){
+  return click_op
+};
+
+export default transmitIncomeOrExpend

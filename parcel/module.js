@@ -53,32 +53,19 @@ export async function caltodaymoney(ID,table,selection,type){
                 total+=StringtoInt(gettabledata(data, `${selection}`, i))
                 i++;
             }
-            //total=gettabledata(money,type,0)
-            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        //console.log(result)
         results=result
     });
-    //console.log(results)
     
     return results;
 }
 
 export function getMonthlyMoney(ID,table,selection,type){
     var result= caltotalmoney(ID,table,selection,type)
-
-/*
-    result.then(res => {
-        result=res
-        console.log ("hi",result)
-        
-    })
-
-*/
     return result
 }
 
@@ -100,18 +87,14 @@ export async function caltotalmoney(ID,table,selection,type){
                 total+=StringtoInt(gettabledata(data, `${selection}`, i))
                 i++;
             }
-            //total=gettabledata(money,type,0)
-            //console.log(`total:${total}`)
             result=total
         }
         else{
             result=0;
         }
-        //console.log(result)
         results=result
 
     });
-    //console.log(results)
     return results;
 }
 //need to check what is the detail in table
@@ -125,7 +108,6 @@ export async function getProjectMoney(ID){
         for (let i in data){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
-            //console.log(lastday, startday)
             if(lastday-startday<0){
                 continue;
             }
@@ -133,7 +115,6 @@ export async function getProjectMoney(ID){
             
             if(remainday>0 || remainday !== undefined){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
-                //console.log("Projectremainday:",remainday)
                 let money= StringtoInt(gettabledata(data, `target_number`,i))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
                 money= money/remainday
                 totalremain+=money
@@ -142,8 +123,6 @@ export async function getProjectMoney(ID){
         }
         results=totalremain
     });
-    
-    //console.log(results)
     return results;
 }
 export async function calprojectpercent(ID, project_name){
@@ -179,7 +158,7 @@ export function datetransfer(date){
 
 export function checkBlank(page, ...input){
     var lengths=1
-    var recordmessage = ["項目","日期", "金額", "類別"]
+    var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"]
     var projectmessage = ["專案名稱", "日期", "目標金額"]
     var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"]
     var pages = []
@@ -208,9 +187,28 @@ export function checkBlank(page, ...input){
 }
 
 export function PopUpMessage(type){
-    console.log(123)
-    $('#popup').css('display','flex')
-    $('#popup #background #box #message p').html(`尚未填寫${type}`)
+    if(type < 4){
+        const PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！']
+        const PopUpGif = ['pig', 'congrate', 'eye', 'glasses']
+        
+        $('#popup .box_login, #popup .box_delete').css('display','none')
+        $('#popup .box_regular').css('display','flex')
+        $('#popup').css('display','flex')
+        $('#popup #background .box_regular .message p').html(`${PopUpTital[type]}`)
+        $('#popup #background .box_regular .message figure img').attr("src",
+        `./image/PopUpMessage/PopUpMessage_${PopUpGif[type]}.gif`)
+    }
+    else if(type == 4){
+        $('#popup .box_regular, #popup .box_delete').css('display','none')
+        $('#popup .box_login').css('display','flex')
+        $('#popup').css('display','flex')
+    }
+    else{
+        console.log('delete')
+        $('#popup .box_regular, #popup .box_login').css('display','none')
+        $('#popup .box_delete').css('display','flex')
+        $('#popup').css('display','flex')
+    }
 }
 
 export async function getAllUser(){
@@ -218,7 +216,6 @@ export async function getAllUser(){
     await $.get('./getAllUser',{}
         ,(data) =>{
             all_user = data
-            //console.log(data)
         })
     return all_user
 }
@@ -248,16 +245,16 @@ export function getColor(color){
 }
 
 export default{
-    gettabledata,//get id inside the row of column select from database
-    getMonthlyMoney,//get money in each table, remember to use caltotalmoney to get in integer
-    caltotalmoney,//calculate total money
-    getProjectMoney,//get daily project saving
-    calprojectpercent,//calculate project complete %(in .1f )
-    StringtoInt,//transfer string to integer
-    datetransfer,//tranfer date to 0date if date<10
-    checkBlank,//check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
-    getAllUser,//get all users' id
-    sergetProject,//FOR SERVER TO GET PROJECT
-    PopUpMessage,//popup message, need to input the word you want to show
-    getColor,//turn the color code into the color, need to input the color code of the project
+    gettabledata, // get id inside the row of column select from database
+    getMonthlyMoney, // get money in each table, remember to use caltotalmoney to get in integer
+    caltotalmoney, // calculate total money
+    getProjectMoney, // get daily project saving
+    calprojectpercent, // calculate project complete %(in .1f )
+    StringtoInt, // transfer string to integer
+    datetransfer, // tranfer date to 0date if date<10
+    checkBlank, // check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+    getAllUser, // get all users' id
+    sergetProject, // FOR SERVER TO GET PROJECT
+    PopUpMessage, // popup message, need to input the word you want to show
+    getColor, // turn the color code into the color, need to input the color code of the project
 } 

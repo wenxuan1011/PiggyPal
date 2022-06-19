@@ -28,13 +28,13 @@ app.listen(port, () => {
 cron.schedule("0 0 * * *", function() {
   var today = new Date()
   console.log(today);
-
+  serverjob.dailyStartprocess();
 });
 
 cron.schedule("58 23 * * *", function() {
   var today = new Date()
   console.log(today);
-  serverjob.dailyprocess();
+  serverjob.dailyEndprocess();
 });
 
 // static
@@ -161,40 +161,22 @@ app.get('/financial',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
   let TYPE = "'"+`${req.query.type}`+"'"
   let ITEM = "'"+`${req.query.item}`+"'"
-  let YEAR = "'"+`${req.query.year}`+"'"
-  let MONTH = "'"+`${mod.datetransfer(req.query.month)}`+"'"
-  let DAY = "'"+`${mod.datetransfer(req.query.day)}`+"'"
+  let DATE = "'"+`${req.query.date}`+"'"
   let MONEY = "'"+`${req.query.money}`+"'"
   let REPEAT = "'"+`${req.query.repeat}`+"'"
 
-  let update_setting = false
-  const update_type = ['income', 'outcome', 'saving']
-  const search_item = `
-    SELECT id FROM financial
-    WHERE id = ${UID} and item =${ITEM}`
-  if (mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)===1){
+  let YEAR = "'" + `${DATE[6]}` + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}` + "'"
+  let MONTH = "'" + `${DATE[0]}` + `${DATE[1]}` + "'"
+  let DAY = "'" + `${DATE[3]}` + `${DATE[4]}` + "'"
+  
+  if(mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)===1){
     const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
-    connection.query(search_item, (err, rows, fields) => {
-      if (err)
-        console.log('fail to search: ', err)
-      console.log(rows)
-      if (rows[0] === undefined) {
-        update_setting = true
-      }
-      else{
-        res.send("The "+ update_type[`${req.query.type}`] +" have already set.")
-      }
+    connection.query(update, (err) => {
+      if (err) console.log('fail to insert: ', err)
     })
-    setTimeout(() => {
-      if (update_setting){
-        console.log(update_setting)
-        connection.query(update, (err, result) => {
-          if (err) console.log('fail to insert: ', err)
-        })
-        res.send('0')
-      }
-    }, 100)
-  }else{
+    res.send('0')
+  }
+  else{
     res.send(mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT))
   }
   
@@ -229,6 +211,7 @@ app.get('/information',(req,res) => {
 
 
 // record
+/*
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS Account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
   
@@ -252,6 +235,40 @@ app.get('/record',(req,res) => {
   }
   else{
     res.send(mod.checkBlank('record',items,temp_date,cost,type))
+  }
+})*/
+
+app.get('/record',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), year VARCHAR(4), month VARCHAR(2), day VARCHAR(2), cost VARCHAR(30), sort VARCHAR(30), items VARCHAR(30), account VARCHAR(30), type VARCHAR(1))')
+  
+  let id = "'"+`${req.query.id}`+"'"
+  let temp_date = `${req.query.date}`
+  let cost = "'" + `${req.query.cost}` + "'"
+  let sort = "'"+`${req.query.sort}`+"'"
+  var items = ""
+  if(req.query.type!=='2'){
+    items = "'" + `${req.query.items}` + "'"
+  }
+  else{
+    items = "'儲蓄'"
+  }
+  console.log(items)
+  let account = "'" + `${req.query.account}` + "'"
+  let type = "'" + `${req.query.type}` + "'"
+  
+  let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
+  let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
+  let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
+
+  if(mod.checkBlank('record',items,temp_date,cost,sort,account,type)===1){
+    const add_record = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUES (${id}, ${year}, ${month}, ${day}, ${cost}, ${sort}, ${items}, ${account}, ${type})`
+    connection.query(add_record, (err) => {
+      if (err) console.log('fail to insert: ', err)
+    })
+    res.send('0')
+  }
+  else{
+    res.send(mod.checkBlank('record',items,temp_date,cost,sort,account,type))
   }
 })
 
@@ -535,7 +552,30 @@ app.get('/saveMoneytoProject',(req,res) =>{
   })
 })
 
-app.get('/setfinancial',(req, res) =>{
+app.get('/setfinancialincome',(req, res) =>{
+  var today = new Date()
+  let UID = req.query.id
+  const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
+  connection.query(setfinancial, (err, rows, fields)=>{
+    if(err)console.log("There are something wrong: ",err)
+    for(let i in rows){
+      let UID = mod.gettabledata(rows,'id', i)
+      let type = mod.gettabledata(rows,'type', i)
+      let item = mod.gettabledata(rows, 'item', i)
+      let date = mod.gettabledata(rows, 'day', i)
+      let money = mod.gettabledata(rows, 'money', i)
+      let repeats = mod.gettabledata(rows, 'repeats', i)
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},1)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+          if(err)console.log("There are something wrong: ",err)
+        })
+      }
+    }
+  })
+})
+
+app.get('/setfinancialexpenditure',(req, res) =>{
   var today = new Date()
   let UID = req.query.id
   const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
@@ -550,8 +590,16 @@ app.get('/setfinancial',(req, res) =>{
       let date = mod.gettabledata(rows, 'day', i)
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
-      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
-        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${mod.datetransfer(today.getFullYear())},1)`
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+        })
+      }
+      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
+        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
+        connection.query(addFinancial,(err, rows, fields)=>{
+          if(err)console.log("There are something wrong: ",err)
+        })
       }
     }
   })
