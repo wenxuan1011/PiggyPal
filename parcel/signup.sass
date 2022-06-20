@@ -112,7 +112,7 @@ body
             flex-direction: row
             justify-content: center
             align-items: center
-            height: 22.55%
+            height: 16.5%
             width: 100%
             margin: 3.818vh 0 9.36vh 0
 
@@ -701,8 +701,6 @@ body
                 
                 img
                     margin: 0
-    
-        #save
 
         
     #barcode
@@ -1414,7 +1412,86 @@ body
             li:nth-last-child(1)
                 border-style: none
 
-    #financial_setting_page
+    #financial_list_page
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid 
+
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #no_financial
+            display: none
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            width: 85.333vw
+            height: 7.758vh
+            background-color: white
+            box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+            border-radius: 8px
+            margin: 3.8177vh 0 3.8177vh 0
+
+            p
+                font-size: 12px
+                color: #737474
+
+        #financial_list
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 85.333vw
+            height: auto
+            margin: 5.17vh 0 2vh 0
+
+            .financial_box
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 85.333vw
+                height: 7.758vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 3.8177vh 0
+
+                p
+                    font-size: 12px
+                    color: #737474
+                    margin: 0 38px
+                
+                p:nth-child(1)
+                    color: black
+
+
+    #add_financial_page
         display: none
         flex-direction: column
         align-items: center
@@ -1448,7 +1525,6 @@ body
                 top: 6.0345vh
                 margin: 0
             
-
         #financial
             display: flex
             flex-direction: column

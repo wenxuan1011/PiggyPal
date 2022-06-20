@@ -186,7 +186,7 @@ function CreateSortBox(image, name){
 
 // ------------------ other selector boxs ------------------
 // open/close other_select_box
-$('#financial_setting_page .box:nth-child(4) .repeat_div').click(function(){
+$('#add_financial_page .box:nth-child(4) .repeat_div').click(function(){
   $('.other_select_box').css("display", "flex")
   setTimeout(() => {
     $('.other_select_box').css("transform", "translateY(0%)")
@@ -225,7 +225,7 @@ function CreateOtherBox(name){
   for(let i=1;i<NameList.length;i++){
     $(`.other_select_box .other_bar .other_box:nth-child(${i})`).click(function(){
       var word = $(`.other_select_box .other_bar .other_box:nth-child(${i}) p`).text()
-      $('#financial_setting_page #financial .box:nth-child(4) .repeat_div p').html(`${word}`)
+      $('#add_financial_page #financial .box:nth-child(4) .repeat_div p').html(`${word}`)
     })
   }
 }
