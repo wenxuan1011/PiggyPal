@@ -102,7 +102,7 @@ $(document).ready(function() {
       s.innerHTML = "一般儲蓄"
     }
     a.innerHTML = "現金"
-    d.value = "05/13/2022"
+    d.value = `${mod.datetransfer(today.getMonth()+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
   
   $('#add_deals .bar img').click((event) => {

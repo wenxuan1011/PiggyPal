@@ -1,7 +1,6 @@
 "use strict";
 import 'regenerator-runtime/runtime.js'
 import ID from './signup.js'
-import click_op from './record.js'
 import * as mod from './module.js'
 
 var TIME = new Date()
@@ -132,10 +131,27 @@ $('#ok').click(function(){
 
 
 // ------------------ expend and income sort selector box ------------------
+var click_op = 0
+
+for(let i=1;i<5;i++){
+  $(`#add_deals #type p:nth-child(${i})`).click(function(){
+    if(i!==4){
+      if(i===1){
+        click_op = 2
+      }
+      else if(i===2){
+        click_op = 1
+      }
+      else{
+        click_op = 0
+      }
+    }
+  })
+}
 
 // open/close sort_select_box
 $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
-  if(click_op() < 2){
+  if(click_op < 2){
     $('.sort_select_box').css("display", "flex")
     setTimeout(() => {
       $('.sort_select_box').css("transform", "translateY(0%)")
@@ -212,7 +228,7 @@ $('#add_deals #fin #acc_div').click(async function(){
 })
 $('#add_deals #fin #sort_div').click(async function(){
   await CreateOtherBox(Project, ProjectDiv)
-  if(click_op() === 2){
+  if(click_op === 2){
     $('.other_select_box').css("display", "flex")
     setTimeout(() => {
       $('.other_select_box').css("transform", "translateY(0%)")

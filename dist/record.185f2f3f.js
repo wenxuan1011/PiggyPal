@@ -1618,7 +1618,7 @@ $(document).ready(function () {
     }
 
     a.innerHTML = "現金";
-    d.value = "05/13/2022";
+    d.value = "".concat(mod.datetransfer(today.getMonth() + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
   });
   $('#add_deals .bar img').click(function (event) {
     event.preventDefault();
@@ -1879,7 +1879,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42880" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1501,357 +1501,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"record.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _signup = _interopRequireDefault(require("./signup.js"));
-
-var mod = _interopRequireWildcard(require("./module.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-// 0支出 1收入
-var click_op = 0; //spend
-
-var t = document.getElementById("spend"); //name
-
-var n = document.getElementById("na"); //date
-
-var d = document.getElementById("da"); //sort
-
-var s = document.getElementById("sort"); //account
-
-var a = document.getElementById("acc");
-var today = new Date();
-$(document).ready(function () {
-  $('#datepick input[name=dates]').val("".concat(mod.datetransfer(today.getMonth() + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear()));
-  $('#save').click(function (event) {
-    event.preventDefault();
-
-    if (click_op !== 2) {
-      $.get('./record', {
-        id: _signup.default,
-        date: $('#fin input[name=date]').val(),
-        cost: $('#fin input[name=cost]').val(),
-        sort: $('#fin #sort').text(),
-        items: $('#fin input[name=items]').val(),
-        account: $('#fin #acc').text(),
-        note: $('#fin input[name=deals_note]').val(),
-        type: click_op
-      }, function (data) {
-        if (data === '0') {
-          t.value = "0";
-          n.value = "";
-
-          if (click_op === 0) {
-            s.innerHTML = "飲食";
-          } else {
-            s.innerHTML = "薪水";
-          }
-
-          a.innerHTML = "現金";
-          d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
-        } else {
-          console.log('record: ', click_op);
-          mod.PopUpMessage(2);
-        }
-      });
-    } else {
-      $.get('./record', {
-        id: _signup.default,
-        date: $('#fin input[name=date]').val(),
-        cost: $('#fin input[name=cost]').val(),
-        sort: $('#fin #sort').text(),
-        account: $('#fin #acc').text(),
-        note: $('#fin input[name=deals_note]').val(),
-        type: click_op
-      }, function (data) {
-        if (data === '0') {
-          t.value = "0";
-          n.value = "";
-
-          if (click_op === 0) {
-            s.innerHTML = "飲食";
-          } else {
-            s.innerHTML = "薪水";
-          }
-
-          a.innerHTML = "現金";
-          d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
-        } else {
-          console.log('record: ', click_op);
-          mod.PopUpMessage(2);
-        }
-      });
-    } //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
-
-  }); // --------------- what is this ? ---------------
-
-  $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
-    $('#add_deals').css("display", "flex");
-    setTimeout(function () {
-      $('#add_deals').css("transform", "translateX(0%)");
-    }, 100);
-    event.preventDefault();
-    t.value = "0";
-    n.value = "";
-
-    if (click_op === 0) {
-      s.innerHTML = "飲食";
-    } else if (click_op === 1) {
-      s.innerHTML = "薪水";
-    } else {
-      s.innerHTML = "一般儲蓄";
-    }
-
-    a.innerHTML = "現金";
-    d.value = "05/13/2022";
-  });
-  $('#add_deals .bar img').click(function (event) {
-    event.preventDefault();
-    $('#add_deals').css("transform", "translateX(100%)");
-    setTimeout(function () {
-      $('#add_deals').css("display", "none");
-    }, 500);
-  }); // --------------- what is this ? ---------------
-}); // type bar (change border-bottom) and change type to expend, income, saving
-
-var _loop = function _loop(i) {
-  $("#add_deals #type p:nth-child(".concat(i, ")")).click(function () {
-    if (i !== 4) {
-      $("#add_deals #type p:nth-child(".concat(i, ")")).css("border-bottom", "2px solid #410ADF");
-
-      if (i === 1) {
-        event.preventDefault();
-        click_op = 2;
-        s.innerHTML = "一般儲蓄";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "none");
-      } else if (i === 2) {
-        event.preventDefault();
-        click_op = 1;
-        s.innerHTML = "薪水";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "flex");
-      } else {
-        event.preventDefault();
-        click_op = 0;
-        s.innerHTML = "飲食";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "flex");
-      }
-
-      for (var j = 1; j < 5; j++) {
-        if (j !== i) {
-          $("#add_deals #type p:nth-child(".concat(j, ")")).css("border-bottom", "none");
-        }
-      }
-    } else {
-      mod.PopUpMessage(3);
-    }
-  });
-};
-
-for (var i = 1; i < 5; i++) {
-  _loop(i);
-} // use jquery calendar
-
-
-$(function () {
-  $("#da").datepicker();
-  $('#das').datepicker();
-});
-$('#login_btn, #save, .datebox').click(function (event) {
-  event.preventDefault();
-  var count = 0;
-  var interval = setInterval(function () {
-    if (count == 10) {
-      count = 0;
-      clearInterval(interval);
-    }
-
-    getdetailincome();
-    getdetailexpenditure();
-    showtoday();
-    console.log(count);
-    count++;
-  }, 1000);
-});
-
-function getdetailincome() {
-  var container = document.querySelector('#main #accounting .income');
-  container.innerHTML = "<p></p>";
-  var DATE = $('#datepick input[name=dates]').val();
-  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
-  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
-  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: DAY,
-    month: MONTH,
-    year: YEAR
-  }, function (data) {
-    if (data != "nothing") {
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i);
-        var sort = mod.gettabledata(data, 'sort', i); //console.log(item, value, type)
-
-        if (item == '' || value == '' || type === '0' || type == '3') {
-          continue;
-        } //create element
-
-
-        var _container = document.querySelector('#main #accounting .income');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('b');
-        var types = document.createElement('img');
-        var word = document.createElement('p');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        word.textContent = "".concat(item);
-        paragraphtwo.textContent = "+".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'boxs');
-        types.setAttribute('id', 'type_pic');
-        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
-        word.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container.appendChild(box);
-
-        paragraphone.appendChild(types);
-        paragraphone.appendChild(word);
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-function getdetailexpenditure() {
-  var today = new Date();
-  var container = document.querySelector('#main #accounting .expenditure');
-  container.innerHTML = "<p></p>";
-  var DATE = $('#datepick input[name=dates]').val();
-  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
-  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
-  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: DAY,
-    month: MONTH,
-    year: YEAR
-  }, function (data) {
-    if (data != "nothing") {
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i);
-        var sort = mod.gettabledata(data, 'sort', i); //console.log(type)
-
-        if (item == '' || value == '' || type === '1' || type == '3') {
-          continue;
-        } //create element
-
-
-        var _container2 = document.querySelector('#main #accounting .expenditure');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('b');
-        var types = document.createElement('img');
-        var word = document.createElement('p');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        word.textContent = "".concat(item);
-        paragraphtwo.textContent = "-".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'boxs');
-        types.setAttribute('id', 'type_pic');
-        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
-        word.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container2.appendChild(box);
-
-        paragraphone.appendChild(types);
-        paragraphone.appendChild(word);
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-function showtoday() {
-  return _showtoday.apply(this, arguments);
-}
-
-function _showtoday() {
-  _showtoday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var DATE, YEAR, MONTH, DAY, dayExpenditure, dayIncome, dayToTal;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            DATE = $('#datepick input[name=dates]').val();
-            YEAR = "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]);
-            MONTH = "".concat(DATE[0]) + "".concat(DATE[1]);
-            DAY = "".concat(DATE[3]) + "".concat(DATE[4]);
-            _context.next = 6;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 0);
-
-          case 6:
-            dayExpenditure = _context.sent;
-            _context.next = 9;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 1);
-
-          case 9:
-            dayIncome = _context.sent;
-            dayToTal = dayIncome - dayExpenditure;
-
-            if (dayToTal >= 0) {
-              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(dayToTal));
-            } else {
-              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(dayToTal));
-            }
-
-          case 12:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _showtoday.apply(this, arguments);
-}
-
-function transmitIncomeOrExpend() {
-  return click_op;
-}
-
-;
-var _default = transmitIncomeOrExpend;
-exports.default = _default;
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1863,8 +1513,6 @@ exports.default = void 0;
 require("regenerator-runtime/runtime.js");
 
 var _signup = _interopRequireDefault(require("./signup.js"));
-
-var _record = _interopRequireDefault(require("./record.js"));
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
@@ -1994,10 +1642,30 @@ $('#ok').click(function () {
     money = '';
   }, 500);
 }); // ------------------ expend and income sort selector box ------------------
-// open/close sort_select_box
+
+var click_op = 0;
+
+var _loop2 = function _loop2(_i) {
+  $("#add_deals #type p:nth-child(".concat(_i, ")")).click(function () {
+    if (_i !== 4) {
+      if (_i === 1) {
+        click_op = 2;
+      } else if (_i === 2) {
+        click_op = 1;
+      } else {
+        click_op = 0;
+      }
+    }
+  });
+};
+
+for (var _i = 1; _i < 5; _i++) {
+  _loop2(_i);
+} // open/close sort_select_box
+
 
 $('#add_deals #fin .box:nth-child(3) .input_div').click(function () {
-  if ((0, _record.default)() < 2) {
+  if (click_op < 2) {
     $('.sort_select_box').css("display", "flex");
     setTimeout(function () {
       $('.sort_select_box').css("transform", "translateY(0%)");
@@ -2034,28 +1702,28 @@ function CreateSortBox(image, name) {
   var ImageList = image;
   var NameList = name;
 
-  for (var _i = 0; _i < ImageList.length; _i++) {
+  for (var _i2 = 0; _i2 < ImageList.length; _i2++) {
     var block = document.createElement('div');
     var ImageBox = document.createElement('img');
     var NameBox = document.createElement('p');
     block.setAttribute("class", "sort_box");
-    ImageBox.setAttribute("src", "./image/Accounting/".concat(ImageList[_i], "_icon.png"));
+    ImageBox.setAttribute("src", "./image/Accounting/".concat(ImageList[_i2], "_icon.png"));
     ImageBox.setAttribute("width", "100%");
-    NameBox.textContent = "".concat(NameList[_i]);
+    NameBox.textContent = "".concat(NameList[_i2]);
     container.appendChild(block);
     block.appendChild(ImageBox);
     block.appendChild(NameBox);
   }
 
-  var _loop2 = function _loop2(_i2) {
-    $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ")")).click(function () {
-      var sort_word = $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ") p")).text();
+  var _loop3 = function _loop3(_i3) {
+    $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i3, ")")).click(function () {
+      var sort_word = $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i3, ") p")).text();
       $('#add_deals #fin #sort').html("".concat(sort_word));
     });
   };
 
-  for (var _i2 = 2; _i2 < 10; _i2++) {
-    _loop2(_i2);
+  for (var _i3 = 2; _i3 < 10; _i3++) {
+    _loop3(_i3);
   }
 } // ------------------ other selector boxs ------------------
 // open/close other_select_box
@@ -2099,7 +1767,7 @@ $('#add_deals #fin #sort_div').click( /*#__PURE__*/_asyncToGenerator( /*#__PURE_
           return CreateOtherBox(Project, ProjectDiv);
 
         case 2:
-          if ((0, _record.default)() === 2) {
+          if (click_op === 2) {
             $('.other_select_box').css("display", "flex");
             setTimeout(function () {
               $('.other_select_box').css("transform", "translateY(0%)");
@@ -2144,8 +1812,8 @@ $(document).ready(function () {
       var j = 2;
 
       if ("".concat(data) !== "nothing") {
-        for (var _i3 in data) {
-          var project_name = mod.gettabledata(data, 'project_name', _i3);
+        for (var _i4 in data) {
+          var project_name = mod.gettabledata(data, 'project_name', _i4);
           Project[j] = "".concat(project_name);
           j++;
         }
@@ -2167,8 +1835,8 @@ $(document).ready(function () {
       var j = 1;
 
       if ("".concat(data) !== "nothing") {
-        for (var _i4 in data) {
-          var account_name = mod.gettabledata(data, 'name', _i4);
+        for (var _i5 in data) {
+          var account_name = mod.gettabledata(data, 'name', _i5);
           Account[j] = "".concat(account_name);
           j++;
         }
@@ -2196,24 +1864,24 @@ function CreateOtherBox(name, place) {
   var NameList = name;
   $(".other_select_box p").html("".concat(NameList[0]));
 
-  for (var _i5 = 1; _i5 < NameList.length; _i5++) {
+  for (var _i6 = 1; _i6 < NameList.length; _i6++) {
     var block = document.createElement('div');
     var NameBox = document.createElement('p');
     block.setAttribute("class", "other_box");
-    NameBox.textContent = "".concat(NameList[_i5]);
+    NameBox.textContent = "".concat(NameList[_i6]);
     container.appendChild(block);
     block.appendChild(NameBox);
   }
 
-  var _loop3 = function _loop3(_i6) {
-    $(".other_select_box .other_bar .other_box:nth-child(".concat(_i6, ")")).click(function () {
-      var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i6, ") p")).text();
+  var _loop4 = function _loop4(_i7) {
+    $(".other_select_box .other_bar .other_box:nth-child(".concat(_i7, ")")).click(function () {
+      var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i7, ") p")).text();
       $("".concat(place)).html("".concat(word));
     });
   };
 
-  for (var _i6 = 1; _i6 < NameList.length + 1; _i6++) {
-    _loop3(_i6);
+  for (var _i7 = 1; _i7 < NameList.length + 1; _i7++) {
+    _loop4(_i7);
   }
 }
 
@@ -2222,7 +1890,7 @@ var _default = {
   InitialColor: InitialColor
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./record.js":"record.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2250,7 +1918,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42880" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

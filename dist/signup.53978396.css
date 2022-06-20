@@ -583,24 +583,36 @@ body {
       #main #accounting #everyday_earn #datepick {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        background-color: white;
-        border-radius: 50px;
-        height: 3.325vh;
-        width: 37.6vw;
+        border: 1px solid #8E5FF4;
+        border-radius: 13px;
+        height: 6.89vh;
+        width: 87.73vw;
         margin: 0 0 26px 0; }
-        #main #accounting #everyday_earn #datepick input {
-          min-height: 2vh;
-          border-style: none;
-          border-radius: 10px;
-          width: 22.133vw;
-          font-family: Roboto Bold;
-          font-size: 1.4778vh;
-          text-align: center;
-          color: black;
-          padding: 0;
-          margin: 0 9px 0 0; }
+        #main #accounting #everyday_earn #datepick .datebox {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: left;
+          margin: 0 20px; }
+          #main #accounting #everyday_earn #datepick .datebox input {
+            min-height: 3vh;
+            border-style: none;
+            border-radius: 10px;
+            width: 25vw;
+            font-family: Roboto Bold;
+            font-size: 16px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0);
+            color: black;
+            padding: 0; }
+          #main #accounting #everyday_earn #datepick .datebox p {
+            color: #747474;
+            font-size: 12px;
+            margin: 5px; }
+        #main #accounting #everyday_earn #datepick img {
+          margin: 0 20px; }
       #main #accounting #everyday_earn #today_earn {
         display: flex;
         flex-direction: row;
