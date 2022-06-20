@@ -1675,7 +1675,7 @@ $('#login_btn, #save, .datebox').click(function (event) {
   event.preventDefault();
   var count = 0;
   var interval = setInterval(function () {
-    if (count == 10) {
+    if (count == 4) {
       count = 0;
       clearInterval(interval);
     }
@@ -1879,7 +1879,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39210" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -2056,4 +2056,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","record.js"], null)
-//# sourceMappingURL=record.185f2f3f.js.map
+//# sourceMappingURL=record.185f2f3f.js.mapp

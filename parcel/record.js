@@ -19,8 +19,9 @@ var today = new Date()
 
 $(document).ready(function() {
   $('#datepick input[name=dates]').val(`${mod.datetransfer(today.getMonth()+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`)
-  
+  console.log(123)
   $('#save').click((event)=> {
+    
     event.preventDefault()
     if(click_op!==2){
       $.get('./record', {
@@ -166,7 +167,7 @@ $('#login_btn, #save, .datebox').click((event) => {
   event.preventDefault()
   var count = 0
   var interval = setInterval(function(){
-    if(count==10){
+    if(count==4){
       count=0
       clearInterval(interval)
     }

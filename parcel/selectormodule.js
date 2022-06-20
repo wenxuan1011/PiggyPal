@@ -1,7 +1,7 @@
 "use strict";
 import 'regenerator-runtime/runtime.js'
 import ID from './signup.js'
-import click_op from './record.js'
+//import click_op from './record.js'
 import * as mod from './module.js'
 
 var TIME = new Date()
@@ -134,6 +134,7 @@ $('#ok').click(function(){
 // ------------------ expend and income sort selector box ------------------
 
 // open/close sort_select_box
+/*
 $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
   if(click_op() < 2){
     $('.sort_select_box').css("display", "flex")
@@ -143,7 +144,7 @@ $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
     }, 100)
   }
 })
-  
+  */
 function clickHiddenSortBox(eve){
   if( eve.target.class != "sort_select_box" ){
     $('.sort_select_box').css("transform", "translateY(100%)")
@@ -210,6 +211,7 @@ $('#add_deals #fin #acc_div').click(async function(){
     document.addEventListener("click", clickHiddenOtherBox);
   }, 100)
 })
+/*
 $('#add_deals #fin #sort_div').click(async function(){
   await CreateOtherBox(Project, ProjectDiv)
   if(click_op() === 2){
@@ -220,7 +222,7 @@ $('#add_deals #fin #sort_div').click(async function(){
     }, 100)
   }
 })
-
+*/
 function clickHiddenOtherBox(eve){
   if( eve.target.class != "other_select_box" ){
     $('.other_select_box').css("transform", "translateY(100%)")
