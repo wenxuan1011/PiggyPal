@@ -1165,6 +1165,7 @@ function checkBlank(page) {
   var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var account = ["NAME", "CURRENCY", "MONEY"];
   var pages = [];
 
   switch (page) {
@@ -1178,6 +1179,9 @@ function checkBlank(page) {
 
     case 'financial':
       pages = financial;
+
+    case 'account':
+      pages = account;
       break;
   }
 
@@ -1578,7 +1582,13 @@ $(document).ready(function () {
         if (data === '0') {
           t.value = "0";
           n.value = "";
-          s.innerHTML = "每月儲蓄";
+
+          if (click_op === 0) {
+            s.innerHTML = "飲食";
+          } else {
+            s.innerHTML = "薪水";
+          }
+
           a.innerHTML = "現金";
           d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
         } else {
@@ -1591,20 +1601,31 @@ $(document).ready(function () {
   }); // --------------- what is this ? ---------------
 
   $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
+    $('#add_deals').css("display", "flex");
+    setTimeout(function () {
+      $('#add_deals').css("transform", "translateX(0%)");
+    }, 100);
     event.preventDefault();
     t.value = "0";
     n.value = "";
-    s.innerHTML = "飲食";
+
+    if (click_op === 0) {
+      s.innerHTML = "飲食";
+    } else if (click_op === 1) {
+      s.innerHTML = "薪水";
+    } else {
+      s.innerHTML = "一般儲蓄";
+    }
+
     a.innerHTML = "現金";
     d.value = "05/13/2022";
   });
-  $('#add_deals .bar').click(function (event) {
+  $('#add_deals .bar img').click(function (event) {
     event.preventDefault();
-    $('#accounting').css("display", "flex");
+    $('#add_deals').css("transform", "translateX(100%)");
     setTimeout(function () {
       $('#add_deals').css("display", "none");
-      $('#add_deals').css("transform", "translateX(100%)");
-    }, 100);
+    }, 500);
   }); // --------------- what is this ? ---------------
 }); // type bar (change border-bottom) and change type to expend, income, saving
 
@@ -1616,7 +1637,7 @@ var _loop = function _loop(i) {
       if (i === 1) {
         event.preventDefault();
         click_op = 2;
-        s.innerHTML = "每月儲蓄";
+        s.innerHTML = "一般儲蓄";
         $('#add_deals #fin .box:nth-child(4)').css("display", "none");
       } else if (i === 2) {
         event.preventDefault();

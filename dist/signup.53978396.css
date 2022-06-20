@@ -232,7 +232,7 @@ body {
       position: absolute;
       top: 6.4vh;
       right: 0; }
-    #main #mainpage #add_project_btn {
+    #main #mainpage #add_deals_circle {
       position: fixed;
       bottom: 13.423vh;
       right: 5.6vw; }
@@ -392,7 +392,158 @@ body {
         #main #mainpage #detail_block .list a:nth-last-child(1) {
           border-bottom: none; }
   #main #account {
-    display: none; }
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    font-family: Roboto Regular;
+    background-color: #F4F4F4;
+    position: absolute;
+    top: 0; }
+    #main #account .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #account .bar img {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #account .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #account #account_div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 85.333vw;
+      height: auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 2px 2px #E5E5E5;
+      margin: 4.93vh 0; }
+      #main #account #account_div #no_account {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 6.65vh;
+        border-bottom: 0.3px solid #B3B3B3; }
+      #main #account #account_div #account_list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto; }
+        #main #account #account_div #account_list .account_box {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          height: auto;
+          border-bottom: 0.3px solid #B3B3B3; }
+          #main #account #account_div #account_list .account_box p {
+            font-size: 16px;
+            color: #737474;
+            font-weight: bold;
+            margin: 20px; }
+          #main #account #account_div #account_list .account_box p:nth-child(1) {
+            color: black; }
+      #main #account #account_div #add_account_page_btn {
+        font-size: 18px;
+        color: #8E5FF4;
+        margin: 20px 0; }
+  #main #add_account_page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0vh;
+    border: none;
+    border-left: solid; }
+    #main #add_account_page .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #add_account_page .bar img {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #add_account_page .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #add_account_page #account_form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 72.2667vw;
+      height: auto;
+      margin: 4.31vh 0 0 0; }
+      #main #add_account_page #account_form .box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 4.31vh;
+        width: 100%;
+        margin: 0 0 2.586vh 0; }
+      #main #add_account_page #account_form .box:nth-child(3) {
+        margin: 0 0 4.187vh 0; }
+      #main #add_account_page #account_form input {
+        min-height: 4.31vh;
+        border-style: none;
+        border-radius: 6px;
+        width: 40.16vw;
+        padding: 0;
+        font-size: 1.4778vh;
+        text-align: right;
+        color: #737474;
+        padding: 0 3.733vw 0 0; }
+      #main #add_account_page #account_form .currency_div {
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        align-items: center;
+        width: 43.8vw;
+        height: 4.31vh;
+        background-color: white;
+        border-radius: 6px; }
+        #main #add_account_page #account_form .currency_div p {
+          font-size: 12px;
+          color: #737474; }
+        #main #add_account_page #account_form .currency_div img {
+          margin: 0 12px; }
+      #main #add_account_page #account_form button {
+        background-color: #F4F4F4;
+        display: flex;
+        align-items: center;
+        height: 3.94vh;
+        border: none;
+        padding: 0; }
+        #main #add_account_page #account_form button img {
+          margin: 0; }
   #main #accounting {
     display: none;
     flex-direction: column;

@@ -64,7 +64,12 @@ $(document).ready(function() {
         if(data === '0'){
           t.value = "0"
           n.value = ""
-          s.innerHTML = "每月儲蓄"
+          if(click_op === 0){
+            s.innerHTML = "飲食"
+          }
+          else{
+            s.innerHTML = "薪水"
+          }
           a.innerHTML = "現金"
           d.value = `${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
         }
@@ -80,21 +85,32 @@ $(document).ready(function() {
   
   // --------------- what is this ? ---------------
   $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
+    $('#add_deals').css("display", "flex")
+    setTimeout(() => {
+      $('#add_deals').css("transform", "translateX(0%)")
+    }, 100)
     event.preventDefault()
     t.value = "0"
     n.value = ""
-    s.innerHTML = "飲食"
+    if(click_op === 0){
+      s.innerHTML = "飲食"
+    }
+    else if(click_op === 1){
+      s.innerHTML = "薪水"
+    }
+    else{
+      s.innerHTML = "一般儲蓄"
+    }
     a.innerHTML = "現金"
     d.value = "05/13/2022"
   })
   
-  $('#add_deals .bar').click((event) => {
+  $('#add_deals .bar img').click((event) => {
     event.preventDefault()
-    $('#accounting').css("display", "flex")
+    $('#add_deals').css("transform", "translateX(100%)")
     setTimeout(function(){       
-        $('#add_deals').css("display", "none")
-        $('#add_deals').css("transform", "translateX(100%)")
-    },100)
+      $('#add_deals').css("display", "none")
+    },500)
   })
   // --------------- what is this ? ---------------
 
@@ -109,7 +125,7 @@ for(let i=1;i<5;i++){
       if(i===1){
         event.preventDefault()
         click_op = 2
-        s.innerHTML = "每月儲蓄"
+        s.innerHTML = "一般儲蓄"
         $('#add_deals #fin .box:nth-child(4)').css("display", "none")
       }
       else if(i===2){

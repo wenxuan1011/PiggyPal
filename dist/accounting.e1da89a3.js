@@ -117,6 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
+<<<<<<< HEAD
 })({"../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
 var define;
 /**
@@ -1381,6 +1382,11 @@ $('#accounting .bar #back').click(function(){
   }, 100)
 })*/
 },{"./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+=======
+})({"accounting.js":[function(require,module,exports) {
+
+},{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+>>>>>>> 19fcf4cca50d4d8beedf81b1d213a5ccb8cd8fa7
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1408,7 +1414,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45422" + '/');
+>>>>>>> 19fcf4cca50d4d8beedf81b1d213a5ccb8cd8fa7
 
   ws.onmessage = function (event) {
     checkedAssets = {};

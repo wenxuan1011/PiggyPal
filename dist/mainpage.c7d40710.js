@@ -1165,6 +1165,7 @@ function checkBlank(page) {
   var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var account = ["NAME", "CURRENCY", "MONEY"];
   var pages = [];
 
   switch (page) {
@@ -1178,6 +1179,9 @@ function checkBlank(page) {
 
     case 'financial':
       pages = financial;
+
+    case 'account':
+      pages = account;
       break;
   }
 
@@ -1516,12 +1520,11 @@ $('#login_btn, #save').click(function (event) {
     getdetail();
   }, 100);
 });
-$('#add_project_btn').click(function (event) {
+$('#add_deals_circle').click(function (event) {
   event.preventDefault();
   $('#add_deals').css("display", "flex");
-  $('#add_deals').css("transform", "translateX(0%)");
   setTimeout(function () {
-    $('#mainpage').css("display", "none");
+    $('#add_deals').css("transform", "translateX(0%)");
   }, 100);
 });
 

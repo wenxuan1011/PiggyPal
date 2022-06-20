@@ -9,15 +9,12 @@ $('#login_btn, #save').click((event) => {
     }, 100)
 })
 
-$('#add_project_btn').click((event) => {
+$('#add_deals_circle').click((event) => {
     event.preventDefault()    
     $('#add_deals').css("display", "flex")
-    $('#add_deals').css("transform", "translateX(0%)")
-
-    setTimeout(function(){       
-        $('#mainpage').css("display", "none")
+    setTimeout(function(){
+        $('#add_deals').css("transform", "translateX(0%)")
     },100)
-    
 })
 
 function getdetail(){

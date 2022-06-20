@@ -156,10 +156,11 @@ export function datetransfer(date){
 }
 
 export function checkBlank(page, ...input){
-    var lengths=1
+    var lengths = 1
     var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"]
     var projectmessage = ["專案名稱", "日期", "目標金額"]
     var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"]
+    var account = ["NAME", "CURRENCY", "MONEY"]
     var pages = []
     
     switch(page){
@@ -171,6 +172,8 @@ export function checkBlank(page, ...input){
             break
         case 'financial':
             pages = financial
+        case 'account':
+            pages = account
             break
     }
 
