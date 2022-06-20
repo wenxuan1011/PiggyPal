@@ -85,8 +85,8 @@ function setremainDay(today,totalday){
 
 async function setVariable(ID){
     var today=new Date();
-        todayExpenditure= await mod.getTodayMoney(ID,'account','cost',0);
-        todayIncome= await mod.getTodayMoney(ID,'account','cost',1);
+        todayExpenditure= await mod.getTodayMoney(ID,'account',today.getFullYear(),mod.StringtoInt(today.getMonth())+1,today.getDate(),'cost',0);
+        todayIncome= await mod.getTodayMoney(ID,'account',today.getFullYear(),mod.StringtoInt(today.getMonth())+1,today.getDate(),'cost',1);
         Expenditure= await mod.getMonthlyMoney(ID,'account','cost',0);
         Income= await mod.getMonthlyMoney(ID,'account','cost',1)
         ProjectSaved = await mod.getMonthlyMoney(ID, 'account', 'cost', 3)
@@ -197,3 +197,4 @@ function showPiggy(remain, used, premain, pused){
     }
     
 }
+

@@ -108,7 +108,10 @@ html
           img#back(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 記帳
         #everyday_earn
-          img(src = "./image/Accounting/box_SelectDate.png", width = "87.8%")
+          form#datepick
+            .datebox
+              input(type = "text", name = "dates", value = "", id="das")
+              img(src = "./image/btn/btn_arrow_down.png", width = "5.0667%")
           #today_earn
             p 本日損益
             p +0
@@ -132,7 +135,7 @@ html
           p 轉帳
         form#fin
           .datebox
-            input(type = "text", name = "date", value = "05/13/2022", id="da")
+            input(type = "text", name = "date", value = "", id="da")
             img(src = "./image/btn/btn_arrow_down.png", width = "5.0667%")
           .box
             input(type = "text", name = "cost", value = "0", id = "spend")

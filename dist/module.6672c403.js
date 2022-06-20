@@ -900,12 +900,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
+exports.caldaymoney = caldaymoney;
 exports.calprojectpercent = calprojectpercent;
-exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.detailpicture = detailpicture;
 exports.getAllUser = getAllUser;
 exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
@@ -931,32 +932,31 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, selection, type) {
-  var result = caltodaymoney(ID, table, selection, type);
+function getTodayMoney(ID, table, year, month, date, selection, type) {
+  var result = caldaymoney(ID, table, year, month, date, selection, type);
   return result;
 }
 
-function caltodaymoney(_x, _x2, _x3, _x4) {
-  return _caltodaymoney.apply(this, arguments);
+function caldaymoney(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
+  return _caldaymoney.apply(this, arguments);
 }
 
-function _caltodaymoney() {
-  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, type) {
-    var results, today;
+function _caldaymoney() {
+  _caldaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, year, month, date, selection, type) {
+    var results;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             results = 0;
-            today = new Date();
-            _context.next = 4;
+            _context.next = 3;
             return $.get('./todaymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: StringtoInt(today.getMonth()) + 1,
-              date: today.getDate(),
-              year: today.getFullYear(),
+              month: month,
+              date: date,
+              year: year,
               type: type
             }, function (data) {
               var result = 0;
@@ -977,17 +977,17 @@ function _caltodaymoney() {
               results = result;
             });
 
-          case 4:
+          case 3:
             return _context.abrupt("return", results);
 
-          case 5:
+          case 4:
           case "end":
             return _context.stop();
         }
       }
     }, _callee);
   }));
-  return _caltodaymoney.apply(this, arguments);
+  return _caldaymoney.apply(this, arguments);
 }
 
 function getMonthlyMoney(ID, table, selection, type) {
@@ -995,7 +995,7 @@ function getMonthlyMoney(ID, table, selection, type) {
   return result;
 }
 
-function caltotalmoney(_x5, _x6, _x7, _x8) {
+function caltotalmoney(_x8, _x9, _x10, _x11) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
@@ -1049,7 +1049,7 @@ function _caltotalmoney() {
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x9) {
+function getProjectMoney(_x12) {
   return _getProjectMoney.apply(this, arguments);
 }
 
@@ -1103,7 +1103,7 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectpercent(_x10, _x11) {
+function calprojectpercent(_x13, _x14) {
   return _calprojectpercent.apply(this, arguments);
 }
 
@@ -1249,7 +1249,7 @@ function _getAllUser() {
   return _getAllUser.apply(this, arguments);
 }
 
-function sergetProject(_x12) {
+function sergetProject(_x15) {
   return _sergetProject.apply(this, arguments);
 }
 
@@ -1294,6 +1294,29 @@ function getColor(color) {
   }
 }
 
+function detailpicture(data, type) {
+  var exptype = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他'];
+  var intype = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他'];
+  var exppicture = ['food', 'shopping', 'house', 'personal', 'transport', 'entertainment', 'hospital', 'other'];
+  var inpicture = ['salary', 'bonus', 'investment', 'repayment', 'win', 'intersest', 'other'];
+
+  if (type == '0') {
+    for (var i in exptype) {
+      if (exptype[i] == data) {
+        return exppicture[i];
+      }
+    }
+  }
+
+  if (type == '1') {
+    for (var i in intype) {
+      if (intype[i] == data) {
+        return inpicture[i];
+      }
+    }
+  }
+}
+
 var _default = {
   gettabledata: gettabledata,
   // get id inside the row of column select from database
@@ -1317,7 +1340,9 @@ var _default = {
   // FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
   // popup message, need to input the word you want to show
-  getColor: getColor // turn the color code into the color, need to input the color code of the project
+  getColor: getColor,
+  // turn the color code into the color, need to input the color code of the project
+  detailpicture: detailpicture //return detail's picture's name
 
 };
 exports.default = _default;
@@ -1349,11 +1374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34665" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
->>>>>>> 84f0f4c340eac6ef8117f73bf6ab8a9e73225581
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

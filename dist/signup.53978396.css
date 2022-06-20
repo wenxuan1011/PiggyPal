@@ -364,14 +364,33 @@ body {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
+          align-items: center;
           border-bottom: 0.3px solid #B3B3B3;
-          border-radius: 0; }
+          border-radius: 0;
+          padding: 0.675vh 0 0.675vh 0; }
+          #main #mainpage #detail_block .list a b {
+            display: flex;
+            flex-direction: row;
+            width: 40vw;
+            align-items: center;
+            margin: 0 0 0 4vw; }
+            #main #mainpage #detail_block .list a b img {
+              height: 5.04vh;
+              width: 10.93vw;
+              margin: 0 0 0 0; }
+            #main #mainpage #detail_block .list a b p {
+              width: 75%;
+              padding: 1.724vh 4vw 1.724vh 5.6vw;
+              text-decoration: none;
+              font-size: 2vh !important;
+              margin: 0 0 0 0; }
           #main #mainpage #detail_block .list a p {
-            width: 75%;
             padding: 1.724vh 5.6vw 1.724vh 5.6vw;
             text-decoration: none;
             font-size: 2vh !important;
             margin: 0 0 0 0; }
+        #main #mainpage #detail_block .list a:nth-last-child(1) {
+          border-bottom: none; }
   #main #account {
     display: none; }
   #main #accounting {
@@ -410,8 +429,27 @@ body {
       height: auto;
       margin-top: 2.59vh;
       margin-bottom: 3.325123vh; }
-      #main #accounting #everyday_earn img:nth-child(1) {
-        margin-bottom: 2vh; }
+      #main #accounting #everyday_earn #datepick {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 50px;
+        height: 3.325vh;
+        width: 37.6vw;
+        margin: 0 0 26px 0; }
+        #main #accounting #everyday_earn #datepick input {
+          min-height: 2vh;
+          border-style: none;
+          border-radius: 10px;
+          width: 22.133vw;
+          font-family: Roboto Bold;
+          font-size: 1.4778vh;
+          text-align: center;
+          color: black;
+          padding: 0;
+          margin: 0 9px 0 0; }
       #main #accounting #everyday_earn #today_earn {
         display: flex;
         flex-direction: row;
@@ -440,16 +478,36 @@ body {
         border-radius: 10px;
         margin: 0 0 0 0;
         border-bottom: 0.3px solid #B3B3B3; }
-        #main #accounting #today_detail .income p, #main #accounting #today_detail .expenditure p {
-          margin: 0 0 0 0; }
         #main #accounting #today_detail .income a, #main #accounting #today_detail .expenditure a {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          margin: 0 8.53vw 0 0;
-          width: 85.87%;
+          align-items: center;
+          border-bottom: 0.3px solid #B3B3B3;
+          border-radius: 0;
+          padding: 0 4.8vw 0 0;
+          padding: 1.724vh 5.6vw 1.724vh 5.6vw;
+          text-decoration: none;
           font-size: 2vh !important;
-          margin: 1.36vh 0 2.09vh 8.53vw; }
+          margin: 0 0 0 0; }
+          #main #accounting #today_detail .income a b, #main #accounting #today_detail .expenditure a b {
+            display: flex;
+            flex-direction: row;
+            width: 40vw;
+            align-items: center;
+            margin: 0 0 0 0; }
+            #main #accounting #today_detail .income a b img, #main #accounting #today_detail .expenditure a b img {
+              height: 5vh;
+              width: 10.93vw; }
+            #main #accounting #today_detail .income a b p, #main #accounting #today_detail .expenditure a b p {
+              width: 75%;
+              padding: 1.724vh 5.6vw 1.724vh 5.6vw;
+              text-decoration: none;
+              font-size: 2vh !important;
+              font-weight: none;
+              margin: 0 0 0 0; }
+        #main #accounting #today_detail .income a:nth-last-child(1), #main #accounting #today_detail .expenditure a:nth-last-child(1) {
+          border-bottom: none; }
       #main #accounting #today_detail .bars {
         display: flex;
         background-color: white;
@@ -457,7 +515,7 @@ body {
         margin: 0 0 0 0; }
         #main #accounting #today_detail .bars p {
           font-size: 2vh;
-          margin: 2.09vh 0 2.09vh 8.53vw;
+          margin: 2.09vh 0 0vh 4.8vw;
           color: #8E5FF4;
           font-family: 'Roboto'; }
   #main #add_deals {

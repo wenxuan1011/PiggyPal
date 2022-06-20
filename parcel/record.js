@@ -17,9 +17,9 @@ var a = document.getElementById("acc")
 
 var today = new Date()
 
-
 $(document).ready(function() {
-
+  $('#datepick input[name=dates]').val(`${mod.datetransfer(today.getMonth()+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`)
+  
   $('#save').click((event)=> {
     event.preventDefault()
     if(click_op!==2){
@@ -142,33 +142,48 @@ for(let i=1;i<5;i++){
 // use jquery calendar
 $(function(){
   $("#da").datepicker();
+  $('#das').datepicker();
 });
 
 
-$('#login_btn, #save').click((event) => {
+$('#login_btn, #save, .datebox').click((event) => {
   event.preventDefault()
-  setTimeout(() => {
+  var count = 0
+  var interval = setInterval(function(){
+    if(count==10){
+      count=0
+      clearInterval(interval)
+    }
     getdetailincome()
     getdetailexpenditure()
-}, 100)
+    showtoday()
+    console.log(count)
+    count++
+  },1000 )
+  
 })
 
 
 function getdetailincome(){
-  var today= new Date()
+  const container = document.querySelector('#main #accounting .income')
+  container.innerHTML=`<p></p>`
+  var DATE = $('#datepick input[name=dates]').val()
+  let YEAR = "'" + `${DATE[6]}` + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}` + "'"
+  let MONTH = "'" + `${DATE[0]}` + `${DATE[1]}` + "'"
+  let DAY = "'" + `${DATE[3]}` + `${DATE[4]}` + "'" 
   $.get('./getmainpagedetail',{
       id:ID,
-      date: today.getDate(),
-      month: today.getMonth()+1,
-      year: today.getFullYear()
+      date: DAY,
+      month: MONTH,
+      year: YEAR
   },(data)=>{
       if(data!="nothing"){
-          const container = document.querySelector('#main #accounting .income')
           container.innerHTML=`<p></p>`
           for (var i in data){
               var item= mod.gettabledata(data,'items',i)
               var value = mod.gettabledata(data, 'cost',i)
               var type = mod.gettabledata(data, 'type', i)
+              var sort = mod.gettabledata(data, 'sort', i)
               //console.log(item, value, type)
               if(item == ''||value == ''|| type === '0' ||type =='3'){
                   continue;
@@ -176,17 +191,24 @@ function getdetailincome(){
               //create element
               const container = document.querySelector('#main #accounting .income')
               const box= document.createElement('a')
-              const paragraphone = document.createElement('P')
+              const paragraphone = document.createElement('b')
+              const types = document.createElement('img')
+              const word = document.createElement('p')
               const paragraphtwo = document.createElement('P')
               //set text
-              paragraphone.textContent= `${item}`
+              word.textContent= `${item}`
               paragraphtwo.textContent=`+${value}`
               //set attribute
               box.setAttribute('id','a')
-              paragraphone.setAttribute('class','text')
+              paragraphone.setAttribute('class','boxs')
+              types.setAttribute('id', 'type_pic')
+              types.setAttribute('src',`./image/Accounting/${mod.detailpicture(sort, type)}_icon.png`)
+              word.setAttribute('class','text')
               paragraphtwo.setAttribute('class','text')
               //append child
               container.appendChild(box)
+              paragraphone.appendChild(types)
+              paragraphone.appendChild(word)
               box.appendChild(paragraphone)
               box.appendChild(paragraphtwo)
           }
@@ -199,19 +221,25 @@ function getdetailincome(){
 
 function getdetailexpenditure(){
   var today= new Date()
+  const container = document.querySelector('#main #accounting .expenditure')
+  container.innerHTML=`<p></p>`
+  var DATE = $('#datepick input[name=dates]').val()
+  let YEAR = "'" + `${DATE[6]}` + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}` + "'"
+  let MONTH = "'" + `${DATE[0]}` + `${DATE[1]}` + "'"
+  let DAY = "'" + `${DATE[3]}` + `${DATE[4]}` + "'" 
   $.get('./getmainpagedetail',{
       id:ID,
-      date: today.getDate(),
-      month: today.getMonth()+1,
-      year: today.getFullYear()
+      date: DAY,
+      month: MONTH,
+      year: YEAR
   },(data)=>{
       if(data!="nothing"){
-          const container = document.querySelector('#main #accounting .expenditure')
           container.innerHTML=`<p></p>`
           for (var i in data){
               var item= mod.gettabledata(data,'items',i)
               var value = mod.gettabledata(data, 'cost',i)
               var type = mod.gettabledata(data, 'type', i)
+              var sort = mod.gettabledata(data, 'sort', i)
               //console.log(type)
               if(item == ''||value == ''|| type === '1' || type =='3'){
                   continue;
@@ -219,17 +247,24 @@ function getdetailexpenditure(){
               //create element
               const container = document.querySelector('#main #accounting .expenditure')
               const box= document.createElement('a')
-              const paragraphone = document.createElement('P')
+              const paragraphone = document.createElement('b')
+              const types = document.createElement('img')
+              const word = document.createElement('p')
               const paragraphtwo = document.createElement('P')
               //set text
-              paragraphone.textContent= `${item}`
+              word.textContent= `${item}`
               paragraphtwo.textContent=`-${value}`
               //set attribute
               box.setAttribute('id','a')
-              paragraphone.setAttribute('class','text')
+              paragraphone.setAttribute('class','boxs')
+              types.setAttribute('id', 'type_pic')
+              types.setAttribute('src',`./image/Accounting/${mod.detailpicture(sort, type)}_icon.png`)
+              word.setAttribute('class','text')
               paragraphtwo.setAttribute('class','text')
               //append child
               container.appendChild(box)
+              paragraphone.appendChild(types)
+              paragraphone.appendChild(word)
               box.appendChild(paragraphone)
               box.appendChild(paragraphtwo)
           }
@@ -240,7 +275,21 @@ function getdetailexpenditure(){
   })
 }
 
-
+async function showtoday(){
+  var DATE = $('#datepick input[name=dates]').val()
+  let YEAR = `${DATE[6]}` + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}`
+  let MONTH = `${DATE[0]}` + `${DATE[1]}`
+  let DAY = `${DATE[3]}` + `${DATE[4]}`  
+  var dayExpenditure = await mod.getTodayMoney(ID,'account',YEAR,MONTH,DAY,'cost',0);
+  var dayIncome = await mod.getTodayMoney(ID,'account',YEAR,MONTH,DAY,'cost',1);
+  var dayToTal = dayIncome - dayExpenditure
+  if((dayToTal)>=0){
+      $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`+${dayToTal}`)
+  }
+  else{
+      $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html(`${dayToTal}`)
+  }
+}
 
 function transmitIncomeOrExpend(){
   return click_op

@@ -119,9 +119,9 @@ app.get('/login',(req,res) => {
 // update mainpage detail
 app.get('/getmainpagedetail',(req,res) => {
   let UID = "'"+`${req.query.id}`+"'"
-  let month= `${mod.datetransfer(req.query.month)}`
-  let date= "'"+`${mod.datetransfer(req.query.date)}`+"'"
-  let year= "'"+`${req.query.year}`+"'"
+  let month= req.query.month
+  let date= req.query.date
+  let year= req.query.year
   var search_user=""
   search_user=`SELECT * FROM account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
   

@@ -900,12 +900,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
+exports.caldaymoney = caldaymoney;
 exports.calprojectpercent = calprojectpercent;
-exports.caltodaymoney = caltodaymoney;
 exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.detailpicture = detailpicture;
 exports.getAllUser = getAllUser;
 exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
@@ -931,32 +932,31 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, selection, type) {
-  var result = caltodaymoney(ID, table, selection, type);
+function getTodayMoney(ID, table, year, month, date, selection, type) {
+  var result = caldaymoney(ID, table, year, month, date, selection, type);
   return result;
 }
 
-function caltodaymoney(_x, _x2, _x3, _x4) {
-  return _caltodaymoney.apply(this, arguments);
+function caldaymoney(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
+  return _caldaymoney.apply(this, arguments);
 }
 
-function _caltodaymoney() {
-  _caltodaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, selection, type) {
-    var results, today;
+function _caldaymoney() {
+  _caldaymoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ID, table, year, month, date, selection, type) {
+    var results;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             results = 0;
-            today = new Date();
-            _context.next = 4;
+            _context.next = 3;
             return $.get('./todaymoney', {
               ID: ID,
               table: table,
               selection: selection,
-              month: StringtoInt(today.getMonth()) + 1,
-              date: today.getDate(),
-              year: today.getFullYear(),
+              month: month,
+              date: date,
+              year: year,
               type: type
             }, function (data) {
               var result = 0;
@@ -977,17 +977,17 @@ function _caltodaymoney() {
               results = result;
             });
 
-          case 4:
+          case 3:
             return _context.abrupt("return", results);
 
-          case 5:
+          case 4:
           case "end":
             return _context.stop();
         }
       }
     }, _callee);
   }));
-  return _caltodaymoney.apply(this, arguments);
+  return _caldaymoney.apply(this, arguments);
 }
 
 function getMonthlyMoney(ID, table, selection, type) {
@@ -995,7 +995,7 @@ function getMonthlyMoney(ID, table, selection, type) {
   return result;
 }
 
-function caltotalmoney(_x5, _x6, _x7, _x8) {
+function caltotalmoney(_x8, _x9, _x10, _x11) {
   return _caltotalmoney.apply(this, arguments);
 } //need to check what is the detail in table
 
@@ -1049,7 +1049,7 @@ function _caltotalmoney() {
   return _caltotalmoney.apply(this, arguments);
 }
 
-function getProjectMoney(_x9) {
+function getProjectMoney(_x12) {
   return _getProjectMoney.apply(this, arguments);
 }
 
@@ -1103,7 +1103,7 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectpercent(_x10, _x11) {
+function calprojectpercent(_x13, _x14) {
   return _calprojectpercent.apply(this, arguments);
 }
 
@@ -1249,7 +1249,7 @@ function _getAllUser() {
   return _getAllUser.apply(this, arguments);
 }
 
-function sergetProject(_x12) {
+function sergetProject(_x15) {
   return _sergetProject.apply(this, arguments);
 }
 
@@ -1294,6 +1294,29 @@ function getColor(color) {
   }
 }
 
+function detailpicture(data, type) {
+  var exptype = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他'];
+  var intype = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他'];
+  var exppicture = ['food', 'shopping', 'house', 'personal', 'transport', 'entertainment', 'hospital', 'other'];
+  var inpicture = ['salary', 'bonus', 'investment', 'repayment', 'win', 'intersest', 'other'];
+
+  if (type == '0') {
+    for (var i in exptype) {
+      if (exptype[i] == data) {
+        return exppicture[i];
+      }
+    }
+  }
+
+  if (type == '1') {
+    for (var i in intype) {
+      if (intype[i] == data) {
+        return inpicture[i];
+      }
+    }
+  }
+}
+
 var _default = {
   gettabledata: gettabledata,
   // get id inside the row of column select from database
@@ -1317,7 +1340,9 @@ var _default = {
   // FOR SERVER TO GET PROJECT
   PopUpMessage: PopUpMessage,
   // popup message, need to input the word you want to show
-  getColor: getColor // turn the color code into the color, need to input the color code of the project
+  getColor: getColor,
+  // turn the color code into the color, need to input the color code of the project
+  detailpicture: detailpicture //return detail's picture's name
 
 };
 exports.default = _default;
@@ -1490,6 +1515,10 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 // 0支出 1收入
 var click_op = 0; //spend
 
@@ -1504,6 +1533,7 @@ var s = document.getElementById("sort"); //account
 var a = document.getElementById("acc");
 var today = new Date();
 $(document).ready(function () {
+  $('#datepick input[name=dates]').val("".concat(mod.datetransfer(today.getMonth() + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear()));
   $('#save').click(function (event) {
     event.preventDefault();
 
@@ -1618,31 +1648,46 @@ for (var i = 1; i < 5; i++) {
 
 $(function () {
   $("#da").datepicker();
+  $('#das').datepicker();
 });
-$('#login_btn, #save').click(function (event) {
+$('#login_btn, #save, .datebox').click(function (event) {
   event.preventDefault();
-  setTimeout(function () {
+  var count = 0;
+  var interval = setInterval(function () {
+    if (count == 10) {
+      count = 0;
+      clearInterval(interval);
+    }
+
     getdetailincome();
     getdetailexpenditure();
-  }, 100);
+    showtoday();
+    console.log(count);
+    count++;
+  }, 1000);
 });
 
 function getdetailincome() {
-  var today = new Date();
+  var container = document.querySelector('#main #accounting .income');
+  container.innerHTML = "<p></p>";
+  var DATE = $('#datepick input[name=dates]').val();
+  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
+  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
+  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
   $.get('./getmainpagedetail', {
     id: _signup.default,
-    date: today.getDate(),
-    month: today.getMonth() + 1,
-    year: today.getFullYear()
+    date: DAY,
+    month: MONTH,
+    year: YEAR
   }, function (data) {
     if (data != "nothing") {
-      var container = document.querySelector('#main #accounting .income');
       container.innerHTML = "<p></p>";
 
       for (var i in data) {
         var item = mod.gettabledata(data, 'items', i);
         var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i); //console.log(item, value, type)
+        var type = mod.gettabledata(data, 'type', i);
+        var sort = mod.gettabledata(data, 'sort', i); //console.log(item, value, type)
 
         if (item == '' || value == '' || type === '0' || type == '3') {
           continue;
@@ -1652,18 +1697,25 @@ function getdetailincome() {
         var _container = document.querySelector('#main #accounting .income');
 
         var box = document.createElement('a');
-        var paragraphone = document.createElement('P');
+        var paragraphone = document.createElement('b');
+        var types = document.createElement('img');
+        var word = document.createElement('p');
         var paragraphtwo = document.createElement('P'); //set text
 
-        paragraphone.textContent = "".concat(item);
+        word.textContent = "".concat(item);
         paragraphtwo.textContent = "+".concat(value); //set attribute
 
         box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'text');
+        paragraphone.setAttribute('class', 'boxs');
+        types.setAttribute('id', 'type_pic');
+        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
+        word.setAttribute('class', 'text');
         paragraphtwo.setAttribute('class', 'text'); //append child
 
         _container.appendChild(box);
 
+        paragraphone.appendChild(types);
+        paragraphone.appendChild(word);
         box.appendChild(paragraphone);
         box.appendChild(paragraphtwo);
       }
@@ -1673,20 +1725,26 @@ function getdetailincome() {
 
 function getdetailexpenditure() {
   var today = new Date();
+  var container = document.querySelector('#main #accounting .expenditure');
+  container.innerHTML = "<p></p>";
+  var DATE = $('#datepick input[name=dates]').val();
+  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
+  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
+  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
   $.get('./getmainpagedetail', {
     id: _signup.default,
-    date: today.getDate(),
-    month: today.getMonth() + 1,
-    year: today.getFullYear()
+    date: DAY,
+    month: MONTH,
+    year: YEAR
   }, function (data) {
     if (data != "nothing") {
-      var container = document.querySelector('#main #accounting .expenditure');
       container.innerHTML = "<p></p>";
 
       for (var i in data) {
         var item = mod.gettabledata(data, 'items', i);
         var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i); //console.log(type)
+        var type = mod.gettabledata(data, 'type', i);
+        var sort = mod.gettabledata(data, 'sort', i); //console.log(type)
 
         if (item == '' || value == '' || type === '1' || type == '3') {
           continue;
@@ -1696,23 +1754,73 @@ function getdetailexpenditure() {
         var _container2 = document.querySelector('#main #accounting .expenditure');
 
         var box = document.createElement('a');
-        var paragraphone = document.createElement('P');
+        var paragraphone = document.createElement('b');
+        var types = document.createElement('img');
+        var word = document.createElement('p');
         var paragraphtwo = document.createElement('P'); //set text
 
-        paragraphone.textContent = "".concat(item);
+        word.textContent = "".concat(item);
         paragraphtwo.textContent = "-".concat(value); //set attribute
 
         box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'text');
+        paragraphone.setAttribute('class', 'boxs');
+        types.setAttribute('id', 'type_pic');
+        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
+        word.setAttribute('class', 'text');
         paragraphtwo.setAttribute('class', 'text'); //append child
 
         _container2.appendChild(box);
 
+        paragraphone.appendChild(types);
+        paragraphone.appendChild(word);
         box.appendChild(paragraphone);
         box.appendChild(paragraphtwo);
       }
     } else {}
   });
+}
+
+function showtoday() {
+  return _showtoday.apply(this, arguments);
+}
+
+function _showtoday() {
+  _showtoday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var DATE, YEAR, MONTH, DAY, dayExpenditure, dayIncome, dayToTal;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            DATE = $('#datepick input[name=dates]').val();
+            YEAR = "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]);
+            MONTH = "".concat(DATE[0]) + "".concat(DATE[1]);
+            DAY = "".concat(DATE[3]) + "".concat(DATE[4]);
+            _context.next = 6;
+            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 0);
+
+          case 6:
+            dayExpenditure = _context.sent;
+            _context.next = 9;
+            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 1);
+
+          case 9:
+            dayIncome = _context.sent;
+            dayToTal = dayIncome - dayExpenditure;
+
+            if (dayToTal >= 0) {
+              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(dayToTal));
+            } else {
+              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(dayToTal));
+            }
+
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _showtoday.apply(this, arguments);
 }
 
 function transmitIncomeOrExpend() {
@@ -1750,11 +1858,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34665" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
->>>>>>> 84f0f4c340eac6ef8117f73bf6ab8a9e73225581
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46555" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

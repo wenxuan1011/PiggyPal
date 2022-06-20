@@ -35,23 +35,32 @@ function getdetail(){
                 var item= mod.gettabledata(data,'items',i)
                 var value = mod.gettabledata(data, 'cost',i)
                 var type = mod.gettabledata(data, 'type',i)
+                var sort = mod.gettabledata(data, 'sort', i)
                 if(item == ''||value == ''||type == '3'){
                     continue;
                 }
                 //create element
                 const container = document.querySelector('.list')
                 const box= document.createElement('a')
-                const paragraphone = document.createElement('P')
-                const paragraphtwo = document.createElement('P')
+                const paragraphone = document.createElement('b')
+                const types = document.createElement('img')
+                const word = document.createElement('p')
+                const paragraphtwo = document.createElement('p')
                 //set text
-                paragraphone.textContent= `${item}`
+                word.textContent= `${item}`
                 paragraphtwo.textContent=`$${value}`
                 //set attribute
                 box.setAttribute('id','a')
-                paragraphone.setAttribute('class','text')
+                paragraphone.setAttribute('class','boxs')
+                types.setAttribute('id', 'type_pic')
+                types.setAttribute('src',`./image/Accounting/${detailpicture(sort, type)}_icon.png`)
+                word.setAttribute('class','text')
                 paragraphtwo.setAttribute('class','text')
+                
                 //append child
                 container.appendChild(box)
+                paragraphone.appendChild(types)
+                paragraphone.appendChild(word)
                 box.appendChild(paragraphone)
                 box.appendChild(paragraphtwo)
             }
@@ -61,4 +70,25 @@ function getdetail(){
         }
     }
     )
+}
+
+function detailpicture(data, type){
+    var exptype = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他']
+    var intype = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他']
+    var exppicture = ['food', 'shopping', 'house', 'personal', 'transport', 'entertainment', 'hospital', 'other']
+    var inpicture = ['salary', 'bonus', 'investment', 'repayment', 'win', 'intersest', 'other']
+    if(type == '0'){
+        for (var i in exptype){
+            if (exptype[i] == data){
+                return exppicture[i]
+            }
+        }
+    }
+    if(type == '1'){
+        for (var i in intype){
+            if (intype[i] == data){
+                return inpicture[i]
+            }
+        }
+    }
 }

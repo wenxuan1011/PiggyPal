@@ -29,21 +29,20 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
-export function getTodayMoney(ID,table,selection,type){
-    var result= caltodaymoney(ID,table,selection,type)
+export function getTodayMoney(ID,table,year,month,date,selection,type){
+    var result= caldaymoney(ID,table,year,month,date,selection,type)
     return result
 }
 
-export async function caltodaymoney(ID,table,selection,type){
+export async function caldaymoney(ID,table,year,month,date,selection,type){
     var results=0
-    var today=new Date()
     await $.get('./todaymoney',{
         ID:ID,
         table:table,
         selection:selection,
-        month:StringtoInt(today.getMonth())+1,
-        date:today.getDate(),
-        year:today.getFullYear(),
+        month:month,
+        date:date,
+        year:year,
         type:type
     },(data) =>{
         var result=0;
@@ -244,6 +243,27 @@ export function getColor(color){
     }
 }
 
+export function detailpicture(data, type){
+    var exptype = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他']
+    var intype = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他']
+    var exppicture = ['food', 'shopping', 'house', 'personal', 'transport', 'entertainment', 'hospital', 'other']
+    var inpicture = ['salary', 'bonus', 'investment', 'repayment', 'win', 'intersest', 'other']
+    if(type == '0'){
+        for (var i in exptype){
+            if (exptype[i] == data){
+                return exppicture[i]
+            }
+        }
+    }
+    if(type == '1'){
+        for (var i in intype){
+            if (intype[i] == data){
+                return inpicture[i]
+            }
+        }
+    }
+}
+
 export default{
     gettabledata, // get id inside the row of column select from database
     getMonthlyMoney, // get money in each table, remember to use caltotalmoney to get in integer
@@ -257,4 +277,5 @@ export default{
     sergetProject, // FOR SERVER TO GET PROJECT
     PopUpMessage, // popup message, need to input the word you want to show
     getColor, // turn the color code into the color, need to input the color code of the project
+    detailpicture, //return detail's picture's name
 } 
