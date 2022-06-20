@@ -3,12 +3,6 @@ import * as mod from './module.js'
 
 //need to export to signup.js
 var TYPE = 0
-var item = document.getElementById("financial_item")
-var year = document.getElementById("financial_year")
-var month = document.getElementById("financial_month")
-var day = document.getElementById("financial_day")
-var money = document.getElementById("financial_money")
-var repeat = document.getElementById("financial_repeat")
 
 // open/close personal page
 $('#mainpage #personal_btn').click(function(){
@@ -25,8 +19,6 @@ $('#personal_page .bar img').click(function(){
     $('#personal_page').css("display", "none")
   }, 500)
 })
-
-
 
 // open/close financial_list_page
 $('#personal_page #financial_setting .list li').click(function(){
@@ -59,6 +51,12 @@ $('#add_financial_page .bar img').click(function(){
     $('#add_financial_page').css("display", "none")
   }, 500)
 })
+
+// delete data --> PopUpMessage(5)
+$('#personal_page #account_setting .list li:nth-child(3)').click(function(){
+  mod.PopUpMessage(5)
+})
+
 
 // change the title of the financial_list_page and add_financial_page
 const TitleArray = [['固定收入', '收入項目', '入帳日期', '收入金額', '請新增一筆固定收入'],
@@ -120,13 +118,11 @@ function ShowFinancialList(type){
     id: ID,
     type: type,
   },(data)=>{
-    console.log(data)
     if(data != "nothing"){
       const container = document.querySelector('#financial_list_page #financial_list')
       container.innerHTML=`<div></div>`
       var financial_list = []
       for (var i in data){
-        console.log('aaaaaaaa')
         var financial_name = mod.gettabledata(data,'item', i)
         financial_list[i] = financial_name
         //create element
@@ -146,7 +142,6 @@ function ShowFinancialList(type){
         block.appendChild(title)
         block.appendChild(name)
       }
-      console.log(financial_list)
       for(let i=0;i<financial_list.length;i++){
         $(`#${financial_list[i]}`).click(function(e){
           $('#add_financial_page').css("display", "flex")

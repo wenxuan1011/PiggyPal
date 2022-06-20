@@ -182,7 +182,6 @@ app.get('/financial',(req,res) => {
   
 })
 
-
 // get financial table
 app.get('/getFinancial',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
@@ -225,6 +224,46 @@ app.get('/getFinancialDetail',(req,res) => {
     }
     else{
       console.log('success')
+      res.send(row)
+    }
+  })
+})
+
+
+// add account
+app.get('/account',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS bank (id VARCHAR(30), name VARCHAR(30), currency VARCHAR(30), money VARCHAR(30))')
+
+  let UID = "'"+`${req.query.id}`+"'"
+  let NAME = "'"+`${req.query.name}`+"'"
+  let CURRENCY = "'"+`${req.query.currency}`+"'"
+  let MONEY = "'"+`${req.query.money}`+"'"
+  
+  if(mod.checkBlank('account', NAME, CURRENCY, MONEY)===1){
+    const add_account = `INSERT INTO bank (id, name, currency, money) VALUES (${UID}, ${NAME}, ${CURRENCY}, ${MONEY})`
+    connection.query(add_account, (err) => {
+      if (err) console.log('fail to insert: ', err)
+    })
+    res.send('0')
+  }
+  else{
+    res.send(mod.checkBlank('account', NAME, CURRENCY, MONEY))
+  }
+  
+})
+
+///get account table
+app.get('/getAccount',(req,res) =>{
+  let UID = "'"+`${req.query.ID}`+"'"
+  var search_user = ""
+  search_user = `SELECT * FROM bank WHERE id = ${UID}`
+  connection.query(search_user, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
       res.send(row)
     }
   })

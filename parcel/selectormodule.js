@@ -1,3 +1,9 @@
+"use strict";
+import 'regenerator-runtime/runtime.js'
+import ID from './signup.js'
+import click_op from './record.js'
+import * as mod from './module.js'
+
 var TIME = new Date()
 
 
@@ -126,13 +132,16 @@ $('#ok').click(function(){
 
 
 // ------------------ expend and income sort selector box ------------------
+
 // open/close sort_select_box
 $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
-  $('.sort_select_box').css("display", "flex")
-  setTimeout(() => {
-    $('.sort_select_box').css("transform", "translateY(0%)")
-    document.addEventListener("click", clickHiddenSortBox);
-  }, 100)
+  if(click_op() < 2){
+    $('.sort_select_box').css("display", "flex")
+    setTimeout(() => {
+      $('.sort_select_box').css("transform", "translateY(0%)")
+      document.addEventListener("click", clickHiddenSortBox);
+    }, 100)
+  }
 })
   
 function clickHiddenSortBox(eve){
@@ -186,14 +195,32 @@ function CreateSortBox(image, name){
 
 // ------------------ other selector boxs ------------------
 // open/close other_select_box
-$('#add_financial_page .box:nth-child(4) .repeat_div').click(function(){
+$('#add_financial_page .box:nth-child(4) .repeat_div, #add_account_page .box:nth-child(2) .currency_div').click(function(){
   $('.other_select_box').css("display", "flex")
   setTimeout(() => {
     $('.other_select_box').css("transform", "translateY(0%)")
     document.addEventListener("click", clickHiddenOtherBox);
   }, 100)
 })
-  
+$('#add_deals #fin #acc_div').click(async function(){
+  await CreateOtherBox(Account, AccountDiv)
+  $('.other_select_box').css("display", "flex")
+  setTimeout(() => {
+    $('.other_select_box').css("transform", "translateY(0%)")
+    document.addEventListener("click", clickHiddenOtherBox);
+  }, 100)
+})
+$('#add_deals #fin #sort_div').click(async function(){
+  await CreateOtherBox(Project, ProjectDiv)
+  if(click_op() === 2){
+    $('.other_select_box').css("display", "flex")
+    setTimeout(() => {
+      $('.other_select_box').css("transform", "translateY(0%)")
+      document.addEventListener("click", clickHiddenOtherBox);
+    }, 100)
+  }
+})
+
 function clickHiddenOtherBox(eve){
   if( eve.target.class != "other_select_box" ){
     $('.other_select_box').css("transform", "translateY(100%)")
@@ -205,15 +232,73 @@ function clickHiddenOtherBox(eve){
 }
 
 const Repeat = ['重複循環', '不重複', '每天', '每週', '每月', '每年', '自訂']
+const RepeatDiv = '#add_financial_page #financial .box:nth-child(4) .repeat_div p'
+const Currency = ['幣種', 'USD-美元', 'AUD-澳幣', 'JPY-日圓', 'TWD-台幣', 'KRW-韓元', 'CNY-人民幣']
+const CurrencyDiv = '#add_account_page #account_form .box:nth-child(2) .currency_div p'
+var Project = ['請選擇專案', '一般儲蓄']
+const ProjectDiv = '#add_deals #fin #sort'
+var Account = ['請選擇帳戶']
+const AccountDiv = '#add_deals #fin #acc'
+
+$(document).ready(function() {
+  // get project name
+  $('#add_deals_btn').click((event) => {
+    event.preventDefault()
+    $.get('./getProject', {
+      ID: ID,
+    }, (data) => {
+      var j = 2
+      if(`${data}` !== "nothing"){
+        for(let i in data){
+          var project_name = mod.gettabledata(data, 'project_name', i)
+          Project[j] = `${project_name}`
+          j++
+        }
+        console.log(Project)
+      }
+      else{
+        console.log('no project')
+      };
+    });
+  })
+  
+  // get all account
+  $('#add_deals_btn').click((event) => {
+    event.preventDefault()
+    $.get('./getAccount', {
+      ID: ID,
+    }, (data) => {
+      var j = 1
+      if(`${data}` !== "nothing"){
+        for(let i in data){
+          var account_name = mod.gettabledata(data, 'name', i)
+          Account[j] = `${account_name}`
+          j++
+        }
+        console.log(Account)
+      }
+      else{
+        Account[1] = '（尚未新增帳戶）'
+        console.log(Account)
+      };
+    });
+  })
+});
 
 $('#personal_page #financial_setting .list li').click((event)=> {
-  CreateOtherBox(Repeat)
+  CreateOtherBox(Repeat, RepeatDiv)
 })
 
-function CreateOtherBox(name){
+$('#account #add_account_page_btn').click((event)=> {
+  CreateOtherBox(Currency, CurrencyDiv)
+})
+
+
+function CreateOtherBox(name, place){
   const container = document.querySelector('.other_select_box .other_bar')
   container.innerHTML=`<div></div>`
   var NameList = name
+  $(`.other_select_box p`).html(`${NameList[0]}`)
   for(let i=1;i<NameList.length;i++){
     const block = document.createElement('div')
     const NameBox = document.createElement('p')
@@ -222,10 +307,10 @@ function CreateOtherBox(name){
     container.appendChild(block)
     block.appendChild(NameBox)
   }
-  for(let i=1;i<NameList.length;i++){
+  for(let i=1;i<NameList.length+1;i++){
     $(`.other_select_box .other_bar .other_box:nth-child(${i})`).click(function(){
       var word = $(`.other_select_box .other_bar .other_box:nth-child(${i}) p`).text()
-      $('#add_financial_page #financial .box:nth-child(4) .repeat_div p').html(`${word}`)
+      $(`${place}`).html(`${word}`)
     })
   }
 }

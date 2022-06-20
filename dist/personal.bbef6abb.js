@@ -1165,6 +1165,7 @@ function checkBlank(page) {
   var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var account = ["NAME", "CURRENCY", "MONEY"];
   var pages = [];
 
   switch (page) {
@@ -1178,6 +1179,9 @@ function checkBlank(page) {
 
     case 'financial':
       pages = financial;
+
+    case 'account':
+      pages = account;
       break;
   }
 
@@ -1485,13 +1489,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //need to export to signup.js
-var TYPE = 0;
-var item = document.getElementById("financial_item");
-var year = document.getElementById("financial_year");
-var month = document.getElementById("financial_month");
-var day = document.getElementById("financial_day");
-var money = document.getElementById("financial_money");
-var repeat = document.getElementById("financial_repeat"); // open/close personal page
+var TYPE = 0; // open/close personal page
 
 $('#mainpage #personal_btn').click(function () {
   $('#personal_page').css("display", "flex");
@@ -1531,6 +1529,10 @@ $('#add_financial_page .bar img').click(function () {
   setTimeout(function () {
     $('#add_financial_page').css("display", "none");
   }, 500);
+}); // delete data --> PopUpMessage(5)
+
+$('#personal_page #account_setting .list li:nth-child(3)').click(function () {
+  mod.PopUpMessage(5);
 }); // change the title of the financial_list_page and add_financial_page
 
 var TitleArray = [['固定收入', '收入項目', '入帳日期', '收入金額', '請新增一筆固定收入'], ['固定支出', '支出項目', '支出日期', '支出金額', '請新增一筆固定支出'], ['固定儲蓄', '儲蓄項目', '儲蓄日期', '儲蓄金額', '請新增一筆固定儲蓄']];
@@ -1587,15 +1589,12 @@ function ShowFinancialList(type) {
     id: _signup.default,
     type: type
   }, function (data) {
-    console.log(data);
-
     if (data != "nothing") {
       var container = document.querySelector('#financial_list_page #financial_list');
       container.innerHTML = "<div></div>";
       var financial_list = [];
 
       for (var i in data) {
-        console.log('aaaaaaaa');
         var financial_name = mod.gettabledata(data, 'item', i);
         financial_list[i] = financial_name; //create element
 
@@ -1621,8 +1620,6 @@ function ShowFinancialList(type) {
         block.appendChild(title);
         block.appendChild(name);
       }
-
-      console.log(financial_list);
 
       var _loop2 = function _loop2(_i) {
         $("#".concat(financial_list[_i])).click(function (e) {
@@ -1707,7 +1704,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46527" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

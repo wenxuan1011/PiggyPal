@@ -1165,6 +1165,7 @@ function checkBlank(page) {
   var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
+  var account = ["NAME", "CURRENCY", "MONEY"];
   var pages = [];
 
   switch (page) {
@@ -1178,6 +1179,9 @@ function checkBlank(page) {
 
     case 'financial':
       pages = financial;
+
+    case 'account':
+      pages = account;
       break;
   }
 
@@ -1499,7 +1503,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46527" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
