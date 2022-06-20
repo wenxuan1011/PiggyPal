@@ -1,14 +1,14 @@
 import * as mod from './module.js'
 
-var todayExpenditure= 0
-var todayIncome = 0
-var Expenditure = 0
-var Income = 0
-var MonthlyExpend = 0
-var MonthlyIncome = 0
-var MonthlySaving = 0
-var ProjectSaving = 0
-var ProjectSaved = 0
+var todayExpenditure= 0//today's expendiiture
+var todayIncome = 0//today's income
+var Expenditure = 0//this month expenditure
+var Income = 0//this month income
+var MonthlyExpend = 0//fixed monthly expenditure
+var MonthlyIncome = 0//fixed monthly income
+var MonthlySaving = 0//fixed monthly saving
+var ProjectSaving = 0//today project saving
+var ProjectSaved = 0//already saved in project
 
 /*
 $('#Login #login-form #login button').click((event) => {
@@ -29,6 +29,7 @@ async function dailyEndprocess(){
         await calculatemoney(today,totalday)
         await saveMoneytoProject(all_user[i])
         await setfinancialexpenditure(all_user[i])
+        await checkmonthlyspend(all_user[i])
     }
 }
 
@@ -54,11 +55,11 @@ function setremainDay(today,totalday){
 
 async function setVariable(ID){
     var today=new Date();
-    todayExpenditure= await mod.getTodayMoney(ID,'Account','cost',0);
-    todayIncome= await mod.getTodayMoney(ID,'Account','cost',1);
-    Expenditure= await mod.getMonthlyMoney(ID,'Account','cost',0);
-    ProjectSaved = await mod.getMonthlyMoney(ID, 'Account', 'cost',3)
-    Income= await mod.getMonthlyMoney(ID,'Account','cost',1)
+    todayExpenditure= await mod.getTodayMoney(ID,'account','cost',0);
+    todayIncome= await mod.getTodayMoney(ID,'account','cost',1);
+    Expenditure= await mod.getMonthlyMoney(ID,'account','cost',0);
+    ProjectSaved = await mod.getMonthlyMoney(ID, 'account', 'cost',3)
+    Income= await mod.getMonthlyMoney(ID,'account','cost',1)
     MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
     MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
     MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
@@ -126,7 +127,35 @@ async function setfinancialexpenditure(ID){
     })
 }
 
-
+async function checkmonthlyspend(ID){
+    if((MonthlyIncome+Income)<(MonthlyExpend+MonthlySaving+Expenditure)){
+        var debt = (MonthlyIncome+Income)-(MonthlyExpend+MonthlySaving+Expenditure)
+        $.get('./sergetproject', {
+            id:ID
+        },(data)=>{
+            for (let count in data){
+                if(data[count].type == '2'){
+                    var date=mod.datetransfer(today.getDate())
+                    var month=mod.datetransfer(today.getMonth()+1)
+                    var year=today.getFullYear()
+                    $.get('./useMoneyinProject',{
+                        id:all_project[count].id,
+                        member:all_project[count].member,
+                        personal_or_joint:all_project[count].personal_or_joint,
+                        project_name:all_project[count].project_name,
+                        using_money:debt,
+                        saved_money:all_project[count].saved_money,
+                        date:date,
+                        month:month,
+                        year:year
+                    },(data)=>{
+                        console.log(data)
+                    })
+                }
+            }
+        })
+    }
+}
 
 
 //////do at day start///////////////

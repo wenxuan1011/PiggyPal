@@ -1360,8 +1360,9 @@ $('#navbar img:nth-child(3)').click(function () {
   selected_to_unselected();
   present_page = navbar[2];
   unselected_to_selected();
+  $('#add_deals').css('display', 'none');
 });
-$('#navbar img:nth-child(4)').click(function () {
+$('#navbar img:nth-child(4), #main #mainpage #add_project_btn').click(function () {
   selected_to_unselected();
   present_page = navbar[3];
   unselected_to_selected();
@@ -1796,27 +1797,27 @@ function _setVariable() {
           case 0:
             today = new Date();
             _context3.next = 3;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 0);
+            return mod.getTodayMoney(ID, 'account', 'cost', 0);
 
           case 3:
             todayExpenditure = _context3.sent;
             _context3.next = 6;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 1);
+            return mod.getTodayMoney(ID, 'account', 'cost', 1);
 
           case 6:
             todayIncome = _context3.sent;
             _context3.next = 9;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 0);
 
           case 9:
             Expenditure = _context3.sent;
             _context3.next = 12;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 1);
 
           case 12:
             Income = _context3.sent;
             _context3.next = 15;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 3);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 3);
 
           case 15:
             ProjectSaved = _context3.sent;
@@ -1857,12 +1858,13 @@ function calculatemoney(_x3, _x4) {
 
 function _calculatemoney() {
   _calculatemoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(today, totalday) {
-    var DailyRemain, actualDailyRemain;
+    var DailyRemain, projectsave, actualDailyRemain;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
+            projectsave = ProjectSaving;
             $('#main #mainpage #balance_bar p:nth-child(1)').html("$".concat(MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income - ProjectSaved)); //console.log("DailyRemain:",DailyRemain)
 
             actualDailyRemain = DailyRemain - ProjectSaving - todayExpenditure; //console.log("ProjectSaving:", ProjectSaving)
@@ -1879,14 +1881,16 @@ function _calculatemoney() {
               ProjectSaving = ProjectSaving + actualDailyRemain;
               actualDailyRemain = 0;
 
-              if (ProjectSaving < 0) {//use money in every month saving
+              if (ProjectSaving < 0) {
+                ProjectSaving = 0; //use money in every month saving
               }
             }
 
-            $('#daily_expend p:nth-child(1)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
-            $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(Math.floor(ProjectSaving))); //console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
+            $('#daily_expend p:nth-child(2)').html("\u4ECA\u5929\u9084\u53EF\u4EE5\u82B1".concat(Math.floor(actualDailyRemain)));
+            $('#daily_expend p:nth-child(3)').html("\u4ECA\u5929\u5DF2\u70BA\u5C08\u6848\u5B58\u4E0B".concat(Math.floor(ProjectSaving)));
+            showPiggy(DailyRemain, actualDailyRemain, projectsave, ProjectSaving); //console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
 
-          case 7:
+          case 9:
           case "end":
             return _context4.stop();
         }
@@ -1894,6 +1898,41 @@ function _calculatemoney() {
     }, _callee4);
   }));
   return _calculatemoney.apply(this, arguments);
+}
+
+function showPiggy(remain, used, premain, pused) {
+  var picture = ['heart-eyes', 'lol', 'blinking-eye', 'smile', 'frown', 'tired', 'angry', 'sad-face', 'dead', 'shock']; //reamin input dailyremain, used input today expenditure
+
+  var today = new Date();
+  var moneypercent = used / remain / (24 - today.getHours()) * 100;
+  var projectmoney = pused / premain;
+  console.log(moneypercent, projectmoney);
+
+  if (moneypercent > 0) {
+    if (remain < 100) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-shock.png');
+    } else if (moneypercent > 5) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-heart-eyes.png');
+    } else if (moneypercent > 3.75) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-lol.png');
+    } else if (moneypercent > 2.5) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-blinking-eye.png');
+    } else if (moneypercent > 1.25) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-smile.png');
+    } else if (moneypercent > 0) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-frown.png');
+    }
+  } else {
+    if (projectmoney >= 0.75) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-tired.png');
+    } else if (projectmoney >= 0.5) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-angry.png');
+    } else if (projectmoney >= 0.25) {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-sad-face.png');
+    } else {
+      $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-dead.png');
+    }
+  }
 }
 },{"./signup.js":"signup.js","./module.js":"module.js","process":"../node_modules/process/browser.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -1923,7 +1962,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34665" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

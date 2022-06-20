@@ -85,11 +85,11 @@ function setremainDay(today,totalday){
 
 async function setVariable(ID){
     var today=new Date();
-        todayExpenditure= await mod.getTodayMoney(ID,'Account','cost',0);
-        todayIncome= await mod.getTodayMoney(ID,'Account','cost',1);
-        Expenditure= await mod.getMonthlyMoney(ID,'Account','cost',0);
-        Income= await mod.getMonthlyMoney(ID,'Account','cost',1)
-        ProjectSaved = await mod.getMonthlyMoney(ID, 'Account', 'cost', 3)
+        todayExpenditure= await mod.getTodayMoney(ID,'account','cost',0);
+        todayIncome= await mod.getTodayMoney(ID,'account','cost',1);
+        Expenditure= await mod.getMonthlyMoney(ID,'account','cost',0);
+        Income= await mod.getMonthlyMoney(ID,'account','cost',1)
+        ProjectSaved = await mod.getMonthlyMoney(ID, 'account', 'cost', 3)
         MonthlyIncome= await mod.getMonthlyMoney(ID,'financial','money',0)
         MonthlyExpend= await mod.getMonthlyMoney(ID,'financial','money',1)
         MonthlySaving= await mod.getMonthlyMoney(ID,'financial','money',2)
@@ -125,6 +125,7 @@ async function setVariable(ID){
 
 async function calculatemoney(today,totalday){
     var DailyRemain=(MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income+todayExpenditure)/(mod.StringtoInt(totalday-today.getDate())+1)
+    var projectsave = ProjectSaving
     $('#main #mainpage #balance_bar p:nth-child(1)').html(`$${MonthlyIncome-MonthlyExpend-MonthlySaving-Expenditure+Income-ProjectSaved}`)
     //console.log("DailyRemain:",DailyRemain)
     var actualDailyRemain=DailyRemain-ProjectSaving-todayExpenditure
@@ -142,12 +143,57 @@ async function calculatemoney(today,totalday){
         ProjectSaving=ProjectSaving+actualDailyRemain
         actualDailyRemain=0
         if(ProjectSaving<0){
-            
+            ProjectSaving = 0
             //use money in every month saving
         }
     }
     
-    $('#daily_expend p:nth-child(1)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
-    $('#daily_expend p:nth-child(2)').html(`今天已為專案存下${Math.floor(ProjectSaving)}`)
+    $('#daily_expend p:nth-child(2)').html(`今天還可以花${Math.floor(actualDailyRemain)}`)
+    $('#daily_expend p:nth-child(3)').html(`今天已為專案存下${Math.floor(ProjectSaving)}`)
+    showPiggy(DailyRemain, actualDailyRemain, projectsave, ProjectSaving)
     //console.log("DailyExpenditure: ", Math.floor(DailyRemain),"actually money : ",Math.floor(actualDailyRemain))
+}
+
+function showPiggy(remain, used, premain, pused){
+    var picture = ['heart-eyes', 'lol', 'blinking-eye', 'smile', 'frown', 'tired', 'angry', 'sad-face', 'dead', 'shock']
+    //reamin input dailyremain, used input today expenditure
+    var today = new Date()
+    var moneypercent = (used/remain)/(24-today.getHours())*100
+    var projectmoney = (pused/premain)
+    console.log(moneypercent,projectmoney)
+    if(moneypercent>0){
+        if(remain<100){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-shock.png')
+        }
+        else if(moneypercent > 5){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-heart-eyes.png')
+        }
+        else if(moneypercent > 3.75){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-lol.png')
+        }
+        else if(moneypercent > 2.5){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-blinking-eye.png')
+        }
+        else if(moneypercent > 1.25){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-smile.png')
+        }
+        else if(moneypercent > 0){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-frown.png')
+        }
+    }
+    else{
+        if (projectmoney >= 0.75){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-tired.png')
+        }
+        else if(projectmoney >= 0.5){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-angry.png')
+        }
+        else if(projectmoney >= 0.25){
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-sad-face.png')
+        }
+        else{
+            $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-dead.png')
+        }
+    }
+    
 }

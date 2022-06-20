@@ -307,22 +307,32 @@ body {
         width: 100%;
         height: 58.235%; }
       #main #mainpage #project_block #daily_expend {
-        background: url("MainPage_helper.05acf22c.png");
+        background-color: #8D5EF3;
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
+        border-radius: 15px;
         display: flex;
-        justify-content: center;
+        justify-content: left;
         align-items: flex-end;
         width: 90vw;
         height: 11.45vh;
         margin: 0 0 0 0; }
+        #main #mainpage #project_block #daily_expend #piggy_face {
+          display: flex;
+          height: 7.63vh;
+          width: 16.53vw;
+          margin: 0 4vw 2.1vh 4vw; }
         #main #mainpage #project_block #daily_expend #word_block {
           display: flex;
           justify-content: space-evenly;
           align-items: flex-start;
           flex-direction: column;
-          height: 8vh; }
+          height: 11.45vh; }
+          #main #mainpage #project_block #daily_expend #word_block p:nth-child(1) {
+            font-size: 13px;
+            color: white;
+            margin: 0 0 0 0; }
           #main #mainpage #project_block #daily_expend #word_block p {
             font-size: 16px;
             color: white;

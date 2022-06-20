@@ -1360,8 +1360,9 @@ $('#navbar img:nth-child(3)').click(function () {
   selected_to_unselected();
   present_page = navbar[2];
   unselected_to_selected();
+  $('#add_deals').css('display', 'none');
 });
-$('#navbar img:nth-child(4)').click(function () {
+$('#navbar img:nth-child(4), #main #mainpage #add_project_btn').click(function () {
   selected_to_unselected();
   present_page = navbar[3];
   unselected_to_selected();
@@ -1749,7 +1750,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34665" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -31,9 +31,10 @@ $('#navbar img:nth-child(3)').click(function(){
   selected_to_unselected();
   present_page = navbar[2];
   unselected_to_selected();
+  $('#add_deals').css('display','none');
 })
 
-$('#navbar img:nth-child(4)').click(function(){
+$('#navbar img:nth-child(4), #main #mainpage #add_project_btn').click(function(){
   selected_to_unselected();
   present_page = navbar[3];
   unselected_to_selected();

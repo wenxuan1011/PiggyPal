@@ -1339,15 +1339,24 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var todayExpenditure = 0;
-var todayIncome = 0;
-var Expenditure = 0;
-var Income = 0;
-var MonthlyExpend = 0;
-var MonthlyIncome = 0;
-var MonthlySaving = 0;
-var ProjectSaving = 0;
-var ProjectSaved = 0;
+var todayExpenditure = 0; //today's expendiiture
+
+var todayIncome = 0; //today's income
+
+var Expenditure = 0; //this month expenditure
+
+var Income = 0; //this month income
+
+var MonthlyExpend = 0; //fixed monthly expenditure
+
+var MonthlyIncome = 0; //fixed monthly income
+
+var MonthlySaving = 0; //fixed monthly saving
+
+var ProjectSaving = 0; //today project saving
+
+var ProjectSaved = 0; //already saved in project
+
 /*
 $('#Login #login-form #login button').click((event) => {
     event.preventDefault()
@@ -1380,7 +1389,7 @@ function _dailyEndprocess() {
 
           case 6:
             if ((_context.t1 = _context.t0()).done) {
-              _context.next = 19;
+              _context.next = 21;
               break;
             }
 
@@ -1402,10 +1411,14 @@ function _dailyEndprocess() {
             return setfinancialexpenditure(all_user[i]);
 
           case 17:
+            _context.next = 19;
+            return checkmonthlyspend(all_user[i]);
+
+          case 19:
             _context.next = 6;
             break;
 
-          case 19:
+          case 21:
           case "end":
             return _context.stop();
         }
@@ -1452,27 +1465,27 @@ function _setVariable() {
           case 0:
             today = new Date();
             _context2.next = 3;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 0);
+            return mod.getTodayMoney(ID, 'account', 'cost', 0);
 
           case 3:
             todayExpenditure = _context2.sent;
             _context2.next = 6;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 1);
+            return mod.getTodayMoney(ID, 'account', 'cost', 1);
 
           case 6:
             todayIncome = _context2.sent;
             _context2.next = 9;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 0);
 
           case 9:
             Expenditure = _context2.sent;
             _context2.next = 12;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 3);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 3);
 
           case 12:
             ProjectSaved = _context2.sent;
             _context2.next = 15;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 1);
 
           case 15:
             Income = _context2.sent;
@@ -1614,8 +1627,7 @@ function _saveMoneytoProject() {
 
 function setfinancialexpenditure(_x5) {
   return _setfinancialexpenditure.apply(this, arguments);
-} //////do at day start///////////////
-
+}
 
 function _setfinancialexpenditure() {
   _setfinancialexpenditure = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(ID) {
@@ -1644,45 +1656,95 @@ function _setfinancialexpenditure() {
   return _setfinancialexpenditure.apply(this, arguments);
 }
 
-function dailyStartprocess() {
-  return _dailyStartprocess.apply(this, arguments);
-}
+function checkmonthlyspend(_x6) {
+  return _checkmonthlyspend.apply(this, arguments);
+} //////do at day start///////////////
 
-function _dailyStartprocess() {
-  _dailyStartprocess = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-    var all_user, i;
+
+function _checkmonthlyspend() {
+  _checkmonthlyspend = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(ID) {
+    var debt;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.next = 2;
-            return mod.getAllUser();
-
-          case 2:
-            all_user = _context6.sent;
-            _context6.t0 = regeneratorRuntime.keys(all_user);
-
-          case 4:
-            if ((_context6.t1 = _context6.t0()).done) {
-              _context6.next = 11;
-              break;
+            if (MonthlyIncome + Income < MonthlyExpend + MonthlySaving + Expenditure) {
+              debt = MonthlyIncome + Income - (MonthlyExpend + MonthlySaving + Expenditure);
+              $.get('./sergetproject', {
+                id: ID
+              }, function (data) {
+                for (var count in data) {
+                  if (data[count].type == '2') {
+                    var date = mod.datetransfer(today.getDate());
+                    var month = mod.datetransfer(today.getMonth() + 1);
+                    var year = today.getFullYear();
+                    $.get('./useMoneyinProject', {
+                      id: all_project[count].id,
+                      member: all_project[count].member,
+                      personal_or_joint: all_project[count].personal_or_joint,
+                      project_name: all_project[count].project_name,
+                      using_money: debt,
+                      saved_money: all_project[count].saved_money,
+                      date: date,
+                      month: month,
+                      year: year
+                    }, function (data) {
+                      console.log(data);
+                    });
+                  }
+                }
+              });
             }
 
-            i = _context6.t1.value;
-            console.log('Now update ', all_user[i], ' data');
-            _context6.next = 9;
-            return setfinancialincome(all_user[i]);
-
-          case 9:
-            _context6.next = 4;
-            break;
-
-          case 11:
+          case 1:
           case "end":
             return _context6.stop();
         }
       }
     }, _callee6);
+  }));
+  return _checkmonthlyspend.apply(this, arguments);
+}
+
+function dailyStartprocess() {
+  return _dailyStartprocess.apply(this, arguments);
+}
+
+function _dailyStartprocess() {
+  _dailyStartprocess = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+    var all_user, i;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return mod.getAllUser();
+
+          case 2:
+            all_user = _context7.sent;
+            _context7.t0 = regeneratorRuntime.keys(all_user);
+
+          case 4:
+            if ((_context7.t1 = _context7.t0()).done) {
+              _context7.next = 11;
+              break;
+            }
+
+            i = _context7.t1.value;
+            console.log('Now update ', all_user[i], ' data');
+            _context7.next = 9;
+            return setfinancialincome(all_user[i]);
+
+          case 9:
+            _context7.next = 4;
+            break;
+
+          case 11:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7);
   }));
   return _dailyStartprocess.apply(this, arguments);
 }
@@ -1692,22 +1754,22 @@ function setfinancialincome() {
 }
 
 function _setfinancialincome() {
-  _setfinancialincome = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
-    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+  _setfinancialincome = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
-            _context7.next = 2;
+            _context8.next = 2;
             return $.get('./setfinancialincome', {
               id: id
             }, function (data) {});
 
           case 2:
           case "end":
-            return _context7.stop();
+            return _context8.stop();
         }
       }
-    }, _callee7);
+    }, _callee8);
   }));
   return _setfinancialincome.apply(this, arguments);
 }
@@ -1745,7 +1807,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34665" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
