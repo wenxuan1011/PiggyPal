@@ -14,8 +14,8 @@ html
         h1 Login
         form#login
           .box
-            img(src = "./image/login/icon_email.png", height = "100%")
-            input(type="text", name="id", placeholder = "E-mail")
+            img(src = "./image/login/icon_userid.png", height = "100%")
+            input(type="text", name="id", placeholder = "User ID")
           .box
             img(src = "./image/login/icon_password.png", height = "100%")
             input(type="password", name="pw", placeholder = "Password")
@@ -24,7 +24,7 @@ html
           button#login_btn(type="submit")
             img(src = "./image/login/btn_Login.png" height = "100%")
       .other_choice
-        img(src="./image/login/line_OrLogWith.png", height = "10%")
+        img(src="./image/login/line_OrConnectWith.png", height = "5.5%")
         .icon 
           img(src = "./image/login/icon_fb.png", height = "100%")
           img(src = "./image/login/icon_google.png", height = "100%")
@@ -42,8 +42,8 @@ html
             img(src = "./image/signup/icon_username.png", height = "100%")
             input(type="text", name="name", placeholder = "User Name")
           .box
-            img(src = "./image/signup/icon_email.png", height = "100%")
-            input(type="text", name="id", placeholder = "E-mail")
+            img(src = "./image/signup/icon_userid.png", height = "100%")
+            input(type="text", name="id", placeholder = "User ID")
           .box
             img(src = "./image/signup/icon_password.png", height = "100%")
             input(type="password", name="password", placeholder = "Password")
@@ -311,30 +311,38 @@ html
               p 刪除所有數據
             li
               p 更改密碼
+
+      #financial_list_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          p 固定收入
+        #financial_list
+        #no_financial
+          p 請新增一筆
+        img#add_financial_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+        
     
-      #financial_setting_page
+      #add_financial_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
           p 固定收入
         form#financial
           .box
             p 收入項目
-            input(type = "text", name = "item")
+            input(type = "text", name = "item", value = '')
           .box
             p 入帳日期
-            input(type = "text", name = "date", id = "fin_date")
+            input(type = "text", name = "date", value = '', id = "fin_date")
           .box
             p 入帳金額
-            input(type = "text", name = "money")
+            input(type = "text", name = "money", value = '')
           .box
             p 重複
-            //input(type = "text", name = "repeat", value = "重複")
             .repeat_div
               p#repeat 每月
               img(src = "./image/btn/btn_arrow_down.png", width = "6%")
           button(type="submit")
             img(src = "./image/btn/btn_save.png" height = "100%")
-        #financial-output
       
       
       .color_select_box

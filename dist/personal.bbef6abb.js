@@ -1504,47 +1504,149 @@ $('#personal_page .bar img').click(function () {
   setTimeout(function () {
     $('#personal_page').css("display", "none");
   }, 500);
-}); // open/close financial_setting_page
+}); // open/close financial_list_page
 
 $('#personal_page #financial_setting .list li').click(function () {
-  $('#financial_setting_page').css("display", "flex");
+  $('#financial_list_page').css("display", "flex");
   setTimeout(function () {
-    $('#financial_setting_page').css("transform", "translateX(0%)");
+    $('#financial_list_page').css("transform", "translateX(0%)");
   }, 100);
 });
-$('#financial_setting_page .bar img').click(function () {
-  $('#financial_setting_page').css("transform", "translateX(100%)");
-  $("#financial-output").html('');
+$('#financial_list_page .bar img').click(function () {
+  $('#financial_list_page').css("transform", "translateX(100%)");
   setTimeout(function () {
-    $('#financial_setting_page').css("display", "none");
+    $('#financial_list_page').css("display", "none");
   }, 500);
-}); // change the title of the financial_setting_page
+}); // open/close add_financial_page
 
-$('#personal_page #financial_setting .list li:nth-child(1)').click(function () {
-  $('#financial_setting_page .bar p').html("固定收入");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("收入項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("入帳日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("收入金額");
-  TYPE = 0;
+$('#financial_list_page #add_financial_btn').click(function () {
+  $('#add_financial_page').css("display", "flex");
+  setTimeout(function () {
+    $('#add_financial_page').css("transform", "translateX(0%)");
+  }, 100);
 });
-$('#personal_page #financial_setting .list li:nth-child(2)').click(function () {
-  $('#financial_setting_page .bar p').html("固定支出");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("支出項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("支出日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("支出金額");
-  TYPE = 1;
-});
-$('#personal_page #financial_setting .list li:nth-child(3)').click(function () {
-  $('#financial_setting_page .bar p').html("固定儲蓄");
-  $('#financial_setting_page #financial .box:nth-child(1) p').html("儲蓄項目");
-  $('#financial_setting_page #financial .box:nth-child(2) p').html("儲蓄日期");
-  $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額");
-  TYPE = 2;
-}); // use jquery calendar
+$('#add_financial_page .bar img').click(function () {
+  $('#add_financial_page').css("transform", "translateX(100%)"); //$("#financial-output").html('')
+
+  setTimeout(function () {
+    $('#add_financial_page').css("display", "none");
+  }, 500);
+}); // change the title of the financial_list_page and add_financial_page
+
+var TitleArray = [['固定收入', '收入項目', '入帳日期', '收入金額', '請新增一筆固定收入'], ['固定支出', '支出項目', '支出日期', '支出金額', '請新增一筆固定支出'], ['固定儲蓄', '儲蓄項目', '儲蓄日期', '儲蓄金額', '請新增一筆固定儲蓄']];
+
+var _loop = function _loop(i) {
+  $("#personal_page #financial_setting .list li:nth-child(".concat(i + 1, ")")).click(function () {
+    $('#financial_list_page .bar p').html(TitleArray[i][0]);
+    $('#add_financial_page .bar p').html(TitleArray[i][0]);
+    $('#add_financial_page #financial .box:nth-child(1) p').html(TitleArray[i][1]);
+    $('#add_financial_page #financial .box:nth-child(2) p').html(TitleArray[i][2]);
+    $('#add_financial_page #financial .box:nth-child(3) p').html(TitleArray[i][3]);
+    $('#financial_list_page #no_financial').html(TitleArray[i][4]);
+    TYPE = i;
+    ShowFinancialList(TYPE);
+  });
+};
+
+for (var i = 0; i < 3; i++) {
+  _loop(i);
+} // use jquery calendar
+
 
 $(function () {
   $("#fin_date").datepicker();
-});
+}); // clean the input value of the add_financial_page
+
+$('#financial_list_page #add_financial_btn').click(function (event) {
+  $('#add_financial_page #financial .box:nth-child(1) input').val('');
+  $('#add_financial_page #financial .box:nth-child(2) input').val('');
+  $('#add_financial_page #financial .box:nth-child(3) input').val('');
+  $('#add_financial_page #financial .box:nth-child(4) .repeat_div #repeat').text('每月');
+}); // create ShowFinancialDetail function
+
+function ShowFinancialDetail(name, type) {
+  $.get('./getFinancialDetail', {
+    id: _signup.default,
+    name: name,
+    type: type
+  }, function (data) {
+    if (data !== false) {
+      console.log('1');
+      $('#add_financial_page #financial .box:nth-child(1) input').val(mod.gettabledata(data, 'item', 0));
+      var date = "".concat(mod.gettabledata(data, 'month', 0), "/").concat(mod.gettabledata(data, 'day', 0), "/").concat(mod.gettabledata(data, 'year', 0));
+      $('#add_financial_page #financial .box:nth-child(2) input').val(date);
+      $('#add_financial_page #financial .box:nth-child(3) input').val(mod.gettabledata(data, 'money', 0));
+      $('#add_financial_page #financial .box:nth-child(4) .repeat_div #repeat').text(mod.gettabledata(data, 'repeats', 0));
+    } else {}
+  });
+} // create ShowFinancialList function
+
+
+function ShowFinancialList(type) {
+  $.get('./getFinancial', {
+    id: _signup.default,
+    type: type
+  }, function (data) {
+    console.log(data);
+
+    if (data != "nothing") {
+      var container = document.querySelector('#financial_list_page #financial_list');
+      container.innerHTML = "<div></div>";
+      var financial_list = [];
+
+      for (var i in data) {
+        console.log('aaaaaaaa');
+        var financial_name = mod.gettabledata(data, 'item', i);
+        financial_list[i] = financial_name; //create element
+
+        var block = document.createElement('div');
+        var title = document.createElement('p');
+        var name = document.createElement('p'); //set text
+
+        name.textContent = "".concat(financial_name);
+
+        if (type == 0) {
+          title.textContent = '收入項目';
+        } else if (type == 1) {
+          title.textContent = '支出項目';
+        } else {
+          title.textContent = '儲蓄項目';
+        } //set attribute
+
+
+        block.setAttribute('class', 'financial_box');
+        block.setAttribute('id', "".concat(financial_name)); //append child
+
+        container.appendChild(block);
+        block.appendChild(title);
+        block.appendChild(name);
+      }
+
+      console.log(financial_list);
+
+      var _loop2 = function _loop2(_i) {
+        $("#".concat(financial_list[_i])).click(function (e) {
+          $('#add_financial_page').css("display", "flex");
+          setTimeout(function () {
+            $('#add_financial_page').css("transform", "translateX(0%)");
+          }, 100);
+          event.preventDefault(); // I'm not sure is it right or not
+
+          ShowFinancialDetail(financial_list[_i], type);
+        });
+      };
+
+      for (var _i = 0; _i < financial_list.length; _i++) {
+        _loop2(_i);
+      }
+
+      $('#no_financial').css("display", "none");
+    } else {
+      $('#no_project').css("display", "flex");
+    }
+  });
+}
+
 $(document).ready(function () {
   // change username
   $('#mainpage img').click(function (event) {
@@ -1564,29 +1666,16 @@ $(document).ready(function () {
       item: $('#financial input[name=item]').val(),
       date: $('#financial input[name=date]').val(),
       money: $('#financial input[name=money]').val(),
-      repeat: $('#financial input[name=repeat]').val()
+      repeat: $('#financial #repeat').text()
     }, function (data) {
       if (data === '0') {
-        $("#financial-output").html("".concat(data));
+        $('#add_financial_page #financial .box:nth-child(1) input').val('');
+        $('#add_financial_page #financial .box:nth-child(2) input').val('');
+        $('#add_financial_page #financial .box:nth-child(3) input').val('');
+        $('#add_financial_page #financial .box:nth-child(4) .repeat_div #repeat').text('每月');
       } else {
         mod.PopUpMessage(2);
       }
-    });
-  }); // update information
-
-  $('#personal_page #financial_setting .list li').click(function (event) {
-    event.preventDefault();
-    $.get('./information', {
-      id: _signup.default,
-      type: TYPE
-    }, function (data) {
-      /*
-      item.value = data[0]
-      year.value = data[1]
-      month.value = data[2]
-      day.value = data[3]
-      money.value = data[4]
-      repeat.value = data[5]*/
     });
   });
 });
@@ -1618,7 +1707,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

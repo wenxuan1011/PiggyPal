@@ -17,7 +17,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6164
+const port = 6165
 
 // listen port
 app.listen(port, () => {
@@ -154,7 +154,7 @@ app.get('/username',(req,res) => {
 })
 
 
-// update financial
+// add financial //--------------- I have not changed the table name ---------------
 app.get('/financial',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
 
@@ -165,9 +165,9 @@ app.get('/financial',(req,res) => {
   let MONEY = "'"+`${req.query.money}`+"'"
   let REPEAT = "'"+`${req.query.repeat}`+"'"
 
-  let YEAR = "'" + `${DATE[6]}` + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}` + "'"
-  let MONTH = "'" + `${DATE[0]}` + `${DATE[1]}` + "'"
-  let DAY = "'" + `${DATE[3]}` + `${DATE[4]}` + "'"
+  let YEAR = "'" + `${DATE[7]}` + `${DATE[8]}` + `${DATE[9]}` + `${DATE[10]}` + "'"
+  let MONTH = "'" + `${DATE[1]}` + `${DATE[2]}` + "'"
+  let DAY = "'" + `${DATE[4]}` + `${DATE[5]}` + "'"
   
   if(mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT)===1){
     const update = `INSERT INTO financial (id, type, item, year, month, day, money, repeats) VALUES (${UID}, ${TYPE}, ${ITEM}, ${YEAR}, ${MONTH}, ${DAY}, ${MONEY}, ${REPEAT})`
@@ -183,8 +183,8 @@ app.get('/financial',(req,res) => {
 })
 
 
-// get information (in financial)
-app.get('/information',(req,res) => {
+// get financial table
+app.get('/getFinancial',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
 
   let UID = "'"+`${req.query.id}`+"'"
@@ -197,14 +197,35 @@ app.get('/information',(req,res) => {
     if (err)
       console.log('fail to search: ', err)
     if (row[0]===undefined) {
-      let result = ['', '', '', '', '', '']
-      res.send(result)
+      res.send('nothing')
     }
     else{
       console.log(row)
-      let result = [mod.gettabledata(row,'item',0), mod.gettabledata(row,'year',0), mod.gettabledata(row,'month',0), mod.gettabledata(row,'day',0), mod.gettabledata(row,'money',0), mod.gettabledata(row,'repeats',0)]
-      console.log(result)
-      res.send(result)
+      res.send(row)
+    }
+  })
+})
+
+// get detail in financial
+app.get('/getFinancialDetail',(req,res) => {
+  connection.query('CREATE TABLE IF NOT EXISTS financial (id VARCHAR(30), type VARCHAR(30), item VARCHAR(30), year VARCHAR(30), month VARCHAR(30), day VARCHAR(30), money VARCHAR(30), repeats VARCHAR(30))')
+
+  let UID = "'"+`${req.query.id}`+"'"
+  let ITEM = "'"+`${req.query.name}`+"'"
+  let TYPE = "'"+`${req.query.type}`+"'"
+
+  const search_information = `
+    SELECT * FROM financial
+    WHERE id = ${UID} and item = ${ITEM} and type = ${TYPE}`
+  connection.query(search_information, (err, row, fields) => {
+    if (err)
+      console.log('fail to search: ', err)
+    if (row[0]===undefined) {
+      res.send(false)
+    }
+    else{
+      console.log('success')
+      res.send(row)
     }
   })
 })

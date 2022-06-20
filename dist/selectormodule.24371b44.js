@@ -306,7 +306,7 @@ function CreateSortBox(image, name) {
 // open/close other_select_box
 
 
-$('#financial_setting_page .box:nth-child(4) .repeat_div').click(function () {
+$('#add_financial_page .box:nth-child(4) .repeat_div').click(function () {
   $('.other_select_box').css("display", "flex");
   setTimeout(function () {
     $('.other_select_box').css("transform", "translateY(0%)");
@@ -347,7 +347,7 @@ function CreateOtherBox(name) {
   var _loop3 = function _loop3(_i4) {
     $(".other_select_box .other_bar .other_box:nth-child(".concat(_i4, ")")).click(function () {
       var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i4, ") p")).text();
-      $('#financial_setting_page #financial .box:nth-child(4) .repeat_div p').html("".concat(word));
+      $('#add_financial_page #financial .box:nth-child(4) .repeat_div p').html("".concat(word));
     });
   };
 
@@ -389,7 +389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44879" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38308" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

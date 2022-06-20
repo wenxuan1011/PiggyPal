@@ -96,7 +96,7 @@ body {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      height: 22.55%;
+      height: 16.5%;
       width: 100%;
       margin: 3.818vh 0 9.36vh 0; }
       #Login .other_choice .icon img {
@@ -1179,7 +1179,7 @@ body {
           font-size: 2vh !important; }
       #main #personal_page .list li:nth-last-child(1) {
         border-style: none; }
-  #main #financial_setting_page {
+  #main #financial_list_page {
     display: none;
     flex-direction: column;
     align-items: center;
@@ -1192,7 +1192,7 @@ body {
     top: 0;
     border: none;
     border-left: solid; }
-    #main #financial_setting_page .bar {
+    #main #financial_list_page .bar {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1200,23 +1200,91 @@ body {
       height: 11.9458vh;
       background-color: white;
       border-bottom: 0.3px solid #B3B3B3; }
-      #main #financial_setting_page .bar img {
+      #main #financial_list_page .bar img {
         position: absolute;
         left: 6.6667vw;
         top: 6.0345vh; }
-      #main #financial_setting_page .bar p {
+      #main #financial_list_page .bar p {
         font-size: 1.97vh;
         position: relative;
         top: 6.0345vh;
         margin: 0; }
-    #main #financial_setting_page #financial {
+    #main #financial_list_page #no_financial {
+      display: none;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 85.333vw;
+      height: 7.758vh;
+      background-color: white;
+      box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin: 3.8177vh 0 3.8177vh 0; }
+      #main #financial_list_page #no_financial p {
+        font-size: 12px;
+        color: #737474; }
+    #main #financial_list_page #financial_list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 85.333vw;
+      height: auto;
+      margin: 5.17vh 0 2vh 0; }
+      #main #financial_list_page #financial_list .financial_box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 85.333vw;
+        height: 7.758vh;
+        background-color: white;
+        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0 0 3.8177vh 0; }
+        #main #financial_list_page #financial_list .financial_box p {
+          font-size: 12px;
+          color: #737474;
+          margin: 0 38px; }
+        #main #financial_list_page #financial_list .financial_box p:nth-child(1) {
+          color: black; }
+  #main #add_financial_page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid; }
+    #main #add_financial_page .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #add_financial_page .bar img {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #add_financial_page .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #add_financial_page #financial {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 72.2667vw;
       height: auto;
       margin: 4.31vh 0 0 0; }
-      #main #financial_setting_page #financial .box {
+      #main #add_financial_page #financial .box {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -1224,9 +1292,9 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
-      #main #financial_setting_page #financial .box:nth-child(4) {
+      #main #add_financial_page #financial .box:nth-child(4) {
         margin: 0 0 4.187vh 0; }
-      #main #financial_setting_page #financial input {
+      #main #add_financial_page #financial input {
         min-height: 4.31vh;
         border-style: none;
         border-radius: 6px;
@@ -1236,7 +1304,7 @@ body {
         text-align: right;
         color: #737474;
         padding: 0 3.733vw 0 0; }
-      #main #financial_setting_page #financial .repeat_div {
+      #main #add_financial_page #financial .repeat_div {
         display: flex;
         flex-direction: row;
         justify-content: right;
@@ -1245,19 +1313,19 @@ body {
         height: 4.31vh;
         background-color: white;
         border-radius: 6px; }
-        #main #financial_setting_page #financial .repeat_div p {
+        #main #add_financial_page #financial .repeat_div p {
           font-size: 12px;
           color: #737474; }
-        #main #financial_setting_page #financial .repeat_div img {
+        #main #add_financial_page #financial .repeat_div img {
           margin: 0 12px; }
-      #main #financial_setting_page #financial button {
+      #main #add_financial_page #financial button {
         background-color: #F4F4F4;
         display: flex;
         align-items: center;
         height: 3.94vh;
         border: none;
         padding: 0; }
-        #main #financial_setting_page #financial button img {
+        #main #add_financial_page #financial button img {
           margin: 0; }
   #main .color_select_box {
     display: none;
