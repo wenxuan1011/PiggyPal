@@ -1619,11 +1619,7 @@ function getdetail() {
         var type = mod.gettabledata(data, 'type', i);
         var sort = mod.gettabledata(data, 'sort', i);
 
-<<<<<<< HEAD
-        if (item == '' || value == '' || type == '3' || type == '2') {
-=======
         if (item == '' || value == '' || type == '2' || type == '3') {
->>>>>>> 3b94e58d886fe8d9a80e818010e856b1ed342b55
           continue;
         } //create element
 
@@ -1714,7 +1710,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46356" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44433" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -192,43 +192,6 @@ function getdetailincome(){
       month: MONTH,
       year: YEAR
   },(data)=>{
-<<<<<<< HEAD
-      if(data!="nothing"){
-          container.innerHTML=`<p></p>`
-          for (var i in data){
-              var item= mod.gettabledata(data,'items',i)
-              var value = mod.gettabledata(data, 'cost',i)
-              var type = mod.gettabledata(data, 'type', i)
-              var sort = mod.gettabledata(data, 'sort', i)
-              //console.log(item, value, type)
-              if(item == ''||value == ''|| type !== '1'){
-                  continue;
-              }
-              //create element
-              const container = document.querySelector('#main #accounting .income')
-              const box= document.createElement('a')
-              const paragraphone = document.createElement('b')
-              const types = document.createElement('img')
-              const word = document.createElement('p')
-              const paragraphtwo = document.createElement('P')
-              //set text
-              word.textContent= `${item}`
-              paragraphtwo.textContent=`+${value}`
-              //set attribute
-              box.setAttribute('id','a')
-              paragraphone.setAttribute('class','boxs')
-              types.setAttribute('id', 'type_pic')
-              types.setAttribute('src',`./image/Accounting/${mod.detailpicture(sort, type)}_icon.png`)
-              word.setAttribute('class','text')
-              paragraphtwo.setAttribute('class','text')
-              //append child
-              container.appendChild(box)
-              paragraphone.appendChild(types)
-              paragraphone.appendChild(word)
-              box.appendChild(paragraphone)
-              box.appendChild(paragraphtwo)
-          }
-=======
       if(data!=="nothing"){
         container.innerHTML=`<p></p>`
         for (var i in data){
@@ -266,7 +229,6 @@ function getdetailincome(){
         }
         $('#accounting #today_detail').css("display", "flex")
         $('#accounting .no_deals').css("display", "none")
->>>>>>> 3b94e58d886fe8d9a80e818010e856b1ed342b55
       }
       else{
         $('#accounting .no_deals').css("display", "flex")
@@ -290,42 +252,6 @@ function getdetailexpenditure(){
       year: YEAR
   },(data)=>{
       if(data!="nothing"){
-<<<<<<< HEAD
-          container.innerHTML=`<p></p>`
-          for (var i in data){
-              var item= mod.gettabledata(data,'items',i)
-              var value = mod.gettabledata(data, 'cost',i)
-              var type = mod.gettabledata(data, 'type', i)
-              var sort = mod.gettabledata(data, 'sort', i)
-              //console.log(type)
-              if(item == ''||value == ''|| type !== '0'){
-                  continue;
-              }
-              //create element
-              const container = document.querySelector('#main #accounting .expenditure')
-              const box= document.createElement('a')
-              const paragraphone = document.createElement('b')
-              const types = document.createElement('img')
-              const word = document.createElement('p')
-              const paragraphtwo = document.createElement('P')
-              //set text
-              word.textContent= `${item}`
-              paragraphtwo.textContent=`-${value}`
-              //set attribute
-              box.setAttribute('id','a')
-              paragraphone.setAttribute('class','boxs')
-              types.setAttribute('id', 'type_pic')
-              types.setAttribute('src',`./image/Accounting/${mod.detailpicture(sort, type)}_icon.png`)
-              word.setAttribute('class','text')
-              paragraphtwo.setAttribute('class','text')
-              //append child
-              container.appendChild(box)
-              paragraphone.appendChild(types)
-              paragraphone.appendChild(word)
-              box.appendChild(paragraphone)
-              box.appendChild(paragraphtwo)
-          }
-=======
         container.innerHTML=`<p></p>`
         for (var i in data){
             var item= mod.gettabledata(data,'items',i)
@@ -362,7 +288,6 @@ function getdetailexpenditure(){
         }
         $('#accounting #today_detail').css("display", "flex")
         $('#accounting .no_deals').css("display", "none")
->>>>>>> 3b94e58d886fe8d9a80e818010e856b1ed342b55
       }
       else{
         $('#accounting .no_deals').css("display", "flex")
