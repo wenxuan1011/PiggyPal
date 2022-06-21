@@ -72,6 +72,7 @@ $(document).ready(function() {
         $('#add_account_page #account_form .box:nth-child(1) input').val('')
         $('#add_account_page #account_form .box:nth-child(2) .currency_div p').text('TWD')
         $('#add_account_page #account_form .box:nth-child(3) input').val('')
+        mod.PopUpMessage(4)
       }
       else{
         mod.PopUpMessage(2)

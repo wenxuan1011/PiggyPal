@@ -54,7 +54,7 @@ $('#add_financial_page .bar img').click(function(){
 
 // delete data --> PopUpMessage(5)
 $('#personal_page #account_setting .list li:nth-child(3)').click(function(){
-  mod.PopUpMessage(5)
+  mod.PopUpMessage(6)
 })
 
 
@@ -152,10 +152,12 @@ function ShowFinancialList(type){
           ShowFinancialDetail(financial_list[i], type)
         })
       }
+      $('#financial_list').css("display", "flex")
       $('#no_financial').css("display", "none")
     }
     else{
-      $('#no_project').css("display", "flex")
+      $('#financial_list').css("display", "none")
+      $('#no_financial').css("display", "flex")
     }
   })
 }
@@ -190,12 +192,11 @@ $(document).ready(function() {
         $('#add_financial_page #financial .box:nth-child(2) input').val('')
         $('#add_financial_page #financial .box:nth-child(3) input').val('')
         $('#add_financial_page #financial .box:nth-child(4) .repeat_div #repeat').text('每月')
+        mod.PopUpMessage(4)
       }
       else{
         mod.PopUpMessage(2)
       }
-      
     });
   })
-
 });

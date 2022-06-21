@@ -343,7 +343,7 @@ body {
       align-items: center;
       width: 100vw;
       height: auto;
-      margin: 2.59vh 0 0 0; }
+      margin: 2.59vh 0; }
       #main #mainpage #detail_block #detail_bar {
         display: flex;
         flex-direction: row;
@@ -351,15 +351,31 @@ body {
         align-items: center;
         width: 79.7333vw;
         height: 3.463vh;
-        margin: 0 0 2.525vh 0; }
+        margin: 0; }
         #main #mainpage #detail_block #detail_bar p {
           margin: 0 3vw 0 0; }
-      #main #mainpage #detail_block .list {
-        list-style-type: none;
+      #main #mainpage #detail_block .no_deals {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 88.2667vw;
+        height: 8.75vh;
         background-color: white;
-        width: 92%;
         border-radius: 10px;
         margin: 2.0936vh 0 10vh 0; }
+        #main #mainpage #detail_block .no_deals p {
+          font-size: 13px;
+          color: #737474; }
+      #main #mainpage #detail_block .list {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        width: 92vw;
+        height: auto;
+        border-radius: 10px;
+        margin: 2.0936vh 0 10vh 0; }
+        #main #mainpage #detail_block .list p {
+          margin: 5px 0; }
         #main #mainpage #detail_block .list a {
           display: flex;
           flex-direction: row;
@@ -367,30 +383,31 @@ body {
           align-items: center;
           border-bottom: 0.3px solid #B3B3B3;
           border-radius: 0;
-          padding: 0.675vh 0 0.675vh 0; }
+          padding: 1vh 0; }
           #main #mainpage #detail_block .list a b {
             display: flex;
             flex-direction: row;
             width: 40vw;
             align-items: center;
-            margin: 0 0 0 4vw; }
+            margin: 0 0 0 5vw; }
             #main #mainpage #detail_block .list a b img {
               height: 5.04vh;
               width: 10.93vw;
-              margin: 0 0 0 0; }
+              margin: 0; }
             #main #mainpage #detail_block .list a b p {
               width: 75%;
               padding: 1.724vh 4vw 1.724vh 5.6vw;
               text-decoration: none;
               font-size: 2vh !important;
-              margin: 0 0 0 0; }
+              margin: 0; }
           #main #mainpage #detail_block .list a p {
             padding: 1.724vh 5.6vw 1.724vh 5.6vw;
             text-decoration: none;
             font-size: 2vh !important;
-            margin: 0 0 0 0; }
+            margin: 0; }
         #main #mainpage #detail_block .list a:nth-last-child(1) {
-          border-bottom: none; }
+          border-bottom: none;
+          margin: 0 0 10px 0; }
   #main #account {
     display: none;
     flex-direction: column;
@@ -461,6 +478,7 @@ body {
             color: black; }
       #main #account #account_div #add_account_page_btn {
         font-size: 18px;
+        font-weight: bold;
         color: #8E5FF4;
         margin: 20px 0; }
   #main #add_account_page {
@@ -630,35 +648,47 @@ body {
           color: #8E5FF4; }
         #main #accounting #everyday_earn #today_earn img:nth-child(2) {
           margin-top: 3.694vh; }
+    #main #accounting .no_deals {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      width: 88.2667vw;
+      height: 8.75vh;
+      background-color: white;
+      border-radius: 10px;
+      margin: 0 0 10px 0; }
+      #main #accounting .no_deals p {
+        font-size: 13px;
+        color: #737474; }
     #main #accounting #today_detail {
+      display: none;
+      flex-direction: column;
       background-color: white;
       border-radius: 10px;
       width: 92vw;
       height: auto;
       margin: 0 0 15vh 0; }
       #main #accounting #today_detail .income, #main #accounting #today_detail .expenditure {
-        background-color: white;
-        border-radius: 10px;
-        margin: 0 0 0 0;
+        display: flex;
+        flex-direction: column;
         border-bottom: 0.3px solid #B3B3B3; }
+        #main #accounting #today_detail .income p, #main #accounting #today_detail .expenditure p {
+          margin: 0; }
         #main #accounting #today_detail .income a, #main #accounting #today_detail .expenditure a {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
-          border-bottom: 0.3px solid #B3B3B3;
-          border-radius: 0;
-          padding: 0 4.8vw 0 0;
           padding: 1.724vh 5.6vw 1.724vh 5.6vw;
           text-decoration: none;
           font-size: 2vh !important;
-          margin: 0 0 0 0; }
+          margin: 0; }
           #main #accounting #today_detail .income a b, #main #accounting #today_detail .expenditure a b {
             display: flex;
             flex-direction: row;
             width: 40vw;
             align-items: center;
-            margin: 0 0 0 0; }
+            margin: 0; }
             #main #accounting #today_detail .income a b img, #main #accounting #today_detail .expenditure a b img {
               height: 5vh;
               width: 10.93vw; }
@@ -667,20 +697,19 @@ body {
               padding: 1.724vh 5.6vw 1.724vh 5.6vw;
               text-decoration: none;
               font-size: 2vh !important;
-              font-weight: none;
-              margin: 0 0 0 0; }
-        #main #accounting #today_detail .income a:nth-last-child(1), #main #accounting #today_detail .expenditure a:nth-last-child(1) {
-          border-bottom: none; }
+              margin: 0; }
+      #main #accounting #today_detail .expenditure {
+        border-bottom: none; }
       #main #accounting #today_detail .bars {
         display: flex;
         background-color: white;
         border-radius: 10px;
-        margin: 0 0 0 0; }
+        margin: 0; }
         #main #accounting #today_detail .bars p {
           font-size: 2vh;
-          margin: 2.09vh 0 0vh 4.8vw;
+          margin: 2.09vh 0 15px 4.8vw;
           color: #8E5FF4;
-          font-family: 'Roboto'; }
+          font-weight: bold; }
   #main #add_deals {
     display: none;
     flex-direction: column;

@@ -1203,20 +1203,19 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
-  if (type < 4) {
-    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！'];
-    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses'];
+  if (type < 5) {
+    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！', '已成功新增！'];
+    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses', 'added'];
     $('#popup .box_login, #popup .box_delete').css('display', 'none');
     $('#popup .box_regular').css('display', 'flex');
     $('#popup').css('display', 'flex');
     $('#popup #background .box_regular .message p').html("".concat(PopUpTital[type]));
     $('#popup #background .box_regular .message figure img').attr("src", "./image/PopUpMessage/PopUpMessage_".concat(PopUpGif[type], ".gif"));
-  } else if (type == 4) {
+  } else if (type == 5) {
     $('#popup .box_regular, #popup .box_delete').css('display', 'none');
     $('#popup .box_login').css('display', 'flex');
     $('#popup').css('display', 'flex');
   } else {
-    console.log('delete');
     $('#popup .box_regular, #popup .box_login').css('display', 'none');
     $('#popup .box_delete').css('display', 'flex');
     $('#popup').css('display', 'flex');
@@ -1483,7 +1482,7 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
         ID = data;
       } else {
-        mod.PopUpMessage(4);
+        mod.PopUpMessage(5);
       }
 
       ;
@@ -1564,6 +1563,7 @@ $(document).ready(function () {
 
           a.innerHTML = "現金";
           d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
+          mod.PopUpMessage(4);
         } else {
           console.log('record: ', click_op);
           mod.PopUpMessage(2);
@@ -1591,6 +1591,7 @@ $(document).ready(function () {
 
           a.innerHTML = "現金";
           d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
+          mod.PopUpMessage(4);
         } else {
           console.log('record: ', click_op);
           mod.PopUpMessage(2);
@@ -1701,7 +1702,7 @@ function getdetailincome() {
     month: MONTH,
     year: YEAR
   }, function (data) {
-    if (data != "nothing") {
+    if (data !== "nothing") {
       container.innerHTML = "<p></p>";
 
       for (var i in data) {
@@ -1710,7 +1711,7 @@ function getdetailincome() {
         var type = mod.gettabledata(data, 'type', i);
         var sort = mod.gettabledata(data, 'sort', i); //console.log(item, value, type)
 
-        if (item == '' || value == '' || type === '0' || type == '3') {
+        if (item == '' || value == '' || type !== '1') {
           continue;
         } //create element
 
@@ -1740,7 +1741,13 @@ function getdetailincome() {
         box.appendChild(paragraphone);
         box.appendChild(paragraphtwo);
       }
-    } else {}
+
+      $('#accounting #today_detail').css("display", "flex");
+      $('#accounting .no_deals').css("display", "none");
+    } else {
+      $('#accounting .no_deals').css("display", "flex");
+      $('#accounting #today_detail').css("display", "none");
+    }
   });
 }
 
@@ -1767,7 +1774,7 @@ function getdetailexpenditure() {
         var type = mod.gettabledata(data, 'type', i);
         var sort = mod.gettabledata(data, 'sort', i); //console.log(type)
 
-        if (item == '' || value == '' || type === '1' || type == '3') {
+        if (item == '' || value == '' || type !== '0') {
           continue;
         } //create element
 
@@ -1797,7 +1804,13 @@ function getdetailexpenditure() {
         box.appendChild(paragraphone);
         box.appendChild(paragraphtwo);
       }
-    } else {}
+
+      $('#accounting #today_detail').css("display", "flex");
+      $('#accounting .no_deals').css("display", "none");
+    } else {
+      $('#accounting .no_deals').css("display", "flex");
+      $('#accounting #today_detail').css("display", "none");
+    }
   });
 }
 
@@ -1879,7 +1892,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42880" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42278" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

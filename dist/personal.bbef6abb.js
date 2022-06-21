@@ -1203,20 +1203,19 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
-  if (type < 4) {
-    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！'];
-    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses'];
+  if (type < 5) {
+    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！', '已成功新增！'];
+    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses', 'added'];
     $('#popup .box_login, #popup .box_delete').css('display', 'none');
     $('#popup .box_regular').css('display', 'flex');
     $('#popup').css('display', 'flex');
     $('#popup #background .box_regular .message p').html("".concat(PopUpTital[type]));
     $('#popup #background .box_regular .message figure img').attr("src", "./image/PopUpMessage/PopUpMessage_".concat(PopUpGif[type], ".gif"));
-  } else if (type == 4) {
+  } else if (type == 5) {
     $('#popup .box_regular, #popup .box_delete').css('display', 'none');
     $('#popup .box_login').css('display', 'flex');
     $('#popup').css('display', 'flex');
   } else {
-    console.log('delete');
     $('#popup .box_regular, #popup .box_login').css('display', 'none');
     $('#popup .box_delete').css('display', 'flex');
     $('#popup').css('display', 'flex');
@@ -1483,7 +1482,7 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
         ID = data;
       } else {
-        mod.PopUpMessage(4);
+        mod.PopUpMessage(5);
       }
 
       ;
@@ -1558,7 +1557,7 @@ $('#add_financial_page .bar img').click(function () {
 }); // delete data --> PopUpMessage(5)
 
 $('#personal_page #account_setting .list li:nth-child(3)').click(function () {
-  mod.PopUpMessage(5);
+  mod.PopUpMessage(6);
 }); // change the title of the financial_list_page and add_financial_page
 
 var TitleArray = [['固定收入', '收入項目', '入帳日期', '收入金額', '請新增一筆固定收入'], ['固定支出', '支出項目', '支出日期', '支出金額', '請新增一筆固定支出'], ['固定儲蓄', '儲蓄項目', '儲蓄日期', '儲蓄金額', '請新增一筆固定儲蓄']];
@@ -1663,9 +1662,11 @@ function ShowFinancialList(type) {
         _loop2(_i);
       }
 
+      $('#financial_list').css("display", "flex");
       $('#no_financial').css("display", "none");
     } else {
-      $('#no_project').css("display", "flex");
+      $('#financial_list').css("display", "none");
+      $('#no_financial').css("display", "flex");
     }
   });
 }
@@ -1696,6 +1697,7 @@ $(document).ready(function () {
         $('#add_financial_page #financial .box:nth-child(2) input').val('');
         $('#add_financial_page #financial .box:nth-child(3) input').val('');
         $('#add_financial_page #financial .box:nth-child(4) .repeat_div #repeat').text('每月');
+        mod.PopUpMessage(4);
       } else {
         mod.PopUpMessage(2);
       }
@@ -1730,7 +1732,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42880" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42278" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

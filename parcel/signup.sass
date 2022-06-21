@@ -405,15 +405,13 @@ body
                         color: white
                         margin: 0 0 0 0
                 
-
-        
         #detail_block
             display: flex
             flex-direction: column
             align-items: center
             width: 100vw
             height: auto
-            margin: 2.59vh 0 0 0
+            margin: 2.59vh 0
 
             #detail_bar
                 display: flex
@@ -422,17 +420,38 @@ body
                 align-items: center
                 width: 79.7333vw
                 height: 3.463vh
-                margin: 0 0 2.525vh 0
+                margin: 0
                 
                 p
                     margin: 0 3vw 0 0
+
+            .no_deals
+                display: none
+                justify-content: center
+                align-items: center
+                width: 88.2667vw
+                height: 8.75vh
+                background-color: white
+                border-radius: 10px
+                margin: 2.0936vh 0 10vh 0
+
+                p
+                    font-size: 13px
+                    color: #737474
+                
             
             .list
-              list-style-type: none
+              display: none
+              flex-direction: column
               background-color: white
-              width: 92%
+              width: 92vw
+              height: auto
               border-radius: 10px
               margin: 2.0936vh 0 10vh 0
+
+              p
+                margin: 5px 0
+
               a
                 display: flex
                 flex-direction: row
@@ -440,33 +459,35 @@ body
                 align-items: center
                 border-bottom: 0.3px solid #B3B3B3
                 border-radius: 0
-                padding: 0.675vh 0 0.675vh 0
+                padding: 1vh 0
 
                 b
                     display: flex
                     flex-direction: row
                     width: 40vw
                     align-items: center
-                    margin: 0 0 0 4vw
+                    margin: 0 0 0 5vw
 
                     img
                         height: 5.04vh
                         width: 10.93vw
-                        margin: 0 0 0 0 
+                        margin: 0
                     p
                         width: 75%
                         padding: 1.724vh 4vw 1.724vh 5.6vw
                         text-decoration: none
                         font-size: 2vh !important
-                        margin: 0 0 0 0
+                        margin: 0
 
                 p
                   padding: 1.724vh 5.6vw 1.724vh 5.6vw
                   text-decoration: none
                   font-size: 2vh !important
-                  margin: 0 0 0 0
+                  margin: 0
+
               a:nth-last-child(1)
                 border-bottom: none
+                margin: 0 0 10px 0
 
 
         #detail_block
@@ -552,6 +573,7 @@ body
 
             #add_account_page_btn
                 font-size: 18px
+                font-weight: bold
                 color: #8E5FF4
                 margin: 20px 0
 
@@ -750,7 +772,23 @@ body
                 img:nth-child(2)
                     margin-top: 3.694vh
 
+        .no_deals
+            display: none
+            justify-content: center
+            align-items: center
+            width: 88.2667vw
+            height: 8.75vh
+            background-color: white
+            border-radius: 10px
+            margin: 0 0 10px 0
+
+            p
+                font-size: 13px
+                color: #737474
+
         #today_detail
+            display: none
+            flex-direction: column
             background-color: white
             border-radius: 10px
             width: 92vw
@@ -758,27 +796,29 @@ body
             margin: 0 0 15vh 0
 
             .income,.expenditure
-                background-color: white
-                
-                border-radius: 10px
-                margin: 0 0 0 0
+                display: flex
+                flex-direction: column
                 border-bottom: 0.3px solid #B3B3B3
+
+                p
+                    margin: 0
                 
                 a
                     display: flex
                     flex-direction: row
                     justify-content: space-between
                     align-items: center
-                    border-bottom: 0.3px solid #B3B3B3
-                    border-radius: 0
-                    padding: 0 4.8vw 0 0
+                    padding: 1.724vh 5.6vw 1.724vh 5.6vw
+                    text-decoration: none
+                    font-size: 2vh !important
+                    margin: 0
 
                     b
                         display: flex
                         flex-direction: row
                         width: 40vw
                         align-items: center
-                        margin: 0 0 0 0
+                        margin: 0
 
                         img
                             height: 5vh
@@ -788,28 +828,22 @@ body
                             padding: 1.724vh 5.6vw 1.724vh 5.6vw
                             text-decoration: none
                             font-size: 2vh !important
-                            font-weight: none
-                            margin: 0 0 0 0
+                            margin: 0
 
-                    p
-                    padding: 1.724vh 5.6vw 1.724vh 5.6vw
-                    text-decoration: none
-                    font-size: 2vh !important
-                    margin: 0 0 0 0
+            .expenditure
+                border-bottom: none
                 
-                a:nth-last-child(1)
-                    border-bottom: none
-                    
             .bars
                 display: flex
                 background-color: white
                 border-radius: 10px
-                margin: 0 0 0 0
+                margin: 0
+
                 p
                     font-size: 2vh
-                    margin: 2.09vh 0 0vh 4.8vw
+                    margin: 2.09vh 0 15px 4.8vw
                     color: #8E5FF4
-                    font-family: 'Roboto'
+                    font-weight: bold
 
 
     #add_deals
