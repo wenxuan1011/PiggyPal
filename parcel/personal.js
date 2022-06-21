@@ -35,7 +35,6 @@ $('#financial_list_page .bar img').click(function(){
   }, 500)
 })
 
-<<<<<<< HEAD
 
 // open/close add_financial_page
 $('#financial_list_page #add_financial_btn').click(function(){
@@ -58,7 +57,6 @@ $('#personal_page #account_setting .list li:nth-child(3)').click(function(){
   mod.PopUpMessage(6)
 })
 
-<<<<<<< HEAD
 
 // change the title of the financial_list_page and add_financial_page
 const TitleArray = [['固定收入', '收入項目', '入帳日期', '收入金額', '請新增一筆固定收入'],
@@ -78,7 +76,6 @@ for(let i=0;i<3;i++){
   })
 }
 
-=======
 // function ReportFileStatus(filespec) {
 //   var fso, s = filespec;
 //   fso = new ActiveXObject("Scripting.FileSystemObject");
@@ -108,7 +105,6 @@ $('#change_personal_page .bar img:nth-child(1)').click(function(){
 // $('#change_personal_page .bar img:nth-child(2)').click(function(){
   
 // })
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
 
 // use jquery calendar
 $(function(){
@@ -233,28 +229,3 @@ $(document).ready(function() {
     });
   })
 });
-=======
-// change the title of the financial_setting_page
-$('#personal_page #financial_setting .list li:nth-child(1)').click(function(){
-    $('#financial_setting_page .bar p').html("固定收入")
-})
-$('#personal_page #financial_setting .list li:nth-child(2)').click(function(){
-    $('#financial_setting_page .bar p').html("固定支出")
-})
-$('#personal_page #financial_setting .list li:nth-child(3)').click(function(){
-    $('#financial_setting_page .bar p').html("固定儲蓄")
-})
-
-
-
-
-// open/close 新增交易
-$('#accounting #everyday_earn #today_earn img').click(function(){
-$('#add_deals').css("transform", "translateX(0%)")
-})
-
-$('#add_deals .bar img').click(function(){
-$('#add_deals').css("transform", "translateX(100%)")
-})
-
->>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
