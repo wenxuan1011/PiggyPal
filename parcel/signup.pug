@@ -64,10 +64,9 @@ html
 
     #main
       #mainpage
-        //- img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
         .personal_btn_bg
           img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "81.25%", width = "47.561%")
-          img#personal_btn_arrow(src = "./image/btn/btn_arrow_right.png", height = "25%", width = "7.31707%")        
+          img#personal_btn_arrow(src = "./image/btn/arrow_right_white.png", height = "25%", width = "10%")        
         img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
         #balance_bar
           p $0
@@ -297,7 +296,8 @@ html
             p#item 一般儲蓄
             img(src = "./image/btn/btn_edit.png", height = "18px")
           .planned_speed_graph
-            img(src = "./image/project/Project_progressBar-bg.png", width = "82%")
+            .SpeedBar 
+              .ColorBar
             p#money $800
           .complete_percent 
            p#percent 35%

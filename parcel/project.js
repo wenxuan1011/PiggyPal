@@ -1,11 +1,12 @@
 import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
+import { async } from 'regenerator-runtime'
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
-var port = 6162
+var port = 6165
 var last_participant = ""
 var parti_num=0
 //偵測有沒有圖片
@@ -150,16 +151,19 @@ function showProjectDetail(project_name, personal_or_joint){
   $.get('./getProjectDetail',{
     id: ID,
     name: project_name,
-  },(data)=>{
+  },async(data)=>{
     let page_tag = `#show_${personal_or_joint}_project`
     if(data !== false){
-      $(`${page_tag} .project_detail .title #item`).html(`${data[0]}`)
-      let percent = data[9]/data[8]/100
+      $(`${page_tag} .project_detail .title #item`).html(`${data[1]}`)
+      var totalmoney = await mod.getaprojectmoney(data[0], data[1], data[2], data[9])
+      var percent = totalmoney / mod.StringtoInt(data[9])*100
       percent = Math.round(percent, -1)
+      $(`${page_tag} .SpeedBar .ColorBar`).css("width", `${percent}%`)
+      $(`${page_tag} .SpeedBar .ColorBar`).css("background-color", `${data[2]}`)
       $(`${page_tag} .project_detail #percent`).html(`${percent}%`)
-      let date = `${data[2]}.${data[3]}.${data[4]} - ${data[5]}.${data[6]}.${data[7]}`
+      let date = `${data[3]}.${data[4]}.${data[5]} - ${data[6]}.${data[7]}.${data[8]}`
       $(`${page_tag} .project_detail .date_box #date`).html(date)
-      let money = '$' + `${data[8]}`
+      let money = '$' + `${data[9]}`
       $(`${page_tag} .project_detail .planned_speed_graph #money`).html(money)
       $(`${page_tag} .project_detail .target_money #money`).html(money)
     }
@@ -188,6 +192,8 @@ async function getallproject(TF){
     const container = document.querySelector('#main #project #project_list')
     container.innerHTML=`<div></div>`
     var project_list = []
+    var color_list = []
+    var percent_list = []
     for (var i in result){
         var id = mod.gettabledata(result,'id', i)
         var project_name = mod.gettabledata(result,'project_name', i)
@@ -199,13 +205,15 @@ async function getallproject(TF){
         var end_month = mod.gettabledata(result, 'end_month', i)
         var end_day = mod.gettabledata(result, 'end_day', i)
         var target_number = mod.gettabledata(result, 'target_number', i)
-        var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number)
+        var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number) //-------
         console.log('totalmoney',totalmoney)
-        var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100
+        var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100 //-------
         console.log(percent)
         percent = Math.round(percent, -1)
         var type = mod.gettabledata(result, 'personal_or_joint', i)
         project_list[i] = project_name
+        color_list[i] = color
+        percent_list[i] = percent
         console.log(type)
         if (type >=2){
           judge = true
@@ -229,7 +237,8 @@ async function getallproject(TF){
         const date = document.createElement('p')
         const infor_3 = document.createElement('div')
         const speed = document.createElement('p')
-        const bar = document.createElement('img')
+        const bar = document.createElement('div')
+        const color_bar = document.createElement('div')
         const btn = document.createElement('img')
         //set text
         name.textContent = `${project_name}`
@@ -243,8 +252,9 @@ async function getallproject(TF){
         infor_3.setAttribute('class', 'plannd_speed_infor')
         dot.setAttribute('src', `./image/project/Project_colordot_${mod.getColor(color)}.png`)
         dot.setAttribute('height', '35%')
-        bar.setAttribute('src', './image/project/Project_progressBar-bg.png')
-        bar.setAttribute('width', '100%')
+        bar.setAttribute('class', 'SpeedBar')
+        color_bar.setAttribute('class', 'ColorBar')
+        color_bar.setAttribute('style', `background-color:${color}`)
         btn.setAttribute('src', './image/btn/btn_arrow_right.png')
         btn.setAttribute('height', '17%')
         btn.setAttribute('id', 'right_btn')
@@ -254,6 +264,7 @@ async function getallproject(TF){
         container.appendChild(block)
         block.appendChild(infor_1)
         block.appendChild(btn)
+        bar.appendChild(color_bar)
         infor_1.appendChild(infor_2)
         infor_1.appendChild(infor_3)
         infor_1.appendChild(bar)
@@ -265,6 +276,7 @@ async function getallproject(TF){
         show_no_project = false
     }
     for(let i=0;i<project_list.length;i++){
+      $(`#${project_list[i]} .SpeedBar .ColorBar`).css("width", `${percent_list[i]}%`)
       if(SHOW_PERSONAL_OR_JOINT === false){
         $("#"+`${project_list[i]}`).click(function(e){
           $('#show_personal_project').css("display", "flex")
@@ -283,6 +295,7 @@ async function getallproject(TF){
           }, 100)
           event.preventDefault()  // I'm not sure is it right or not
           showProjectDetail(project_list[i], 'joint')
+          getProjectCreater(project_list[i])
         })
       }
     }
@@ -1317,7 +1330,6 @@ $(document).ready(function() {
         var l_id = $('#add_member #id_box input[name=userid]').val()
         $('#add_member #result').css("display", "flex");
         $('#add_member #result p').html(`${data}`);
-        //
         $('#add_member #wrong').css("display", "none");
         //----------------------------------------------------------------
         // var have_pic = 0

@@ -18,7 +18,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6162
+const port = 6165
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
@@ -78,7 +78,6 @@ app.get('/signup', (req, res) => {
       res.send("Signup faild.")
     }
   })
-  
   setTimeout(() => {
     var today = new Date()
     if (add_user){
@@ -389,10 +388,11 @@ app.get('/getProjectDetail',(req,res) => {
       res.send(false)
     }
     else{
-      let detail = [mod.gettabledata(row,'project_name',0), mod.gettabledata(row,'color',0), mod.gettabledata(row,'start_year',0),
-        mod.gettabledata(row,'start_month',0), mod.gettabledata(row,'start_day',0), mod.gettabledata(row,'end_year',0), mod.gettabledata(row,'end_month',0),
-        mod.gettabledata(row,'end_day',0), mod.gettabledata(row,'target_number',0), mod.gettabledata(row,'saved_money',0)]
-      res.send(detail)
+      let result = [mod.gettabledata(row, 'id', 0), mod.gettabledata(row, 'project_name', 0), mod.gettabledata(row, 'color', 0),
+                mod.gettabledata(row, 'start_year', 0), mod.gettabledata(row, 'start_month', 0), mod.gettabledata(row, 'start_day', 0),
+                mod.gettabledata(row, 'end_year', 0), mod.gettabledata(row, 'end_month', 0), mod.gettabledata(row, 'end_day', 0),
+                mod.gettabledata(row, 'target_number', 0)]
+      res.send(result)
     }
   })
 })
