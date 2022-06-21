@@ -3086,7 +3086,7 @@ function setStickerSrc() {
 
     console.log("last_participant = " + last_participant);
     console.log("parti_num=" + parti_num); //fail callback
-  });
+  }); //
 }
 },{"./signup.js":"signup.js","./module.js":"module.js","./selectormodule.js":"selectormodule.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -3116,7 +3116,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33572" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46696" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
