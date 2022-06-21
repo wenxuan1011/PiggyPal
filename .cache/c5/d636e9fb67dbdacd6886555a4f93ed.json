@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 {"id":"image/login/icon_email.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1652360778334}],"generated":{"js":"module.exports = \"2169ce30a81b8f9e51c8e9a93264ce44.png\";"},"sourceMaps":null,"error":null,"hash":"d3720560557144a39fab63a69d231d8d","cacheData":{"env":{}}}
+=======
+{"id":"image/login/icon_email.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655814207367}],"generated":{"js":"module.exports = \"2169ce30a81b8f9e51c8e9a93264ce44.png\";"},"sourceMaps":null,"error":null,"hash":"d3720560557144a39fab63a69d231d8d","cacheData":{"env":{}}}
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
+=======
+{"id":"image/login/icon_email.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"2169ce30a81b8f9e51c8e9a93264ce44.png\";"},"sourceMaps":null,"error":null,"hash":"d3720560557144a39fab63a69d231d8d","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

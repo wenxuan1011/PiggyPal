@@ -150,6 +150,7 @@ for(let i=1;i<5;i++){
 }
 
 // open/close sort_select_box
+/*
 $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
   if(click_op < 2){
     $('.sort_select_box').css("display", "flex")
@@ -159,7 +160,7 @@ $('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
     }, 100)
   }
 })
-  
+  */
 function clickHiddenSortBox(eve){
   if( eve.target.class != "sort_select_box" ){
     $('.sort_select_box').css("transform", "translateY(100%)")
@@ -226,6 +227,7 @@ $('#add_deals #fin #acc_div').click(async function(){
     document.addEventListener("click", clickHiddenOtherBox);
   }, 100)
 })
+/*
 $('#add_deals #fin #sort_div').click(async function(){
   await CreateOtherBox(Project, ProjectDiv)
   if(click_op === 2){
@@ -236,7 +238,7 @@ $('#add_deals #fin #sort_div').click(async function(){
     }, 100)
   }
 })
-
+*/
 function clickHiddenOtherBox(eve){
   if( eve.target.class != "other_select_box" ){
     $('.other_select_box').css("transform", "translateY(100%)")

@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"id":"image/PersonalPage/Personal_editUserPic.png","dependencies":[],"generated":{"js":"module.exports=\"5f2ee2e570fe06a442666d38ae1b46b3.png\";"},"sourceMaps":null,"error":null,"hash":"1ca504d13b8c9cbdf6fd91bf06906ad1","cacheData":{}}
+=======
+{"id":"image/PersonalPage/Personal_editUserPic.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"5f2ee2e570fe06a442666d38ae1b46b3.png\";"},"sourceMaps":null,"error":null,"hash":"1ca504d13b8c9cbdf6fd91bf06906ad1","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

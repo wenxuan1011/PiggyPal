@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 {"id":"image/MainPage/MainPage_personal.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1652360778334}],"generated":{"js":"module.exports = \"3988f3632f0e95ecf1f303b033fec9a3.png\";"},"sourceMaps":null,"error":null,"hash":"2ef280d7adf1040f80b5f91deb2eded6","cacheData":{"env":{}}}
+=======
+{"id":"image/MainPage/MainPage_personal.png","dependencies":[],"generated":{"js":"module.exports=\"3988f3632f0e95ecf1f303b033fec9a3.png\";"},"sourceMaps":null,"error":null,"hash":"2ef280d7adf1040f80b5f91deb2eded6","cacheData":{}}
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
+=======
+{"id":"image/MainPage/MainPage_personal.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"3988f3632f0e95ecf1f303b033fec9a3.png\";"},"sourceMaps":null,"error":null,"hash":"2ef280d7adf1040f80b5f91deb2eded6","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

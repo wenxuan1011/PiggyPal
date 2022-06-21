@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"id":"image/btn/btn_edit.png","dependencies":[],"generated":{"js":"module.exports=\"30da9a5a80f27ca514150c91b4fe2f2f.png\";"},"sourceMaps":null,"error":null,"hash":"d30a1ced7488a41fa00fdc0a36c4b1b5","cacheData":{}}
+=======
+{"id":"image/btn/btn_edit.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"30da9a5a80f27ca514150c91b4fe2f2f.png\";"},"sourceMaps":null,"error":null,"hash":"d30a1ced7488a41fa00fdc0a36c4b1b5","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

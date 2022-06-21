@@ -1,4 +1,6 @@
 import * as mod from './module.js'
+import fs from 'fs'
+//import process from './dailymoney.js'
 
 $('#change-to-login').click(function(){
   $("#SignUp").css("display", "none");
@@ -75,7 +77,7 @@ function unselected_to_selected(){
   if(present_page == navbar[0]){
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
     $('#barcode').css("display", "flex");
-    window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html#/';
+    window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html?';
   }
   else if(present_page == navbar[1]){
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
@@ -96,6 +98,7 @@ function unselected_to_selected(){
 };
 
 var ID = "";
+
 $(document).ready(function() {
   
   // sign up
@@ -110,6 +113,7 @@ $(document).ready(function() {
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
         ID = $('#signup input[name=id]').val()
+        
       }
       else{
         $("#signup-output").html(`${data}`);
@@ -117,6 +121,7 @@ $(document).ready(function() {
         //process(ID)
       };
     });
+    
   })
   
   // login
@@ -131,6 +136,8 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
+        localStorage.setItem("ID", data)
+        //process(ID)
       }
       else{
         mod.PopUpMessage(5)
@@ -144,6 +151,7 @@ $('#popup #background .confirm').click(function(){
 })
 
 function transmit(){
+  
   return ID
 };
 

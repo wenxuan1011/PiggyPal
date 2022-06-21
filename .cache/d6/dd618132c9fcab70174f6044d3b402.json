@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 {"id":"image/signup/icon_twitter.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1652360778334}],"generated":{"js":"module.exports = \"8270a7f92ead81ca14fa61b20fca2a9f.png\";"},"sourceMaps":null,"error":null,"hash":"eb4dd9f3fc8e45bd63e4fa550e6c6094","cacheData":{"env":{}}}
+=======
+{"id":"image/signup/icon_twitter.png","dependencies":[],"generated":{"js":"module.exports=\"8270a7f92ead81ca14fa61b20fca2a9f.png\";"},"sourceMaps":null,"error":null,"hash":"eb4dd9f3fc8e45bd63e4fa550e6c6094","cacheData":{}}
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
+=======
+{"id":"image/signup/icon_twitter.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"8270a7f92ead81ca14fa61b20fca2a9f.png\";"},"sourceMaps":null,"error":null,"hash":"eb4dd9f3fc8e45bd63e4fa550e6c6094","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

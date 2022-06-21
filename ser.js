@@ -7,6 +7,7 @@ import {fileURLToPath} from 'url'
 import config from './config.js'
 import mysql from 'mysql'
 import mod from './parcel/module.js'
+import bodyParser from 'body-parser'
 import serverjob from './parcel/serverjobs.js'
 import cron from 'node-cron'
 import { connect } from 'http2'
@@ -17,7 +18,10 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6165
+const port = 6162
+
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 
 // listen port
 app.listen(port, () => {
@@ -276,6 +280,7 @@ app.get('/getAccount',(req,res) =>{
 
 
 // record
+
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), year VARCHAR(4), month VARCHAR(2), day VARCHAR(2), cost VARCHAR(30), sort VARCHAR(30), items VARCHAR(30), account VARCHAR(30), type VARCHAR(1))')
   
@@ -455,12 +460,24 @@ app.get('/project',(req,res) => {
 })
 
 
+// //傳port值給前端
+// app.get('/getPort',(req,res) =>{
+//   let port_ = "'"+`${req.query.port}`+"'"
+//     if(err)
+//       console.log('fail to search: ', err)
+//     if(row[0]===undefined){
+//       res.send("nothing")
+//     }
+//     else{
+//       res.send(port_)
+//     }
+//   })
+
 
 ///get project table
 app.get('/getProject',(req,res) =>{
   let UID = "'"+`${req.query.ID}`+"'"
-  var search_user = ""
-  search_user = `SELECT * FROM project WHERE member = ${UID}`
+  const search_user = `SELECT * FROM project WHERE member = ${UID}`
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)
@@ -471,6 +488,104 @@ app.get('/getProject',(req,res) =>{
       res.send(row)
     }
   })
+})
+
+app.get('/projectcomplete', (req,res) => {
+  var ID = "'"+req.query.ID+"'"
+  var project_number = "'"+req.query.project_name+"'"
+  var color = "'"+req.query.color+"'"
+  var target_number = "'"+req.query.target_number+"'"
+  var member = "'"+req.query.member+"'"
+  const complete = `UPDATE project SET personal_or_joint = -1 WHERE id = ${ID} and project_name = ${project_number} and color = ${color} and target_number = ${target_number} and member = ${member}` 
+  connection.query(complete, (err) => {
+    if(err) console.log('failed to complete project',err)
+  })
+})
+
+app.get('/getaprojectmoney', (req,res) => {
+  var result = 0
+  var id = "'"+req.query.id+"'"
+  var project_name= "'"+req.query.project_name+"'"
+  var color = "'" + req.query.color + "'"
+  var target_number = "'" + req.query.target_number + "'"
+  const summation = `SELECT * FROM project WHERE id = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+  connection.query(summation,(err,rows)=>{
+    if(err)console.log('failed to get a project total saved money')
+    for(var i in rows){
+      result += mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
+    }
+    res.send(`${result}`)
+    
+  })
+  
+})
+
+//get project creater
+app.get('/getCreater',(req,res) =>{
+  let member = "'"+`${req.query.ID}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  const search_creater = `SELECT * FROM project WHERE member = ${member} and project_name = ${project_name}`
+  connection.query(search_creater, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
+})
+//get project members
+app.get('/getMember',(req,res) =>{
+  let member = "'"+`${req.query.ID}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  const search_member = `SELECT * FROM project WHERE id = ${member} and project_name = ${project_name}`
+  connection.query(search_member, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
+})
+
+//upload personal picture
+import multer  from 'multer'
+import path  from 'path'
+import fs from 'fs'
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) =>{
+    cb(null, "./dist/image/personal_pic");
+    
+  },
+  filename: (req, file, cb) =>{
+    //console.log(file)
+    //console.log(path.extname(file.originalname))
+    cb(null, `1` + `${path.extname(file.originalname)}`);
+  }
+  
+})
+
+const upload = multer({storage: storage})
+
+app.get('/upload', (req, res) =>{
+  res.render("upload");
+});
+
+app.post('/upload', upload.single("image"), (req, res) =>{
+  // console.log(req.body.usr_name)
+  // console.log(path.extname(req.file.originalname))
+  // console.log(123)
+  fs.rename(`./dist/image/personal_pic/1${path.extname(req.file.originalname)}`, `./dist/image/personal_pic/${req.body.usr_name}${path.extname(req.file.originalname)}`, (err) => {
+    if (err) throw err;
+    console.log('Rename complete!');
+  });
+  res.send("Image uploaded");
 })
 
 /////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////

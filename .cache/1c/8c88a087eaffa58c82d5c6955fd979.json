@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 {"id":"image/navbar/selected/mainpage_select.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1652360778334}],"generated":{"js":"module.exports = \"7bc46c4a27c21e8980aa63e00316ce03.png\";"},"sourceMaps":null,"error":null,"hash":"d2e648c4aec595a8e0ee4c2cd3f779e8","cacheData":{"env":{}}}
+=======
+{"id":"image/navbar/selected/mainpage_select.png","dependencies":[],"generated":{"js":"module.exports=\"7bc46c4a27c21e8980aa63e00316ce03.png\";"},"sourceMaps":null,"error":null,"hash":"d2e648c4aec595a8e0ee4c2cd3f779e8","cacheData":{}}
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
+=======
+{"id":"image/navbar/selected/mainpage_select.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"7bc46c4a27c21e8980aa63e00316ce03.png\";"},"sourceMaps":null,"error":null,"hash":"d2e648c4aec595a8e0ee4c2cd3f779e8","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

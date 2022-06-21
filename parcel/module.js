@@ -100,6 +100,7 @@ export async function caltotalmoney(ID,table,selection,type){
 
 export async function getProjectMoney(ID){
     var results=0
+    var checkcomplete =false
     await $.get('./getProject',{
         ID:ID,
     },(data) =>{
@@ -112,17 +113,37 @@ export async function getProjectMoney(ID){
             }
             var remainday= Math.abs(lastday-startday)
             
-            if(remainday>0 || remainday !== undefined){
+            if(remainday>0 || remainday !== undefined || gettabledata(data, 'personal_or_joint', i)>0){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
-                let money= StringtoInt(gettabledata(data, `target_number`,i))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
-                money= money/remainday
-                totalremain+=money
+                let money= (StringtoInt(gettabledata(data, `target_number`,i))/StringtoInt(gettabledata(data, 'personal_or_joint',i)))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
+                if(money>0){
+                    checkcomplete = false
+                    money= money/remainday
+                    totalremain+=money
+                }
+                else{
+                    checkcomplete = true
+                    checkProjectComplete(data, i)
+                }
             }
             else continue
         }
         results=totalremain
     });
+
     return results;
+}
+
+async function checkProjectComplete(data, i){
+    await $.get('./projectcomplete',{
+        ID:gettabledata(data,'id',i),
+        project_name:gettabledata(data,'project_name',i),
+        color:gettabledata(data,'color',i),
+        target_number:gettabledata(data,'target_number',i),
+        member:gettabledata(data,'member',i),
+    },(data) => {
+
+    })
 }
 export async function calprojectpercent(ID, project_name){
     var result=0
@@ -266,6 +287,19 @@ export function detailpicture(data, type){
     }
 }
 
+export async function getaprojectmoney(id, project_name, color, target_number){
+    var result = 0
+    await $.get('./getaprojectmoney',{
+        id:id,
+        project_name:project_name,
+        color:color,
+        target_number:target_number
+    },(data) => {
+        result = data
+    })
+    return result
+}
+
 export default{
     gettabledata, // get id inside the row of column select from database
     getMonthlyMoney, // get money in each table, remember to use caltotalmoney to get in integer
@@ -280,4 +314,5 @@ export default{
     PopUpMessage, // popup message, need to input the word you want to show
     getColor, // turn the color code into the color, need to input the color code of the project
     detailpicture, //return detail's picture's name
+    getaprojectmoney, //use to get a project saved money
 } 

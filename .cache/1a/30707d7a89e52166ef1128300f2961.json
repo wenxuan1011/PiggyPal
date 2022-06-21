@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"id":"image/project/Project_colordot_orange.png","dependencies":[],"generated":{"js":"module.exports=\"a2d0469f7b113dda6e9ed1935394792f.png\";"},"sourceMaps":null,"error":null,"hash":"819701a924347099dd2cd0d5ea1e3a17","cacheData":{}}
+=======
+{"id":"image/project/Project_colordot_orange.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"a2d0469f7b113dda6e9ed1935394792f.png\";"},"sourceMaps":null,"error":null,"hash":"819701a924347099dd2cd0d5ea1e3a17","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
