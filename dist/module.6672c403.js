@@ -912,6 +912,7 @@ exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
+exports.getaprojectmoney = getaprojectmoney;
 exports.gettabledata = gettabledata;
 exports.sergetProject = sergetProject;
 
@@ -1055,13 +1056,14 @@ function getProjectMoney(_x12) {
 
 function _getProjectMoney() {
   _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
-    var results;
+    var results, checkcomplete;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             results = 0;
-            _context3.next = 3;
+            checkcomplete = false;
+            _context3.next = 4;
             return $.get('./getProject', {
               ID: ID
             }, function (data) {
@@ -1077,23 +1079,29 @@ function _getProjectMoney() {
 
                 var remainday = Math.abs(lastday - startday);
 
-                if (remainday > 0 || remainday !== undefined) {
+                if (remainday > 0 || remainday !== undefined || gettabledata(data, 'personal_or_joint', i) > 0) {
                   remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) / StringtoInt(gettabledata(data, 'personal_or_joint', i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
-                  money = money / remainday;
-                  totalremain += money;
+                  if (money > 0) {
+                    checkcomplete = false;
+                    money = money / remainday;
+                    totalremain += money;
+                  } else {
+                    checkcomplete = true;
+                    checkProjectComplete(data, i);
+                  }
                 } else continue;
               }
 
               results = totalremain;
             });
 
-          case 3:
+          case 4:
             return _context3.abrupt("return", results);
 
-          case 4:
+          case 5:
           case "end":
             return _context3.stop();
         }
@@ -1103,19 +1111,48 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectpercent(_x13, _x14) {
-  return _calprojectpercent.apply(this, arguments);
+function checkProjectComplete(_x13, _x14) {
+  return _checkProjectComplete.apply(this, arguments);
 }
 
-function _calprojectpercent() {
-  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
-    var result;
+function _checkProjectComplete() {
+  _checkProjectComplete = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(data, i) {
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
+            _context4.next = 2;
+            return $.get('./projectcomplete', {
+              ID: gettabledata(data, 'id', i),
+              project_name: gettabledata(data, 'project_name', i),
+              color: gettabledata(data, 'color', i),
+              target_number: gettabledata(data, 'target_number', i),
+              member: gettabledata(data, 'member', i)
+            }, function (data) {});
+
+          case 2:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _checkProjectComplete.apply(this, arguments);
+}
+
+function calprojectpercent(_x15, _x16) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
             result = 0;
-            _context4.next = 3;
+            _context5.next = 3;
             return $.get('./getproject', {
               ID: ID
             }, function (data) {
@@ -1128,14 +1165,14 @@ function _calprojectpercent() {
             });
 
           case 3:
-            return _context4.abrupt("return", Math.round(result, -1));
+            return _context5.abrupt("return", Math.round(result, -1));
 
           case 4:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4);
+    }, _callee5);
   }));
   return _calprojectpercent.apply(this, arguments);
 }
@@ -1228,43 +1265,43 @@ function getAllUser() {
 }
 
 function _getAllUser() {
-  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
     var all_user;
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
             all_user = [];
-            _context5.next = 3;
+            _context6.next = 3;
             return $.get('./getAllUser', {}, function (data) {
               all_user = data;
             });
 
           case 3:
-            return _context5.abrupt("return", all_user);
+            return _context6.abrupt("return", all_user);
 
           case 4:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5);
+    }, _callee6);
   }));
   return _getAllUser.apply(this, arguments);
 }
 
-function sergetProject(_x15) {
+function sergetProject(_x17) {
   return _sergetProject.apply(this, arguments);
 }
 
 function _sergetProject() {
-  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(user) {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(user) {
     var all_project;
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
-            _context6.next = 2;
+            _context7.next = 2;
             return $.get('./sergetProject', {
               user: user
             }, function (data) {
@@ -1275,14 +1312,14 @@ function _sergetProject() {
             });
 
           case 2:
-            return _context6.abrupt("return", all_project);
+            return _context7.abrupt("return", all_project);
 
           case 3:
           case "end":
-            return _context6.stop();
+            return _context7.stop();
         }
       }
-    }, _callee6);
+    }, _callee7);
   }));
   return _sergetProject.apply(this, arguments);
 }
@@ -1321,6 +1358,41 @@ function detailpicture(data, type) {
   }
 }
 
+function getaprojectmoney(_x18, _x19, _x20, _x21) {
+  return _getaprojectmoney.apply(this, arguments);
+}
+
+function _getaprojectmoney() {
+  _getaprojectmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(id, project_name, color, target_number) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            result = 0;
+            _context8.next = 3;
+            return $.get('./getaprojectmoney', {
+              id: id,
+              project_name: project_name,
+              color: color,
+              target_number: target_number
+            }, function (data) {
+              result = data;
+            });
+
+          case 3:
+            return _context8.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+  return _getaprojectmoney.apply(this, arguments);
+}
+
 var _default = {
   gettabledata: gettabledata,
   // get id inside the row of column select from database
@@ -1346,7 +1418,9 @@ var _default = {
   // popup message, need to input the word you want to show
   getColor: getColor,
   // turn the color code into the color, need to input the color code of the project
-  detailpicture: detailpicture //return detail's picture's name
+  detailpicture: detailpicture,
+  //return detail's picture's name
+  getaprojectmoney: getaprojectmoney //use to get a project saved money
 
 };
 exports.default = _default;
@@ -1378,7 +1452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46356" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

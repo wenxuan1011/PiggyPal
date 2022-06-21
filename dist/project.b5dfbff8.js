@@ -912,6 +912,7 @@ exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
+exports.getaprojectmoney = getaprojectmoney;
 exports.gettabledata = gettabledata;
 exports.sergetProject = sergetProject;
 
@@ -1055,13 +1056,14 @@ function getProjectMoney(_x12) {
 
 function _getProjectMoney() {
   _getProjectMoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(ID) {
-    var results;
+    var results, checkcomplete;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             results = 0;
-            _context3.next = 3;
+            checkcomplete = false;
+            _context3.next = 4;
             return $.get('./getProject', {
               ID: ID
             }, function (data) {
@@ -1077,23 +1079,29 @@ function _getProjectMoney() {
 
                 var remainday = Math.abs(lastday - startday);
 
-                if (remainday > 0 || remainday !== undefined) {
+                if (remainday > 0 || remainday !== undefined || gettabledata(data, 'personal_or_joint', i) > 0) {
                   remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
+                  var money = StringtoInt(gettabledata(data, "target_number", i)) / StringtoInt(gettabledata(data, 'personal_or_joint', i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
-                  money = money / remainday;
-                  totalremain += money;
+                  if (money > 0) {
+                    checkcomplete = false;
+                    money = money / remainday;
+                    totalremain += money;
+                  } else {
+                    checkcomplete = true;
+                    checkProjectComplete(data, i);
+                  }
                 } else continue;
               }
 
               results = totalremain;
             });
 
-          case 3:
+          case 4:
             return _context3.abrupt("return", results);
 
-          case 4:
+          case 5:
           case "end":
             return _context3.stop();
         }
@@ -1103,19 +1111,48 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function calprojectpercent(_x13, _x14) {
-  return _calprojectpercent.apply(this, arguments);
+function checkProjectComplete(_x13, _x14) {
+  return _checkProjectComplete.apply(this, arguments);
 }
 
-function _calprojectpercent() {
-  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(ID, project_name) {
-    var result;
+function _checkProjectComplete() {
+  _checkProjectComplete = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(data, i) {
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
+            _context4.next = 2;
+            return $.get('./projectcomplete', {
+              ID: gettabledata(data, 'id', i),
+              project_name: gettabledata(data, 'project_name', i),
+              color: gettabledata(data, 'color', i),
+              target_number: gettabledata(data, 'target_number', i),
+              member: gettabledata(data, 'member', i)
+            }, function (data) {});
+
+          case 2:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _checkProjectComplete.apply(this, arguments);
+}
+
+function calprojectpercent(_x15, _x16) {
+  return _calprojectpercent.apply(this, arguments);
+}
+
+function _calprojectpercent() {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(ID, project_name) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
             result = 0;
-            _context4.next = 3;
+            _context5.next = 3;
             return $.get('./getproject', {
               ID: ID
             }, function (data) {
@@ -1128,14 +1165,14 @@ function _calprojectpercent() {
             });
 
           case 3:
-            return _context4.abrupt("return", Math.round(result, -1));
+            return _context5.abrupt("return", Math.round(result, -1));
 
           case 4:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4);
+    }, _callee5);
   }));
   return _calprojectpercent.apply(this, arguments);
 }
@@ -1228,43 +1265,43 @@ function getAllUser() {
 }
 
 function _getAllUser() {
-  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
     var all_user;
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
             all_user = [];
-            _context5.next = 3;
+            _context6.next = 3;
             return $.get('./getAllUser', {}, function (data) {
               all_user = data;
             });
 
           case 3:
-            return _context5.abrupt("return", all_user);
+            return _context6.abrupt("return", all_user);
 
           case 4:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5);
+    }, _callee6);
   }));
   return _getAllUser.apply(this, arguments);
 }
 
-function sergetProject(_x15) {
+function sergetProject(_x17) {
   return _sergetProject.apply(this, arguments);
 }
 
 function _sergetProject() {
-  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(user) {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(user) {
     var all_project;
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
-            _context6.next = 2;
+            _context7.next = 2;
             return $.get('./sergetProject', {
               user: user
             }, function (data) {
@@ -1275,14 +1312,14 @@ function _sergetProject() {
             });
 
           case 2:
-            return _context6.abrupt("return", all_project);
+            return _context7.abrupt("return", all_project);
 
           case 3:
           case "end":
-            return _context6.stop();
+            return _context7.stop();
         }
       }
-    }, _callee6);
+    }, _callee7);
   }));
   return _sergetProject.apply(this, arguments);
 }
@@ -1321,6 +1358,41 @@ function detailpicture(data, type) {
   }
 }
 
+function getaprojectmoney(_x18, _x19, _x20, _x21) {
+  return _getaprojectmoney.apply(this, arguments);
+}
+
+function _getaprojectmoney() {
+  _getaprojectmoney = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(id, project_name, color, target_number) {
+    var result;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            result = 0;
+            _context8.next = 3;
+            return $.get('./getaprojectmoney', {
+              id: id,
+              project_name: project_name,
+              color: color,
+              target_number: target_number
+            }, function (data) {
+              result = data;
+            });
+
+          case 3:
+            return _context8.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+  return _getaprojectmoney.apply(this, arguments);
+}
+
 var _default = {
   gettabledata: gettabledata,
   // get id inside the row of column select from database
@@ -1346,7 +1418,9 @@ var _default = {
   // popup message, need to input the word you want to show
   getColor: getColor,
   // turn the color code into the color, need to input the color code of the project
-  detailpicture: detailpicture //return detail's picture's name
+  detailpicture: detailpicture,
+  //return detail's picture's name
+  getaprojectmoney: getaprojectmoney //use to get a project saved money
 
 };
 exports.default = _default;
@@ -1501,357 +1575,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"record.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _signup = _interopRequireDefault(require("./signup.js"));
-
-var mod = _interopRequireWildcard(require("./module.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-// 0支出 1收入
-var click_op = 0; //spend
-
-var t = document.getElementById("spend"); //name
-
-var n = document.getElementById("na"); //date
-
-var d = document.getElementById("da"); //sort
-
-var s = document.getElementById("sort"); //account
-
-var a = document.getElementById("acc");
-var today = new Date();
-$(document).ready(function () {
-  $('#datepick input[name=dates]').val("".concat(mod.datetransfer(today.getMonth() + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear()));
-  $('#save').click(function (event) {
-    event.preventDefault();
-
-    if (click_op !== 2) {
-      $.get('./record', {
-        id: _signup.default,
-        date: $('#fin input[name=date]').val(),
-        cost: $('#fin input[name=cost]').val(),
-        sort: $('#fin #sort').text(),
-        items: $('#fin input[name=items]').val(),
-        account: $('#fin #acc').text(),
-        note: $('#fin input[name=deals_note]').val(),
-        type: click_op
-      }, function (data) {
-        if (data === '0') {
-          t.value = "0";
-          n.value = "";
-
-          if (click_op === 0) {
-            s.innerHTML = "飲食";
-          } else {
-            s.innerHTML = "薪水";
-          }
-
-          a.innerHTML = "現金";
-          d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
-        } else {
-          console.log('record: ', click_op);
-          mod.PopUpMessage(2);
-        }
-      });
-    } else {
-      $.get('./record', {
-        id: _signup.default,
-        date: $('#fin input[name=date]').val(),
-        cost: $('#fin input[name=cost]').val(),
-        sort: $('#fin #sort').text(),
-        account: $('#fin #acc').text(),
-        note: $('#fin input[name=deals_note]').val(),
-        type: click_op
-      }, function (data) {
-        if (data === '0') {
-          t.value = "0";
-          n.value = "";
-
-          if (click_op === 0) {
-            s.innerHTML = "飲食";
-          } else {
-            s.innerHTML = "薪水";
-          }
-
-          a.innerHTML = "現金";
-          d.value = "".concat(mod.datetransfer(mod.StringtoInt(today.getMonth()) + 1), "/").concat(mod.datetransfer(today.getDate()), "/").concat(today.getFullYear());
-        } else {
-          console.log('record: ', click_op);
-          mod.PopUpMessage(2);
-        }
-      });
-    } //use this in date:`${mod.datetransfer(mod.StringtoInt(today.getMonth())+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
-
-  }); // --------------- what is this ? ---------------
-
-  $('#accounting #everyday_earn #add_deals_btn').click(function (event) {
-    $('#add_deals').css("display", "flex");
-    setTimeout(function () {
-      $('#add_deals').css("transform", "translateX(0%)");
-    }, 100);
-    event.preventDefault();
-    t.value = "0";
-    n.value = "";
-
-    if (click_op === 0) {
-      s.innerHTML = "飲食";
-    } else if (click_op === 1) {
-      s.innerHTML = "薪水";
-    } else {
-      s.innerHTML = "一般儲蓄";
-    }
-
-    a.innerHTML = "現金";
-    d.value = "05/13/2022";
-  });
-  $('#add_deals .bar img').click(function (event) {
-    event.preventDefault();
-    $('#add_deals').css("transform", "translateX(100%)");
-    setTimeout(function () {
-      $('#add_deals').css("display", "none");
-    }, 500);
-  }); // --------------- what is this ? ---------------
-}); // type bar (change border-bottom) and change type to expend, income, saving
-
-var _loop = function _loop(i) {
-  $("#add_deals #type p:nth-child(".concat(i, ")")).click(function () {
-    if (i !== 4) {
-      $("#add_deals #type p:nth-child(".concat(i, ")")).css("border-bottom", "2px solid #410ADF");
-
-      if (i === 1) {
-        event.preventDefault();
-        click_op = 2;
-        s.innerHTML = "一般儲蓄";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "none");
-      } else if (i === 2) {
-        event.preventDefault();
-        click_op = 1;
-        s.innerHTML = "薪水";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "flex");
-      } else {
-        event.preventDefault();
-        click_op = 0;
-        s.innerHTML = "飲食";
-        $('#add_deals #fin .box:nth-child(4)').css("display", "flex");
-      }
-
-      for (var j = 1; j < 5; j++) {
-        if (j !== i) {
-          $("#add_deals #type p:nth-child(".concat(j, ")")).css("border-bottom", "none");
-        }
-      }
-    } else {
-      mod.PopUpMessage(3);
-    }
-  });
-};
-
-for (var i = 1; i < 5; i++) {
-  _loop(i);
-} // use jquery calendar
-
-
-$(function () {
-  $("#da").datepicker();
-  $('#das').datepicker();
-});
-$('#login_btn, #save, .datebox').click(function (event) {
-  event.preventDefault();
-  var count = 0;
-  var interval = setInterval(function () {
-    if (count == 4) {
-      count = 0;
-      clearInterval(interval);
-    }
-
-    getdetailincome();
-    getdetailexpenditure();
-    showtoday();
-    console.log(count);
-    count++;
-  }, 1000);
-});
-
-function getdetailincome() {
-  var container = document.querySelector('#main #accounting .income');
-  container.innerHTML = "<p></p>";
-  var DATE = $('#datepick input[name=dates]').val();
-  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
-  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
-  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: DAY,
-    month: MONTH,
-    year: YEAR
-  }, function (data) {
-    if (data != "nothing") {
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i);
-        var sort = mod.gettabledata(data, 'sort', i); //console.log(item, value, type)
-
-        if (item == '' || value == '' || type === '0' || type == '3') {
-          continue;
-        } //create element
-
-
-        var _container = document.querySelector('#main #accounting .income');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('b');
-        var types = document.createElement('img');
-        var word = document.createElement('p');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        word.textContent = "".concat(item);
-        paragraphtwo.textContent = "+".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'boxs');
-        types.setAttribute('id', 'type_pic');
-        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
-        word.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container.appendChild(box);
-
-        paragraphone.appendChild(types);
-        paragraphone.appendChild(word);
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-function getdetailexpenditure() {
-  var today = new Date();
-  var container = document.querySelector('#main #accounting .expenditure');
-  container.innerHTML = "<p></p>";
-  var DATE = $('#datepick input[name=dates]').val();
-  var YEAR = "'" + "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]) + "'";
-  var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
-  var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
-  $.get('./getmainpagedetail', {
-    id: _signup.default,
-    date: DAY,
-    month: MONTH,
-    year: YEAR
-  }, function (data) {
-    if (data != "nothing") {
-      container.innerHTML = "<p></p>";
-
-      for (var i in data) {
-        var item = mod.gettabledata(data, 'items', i);
-        var value = mod.gettabledata(data, 'cost', i);
-        var type = mod.gettabledata(data, 'type', i);
-        var sort = mod.gettabledata(data, 'sort', i); //console.log(type)
-
-        if (item == '' || value == '' || type === '1' || type == '3') {
-          continue;
-        } //create element
-
-
-        var _container2 = document.querySelector('#main #accounting .expenditure');
-
-        var box = document.createElement('a');
-        var paragraphone = document.createElement('b');
-        var types = document.createElement('img');
-        var word = document.createElement('p');
-        var paragraphtwo = document.createElement('P'); //set text
-
-        word.textContent = "".concat(item);
-        paragraphtwo.textContent = "-".concat(value); //set attribute
-
-        box.setAttribute('id', 'a');
-        paragraphone.setAttribute('class', 'boxs');
-        types.setAttribute('id', 'type_pic');
-        types.setAttribute('src', "./image/Accounting/".concat(mod.detailpicture(sort, type), "_icon.png"));
-        word.setAttribute('class', 'text');
-        paragraphtwo.setAttribute('class', 'text'); //append child
-
-        _container2.appendChild(box);
-
-        paragraphone.appendChild(types);
-        paragraphone.appendChild(word);
-        box.appendChild(paragraphone);
-        box.appendChild(paragraphtwo);
-      }
-    } else {}
-  });
-}
-
-function showtoday() {
-  return _showtoday.apply(this, arguments);
-}
-
-function _showtoday() {
-  _showtoday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var DATE, YEAR, MONTH, DAY, dayExpenditure, dayIncome, dayToTal;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            DATE = $('#datepick input[name=dates]').val();
-            YEAR = "".concat(DATE[6]) + "".concat(DATE[7]) + "".concat(DATE[8]) + "".concat(DATE[9]);
-            MONTH = "".concat(DATE[0]) + "".concat(DATE[1]);
-            DAY = "".concat(DATE[3]) + "".concat(DATE[4]);
-            _context.next = 6;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 0);
-
-          case 6:
-            dayExpenditure = _context.sent;
-            _context.next = 9;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 1);
-
-          case 9:
-            dayIncome = _context.sent;
-            dayToTal = dayIncome - dayExpenditure;
-
-            if (dayToTal >= 0) {
-              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("+".concat(dayToTal));
-            } else {
-              $('#main #accounting #everyday_earn #today_earn p:nth-child(2)').html("".concat(dayToTal));
-            }
-
-          case 12:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _showtoday.apply(this, arguments);
-}
-
-function transmitIncomeOrExpend() {
-  return click_op;
-}
-
-;
-var _default = transmitIncomeOrExpend;
-exports.default = _default;
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1863,8 +1587,6 @@ exports.default = void 0;
 require("regenerator-runtime/runtime.js");
 
 var _signup = _interopRequireDefault(require("./signup.js"));
-
-var _record = _interopRequireDefault(require("./record.js"));
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
@@ -1994,17 +1716,39 @@ $('#ok').click(function () {
     money = '';
   }, 500);
 }); // ------------------ expend and income sort selector box ------------------
-// open/close sort_select_box
 
-$('#add_deals #fin .box:nth-child(3) .input_div').click(function () {
-  if ((0, _record.default)() < 2) {
-    $('.sort_select_box').css("display", "flex");
-    setTimeout(function () {
-      $('.sort_select_box').css("transform", "translateY(0%)");
+var click_op = 0;
+
+var _loop2 = function _loop2(_i) {
+  $("#add_deals #type p:nth-child(".concat(_i, ")")).click(function () {
+    if (_i !== 4) {
+      if (_i === 1) {
+        click_op = 2;
+      } else if (_i === 2) {
+        click_op = 1;
+      } else {
+        click_op = 0;
+      }
+    }
+  });
+};
+
+for (var _i = 1; _i < 5; _i++) {
+  _loop2(_i);
+} // open/close sort_select_box
+
+/*
+$('#add_deals #fin .box:nth-child(3) .input_div').click(function(){
+  if(click_op < 2){
+    $('.sort_select_box').css("display", "flex")
+    setTimeout(() => {
+      $('.sort_select_box').css("transform", "translateY(0%)")
       document.addEventListener("click", clickHiddenSortBox);
-    }, 100);
+    }, 100)
   }
-});
+})
+  */
+
 
 function clickHiddenSortBox(eve) {
   if (eve.target.class != "sort_select_box") {
@@ -2034,28 +1778,28 @@ function CreateSortBox(image, name) {
   var ImageList = image;
   var NameList = name;
 
-  for (var _i = 0; _i < ImageList.length; _i++) {
+  for (var _i2 = 0; _i2 < ImageList.length; _i2++) {
     var block = document.createElement('div');
     var ImageBox = document.createElement('img');
     var NameBox = document.createElement('p');
     block.setAttribute("class", "sort_box");
-    ImageBox.setAttribute("src", "./image/Accounting/".concat(ImageList[_i], "_icon.png"));
+    ImageBox.setAttribute("src", "./image/Accounting/".concat(ImageList[_i2], "_icon.png"));
     ImageBox.setAttribute("width", "100%");
-    NameBox.textContent = "".concat(NameList[_i]);
+    NameBox.textContent = "".concat(NameList[_i2]);
     container.appendChild(block);
     block.appendChild(ImageBox);
     block.appendChild(NameBox);
   }
 
-  var _loop2 = function _loop2(_i2) {
-    $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ")")).click(function () {
-      var sort_word = $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i2, ") p")).text();
+  var _loop3 = function _loop3(_i3) {
+    $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i3, ")")).click(function () {
+      var sort_word = $(".sort_select_box .sort_bar .sort_box:nth-child(".concat(_i3, ") p")).text();
       $('#add_deals #fin #sort').html("".concat(sort_word));
     });
   };
 
-  for (var _i2 = 2; _i2 < 10; _i2++) {
-    _loop2(_i2);
+  for (var _i3 = 2; _i3 < 10; _i3++) {
+    _loop3(_i3);
   }
 } // ------------------ other selector boxs ------------------
 // open/close other_select_box
@@ -2090,30 +1834,18 @@ $('#add_deals #fin #acc_div').click( /*#__PURE__*/_asyncToGenerator( /*#__PURE__
     }
   }, _callee);
 })));
-$('#add_deals #fin #sort_div').click( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-  return regeneratorRuntime.wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return CreateOtherBox(Project, ProjectDiv);
-
-        case 2:
-          if ((0, _record.default)() === 2) {
-            $('.other_select_box').css("display", "flex");
-            setTimeout(function () {
-              $('.other_select_box').css("transform", "translateY(0%)");
-              document.addEventListener("click", clickHiddenOtherBox);
-            }, 100);
-          }
-
-        case 3:
-        case "end":
-          return _context2.stop();
-      }
-    }
-  }, _callee2);
-})));
+/*
+$('#add_deals #fin #sort_div').click(async function(){
+  await CreateOtherBox(Project, ProjectDiv)
+  if(click_op === 2){
+    $('.other_select_box').css("display", "flex")
+    setTimeout(() => {
+      $('.other_select_box').css("transform", "translateY(0%)")
+      document.addEventListener("click", clickHiddenOtherBox);
+    }, 100)
+  }
+})
+*/
 
 function clickHiddenOtherBox(eve) {
   if (eve.target.class != "other_select_box") {
@@ -2144,8 +1876,8 @@ $(document).ready(function () {
       var j = 2;
 
       if ("".concat(data) !== "nothing") {
-        for (var _i3 in data) {
-          var project_name = mod.gettabledata(data, 'project_name', _i3);
+        for (var _i4 in data) {
+          var project_name = mod.gettabledata(data, 'project_name', _i4);
           Project[j] = "".concat(project_name);
           j++;
         }
@@ -2167,8 +1899,8 @@ $(document).ready(function () {
       var j = 1;
 
       if ("".concat(data) !== "nothing") {
-        for (var _i4 in data) {
-          var account_name = mod.gettabledata(data, 'name', _i4);
+        for (var _i5 in data) {
+          var account_name = mod.gettabledata(data, 'name', _i5);
           Account[j] = "".concat(account_name);
           j++;
         }
@@ -2196,24 +1928,24 @@ function CreateOtherBox(name, place) {
   var NameList = name;
   $(".other_select_box p").html("".concat(NameList[0]));
 
-  for (var _i5 = 1; _i5 < NameList.length; _i5++) {
+  for (var _i6 = 1; _i6 < NameList.length; _i6++) {
     var block = document.createElement('div');
     var NameBox = document.createElement('p');
     block.setAttribute("class", "other_box");
-    NameBox.textContent = "".concat(NameList[_i5]);
+    NameBox.textContent = "".concat(NameList[_i6]);
     container.appendChild(block);
     block.appendChild(NameBox);
   }
 
-  var _loop3 = function _loop3(_i6) {
-    $(".other_select_box .other_bar .other_box:nth-child(".concat(_i6, ")")).click(function () {
-      var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i6, ") p")).text();
+  var _loop4 = function _loop4(_i7) {
+    $(".other_select_box .other_bar .other_box:nth-child(".concat(_i7, ")")).click(function () {
+      var word = $(".other_select_box .other_bar .other_box:nth-child(".concat(_i7, ") p")).text();
       $("".concat(place)).html("".concat(word));
     });
   };
 
-  for (var _i6 = 1; _i6 < NameList.length + 1; _i6++) {
-    _loop3(_i6);
+  for (var _i7 = 1; _i7 < NameList.length + 1; _i7++) {
+    _loop4(_i7);
   }
 }
 
@@ -2222,7 +1954,7 @@ var _default = {
   InitialColor: InitialColor
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./record.js":"record.js","./module.js":"module.js"}],"project.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./module.js":"module.js"}],"project.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -2232,6 +1964,10 @@ var _module = _interopRequireDefault(require("./module.js"));
 var _selectormodule = _interopRequireDefault(require("./selectormodule.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 
@@ -2347,140 +2083,184 @@ $('#navbar img:nth-child(5), #project #type_bar').click(function (event) {
   getallproject(SHOW_PERSONAL_OR_JOINT);
 }); // create getallproject function
 
-function getallproject(TF) {
-  var show_no_project = true;
-  $.get('./getProject', {
-    ID: _signup.default
-  }, function (data) {
-    if (data != "nothing") {
-      var container = document.querySelector('#main #project #project_list');
-      container.innerHTML = "<div></div>";
-      var project_list = [];
+function getallproject(_x) {
+  return _getallproject.apply(this, arguments);
+}
 
-      for (var i in data) {
-        var project_name = _module.default.gettabledata(data, 'project_name', i);
+function _getallproject() {
+  _getallproject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(TF) {
+    var show_no_project, judge, result, container, project_list, i, id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, totalmoney, percent, type, _container, block, infor_1, infor_2, dot, name, date, infor_3, speed, bar, btn, _loop2, _i;
 
-        var color = _module.default.gettabledata(data, 'color', i);
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            show_no_project = true;
+            judge = true;
+            result = 0;
+            _context.next = 5;
+            return $.get('./getProject', {
+              ID: _signup.default
+            }, function (data) {
+              result = data;
+            });
 
-        var start_year = _module.default.gettabledata(data, 'start_year', i);
+          case 5:
+            if (!(result != "nothing")) {
+              _context.next = 78;
+              break;
+            }
 
-        var start_month = _module.default.gettabledata(data, 'start_month', i);
+            container = document.querySelector('#main #project #project_list');
+            container.innerHTML = "<div></div>";
+            project_list = [];
+            _context.t0 = regeneratorRuntime.keys(result);
 
-        var start_day = _module.default.gettabledata(data, 'start_day', i);
+          case 10:
+            if ((_context.t1 = _context.t0()).done) {
+              _context.next = 76;
+              break;
+            }
 
-        var end_year = _module.default.gettabledata(data, 'end_year', i);
+            i = _context.t1.value;
+            id = _module.default.gettabledata(result, 'id', i);
+            project_name = _module.default.gettabledata(result, 'project_name', i);
+            color = _module.default.gettabledata(result, 'color', i);
+            start_year = _module.default.gettabledata(result, 'start_year', i);
+            start_month = _module.default.gettabledata(result, 'start_month', i);
+            start_day = _module.default.gettabledata(result, 'start_day', i);
+            end_year = _module.default.gettabledata(result, 'end_year', i);
+            end_month = _module.default.gettabledata(result, 'end_month', i);
+            end_day = _module.default.gettabledata(result, 'end_day', i);
+            target_number = _module.default.gettabledata(result, 'target_number', i);
+            _context.next = 24;
+            return _module.default.getaprojectmoney(id, project_name, color, target_number);
 
-        var end_month = _module.default.gettabledata(data, 'end_month', i);
+          case 24:
+            totalmoney = _context.sent;
+            console.log('totalmoney', totalmoney);
+            percent = totalmoney / _module.default.StringtoInt(_module.default.gettabledata(result, 'target_number', i)) * 100;
+            console.log(percent);
+            percent = Math.round(percent, -1);
+            type = _module.default.gettabledata(result, 'personal_or_joint', i);
+            project_list[i] = project_name;
+            console.log(type);
 
-        var end_day = _module.default.gettabledata(data, 'end_day', i);
+            if (type >= 2) {
+              judge = true;
+            } else if (type == 1) {
+              judge = false;
+            } else {
+              judge = undefined;
+            }
 
-        var percent = _module.default.StringtoInt(_module.default.gettabledata(data, 'saved_money', i)) / _module.default.StringtoInt(_module.default.gettabledata(data, 'target_number', i)) / 100;
-        percent = Math.round(percent, -1);
+            if (!(judge !== TF)) {
+              _context.next = 35;
+              break;
+            }
 
-        var type = _module.default.gettabledata(data, 'personal_or_joint', i);
+            return _context.abrupt("continue", 10);
 
-        project_list[i] = project_name;
+          case 35:
+            //create element
+            _container = document.querySelector('#main #project #project_list');
+            block = document.createElement('div');
+            infor_1 = document.createElement('div');
+            infor_2 = document.createElement('div');
+            dot = document.createElement('img');
+            name = document.createElement('p');
+            date = document.createElement('p');
+            infor_3 = document.createElement('div');
+            speed = document.createElement('p');
+            bar = document.createElement('img');
+            btn = document.createElement('img'); //set text
 
-        if (type !== "".concat(TF)) {
-          continue;
-        } //create element
+            name.textContent = "".concat(project_name);
+            date.textContent = "".concat(start_year, ".").concat(start_month, ".").concat(start_day, "-").concat(end_year, ".").concat(end_month, ".").concat(end_day);
+            speed.textContent = "".concat(percent, "%"); //set attribute
 
+            block.setAttribute('class', 'project_block');
+            block.setAttribute('id', "".concat(project_name));
+            infor_1.setAttribute('class', 'project_infor');
+            infor_2.setAttribute('class', 'type_and_date');
+            infor_3.setAttribute('class', 'plannd_speed_infor');
+            dot.setAttribute('src', "./image/project/Project_colordot_".concat(_module.default.getColor(color), ".png"));
+            dot.setAttribute('height', '35%');
+            bar.setAttribute('src', './image/project/Project_progressBar-bg.png');
+            bar.setAttribute('width', '100%');
+            btn.setAttribute('src', './image/btn/btn_arrow_right.png');
+            btn.setAttribute('height', '17%');
+            btn.setAttribute('id', 'right_btn');
+            name.setAttribute('id', 'item');
+            speed.setAttribute('id', 'percent'); //append child
 
-        var _container = document.querySelector('#main #project #project_list');
+            _container.appendChild(block);
 
-        var block = document.createElement('div');
-        var infor_1 = document.createElement('div');
-        var infor_2 = document.createElement('div');
-        var dot = document.createElement('img');
-        var name = document.createElement('p');
-        var date = document.createElement('p');
-        var infor_3 = document.createElement('div');
-        var speed = document.createElement('p');
-        var bar = document.createElement('img');
-        var btn = document.createElement('img'); //set text
+            block.appendChild(infor_1);
+            block.appendChild(btn);
+            infor_1.appendChild(infor_2);
+            infor_1.appendChild(infor_3);
+            infor_1.appendChild(bar);
+            infor_2.appendChild(dot);
+            infor_2.appendChild(name);
+            infor_2.appendChild(date);
+            infor_3.appendChild(speed); // display no_project box or not
 
-        name.textContent = "".concat(project_name);
-        date.textContent = "".concat(start_year, ".").concat(start_month, ".").concat(start_day, "-").concat(end_year, ".").concat(end_month, ".").concat(end_day);
-        speed.textContent = "".concat(percent, "%"); //set attribute
+            show_no_project = false;
+            _context.next = 10;
+            break;
 
-        block.setAttribute('class', 'project_block');
-        block.setAttribute('id', "".concat(project_name));
-        infor_1.setAttribute('class', 'project_infor');
-        infor_2.setAttribute('class', 'type_and_date');
-        infor_3.setAttribute('class', 'plannd_speed_infor');
-        dot.setAttribute('src', "./image/project/Project_colordot_".concat(_module.default.getColor(color), ".png"));
-        dot.setAttribute('height', '35%');
-        bar.setAttribute('src', './image/project/Project_progressBar-bg.png');
-        bar.setAttribute('width', '100%');
-        btn.setAttribute('src', './image/btn/btn_arrow_right.png');
-        btn.setAttribute('height', '17%');
-        btn.setAttribute('id', 'right_btn');
-        name.setAttribute('id', 'item');
-        speed.setAttribute('id', 'percent'); //append child
+          case 76:
+            _loop2 = function _loop2(_i) {
+              if (SHOW_PERSONAL_OR_JOINT === false) {
+                $("#" + "".concat(project_list[_i])).click(function (e) {
+                  $('#show_personal_project').css("display", "flex");
+                  setTimeout(function () {
+                    $('#show_personal_project').css("transform", "translateX(0%)");
+                  }, 100);
+                  event.preventDefault(); // I'm not sure is it right or not
 
-        _container.appendChild(block);
+                  showProjectDetail(project_list[_i], 'personal');
+                });
+              } else {
+                $("#" + "".concat(project_list[_i])).click(function (e) {
+                  $('#show_joint_project').css("display", "flex");
+                  setTimeout(function () {
+                    $('#show_joint_project').css("transform", "translateX(0%)");
+                  }, 100);
+                  event.preventDefault(); // I'm not sure is it right or not
 
-        block.appendChild(infor_1);
-        block.appendChild(btn);
-        infor_1.appendChild(infor_2);
-        infor_1.appendChild(infor_3);
-        infor_1.appendChild(bar);
-        infor_2.appendChild(dot);
-        infor_2.appendChild(name);
-        infor_2.appendChild(date);
-        infor_3.appendChild(speed); // display no_project box or not
+                  showProjectDetail(project_list[_i], 'joint');
+                });
+              }
+            };
 
-        show_no_project = false;
-      }
+            for (_i = 0; _i < project_list.length; _i++) {
+              _loop2(_i);
+            }
 
-      var _loop2 = function _loop2(_i) {
-        if (SHOW_PERSONAL_OR_JOINT === false) {
-          $("#" + "".concat(project_list[_i])).click(function (e) {
-            $('#show_personal_project').css("display", "flex");
-            setTimeout(function () {
-              $('#show_personal_project').css("transform", "translateX(0%)");
-            }, 100);
-            event.preventDefault(); // I'm not sure is it right or not
+          case 78:
+            if (show_no_project === true) {
+              $('#no_project').css("display", "flex");
+            } else {
+              $('#no_project').css("display", "none");
+            }
 
-            showProjectDetail(project_list[_i], 'personal');
-          });
-        } else {
-          $("#" + "".concat(project_list[_i])).click(function (e) {
-            $('#show_joint_project').css("display", "flex");
-            setTimeout(function () {
-              $('#show_joint_project').css("transform", "translateX(0%)");
-            }, 100);
-            event.preventDefault(); // I'm not sure is it right or not
-
-            showProjectDetail(project_list[_i], 'joint');
-          });
+          case 79:
+          case "end":
+            return _context.stop();
         }
-      };
-
-      for (var _i = 0; _i < project_list.length; _i++) {
-        _loop2(_i);
       }
-    }
-
-    if (show_no_project === true) {
-      $('#no_project').css("display", "flex");
-    } else {
-      $('#no_project').css("display", "none");
-    }
-  });
+    }, _callee);
+  }));
+  return _getallproject.apply(this, arguments);
 }
 
 $(document).ready(function () {
   // add project
   $('#project_form button[type="submit"]').click(function (event) {
     event.preventDefault();
-
-    if (MEMBER.length > 1) {
-      PERSONAL_OR_JOINT = true;
-    } else {
-      PERSONAL_OR_JOINT = false;
-    }
-
+    PERSONAL_OR_JOINT = MEMBER.length;
     $.get('./project', {
       id: _signup.default,
       project_name: $('#project_form input[name=project_name]').val(),
@@ -2542,7 +2322,8 @@ $(document).ready(function () {
   }); // add member in project
 
   $('#add_member #result #add_mem_btn').click(function (event) {
-    MEMBER.push($('#add_member #id_box input[name=userid]').val());
+    MEMBER.push($('#add_member #id_box input[name=userid]').val()); //maybe need to check whether it is blank
+
     console.log(MEMBER);
   });
 });
@@ -2577,7 +2358,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39210" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46356" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -2754,5 +2535,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","project.js"], null)
-
 //# sourceMappingURL=project.b5dfbff8.js.map

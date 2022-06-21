@@ -122,106 +122,124 @@ $('#navbar img:nth-child(5), #project #type_bar').click((event) => {
 })
 
 // create getallproject function
-function getallproject(TF){
+async function getallproject(TF){
   var show_no_project = true
-  $.get('./getProject',{
+  var judge = true
+  var result = 0
+  await $.get('./getProject',{
     ID: ID,
   },(data)=>{
-      if(data != "nothing"){
-          const container = document.querySelector('#main #project #project_list')
-          container.innerHTML=`<div></div>`
-          var project_list = []
-          for (var i in data){
-              var project_name = mod.gettabledata(data,'project_name', i)
-              var color = mod.gettabledata(data, 'color',i)
-              var start_year = mod.gettabledata(data, 'start_year', i)
-              var start_month = mod.gettabledata(data, 'start_month', i)
-              var start_day = mod.gettabledata(data, 'start_day', i)
-              var end_year = mod.gettabledata(data, 'end_year', i)
-              var end_month = mod.gettabledata(data, 'end_month', i)
-              var end_day = mod.gettabledata(data, 'end_day', i)
-              var percent = mod.StringtoInt(mod.gettabledata(data, 'saved_money', i))/mod.StringtoInt(mod.gettabledata(data, 'target_number', i))/100
-              percent = Math.round(percent, -1)
-              var type = mod.gettabledata(data, 'personal_or_joint', i)
-              project_list[i] = project_name
-              if(type !== `${TF}`){
-                continue;
-              }
-              //create element
-              const container = document.querySelector('#main #project #project_list')
-              const block = document.createElement('div')
-              const infor_1 = document.createElement('div')
-              const infor_2 = document.createElement('div')
-              const dot = document.createElement('img')
-              const name = document.createElement('p')
-              const date = document.createElement('p')
-              const infor_3 = document.createElement('div')
-              const speed = document.createElement('p')
-              const bar = document.createElement('img')
-              const btn = document.createElement('img')
-              //set text
-              name.textContent = `${project_name}`
-              date.textContent = `${start_year}.${start_month}.${start_day}-${end_year}.${end_month}.${end_day}`
-              speed.textContent = `${percent}%`
-              //set attribute
-              block.setAttribute('class', 'project_block')
-              block.setAttribute('id', `${project_name}`)
-              infor_1.setAttribute('class', 'project_infor')
-              infor_2.setAttribute('class', 'type_and_date')
-              infor_3.setAttribute('class', 'plannd_speed_infor')
-              dot.setAttribute('src', `./image/project/Project_colordot_${mod.getColor(color)}.png`)
-              dot.setAttribute('height', '35%')
-              bar.setAttribute('src', './image/project/Project_progressBar-bg.png')
-              bar.setAttribute('width', '100%')
-              btn.setAttribute('src', './image/btn/btn_arrow_right.png')
-              btn.setAttribute('height', '17%')
-              btn.setAttribute('id', 'right_btn')
-              name.setAttribute('id', 'item')
-              speed.setAttribute('id', 'percent')
-              //append child
-              container.appendChild(block)
-              block.appendChild(infor_1)
-              block.appendChild(btn)
-              infor_1.appendChild(infor_2)
-              infor_1.appendChild(infor_3)
-              infor_1.appendChild(bar)
-              infor_2.appendChild(dot)
-              infor_2.appendChild(name)
-              infor_2.appendChild(date)
-              infor_3.appendChild(speed)
-              // display no_project box or not
-              show_no_project = false
-          }
-          for(let i=0;i<project_list.length;i++){
-            if(SHOW_PERSONAL_OR_JOINT === false){
-              $("#"+`${project_list[i]}`).click(function(e){
-                $('#show_personal_project').css("display", "flex")
-                setTimeout(() => {
-                  $('#show_personal_project').css("transform", "translateX(0%)")
-                }, 100)
-                event.preventDefault()  // I'm not sure is it right or not
-                showProjectDetail(project_list[i], 'personal')
-              })
-            }
-            else{
-              $("#"+`${project_list[i]}`).click(function(e){
-                $('#show_joint_project').css("display", "flex")
-                setTimeout(() => {
-                  $('#show_joint_project').css("transform", "translateX(0%)")
-                }, 100)
-                event.preventDefault()  // I'm not sure is it right or not
-                showProjectDetail(project_list[i], 'joint')
-              })
-            }
-          }
-      }
-      if(show_no_project===true){
-        $('#no_project').css("display", "flex")
+    result = data
+  })
+  if(result != "nothing"){
+    const container = document.querySelector('#main #project #project_list')
+    container.innerHTML=`<div></div>`
+    var project_list = []
+    for (var i in result){
+        var id = mod.gettabledata(result,'id', i)
+        var project_name = mod.gettabledata(result,'project_name', i)
+        var color = mod.gettabledata(result, 'color',i)
+        var start_year = mod.gettabledata(result, 'start_year', i)
+        var start_month = mod.gettabledata(result, 'start_month', i)
+        var start_day = mod.gettabledata(result, 'start_day', i)
+        var end_year = mod.gettabledata(result, 'end_year', i)
+        var end_month = mod.gettabledata(result, 'end_month', i)
+        var end_day = mod.gettabledata(result, 'end_day', i)
+        var target_number = mod.gettabledata(result, 'target_number', i)
+        var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number)
+        console.log('totalmoney',totalmoney)
+        var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100
+        console.log(percent)
+        percent = Math.round(percent, -1)
+        var type = mod.gettabledata(result, 'personal_or_joint', i)
+        project_list[i] = project_name
+        console.log(type)
+        if (type >=2){
+          judge = true
+        }
+        else if(type == 1){
+          judge = false
+        }
+        else{
+          judge = undefined
+        }
+        if(judge !== TF){
+          continue;
+        }
+        //create element
+        const container = document.querySelector('#main #project #project_list')
+        const block = document.createElement('div')
+        const infor_1 = document.createElement('div')
+        const infor_2 = document.createElement('div')
+        const dot = document.createElement('img')
+        const name = document.createElement('p')
+        const date = document.createElement('p')
+        const infor_3 = document.createElement('div')
+        const speed = document.createElement('p')
+        const bar = document.createElement('img')
+        const btn = document.createElement('img')
+        //set text
+        name.textContent = `${project_name}`
+        date.textContent = `${start_year}.${start_month}.${start_day}-${end_year}.${end_month}.${end_day}`
+        speed.textContent = `${percent}%`
+        //set attribute
+        block.setAttribute('class', 'project_block')
+        block.setAttribute('id', `${project_name}`)
+        infor_1.setAttribute('class', 'project_infor')
+        infor_2.setAttribute('class', 'type_and_date')
+        infor_3.setAttribute('class', 'plannd_speed_infor')
+        dot.setAttribute('src', `./image/project/Project_colordot_${mod.getColor(color)}.png`)
+        dot.setAttribute('height', '35%')
+        bar.setAttribute('src', './image/project/Project_progressBar-bg.png')
+        bar.setAttribute('width', '100%')
+        btn.setAttribute('src', './image/btn/btn_arrow_right.png')
+        btn.setAttribute('height', '17%')
+        btn.setAttribute('id', 'right_btn')
+        name.setAttribute('id', 'item')
+        speed.setAttribute('id', 'percent')
+        //append child
+        container.appendChild(block)
+        block.appendChild(infor_1)
+        block.appendChild(btn)
+        infor_1.appendChild(infor_2)
+        infor_1.appendChild(infor_3)
+        infor_1.appendChild(bar)
+        infor_2.appendChild(dot)
+        infor_2.appendChild(name)
+        infor_2.appendChild(date)
+        infor_3.appendChild(speed)
+        // display no_project box or not
+        show_no_project = false
+    }
+    for(let i=0;i<project_list.length;i++){
+      if(SHOW_PERSONAL_OR_JOINT === false){
+        $("#"+`${project_list[i]}`).click(function(e){
+          $('#show_personal_project').css("display", "flex")
+          setTimeout(() => {
+            $('#show_personal_project').css("transform", "translateX(0%)")
+          }, 100)
+          event.preventDefault()  // I'm not sure is it right or not
+          showProjectDetail(project_list[i], 'personal')
+        })
       }
       else{
-        $('#no_project').css("display", "none")
+        $("#"+`${project_list[i]}`).click(function(e){
+          $('#show_joint_project').css("display", "flex")
+          setTimeout(() => {
+            $('#show_joint_project').css("transform", "translateX(0%)")
+          }, 100)
+          event.preventDefault()  // I'm not sure is it right or not
+          showProjectDetail(project_list[i], 'joint')
+        })
       }
-  })
+    }
+  }
+  if(show_no_project===true){
+    $('#no_project').css("display", "flex")
+  }
+  else{
+    $('#no_project').css("display", "none")
+  }
 }
 
 
@@ -229,12 +247,7 @@ $(document).ready(function() {
   // add project
   $('#project_form button[type="submit"]').click((event) => {
     event.preventDefault()
-    if(MEMBER.length>1){
-      PERSONAL_OR_JOINT = true
-    }
-    else{
-      PERSONAL_OR_JOINT = false
-    }
+    PERSONAL_OR_JOINT = MEMBER.length
     $.get('./project', {
       id: ID,
       project_name: $('#project_form input[name=project_name]').val(),
@@ -303,7 +316,7 @@ $(document).ready(function() {
 
   // add member in project
   $('#add_member #result #add_mem_btn').click((event) => {
-    MEMBER.push($('#add_member #id_box input[name=userid]').val())
+    MEMBER.push($('#add_member #id_box input[name=userid]').val())//maybe need to check whether it is blank
     console.log(MEMBER)
   })
 });

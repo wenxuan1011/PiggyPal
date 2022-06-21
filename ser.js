@@ -276,32 +276,7 @@ app.get('/getAccount',(req,res) =>{
 
 
 // record
-/*
-app.get('/record',(req,res) => {
-  connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
-  
-  let id = "'"+`${req.query.id}`+"'"
-  let items = "'" + `${req.query.items}` + "'"
-  let cost = "'" + `${req.query.cost}` + "'"
-  let temp_date = `${req.query.date}`
-  let type = "'" + `${req.query.type}` + "'"
-  
-  let year = "'" + `${temp_date[6]}` + `${temp_date[7]}` + `${temp_date[8]}` + `${temp_date[9]}` + "'"
-  let day = "'" + `${temp_date[3]}` + `${temp_date[4]}` + "'"
-  let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
 
-  if(mod.checkBlank('record',items,temp_date,cost,type)===1){
-    const add_record = `INSERT INTO account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
-    connection.query(add_record, (err) => {
-      if (err) console.log('fail to insert: ', err)
-      
-    })
-    res.send('0')
-  }
-  else{
-    res.send(mod.checkBlank('record',items,temp_date,cost,type))
-  }
-})*/
 
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), year VARCHAR(4), month VARCHAR(2), day VARCHAR(2), cost VARCHAR(30), sort VARCHAR(30), items VARCHAR(30), account VARCHAR(30), type VARCHAR(1))')
@@ -498,6 +473,39 @@ app.get('/getProject',(req,res) =>{
       res.send(row)
     }
   })
+})
+
+app.get('/projectcomplete', (req,res) => {
+  var ID = "'"+req.query.ID+"'"
+  var project_number = "'"+req.query.project_name+"'"
+  var color = "'"+req.query.color+"'"
+  var target_number = "'"+req.query.target_number+"'"
+  var member = "'"+req.query.member+"'"
+  const complete = `UPDATE project SET personal_or_joint = -1 WHERE id = ${ID} and project_name = ${project_number} and color = ${color} and target_number = ${target_number} and member = ${member}` 
+  connection.query(complete, (err) => {
+    if(err) console.log('failed to complete project',err)
+  })
+})
+
+app.get('/getaprojectmoney', (req,res) => {
+  var result = 0
+  var id = "'"+req.query.id+"'"
+  var project_name= "'"+req.query.project_name+"'"
+  var color = "'" + req.query.color + "'"
+  var target_number = "'" + req.query.target_number + "'"
+  const summation = `SELECT * FROM project WHERE id = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+  console.log(summation)
+  connection.query(summation,(err,rows)=>{
+    if(err)console.log('failed to get a project total saved money')
+    console.log('bbb',rows)
+    for(var i in rows){
+      result += mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
+      console.log('aaa',result)
+    }
+    res.send(`${result}`)
+    
+  })
+  
 })
 
 /////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////

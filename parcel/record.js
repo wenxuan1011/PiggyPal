@@ -103,7 +103,7 @@ $(document).ready(function() {
       s.innerHTML = "一般儲蓄"
     }
     a.innerHTML = "現金"
-    d.value = "05/13/2022"
+    d.value = `${mod.datetransfer(today.getMonth()+1)}/${mod.datetransfer(today.getDate())}/${today.getFullYear()}`
   })
   
   $('#add_deals .bar img').click((event) => {
@@ -174,10 +174,8 @@ $('#login_btn, #save, .datebox').click((event) => {
     getdetailincome()
     getdetailexpenditure()
     showtoday()
-    console.log(count)
     count++
   },1000 )
-  
 })
 
 
@@ -202,7 +200,7 @@ function getdetailincome(){
               var type = mod.gettabledata(data, 'type', i)
               var sort = mod.gettabledata(data, 'sort', i)
               //console.log(item, value, type)
-              if(item == ''||value == ''|| type === '0' ||type =='3'){
+              if(item == ''||value == ''|| type !== '1'){
                   continue;
               }
               //create element
@@ -258,7 +256,7 @@ function getdetailexpenditure(){
               var type = mod.gettabledata(data, 'type', i)
               var sort = mod.gettabledata(data, 'sort', i)
               //console.log(type)
-              if(item == ''||value == ''|| type === '1' || type =='3'){
+              if(item == ''||value == ''|| type !== '0'){
                   continue;
               }
               //create element
