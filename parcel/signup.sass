@@ -373,8 +373,8 @@ body
                 height: 20%
                 margin: 1.5vh 0 0.5vh 0
 
-                img
-                    margin: 0 2.933vw 0 5vw
+                // img
+                //     margin: 0 2.933vw 0 5vw
 
                 p
                     font-size: 14px
@@ -569,7 +569,6 @@ body
                     color: #8E5FF4
                     font-family: 'Roboto'
 
-
     #add_deals
         display: none
         flex-direction: column
@@ -717,8 +716,7 @@ body
                     margin: 0
     
         #save
-
-        
+   
     #barcode
         display: none
 
@@ -788,19 +786,8 @@ body
             width: 80.2667vw
             height: auto
             margin: 5.17vh 0 0 0
-
-            #no_normal_save_money
-                display: none
-                flex-direction: row
-                justify-content: center
-                align-items: center
-                width: 80.2667vw
-                height: 10vh
-                background-color: white
-                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
-                border-radius: 8px
-                margin: 0 0 7.88vh 0
-
+            #more_sm_infor_btn
+                margin: 0 4vw 0 0
             .normal_save_money
                 display: none
                 flex-direction: row
@@ -813,8 +800,7 @@ body
                 border-radius: 8px
                 margin: 0 0 7.88vh 0
 
-                #more_sm_infor_btn
-                    margin: 0 4vw 0 0
+                
 
                 .normal_save_money_infor
                     display: flex
@@ -855,18 +841,24 @@ body
                         #percent_sm
                             font-family: Roboto Bold
                             font-size: 24px
-
-        #no_project
-            display: none
-            flex-direction: row
-            justify-content: center
+        #project_list_all
+            display: flex
+            flex-direction: column
             align-items: center
-            width: 80.2667vw
-            height: 10vh
-            background-color: white
-            box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
-            border-radius: 8px
-            margin: 0 0 7.88vh 0
+            width: auto
+            height: auto
+
+            #no_project
+                display: none
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                width: 80.2667vw
+                height: 10vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 7.88vh 0
         
         #project_list
             display: flex
@@ -988,7 +980,13 @@ body
                 height: 4.31vh
                 width: 100%
                 margin: 0 0 2.586vh 0
-
+            .box:nth-child(5)
+                .participate_member
+                    margin: 0 0 0 5vh
+                    img
+                        object-fit: cover
+                        border-radius: 34px
+                
             .box:nth-child(8)
                 align-items: start
                 margin: 0 0 6.48vh 0
@@ -1154,6 +1152,10 @@ body
             p
                 font-size: 16px
                 margin: 2.09vh 0 3.85vh 0
+            
+            img:nth-child(1)
+                border-radius: 30px
+                object-fit: cover
 
         #wrong
             display: none
@@ -1164,8 +1166,6 @@ body
 
             p
                font-size: 16px 
-
-        
 
     #show_personal_project
         display: none
@@ -1301,6 +1301,31 @@ body
         top: 0
         border: none
         border-left: solid
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                right: 6.9333vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
         #graph_box_sm
             display: flex
             flex-direction: column
@@ -1323,6 +1348,28 @@ body
             border-radius: 10px
 
             #title_sm
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 3.2vh 0 0 0
+
+                p
+                    font-size: 15px
+                // display: flex
+                // flex-direction: row
+                // align-items: center
+                // width: 100%
+                // height: 20%
+                // margin: 1.5vh 0 0.5vh 0
+
+                // img
+                //     margin: 0 2.933vw 0 5vw
+
+                // p
+                //     font-size: 14px
             #date_box_sm
                 display: flex
                 flex-direction: row
@@ -1339,14 +1386,23 @@ body
                     font-family: "Roboto Bold"
     
             #target_money_sm
-                margin: 0
-                padding: 1.1084vh 0
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 0 0 20px 0
+                padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
+                // margin: 0
+                // padding: 1.1084vh 0
+                // border-top: 0.2px solid #B3B3B3
                 p
                     font-size: 13px
                 #money
                     color: #737474
-//////////////////////////////////////////////////
+
     #show_joint_project
         display: none
         flex-direction: column
@@ -1402,7 +1458,33 @@ body
             min-height: 10vh
             background-color: white
             border-radius: 10px
-            margin: 1.724vh 0 1.97vh 0
+            margin: 1.97vh 0
+
+            .member_block
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 90vw
+                height: 6.1576vh
+                margin: 15px 0
+            
+                img:nth-child(1)
+                    object-fit: cover
+                    border-radius: 30px
+                    margin: 0 0 0 25px
+                
+                p
+                    font-size: 12px
+                    color: #737474
+
+                .member_box
+                    display: flex
+                    flex-direction: column
+                    justify-content: space-between
+                    align-items: end
+                    width: 72%
+                    margin: 0 25px 0 0
 
         .project_detail
             display: flex
@@ -1475,7 +1557,6 @@ body
                 padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
 
-
     #personal_page
         display: flex
         flex-direction: column
@@ -1520,7 +1601,7 @@ body
             
             img
                 margin: 0 0 1.97vh 0
-                border-radius : 30px
+                border-radius: 30px
                 object-fit: cover
             
             p
@@ -1711,7 +1792,6 @@ body
                 img
                     margin: 0
 
-
     .color_select_box
         display: none
         flex-direction: column
@@ -1751,7 +1831,6 @@ body
             img:nth-child(5)
                 margin: 0
 
-
     .NumKeyBoard_select_box
         display: none
         flex-direction: column
@@ -1785,7 +1864,6 @@ body
         
         .board_box:nth-child(5)
             width: 69vw
-
 
     .sort_select_box
         display: none

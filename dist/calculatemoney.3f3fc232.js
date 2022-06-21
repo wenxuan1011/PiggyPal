@@ -1804,27 +1804,27 @@ function _setVariable() {
           case 0:
             today = new Date();
             _context3.next = 3;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 0);
+            return mod.getTodayMoney(ID, 'account', 'cost', 0);
 
           case 3:
             todayExpenditure = _context3.sent;
             _context3.next = 6;
-            return mod.getTodayMoney(ID, 'Account', 'cost', 1);
+            return mod.getTodayMoney(ID, 'account', 'cost', 1);
 
           case 6:
             todayIncome = _context3.sent;
             _context3.next = 9;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 0);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 0);
 
           case 9:
             Expenditure = _context3.sent;
             _context3.next = 12;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 1);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 1);
 
           case 12:
             Income = _context3.sent;
             _context3.next = 15;
-            return mod.getMonthlyMoney(ID, 'Account', 'cost', 3);
+            return mod.getMonthlyMoney(ID, 'account', 'cost', 3);
 
           case 15:
             ProjectSaved = _context3.sent;
@@ -1931,7 +1931,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43454" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33572" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

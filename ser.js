@@ -18,7 +18,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6173
+const port = 6174
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
@@ -122,7 +122,7 @@ app.get('/getmainpagedetail',(req,res) => {
   let date= "'"+`${mod.datetransfer(req.query.date)}`+"'"
   let year= "'"+`${req.query.year}`+"'"
   var search_user=""
-  search_user=`SELECT * FROM Account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
+  search_user=`SELECT * FROM account WHERE id = ${UID} and month = ${month} and day = ${date} and year = ${year}`
   
   //console.log(search_user)
   connection.query(search_user, (err, row, fields) => {
@@ -217,7 +217,7 @@ app.get('/information',(req,res) => {
 // record
 /*
 app.get('/record',(req,res) => {
-  connection.query('CREATE TABLE IF NOT EXISTS Account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
+  connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), items VARCHAR(30), cost VARCHAR(30), day VARCHAR(2), month VARCHAR(2), year VARCHAR(4), type VARCHAR(1))')
   
   let id = "'"+`${req.query.id}`+"'"
   let items = "'" + `${req.query.items}` + "'"
@@ -230,7 +230,7 @@ app.get('/record',(req,res) => {
   let month = "'" + `${temp_date[0]}` + `${temp_date[1]}` + "'"
 
   if(mod.checkBlank('record',items,temp_date,cost,type)===1){
-    const add_record = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
+    const add_record = `INSERT INTO account (id, items, cost, day, month, year, type) VALUES (${id}, ${items}, ${cost}, ${day}, ${month}, ${year}, ${type})`
     connection.query(add_record, (err) => {
       if (err) console.log('fail to insert: ', err)
       
@@ -421,12 +421,24 @@ app.get('/project',(req,res) => {
 })
 
 
+// //傳port值給前端
+// app.get('/getPort',(req,res) =>{
+//   let port_ = "'"+`${req.query.port}`+"'"
+//     if(err)
+//       console.log('fail to search: ', err)
+//     if(row[0]===undefined){
+//       res.send("nothing")
+//     }
+//     else{
+//       res.send(port_)
+//     }
+//   })
+
 
 ///get project table
 app.get('/getProject',(req,res) =>{
   let UID = "'"+`${req.query.ID}`+"'"
-  var search_user = ""
-  search_user = `SELECT * FROM project WHERE member = ${UID}`
+  const search_user = `SELECT * FROM project WHERE member = ${UID}`
   connection.query(search_user, (err, row, fields) => {
     if(err)
       console.log('fail to search: ', err)
@@ -439,6 +451,38 @@ app.get('/getProject',(req,res) =>{
   })
 })
 
+//get project creater
+app.get('/getCreater',(req,res) =>{
+  let member = "'"+`${req.query.ID}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  const search_creater = `SELECT * FROM project WHERE member = ${member} and project_name = ${project_name}`
+  connection.query(search_creater, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
+})
+//get project members
+app.get('/getMember',(req,res) =>{
+  let member = "'"+`${req.query.ID}`+"'"
+  let project_name = "'"+`${req.query.project_name}`+"'"
+  const search_member = `SELECT * FROM project WHERE id = ${member} and project_name = ${project_name}`
+  connection.query(search_member, (err, row, fields) => {
+    if(err)
+      console.log('fail to search: ', err)
+    if(row[0]===undefined){
+      res.send("nothing")
+    }
+    else{
+      res.send(row)
+    }
+  })
+})
 
 //upload personal picture
 import multer  from 'multer'
@@ -578,7 +622,7 @@ app.get('/saveMoneytoProject',(req,res) =>{
   let month = "'"+`${req.query.month}`+"'"
   let year = "'"+`${req.query.year}`+"'"
 
-  const accounting = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${member}, ${project_name}, ${saveded_money}, ${date}, ${month}, ${year}, '3')`
+  const accounting = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${member}, ${project_name}, ${saveded_money}, ${date}, ${month}, ${year}, '3')`
   connection.query(accounting, (err,rows,fields)=>{
   
     if(err)console.log("There are some problem: ",err)
@@ -606,7 +650,7 @@ app.get('/setfinancialincome',(req, res) =>{
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
-        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},1)`
+        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},1)`
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })
@@ -631,12 +675,12 @@ app.get('/setfinancialexpenditure',(req, res) =>{
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
-        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
+        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
         connection.query(addFinancial,(err, rows, fields)=>{
         })
       }
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
-        const addFinancial = `INSERT INTO Account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
+        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })

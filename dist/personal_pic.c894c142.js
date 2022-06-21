@@ -1502,59 +1502,83 @@ function CheckImgExists(imgurl) {
       reject(err);
     };
   });
-} //使用方式
+}
 
+var port = 6174; //使用方式
 
-CheckImgExists("http://140.116.177.150:6173/image/personal_pic/" + l_id + ".jpg" //imgurl here
+var have_pic = 0;
+CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".jpg" //imgurl here
 ).then(function () {
   $("img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".jpg");
   $("#photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".jpg"); //success callback
+  $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".jpg");
+  have_pic = 1; //success callback
 }).catch(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/2.jpg"); //fail callback
+  // console.log(2)
+  if (have_pic === 0) {
+    $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
+    $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
+    $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/2.jpg");
+  } //fail callback
+
 });
-CheckImgExists("http://140.116.177.150:6173/image/personal_pic/" + l_id + ".png" //imgurl here
+CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".png" //imgurl here
 ).then(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".png");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".png");
-  $("img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".png"); //success callback
+  $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".png");
+  $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".png");
+  $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".png");
+  have_pic = 1; //success callback
 }).catch(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/2.jpg"); //fail callback
+  if (have_pic === 0) {
+    $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/2.jpg");
+    $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
+    $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/2.jpg");
+  } //fail callback
+
 });
-CheckImgExists("http://140.116.177.150:6173/image/personal_pic/" + l_id + ".jpeg" //imgurl here
+CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".jpeg" //imgurl here
 ).then(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".jpeg"); //success callback
+  $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
+  $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
+  $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
+  have_pic = 1; //success callback
 }).catch(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/2.jpg"); //fail callback
+  if (have_pic === 0) {
+    $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/2.jpg");
+    $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
+    $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/2.jpg");
+  } //fail callback
+
 });
-CheckImgExists("http://140.116.177.150:6173/image/personal_pic/" + l_id + ".MOV" //imgurl here
+CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".MOV" //imgurl here
 ).then(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".MOV");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".MOV");
-  $("img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".MOV"); //success callback
+  $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".MOV");
+  $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".MOV");
+  $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".MOV");
+  have_pic = 1; //success callback
 }).catch(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/2.jpg"); //fail callback
+  if (have_pic === 0) {
+    $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/2.jpg");
+    $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
+    $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/2.jpg");
+  } //fail callback
+
 });
-CheckImgExists("http://140.116.177.150:6173/image/personal_pic/" + l_id + ".mp4" //imgurl here
+CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".mp4" //imgurl here
 ).then(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".mp4");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".mp4");
-  $("img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".mp4"); //success callback
+  $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/" + l_id + ".mp4");
+  $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/" + l_id + ".mp4");
+  $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/" + l_id + ".mp4");
+  have_pic = 1; //success callback
 }).catch(function () {
-  $("img#change_pic").attr("src", "./image/personal_pic/2.jpg");
-  $("#photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
-  $("img#personal_btn").attr("src", "./image/personal_pic/2.jpg"); //fail callback
-});
+  if (have_pic === 0) {
+    $("#change_personal_page img#change_pic").attr("src", "./image/personal_pic/2.jpg");
+    $("#personal_page #photo_and_name img").attr("src", "./image/personal_pic/2.jpg");
+    $(".personal_btn_bg img#personal_btn").attr("src", "./image/personal_pic/2.jpg");
+  } //fail callback
+
+}); // }
+
 $(document).ready(function () {
   $('#image_summit').submit(function (event) {
     event.preventDefault();
@@ -1611,7 +1635,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40236" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33572" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
