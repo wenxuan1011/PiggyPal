@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 import ID from './signup.js'
 import * as mod from './module.js'
 
 //need to export to signup.js
 var TYPE = 0
 
+=======
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
 // open/close personal page
 $('#mainpage #personal_btn').click(function(){
   $('#personal_page').css("display", "flex")
@@ -35,6 +38,7 @@ $('#financial_list_page .bar img').click(function(){
   }, 500)
 })
 
+<<<<<<< HEAD
 
 // open/close add_financial_page
 $('#financial_list_page #add_financial_btn').click(function(){
@@ -200,3 +204,28 @@ $(document).ready(function() {
     });
   })
 });
+=======
+// change the title of the financial_setting_page
+$('#personal_page #financial_setting .list li:nth-child(1)').click(function(){
+    $('#financial_setting_page .bar p').html("固定收入")
+})
+$('#personal_page #financial_setting .list li:nth-child(2)').click(function(){
+    $('#financial_setting_page .bar p').html("固定支出")
+})
+$('#personal_page #financial_setting .list li:nth-child(3)').click(function(){
+    $('#financial_setting_page .bar p').html("固定儲蓄")
+})
+
+
+
+
+// open/close 新增交易
+$('#accounting #everyday_earn #today_earn img').click(function(){
+$('#add_deals').css("transform", "translateX(0%)")
+})
+
+$('#add_deals .bar img').click(function(){
+$('#add_deals').css("transform", "translateX(100%)")
+})
+
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1

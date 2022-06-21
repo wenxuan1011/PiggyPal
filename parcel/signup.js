@@ -75,7 +75,11 @@ function unselected_to_selected(){
   if(present_page == navbar[0]){
     $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
     $('#barcode').css("display", "flex");
+<<<<<<< HEAD
     window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html#/';
+=======
+    window.location.href='https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html?';
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
   }
   else if(present_page == navbar[1]){
     $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
@@ -137,6 +141,7 @@ $(document).ready(function() {
       };
     });
   })
+<<<<<<< HEAD
  });
 
 $('#popup #background .confirm').click(function(){
@@ -148,3 +153,6 @@ function transmit(){
 };
 
 export default transmit
+=======
+});
+>>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
