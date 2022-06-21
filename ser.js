@@ -694,11 +694,7 @@ app.get('/saveMoneytoProject',(req,res) =>{
   let month = "'"+`${req.query.month}`+"'"
   let year = "'"+`${req.query.year}`+"'"
 
-<<<<<<< HEAD
   const accounting = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${member}, ${year}, ${month}, ${date}, ${saveded_money}, 'project_saving', ${project_name}, 現金, '3')`
-=======
-  const accounting = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${member}, ${project_name}, ${saveded_money}, ${date}, ${month}, ${year}, '3')`
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
   connection.query(accounting, (err,rows,fields)=>{
   
     if(err)console.log("There are some problem: ",err)
@@ -750,13 +746,8 @@ app.get('/setfinancialincome',(req, res) =>{
       let date = mod.gettabledata(rows, 'day', i)
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
-<<<<<<< HEAD
       if (repeats == '每月' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
         const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 1)`
-=======
-      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
-        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},1)`
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })
@@ -781,20 +772,12 @@ app.get('/setfinancialexpenditure',(req, res) =>{
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
-<<<<<<< HEAD
         const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 0)`
-=======
-        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
         connection.query(addFinancial,(err, rows, fields)=>{
         })
       }
       if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
-<<<<<<< HEAD
         const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 0)`
-=======
-        const addFinancial = `INSERT INTO account (id, items, cost, day, month, year, type) VALUE (${UID}, ${item}, ${money}, ${mod.datetransfer(today.getDate())},${mod.datetransfer(today.getMonth()+1)},${today.getFullYear()},0)`
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })

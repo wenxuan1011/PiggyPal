@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 import ID from './signup.js'
 import * as mod from './module.js'
 
 //need to export to signup.js
 var TYPE = 0
 
-=======
->>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
 // open/close personal page
 $('#mainpage .personal_btn_bg').click(function(){
   $('#personal_page').css("display", "flex")

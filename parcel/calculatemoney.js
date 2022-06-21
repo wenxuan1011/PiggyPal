@@ -85,13 +85,8 @@ function setremainDay(today,totalday){
 
 async function setVariable(ID){
     var today=new Date();
-<<<<<<< HEAD
         todayExpenditure= await mod.getTodayMoney(ID,'account',today.getFullYear(),mod.StringtoInt(today.getMonth())+1,today.getDate(),'cost',0);
         todayIncome= await mod.getTodayMoney(ID,'account',today.getFullYear(),mod.StringtoInt(today.getMonth())+1,today.getDate(),'cost',1);
-=======
-        todayExpenditure= await mod.getTodayMoney(ID,'account','cost',0);
-        todayIncome= await mod.getTodayMoney(ID,'account','cost',1);
->>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
         Expenditure= await mod.getMonthlyMoney(ID,'account','cost',0);
         Income= await mod.getMonthlyMoney(ID,'account','cost',1)
         ProjectSaved = await mod.getMonthlyMoney(ID, 'account', 'cost', 3)
