@@ -1423,7 +1423,9 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1433,10 +1435,15 @@ exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//import process from './dailymoney.js'
 $('#change-to-login').click(function () {
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -1555,6 +1562,7 @@ $(document).ready(function () {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data;
+        localStorage.setItem("ID", data); //process(ID)
       } else {
         mod.PopUpMessage(5);
       }
@@ -1574,7 +1582,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"selectormodule.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"selectormodule.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1972,28 +1980,68 @@ var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 
 var SHOW_PERSONAL_OR_JOINT = false;
 var MEMBER = [_signup.default];
-var TIME = new Date(); // type bar (change border-bottom)
+var TIME = new Date();
+var port = 6174;
+var last_participant = "";
+var parti_num = 0; //偵測有沒有圖片
+
+function CheckImgExists(imgurl) {
+  return new Promise(function (resolve, reject) {
+    var ImgObj = new Image(); //判断图片是否存在
+
+    ImgObj.src = imgurl;
+
+    ImgObj.onload = function (res) {
+      resolve(res);
+    };
+
+    ImgObj.onerror = function (err) {
+      reject(err);
+    };
+  });
+} // type bar (change border-bottom)
+
 
 var _loop = function _loop(i) {
   $('#project #type_bar p:nth-child(' + "".concat(i) + ')').click(function () {
     $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("border-bottom", "2px solid #410ADF");
+    $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("color", "#0D0E10");
 
-    if (i === 2) {
+    if (i === 1) {
+      $('#project_list_all').css("display", "none"); // $('#project_list').css("display", "none")
+      // $('#project #add_project_btn').css("display", "none")
+      // $('#project #no_project').css("display", "none")
+
+      $('#normal_save_money_list').css("display", "flex"); // $('#normal_save_money').css("display", "flex")
+
+      $('#normal_save_money_list .normal_save_money').css("display", "flex");
+    } else if (i === 2) {
       SHOW_PERSONAL_OR_JOINT = false;
-      $('#project_list').css("display", "flex");
-      $('#project #add_project_btn').css("display", "block");
+      $('#project_list_all').css("display", "flex"); // $('#project_list').css("display", "flex")
+      // $('#project #add_project_btn').css("display", "block")
+
+      $('#normal_save_money_list').css("display", "none");
+      $('#normal_save_money_list .normal_save_money').css("display", "none");
     } else if (i === 3) {
       SHOW_PERSONAL_OR_JOINT = true;
-      $('#project_list').css("display", "flex");
-      $('#project #add_project_btn').css("display", "block");
+      $('#project_list_all').css("display", "flex"); // $('#project_list').css("display", "flex")
+      // $('#project #add_project_btn').css("display", "block")
+
+      $('#normal_save_money_list').css("display", "none");
+      $('#normal_save_money_list .normal_save_money').css("display", "none");
     } else {
-      $('#project_list').css("display", "none");
-      $('#project #add_project_btn').css("display", "none");
+      $('#project_list_all').css("display", "none"); // $('#project_list').css("display", "none")
+      // $('#project #add_project_btn').css("display", "none")
+
+      $('#normal_save_money_list').css("display", "none");
+      $('#project #no_project').css("display", "none");
+      $('#normal_save_money_list .normal_save_money').css("display", "none");
     }
 
     for (var j = 1; j < 5; j++) {
       if (j !== i) {
         $('#project #type_bar p:nth-child(' + "".concat(j) + ')').css("border-bottom", "none");
+        $('#project #type_bar p:nth-child(' + "".concat(j) + ')').css("color", "#BEBEBF");
       }
     }
   });
@@ -2030,8 +2078,20 @@ $('#show_personal_project .bar img').click(function () {
   setTimeout(function () {
     $('#show_personal_project').css("display", "none");
   }, 500);
-}); // close joint_project page (project detail page)
+}); // open/close normal_save_money page
 
+$('.normal_save_money').click(function () {
+  $('#show_normal_save_money').css("display", "flex");
+  setTimeout(function () {
+    $('#show_normal_save_money').css("transform", "translateX(0%)");
+  }, 100);
+});
+$('#show_normal_save_money .bar img').click(function () {
+  $('#show_normal_save_money').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#show_normal_save_money').css("display", "none");
+  }, 500);
+});
 $('#show_joint_project .bar img').click(function () {
   $('#show_joint_project').css("transform", "translateX(100%)");
   setTimeout(function () {
@@ -2245,9 +2305,25 @@ function _getallproject() {
               $('#no_project').css("display", "none");
             }
 
+<<<<<<< HEAD
           case 79:
           case "end":
             return _context.stop();
+=======
+            showProjectDetail(project_list[_i], 'personal');
+          });
+        } else {
+          $("#" + "".concat(project_list[_i])).click(function (e) {
+            $('#show_joint_project').css("display", "flex");
+            setTimeout(function () {
+              $('#show_joint_project').css("transform", "translateX(0%)");
+            }, 100);
+            event.preventDefault(); // I'm not sure is it right or not
+
+            showProjectDetail(project_list[_i], 'joint');
+            getProjectCreater(project_list[_i]);
+          });
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
         }
       }
     }, _callee);
@@ -2255,11 +2331,758 @@ function _getallproject() {
   return _getallproject.apply(this, arguments);
 }
 
+function getProjectMember(creater, project_name) {
+  $.get('./getMember', {
+    ID: creater,
+    project_name: project_name
+  }, function (data) {
+    if (data != "nothing") {
+      var container = document.querySelector('#main #show_joint_project .ranking_list');
+      container.innerHTML = "<div></div>";
+      var member_list = []; // var saved_money_list = []
+
+      var count_member = 0;
+      var have_pic = 0;
+
+      for (var i in data) {
+        var member_1 = _module.default.gettabledata(data, 'member', i);
+
+        count_member++;
+        member_list[i] = member_1;
+      } // for(var i in data){
+      //   console.log("i=="+i)
+      //   console.log("member_list[i]=="+member_list[i])
+      // }
+
+
+      var k = 0;
+
+      for (var i in data) {
+        var member_ = _module.default.gettabledata(data, 'member', i);
+
+        var saved_money = _module.default.gettabledata(data, 'saved_money', i);
+
+        var target_money = _module.default.gettabledata(data, 'target_number', i) / count_member; // member_list[i] = member_
+        // saved_money_list[i] = saved_money
+        //create element
+        // const container = document.querySelector('#main #project #project_list')
+
+        var block = document.createElement('div');
+        var box = document.createElement('div');
+        var member_pic = document.createElement('img');
+        var already_save = document.createElement('p');
+        var progress_bar_bottom = document.createElement('img'); //set text
+
+        already_save.textContent = "$".concat(target_money); //set attribute
+
+        block.setAttribute('class', 'member_block');
+        block.setAttribute('id', "".concat(member_list[i], "block"));
+        box.setAttribute('class', 'member_box');
+        member_pic.setAttribute('id', "".concat(member_list[i]));
+        member_pic.setAttribute('src', "./image/personal_pic/2.jpg"); // member_pic.setAttribute('src', `./image/personal_pic/${save_personal_pic[i]}`)
+
+        member_pic.setAttribute('width', '10%');
+        member_pic.setAttribute('height', '68%');
+        progress_bar_bottom.setAttribute('src', './image/project/Project_collab_processBar-bg.png');
+        progress_bar_bottom.setAttribute('width', '100%');
+        progress_bar_bottom.setAttribute('id', 'progress_bar_bottom_id'); //append child
+
+        container.appendChild(block);
+        block.appendChild(member_pic);
+        block.appendChild(box);
+        box.appendChild(already_save);
+        box.appendChild(progress_bar_bottom); // j++
+      }
+
+      if (count_member === 1) {
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".png").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpeg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".mp4").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".MOV").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+      }
+
+      if (count_member === 2) {
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".png").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpeg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".mp4").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".MOV").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".png").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpeg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".mp4").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".MOV").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+      }
+
+      if (count_member === 3) {
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".png").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpeg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".mp4").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".MOV").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".png").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpeg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".mp4").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".MOV").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".png").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpeg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".mp4").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".MOV").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+      }
+
+      if (count_member === 4) {
+        have_pic = 1;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".png").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpeg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".mp4").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".MOV").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".png").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpeg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".mp4").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".MOV").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".png").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpeg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".mp4").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".MOV").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //---------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".jpg").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".png").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".jpeg").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".jpeg"));
+          have_pic = 1;
+          console.log("i==" + (i - 1));
+          console.log("member_list[i]==" + member_list[i - 1]);
+          console.log(1);
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".mp4").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".MOV").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+      }
+
+      if (count_member === 5) {
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".png").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".jpeg").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".mp4").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[0] + ".MOV").then(function () {
+          $("#" + member_list[0]).attr('src', "./image/personal_pic/".concat(member_list[0], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[0]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".png").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".jpeg").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".mp4").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[1] + ".MOV").then(function () {
+          $("#" + member_list[1]).attr('src', "./image/personal_pic/".concat(member_list[1], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[1]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".png").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".jpeg").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".jpeg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".mp4").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[2] + ".MOV").then(function () {
+          $("#" + member_list[2]).attr('src', "./image/personal_pic/".concat(member_list[2], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[2]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".jpg").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".png").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".jpeg").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".jpeg"));
+          have_pic = 1;
+          console.log("i==" + (i - 1));
+          console.log("member_list[i]==" + member_list[i - 1]);
+          console.log(1);
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".mp4").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[3] + ".MOV").then(function () {
+          $("#" + member_list[3]).attr('src', "./image/personal_pic/".concat(member_list[3], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[3]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------
+        //-------------------------
+
+        have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[4] + ".jpg").then(function () {
+          $("#" + member_list[4]).attr('src', "./image/personal_pic/".concat(member_list[4], ".jpg"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[4]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[4] + ".png").then(function () {
+          $("#" + member_list[4]).attr('src', "./image/personal_pic/".concat(member_list[4], ".png"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[4]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[4] + ".jpeg").then(function () {
+          $("#" + member_list[4]).attr('src', "./image/personal_pic/".concat(member_list[4], ".jpeg"));
+          have_pic = 1;
+          console.log("i==" + (i - 1));
+          console.log("member_list[i]==" + member_list[i - 1]);
+          console.log(1);
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[4]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[4] + ".mp4").then(function () {
+          $("#" + member_list[4]).attr('src', "./image/personal_pic/".concat(member_list[4], ".mp4"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[4]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + member_list[4] + ".MOV").then(function () {
+          $("#" + member_list[4]).attr('src', "./image/personal_pic/".concat(member_list[4], ".MOV"));
+          have_pic = 1;
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#" + member_list[4]).attr('src', "./image/personal_pic/2.jpg");
+          }
+        }); //-------------------------              
+      }
+    }
+  });
+} // rank dynamic add
+
+
+function getProjectCreater(project_name) {
+  $.get('./getCreater', {
+    ID: _signup.default,
+    project_name: project_name
+  }, function (data) {
+    if (data != "nothing") {
+      console.log('123456');
+
+      var project_name = _module.default.gettabledata(data, 'project_name', 0);
+
+      var creater = _module.default.gettabledata(data, 'id', 0); //return [creater, project_name]
+
+
+      getProjectMember(creater, project_name);
+    } else {
+      console.log('wrong');
+    }
+  });
+}
+
 $(document).ready(function () {
   // add project
   $('#project_form button[type="submit"]').click(function (event) {
     event.preventDefault();
+<<<<<<< HEAD
     PERSONAL_OR_JOINT = MEMBER.length;
+=======
+    parti_num = 0;
+
+    if (MEMBER.length > 1) {
+      PERSONAL_OR_JOINT = true;
+    } else {
+      PERSONAL_OR_JOINT = false;
+    }
+
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
     $.get('./project', {
       id: _signup.default,
       project_name: $('#project_form input[name=project_name]').val(),
@@ -2312,9 +3135,67 @@ $(document).ready(function () {
       id: $('#add_member #id_box input[name=userid]').val()
     }, function (data) {
       if (data !== "failed,try again") {
+        var l_id = $('#add_member #id_box input[name=userid]').val();
         $('#add_member #result').css("display", "flex");
-        $('#add_member #result p').html("".concat(data));
-        $('#add_member #wrong').css("display", "none");
+        $('#add_member #result p').html("".concat(data)); //
+
+        $('#add_member #wrong').css("display", "none"); //----------------------------------------------------------------
+        // var have_pic = 0
+        // while(have_pic==0)
+        // {  
+
+        var have_pic = 0;
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".jpg" //imgurl here
+        ).then(function () {
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/" + l_id + ".jpg");
+          have_pic = 1; //success callback
+        }).catch(function () {
+          // console.log(2)
+          if (have_pic === 0) {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+          } //fail callback
+
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".png" //imgurl here
+        ).then(function () {
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/" + l_id + ".png");
+          have_pic = 1; //success callback
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+          } //fail callback
+
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".jpeg" //imgurl here
+        ).then(function () {
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/" + l_id + ".jpeg");
+          have_pic = 1; //success callback
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+          } //fail callback
+
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".MOV" //imgurl here
+        ).then(function () {
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/" + l_id + ".MOV");
+          have_pic = 1; //success callback
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+          } //fail callback
+
+        });
+        CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".mp4" //imgurl here
+        ).then(function () {
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/" + l_id + ".mp4");
+          have_pic = 1; //success callback
+        }).catch(function () {
+          if (have_pic === 0) {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+          } //fail callback
+
+        }); //---------------------------------
       } else {
         $('#add_member #result').css("display", "none");
         $('#add_member #wrong').css("display", "flex");
@@ -2323,14 +3204,208 @@ $(document).ready(function () {
   }); // add member in project
 
   $('#add_member #result #add_mem_btn').click(function (event) {
+<<<<<<< HEAD
     MEMBER.push($('#add_member #id_box input[name=userid]').val()); //maybe need to check whether it is blank
 
+=======
+    MEMBER.push($('#add_member #id_box input[name=userid]').val());
+    last_participant = $('#add_member #id_box input[name=userid]').val();
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
     console.log(MEMBER);
+    console.log("last_participant = " + last_participant); // var sticker1,sticker2,sticker3,sticker4 = showParticipationImage()
+    // var sticker2 = mod.showParticipationImage(sticker2)
+    // var sticker3 = mod.showParticipationImage(sticker3)
+    // var sticker4 = mod.showParticipationImage(sticker4)
+
+    if (parti_num === 0) {
+      showParticipationImage();
+      setStickerSrc();
+    } else {
+      setStickerSrc();
+    }
   });
 });
 $(function () {
   $(".calendar").datepicker();
 });
+var last_participant = ""; //show participant image
+
+function showParticipationImage() {
+  var container = document.querySelector('#add_project #project_form .box:nth-child(5) .participate_member');
+  container.innerHTML = "<div></div>"; //create element
+
+  var sticker1 = document.createElement('img');
+  var sticker2 = document.createElement('img');
+  var sticker3 = document.createElement('img');
+  var sticker4 = document.createElement('img');
+  var block = document.createElement('div'); //set attribute
+
+  block.setAttribute('class', 'sticker_block');
+  block.setAttribute('id', "memberimage"); // last_participant = last_participant
+  // sticker.setAttribute('src', `${image_src}`)
+  // sticker.setAttribute('src', "./image/personal_pic/2.jpg")
+
+  sticker1.setAttribute('height', '34px');
+  sticker1.setAttribute('width', '34px'); // sticker1.setAttribute("src", "./image/personal_pic/2.jpg")
+
+  sticker2.setAttribute('height', '34px');
+  sticker2.setAttribute('width', '34px'); // sticker2.setAttribute("src", "./image/personal_pic/2.jpg")
+
+  sticker3.setAttribute('height', '34px');
+  sticker3.setAttribute('width', '34px'); // sticker3.setAttribute("src", "./image/personal_pic/2.jpg")
+
+  sticker4.setAttribute('height', '34px');
+  sticker4.setAttribute('width', '34px'); // sticker4.setAttribute("src", "./image/personal_pic/2.jpg")
+  //append child
+
+  container.appendChild(block);
+  block.appendChild(sticker1);
+  block.appendChild(sticker2);
+  block.appendChild(sticker3);
+  block.appendChild(sticker4); // return sticker1,sticker2,sticker3,sticker4
+}
+
+function setStickerSrc() {
+  var have_pic = 0;
+  parti_num++;
+  CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + last_participant + ".jpg" //imgurl here
+  ).then(function () {
+    if (parti_num === 1) {
+      $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/" + last_participant + ".jpg");
+    } else if (parti_num === 2) {
+      $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/" + last_participant + ".jpg");
+    } else if (parti_num === 3) {
+      $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/" + last_participant + ".jpg");
+    } else if (parti_num === 4) {
+      $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/" + last_participant + ".jpg");
+    }
+
+    have_pic = 1; //success callback
+  }).catch(function () {
+    if (have_pic === 0) {
+      if (parti_num === 1) {
+        $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 2) {
+        $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 3) {
+        $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 4) {
+        $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/2.jpg");
+      }
+    } //fail callback
+
+  });
+  CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + last_participant + ".png" //imgurl here
+  ).then(function () {
+    if (parti_num === 1) {
+      $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/" + last_participant + ".png");
+    } else if (parti_num === 2) {
+      $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/" + last_participant + ".png");
+    } else if (parti_num === 3) {
+      $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/" + last_participant + ".png");
+    } else if (parti_num === 4) {
+      $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/" + last_participant + ".png");
+    }
+
+    have_pic = 1; //success callback
+  }).catch(function () {
+    if (have_pic === 0) {
+      if (parti_num === 1) {
+        $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 2) {
+        $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 3) {
+        $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 4) {
+        $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/2.jpg");
+      }
+    } //fail callback
+
+  });
+  CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + last_participant + ".jpeg" //imgurl here
+  ).then(function () {
+    if (parti_num === 1) {
+      $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/" + last_participant + ".jpeg");
+    } else if (parti_num === 2) {
+      $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/" + last_participant + ".jpeg");
+    } else if (parti_num === 3) {
+      $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/" + last_participant + ".jpeg");
+    } else if (parti_num === 4) {
+      $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/" + last_participant + ".jpeg");
+    }
+
+    have_pic = 1; //success callback
+  }).catch(function () {
+    if (have_pic === 0) {
+      if (parti_num === 1) {
+        $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 2) {
+        $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 3) {
+        $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 4) {
+        $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/2.jpg");
+      }
+    } //fail callback
+
+  });
+  CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + last_participant + ".MOV" //imgurl here
+  ).then(function () {
+    if (parti_num === 1) {
+      $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/" + last_participant + ".MOV");
+    } else if (parti_num === 2) {
+      $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/" + last_participant + ".MOV");
+    } else if (parti_num === 3) {
+      $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/" + last_participant + ".MOV");
+    } else if (parti_num === 4) {
+      $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/" + last_participant + ".MOV");
+    }
+
+    have_pic = 1; //success callback
+  }).catch(function () {
+    if (have_pic === 0) {
+      if (parti_num === 1) {
+        $("#memberimage img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 2) {
+        $("#memberimage img:nth-child(2)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 3) {
+        $("#memberimage img:nth-child(3)").attr("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 4) {
+        $("#memberimage img:nth-child(4)").attr("src", "./image/personal_pic/2.jpg");
+      }
+    } //fail callback
+
+  });
+  CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + last_participant + ".mp4" //imgurl here
+  ).then(function () {
+    if (parti_num === 1) {
+      sticker1.setAttribute("src", "./image/personal_pic/" + last_participant + ".mp4");
+    } else if (parti_num === 2) {
+      sticker2.setAttribute("src", "./image/personal_pic/" + last_participant + ".mp4");
+    } else if (parti_num === 3) {
+      sticker3.setAttribute("src", "./image/personal_pic/" + last_participant + ".mp4");
+    } else if (parti_num === 4) {
+      sticker4.setAttribute("src", "./image/personal_pic/" + last_participant + ".mp4");
+    }
+
+    have_pic = 1; //success callback
+  }).catch(function () {
+    if (have_pic === 0) {
+      if (parti_num === 1) {
+        sticker1.setAttribute("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 2) {
+        sticker2.setAttribute("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 3) {
+        sticker3.setAttribute("src", "./image/personal_pic/2.jpg");
+      } else if (parti_num === 4) {
+        sticker4.setAttribute("src", "./image/personal_pic/2.jpg");
+      }
+    }
+
+    console.log("last_participant = " + last_participant);
+    console.log("parti_num=" + parti_num); //fail callback
+  });
+}
 },{"./signup.js":"signup.js","./module.js":"module.js","./selectormodule.js":"selectormodule.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2359,7 +3434,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "44433" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33572" + '/');
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
 
   ws.onmessage = function (event) {
     checkedAssets = {};

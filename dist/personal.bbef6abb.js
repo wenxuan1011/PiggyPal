@@ -1423,7 +1423,9 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1433,10 +1435,15 @@ exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//import process from './dailymoney.js'
 $('#change-to-login').click(function () {
   $("#SignUp").css("display", "none");
   $("#Login").css("display", "flex");
@@ -1555,6 +1562,7 @@ $(document).ready(function () {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data;
+        localStorage.setItem("ID", data); //process(ID)
       } else {
         mod.PopUpMessage(5);
       }
@@ -1574,7 +1582,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"personal.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"personal.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -1590,7 +1598,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //need to export to signup.js
 var TYPE = 0; // open/close personal page
 
-$('#mainpage #personal_btn').click(function () {
+$('#mainpage .personal_btn_bg').click(function () {
   $('#personal_page').css("display", "flex");
   setTimeout(function () {
     $('#personal_page').css("transform", "translateX(0%)");
@@ -1622,6 +1630,7 @@ $('#financial_list_page #add_financial_btn').click(function () {
     $('#add_financial_page').css("transform", "translateX(0%)");
   }, 100);
 });
+<<<<<<< HEAD
 $('#add_financial_page .bar img').click(function () {
   $('#add_financial_page').css("transform", "translateX(100%)"); //$("#financial-output").html('')
 
@@ -1653,6 +1662,46 @@ for (var i = 0; i < 3; i++) {
   _loop(i);
 } // use jquery calendar
 
+=======
+$('#personal_page #financial_setting .list li:nth-child(2)').click(function () {
+  $('#financial_setting_page .bar p').html("固定支出");
+  $('#financial_setting_page #financial .box:nth-child(1) p').html("支出項目");
+  $('#financial_setting_page #financial .box:nth-child(2) p').html("支出日期");
+  $('#financial_setting_page #financial .box:nth-child(3) p').html("支出金額");
+  TYPE = 1;
+});
+$('#personal_page #financial_setting .list li:nth-child(3)').click(function () {
+  $('#financial_setting_page .bar p').html("固定儲蓄");
+  $('#financial_setting_page #financial .box:nth-child(1) p').html("儲蓄項目");
+  $('#financial_setting_page #financial .box:nth-child(2) p').html("儲蓄日期");
+  $('#financial_setting_page #financial .box:nth-child(3) p').html("儲蓄金額");
+  TYPE = 2;
+}); // function ReportFileStatus(filespec) {
+//   var fso, s = filespec;
+//   fso = new ActiveXObject("Scripting.FileSystemObject");
+//   if (fso.FileExists(filespec))
+//      s += " exists.";
+//   else 
+//      s += " doesn't exist.";
+//   return(s);
+// }
+//改大頭貼
+
+$('#personal_page #photo_and_name img').click(function () {
+  $('#change_personal_page').css("display", "flex");
+  setTimeout(function () {
+    $('#change_personal_page').css("transform", "translateX(0%)");
+  }, 100); //console.log(ReportFileStatus('../dist/image/personal_pic/F64081127.jpg'))
+});
+$('#change_personal_page .bar img:nth-child(1)').click(function () {
+  $('#change_personal_page').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#change_personal_page').css("display", "none");
+  }, 500);
+}); // $('#change_personal_page .bar img:nth-child(2)').click(function(){
+// })
+// use jquery calendar
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
 
 $(function () {
   $("#fin_date").datepicker();
@@ -1806,7 +1855,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "44433" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33572" + '/');
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
 
   ws.onmessage = function (event) {
     checkedAssets = {};

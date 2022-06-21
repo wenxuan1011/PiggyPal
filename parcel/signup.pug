@@ -62,11 +62,13 @@ html
           p Already had an account? &nbsp; 
           p#change-to-login Login.
 
-
     #main
       #mainpage
-        img#personal_btn(src = "./image/MainPage/MainPage_personal.png", width = "21.8667%")
-        img#add_deals_circle(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
+        //- img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "5.911%")
+        .personal_btn_bg
+          img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "81.25%", width = "47.561%")
+          img#personal_btn_arrow(src = "./image/btn/btn_arrow_right.png", height = "25%", width = "7.31707%")        
+        img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
         #balance_bar
           p $0
           p 本月可用
@@ -102,9 +104,8 @@ html
             p 新增第一筆明細
           .list
         .add_button
-
+      
       #account
-<<<<<<< HEAD
         .bar
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
           p 帳戶管理
@@ -191,53 +192,6 @@ html
           button(type="submit", id="save")
             img(src = "./image/btn/btn_save.png" height = "100%") 
         
-=======
-        h1 account
-      #accounting 
-        .bar
-          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
-          p 記帳
-        #everyday_earn
-          img(src = "./image/Accounting/box_SelectDate.png", height = "30.10752688%")
-          #today_earn
-            p 本日損益
-            p +1920
-            img(src = "./image/Accounting/btn_add.png", height = "19.355%")
-        .list
-          p 收入
-          p 工讀
-          p 薪水
-          p 支出
-          p 早餐
-          p 飲料點心
-          p 交通
-      #add_deals
-        .bar
-          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
-          p 新增交易
-        #type
-          p 儲蓄
-          p 收入
-          p 支出
-          p 轉帳
-        form#fin
-          .box
-            input(type = "text", name = "item", value = "2021.09.27")
-          .box
-            input(type = "text", name = "item", value = "0")
-          .box
-            p 分類
-            input(type = "text", name = "date", value = "食品酒水")
-          .box
-            p 帳戶
-            input(type = "text", name = "money", value = "現金")
-          .box
-            p 備註
-            input(type = "text", name = "repeat", value = "")
-          button(type="submit")
-            img(src = "./image/btn/btn_save.png" height = "100%")
->>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
-
       #barcode
         h1 Barcode
 
@@ -251,10 +205,23 @@ html
           p 個人專案
           p 共同專案
           p 達成成就
-        #project_list
-        #no_project
-          p 尚未建立專案
-        img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+      
+        #normal_save_money_list
+          //- #no_normal_save_money
+          //-   p 尚未建立專案
+          .normal_save_money
+            .normal_save_money_infor
+              .type_and_point
+                img(src = "./image/project/Project_colordot_purple.png", height = "35%")
+                p#item_sm 每月固定儲蓄
+              .save_money_infor
+                p#percent_sm 35%
+            img#more_sm_infor_btn(src = "./image/btn/btn_arrow_right.png", height = "17%")
+        #project_list_all
+          #project_list
+          #no_project
+            p 尚未建立專案
+          img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
 
       #add_project
         .bar
@@ -281,7 +248,8 @@ html
             input(type = "text", name = "target_number")
           .box
             p 參與成員
-            p#member
+            //- p#member
+            .participate_member
             img#add_mem(src = "./image/MainPage/addcircle.png", height = "85.7%")
           .box
             p 分配設定
@@ -309,7 +277,8 @@ html
             input(type = "text", name = "userid")
             img(src = "./image/btn/btn_search.png", height = "47.56%")
         #result
-          img(src = "./image/project/project_adduser_laila.png", height = "28.2667%")
+          //- img(src = "./image/MainPage/MainPage_personal.png", height = "66.6%", width = "28.2667%")
+          img(src = "./image/PersonalPage/Personal_userPic.png", height = "106vh", width = "28.2667%")
           p USER
           img#add_mem_btn(src = "./image/btn/btn_save.png", width = "52%")
         #wrong
@@ -339,7 +308,7 @@ html
           .target_money
             p 目標金額
             p#money $800
-          
+      
       #show_joint_project
         .bar
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
@@ -364,13 +333,31 @@ html
             p 目標金額
             p#money $800
 
+      #show_normal_save_money
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_close.png", height = "2.22167%")
+          p 一般儲蓄
+        #graph_box_sm
+          img(src = "./image/project/Project_month-bg.png", height = "25px")
+          img#graph_sm(src = "./image/project/Project_general savings_graph.png", height = "67%")
+        #project_detail_sm
+          #title_sm
+            p#item 一般儲蓄
+            img(src = "./image/btn/btn_edit.png", height = "18px")
+          #date_box_sm 
+            p 4月已存下
+            p#money $500 
+          #target_money_sm
+            p 每月固定儲蓄金額
+            p#money $800    
 
       #personal_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
           p 個人資料
         #photo_and_name
-          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%")
+          img(src = "./image/PersonalPage/Personal_userPic.png", height = "74%", width = "21.323%")
           p USER
         #financial_setting
           p 財務設定
@@ -396,11 +383,21 @@ html
             li
               p 更改密碼
 
+      
+      #change_personal_page
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", height = "2.8325%")
+          img(src = "./image/btn/btn_edit.png", height = "2.217%")
+          p 個人資料
+        img#change_pic(src = "./image/PersonalPage/Personal_editUserPic.png", width = "100%", height = "46.182266%")
+        form(method='POST', action='/upload', enctype='multipart/form-data', id = "image_summit")
+          input(type='file', name='image', accept=".MOV, .jpg, .jpeg, .mp4, .png")
+          input(type='submit')
+
       #financial_list_page
         .bar
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
           p 固定收入
-<<<<<<< HEAD
         #financial_list
         #no_financial
           p 請新增一筆
@@ -429,7 +426,6 @@ html
           button(type="submit")
             img(src = "./image/btn/btn_save.png" height = "100%")
       
-      
       .color_select_box
         img(src = "./image/Accounting/ListLine.png", width = "20.8%")
         p 請選擇分類顏色
@@ -441,7 +437,6 @@ html
           img(src = "./image/project/Project_colordot_blue.png", width = "9.5%")
           img(src = "./image/project/Project_colordot_purple.png", width = "9.5%")
           img(src = "./image/project/Project_colordot_pink.png", width = "9.5%")
-
 
       .NumKeyBoard_select_box
         img(src = "./image/Accounting/ListLine.png", width = "20.8%")
@@ -462,22 +457,17 @@ html
           p#zero 0 
           img(src = "./image/Accounting/calculator_btn-ok.png", width = "20.39%", id = "ok")
 
-
       .sort_select_box
         img(src = "./image/Accounting/ListLine.png", width = "20.8%")
         p 請選擇分類
         .sort_bar
 
-
       .other_select_box
         img(src = "./image/Accounting/ListLine.png", width = "20.8%")
         p 選單名稱
         .other_bar
-          
 
-=======
         
->>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
       #navbar
         img(src="./image/navbar/unselect/barcode_unselect.png", height = "77.647%")
         img(src="./image/navbar/unselect/account_unselect.png", height = "77.647%")
@@ -525,3 +515,4 @@ html
   script(src="./mainpage.js")
   script(src="./serverjobs.js")
   script(src="./selectormodule.js")
+  script(src="./personal_pic.js")

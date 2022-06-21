@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"id":"image/Accounting/calculator_btn-ok.png","dependencies":[],"generated":{"js":"module.exports=\"91d9840dc4cdbe4208f5b28588807c1b.png\";"},"sourceMaps":null,"error":null,"hash":"206fc23c45a282e1da809a9518be5db3","cacheData":{}}
+=======
+{"id":"image/Accounting/calculator_btn-ok.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"91d9840dc4cdbe4208f5b28588807c1b.png\";"},"sourceMaps":null,"error":null,"hash":"206fc23c45a282e1da809a9518be5db3","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

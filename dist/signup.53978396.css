@@ -228,11 +228,36 @@ body {
     background-color: #F4F4F4;
     position: absolute;
     top: 0; }
-    #main #mainpage #personal_btn {
+    #main #mainpage .personal_btn_bg {
       position: absolute;
       top: 6.4vh;
+<<<<<<< HEAD
       right: 0; }
     #main #mainpage #add_deals_circle {
+=======
+      right: 0;
+      width: 10.1vh;
+      height: 5.91133vh;
+      top: 6.404vh;
+      background: #8E5FF4;
+      border-radius: 10px 0px 0px 10px;
+      margin: 0 0 0 36.1vh;
+      z-index: 0; }
+      #main #mainpage .personal_btn_bg #personal_btn {
+        position: absolute;
+        top: 0.492611vh;
+        right: 4vh;
+        object-fit: cover;
+        z-index: 1;
+        border-radius: 10px; }
+      #main #mainpage .personal_btn_bg #personal_btn_arrow {
+        position: absolute;
+        top: 2.21675vh;
+        right: 1.5vh;
+        object-fit: cover;
+        z-index: 1; }
+    #main #mainpage #add_project_btn {
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
       position: fixed;
       bottom: 13.423vh;
       right: 5.6vw; }
@@ -295,8 +320,6 @@ body {
         width: 100%;
         height: 20%;
         margin: 1.5vh 0 0.5vh 0; }
-        #main #mainpage #project_block .title img {
-          margin: 0 2.933vw 0 5vw; }
         #main #mainpage #project_block .title p {
           font-size: 14px; }
       #main #mainpage #project_block .planned_speed {
@@ -409,6 +432,7 @@ body {
           border-bottom: none;
           margin: 0 0 10px 0; }
   #main #account {
+<<<<<<< HEAD
     display: none;
     flex-direction: column;
     align-items: center;
@@ -562,6 +586,16 @@ body {
         padding: 0; }
         #main #add_account_page #account_form button img {
           margin: 0; }
+=======
+    display: none; }
+    #main #account #display-image {
+      display: absolute;
+      width: 400px;
+      height: 225px;
+      border: 1px solid black;
+      background-position: center;
+      background-size: cover; }
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
   #main #accounting {
     display: none;
     flex-direction: column;
@@ -881,19 +915,86 @@ body {
       #main #project #type_bar p {
         padding: 0 0 12px 0;
         border-bottom: none; }
+      #main #project #type_bar p:nth-child(1) {
+        color: #BEBEBF; }
+      #main #project #type_bar p:nth-child(3) {
+        color: #BEBEBF; }
+      #main #project #type_bar p:nth-child(4) {
+        color: #BEBEBF; }
       #main #project #type_bar p:nth-child(2) {
-        border-bottom: 2px solid #410ADF; }
-    #main #project #no_project {
+        border-bottom: 2px solid #410ADF;
+        color: #0D0E10; }
+    #main #project #normal_save_money_list {
       display: none;
-      flex-direction: row;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       width: 80.2667vw;
-      height: 10vh;
-      background-color: white;
-      box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      margin: 0 0 7.88vh 0; }
+      height: auto;
+      margin: 5.17vh 0 0 0; }
+      #main #project #normal_save_money_list #more_sm_infor_btn {
+        margin: 0 4vw 0 0; }
+      #main #project #normal_save_money_list .normal_save_money {
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 80.2667vw;
+        height: 13.054vh;
+        background-color: white;
+        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0 0 7.88vh 0; }
+        #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 80%;
+          height: auto;
+          margin: 0 0 0 5.33vw;
+          font-size: 12px; }
+          #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 1.847vh;
+            margin: 0 0 15px 0; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point img {
+              margin: 0 2.133vw 0 0; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point p {
+              margin: 0;
+              color: #747474; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .type_and_point #item_sm {
+              margin: 0 40vw 0 0; }
+          #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .save_money_infor {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 1.847vh;
+            margin: 0 0 15px 5px; }
+            #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .save_money_infor #percent_sm {
+              font-family: Roboto Bold;
+              font-size: 24px; }
+    #main #project #project_list_all {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: auto;
+      height: auto; }
+      #main #project #project_list_all #no_project {
+        display: none;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 80.2667vw;
+        height: 10vh;
+        background-color: white;
+        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0 0 7.88vh 0; }
     #main #project #project_list {
       display: flex;
       flex-direction: column;
@@ -998,6 +1099,11 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
+      #main #add_project #project_form .box:nth-child(5) .participate_member {
+        margin: 0 0 0 5vh; }
+        #main #add_project #project_form .box:nth-child(5) .participate_member img {
+          object-fit: cover;
+          border-radius: 34px; }
       #main #add_project #project_form .box:nth-child(8) {
         align-items: start;
         margin: 0 0 6.48vh 0;
@@ -1138,6 +1244,9 @@ body {
       #main #add_member #result p {
         font-size: 16px;
         margin: 2.09vh 0 3.85vh 0; }
+      #main #add_member #result img:nth-child(1) {
+        border-radius: 30px;
+        object-fit: cover; }
     #main #add_member #wrong {
       display: none;
       flex-direction: column;
@@ -1251,6 +1360,96 @@ body {
         margin: 0;
         padding: 2vh 0;
         border-top: 0.2px solid #B3B3B3; }
+  #main #show_normal_save_money {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid; }
+    #main #show_normal_save_money .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #show_normal_save_money .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #show_normal_save_money .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #show_normal_save_money .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #show_normal_save_money #graph_box_sm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 28.82vh;
+      margin: 2.955vh 0 0 0; }
+      #main #show_normal_save_money #graph_box_sm #graph_sm {
+        margin: 3.394vh 0 0 0; }
+    #main #show_normal_save_money #project_detail_sm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      height: 22.1675vh;
+      background-color: white;
+      margin: 2.894vh 0 0 0;
+      border-radius: 10px; }
+      #main #show_normal_save_money #project_detail_sm #title_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 3.2vh 0 0 0; }
+        #main #show_normal_save_money #project_detail_sm #title_sm p {
+          font-size: 15px; }
+      #main #show_normal_save_money #project_detail_sm #date_box_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 4.68vh 0 0 0;
+        padding: 2vh 0; }
+        #main #show_normal_save_money #project_detail_sm #date_box_sm p {
+          font-size: 13px; }
+        #main #show_normal_save_money #project_detail_sm #date_box_sm #money {
+          font-size: 25px;
+          font-family: "Roboto Bold"; }
+      #main #show_normal_save_money #project_detail_sm #target_money_sm {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 74.6667vw;
+        height: 2.463vh;
+        margin: 0 0 20px 0;
+        padding: 2vh 0;
+        border-top: 0.2px solid #B3B3B3; }
+        #main #show_normal_save_money #project_detail_sm #target_money_sm p {
+          font-size: 13px; }
+        #main #show_normal_save_money #project_detail_sm #target_money_sm #money {
+          color: #737474; }
   #main #show_joint_project {
     display: none;
     flex-direction: column;
@@ -1297,7 +1496,29 @@ body {
       min-height: 10vh;
       background-color: white;
       border-radius: 10px;
-      margin: 1.724vh 0 1.97vh 0; }
+      margin: 1.97vh 0; }
+      #main #show_joint_project .ranking_list .member_block {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90vw;
+        height: 6.1576vh;
+        margin: 15px 0; }
+        #main #show_joint_project .ranking_list .member_block img:nth-child(1) {
+          object-fit: cover;
+          border-radius: 30px;
+          margin: 0 0 0 25px; }
+        #main #show_joint_project .ranking_list .member_block p {
+          font-size: 12px;
+          color: #737474; }
+        #main #show_joint_project .ranking_list .member_block .member_box {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: end;
+          width: 72%;
+          margin: 0 25px 0 0; }
     #main #show_joint_project .project_detail {
       display: flex;
       flex-direction: column;
@@ -1359,7 +1580,7 @@ body {
         padding: 2vh 0;
         border-top: 0.2px solid #B3B3B3; }
   #main #personal_page {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: 100vw;
@@ -1396,7 +1617,9 @@ body {
       height: 13.547vh;
       margin: 4.31vh 0 0 0; }
       #main #personal_page #photo_and_name img {
-        margin: 0 0 1.97vh 0; }
+        margin: 0 0 1.97vh 0;
+        border-radius: 30px;
+        object-fit: cover; }
       #main #personal_page #photo_and_name p {
         font-size: 1.47vh;
         margin: 0; }
@@ -1439,7 +1662,49 @@ body {
           font-size: 2vh !important; }
       #main #personal_page .list li:nth-last-child(1) {
         border-style: none; }
+<<<<<<< HEAD
   #main #financial_list_page {
+=======
+  #main #change_personal_page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid;
+    backdrop-filter: none; }
+    #main #change_personal_page .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3;
+      margin: 0 0 9.36vh 0; }
+      #main #change_personal_page .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #change_personal_page .bar img:nth-child(2) {
+        position: absolute;
+        left: 89.6vw;
+        top: 6.0345vh; }
+      #main #change_personal_page .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #change_personal_page img {
+      object-fit: cover; }
+  #main #financial_setting_page {
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
     display: none;
     flex-direction: column;
     align-items: center;

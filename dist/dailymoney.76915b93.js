@@ -898,6 +898,7 @@ By Maker
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
 exports.calprojectpercent = calprojectpercent;
 exports.caltodaymoney = caltodaymoney;
@@ -905,10 +906,13 @@ exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
+exports.getAllUser = getAllUser;
+exports.getColor = getColor;
 exports.getMonthlyMoney = getMonthlyMoney;
 exports.getProjectMoney = getProjectMoney;
 exports.getTodayMoney = getTodayMoney;
 exports.gettabledata = gettabledata;
+exports.sergetProject = sergetProject;
 
 require("regenerator-runtime/runtime.js");
 
@@ -963,17 +967,13 @@ function _caltodaymoney() {
                 for (var i in data) {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
-                } //total=gettabledata(money,type,0)
+                }
 
-
-                //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
                 result = total;
               } else {
                 result = 0;
               }
 
-              console.log(result);
               results = result;
             });
 
@@ -992,15 +992,6 @@ function _caltodaymoney() {
 
 function getMonthlyMoney(ID, table, selection, type) {
   var result = caltotalmoney(ID, table, selection, type);
-  /*
-      result.then(res => {
-          result=res
-          console.log ("hi",result)
-          
-      })
-  
-  */
-
   return result;
 }
 
@@ -1035,17 +1026,13 @@ function _caltotalmoney() {
                 for (var i in data) {
                   total += StringtoInt(gettabledata(data, "".concat(selection), i));
                   i++;
-                } //total=gettabledata(money,type,0)
+                }
 
-
-                //total=gettabledata(money,type,0)
-                console.log("total:".concat(total));
                 result = total;
               } else {
                 result = 0;
               }
 
-              console.log(result);
               results = result;
             });
 
@@ -1083,7 +1070,6 @@ function _getProjectMoney() {
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
                 var startday = new Date();
-                console.log(lastday, startday);
 
                 if (lastday - startday < 0) {
                   continue;
@@ -1093,7 +1079,6 @@ function _getProjectMoney() {
 
                 if (remainday > 0 || remainday !== undefined) {
                   remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
-                  console.log("Projectremainday:", remainday);
                   var money = StringtoInt(gettabledata(data, "target_number", i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   //0 is for simulating money already save for this project
@@ -1136,7 +1121,7 @@ function _calprojectpercent() {
             }, function (data) {
               for (var i in data) {
                 if (project_name === data[i].project_name) {
-                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_goal', i));
+                  result = StringtoInt(gettabledata(data, 'saved_money', i)) / StringtoInt(gettabledata(data, 'target_number', i));
                   result = result / 100;
                 }
               }
@@ -1177,7 +1162,7 @@ function datetransfer(date) {
 
 function checkBlank(page) {
   var lengths = 1;
-  var recordmessage = ["日期", "金額", "類別"];
+  var recordmessage = ["項目", "日期", "金額", "分類", "帳戶", "類別"];
   var projectmessage = ["專案名稱", "日期", "目標金額"];
   var financial = ["type", "ITEM", "YEAR", "MONTH", "DAY", "MONEY", "REPEAT"];
   var pages = [];
@@ -1185,15 +1170,15 @@ function checkBlank(page) {
   switch (page) {
     case 'record':
       pages = recordmessage;
-      return;
+      break;
 
     case 'project':
       pages = projectmessage;
-      return;
+      break;
 
     case 'financial':
       pages = financial;
-      return;
+      break;
   }
 
   for (var _len = arguments.length, input = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -1204,8 +1189,7 @@ function checkBlank(page) {
     lengths = lengths * (input[j].length - 2);
 
     if (lengths === 0) {
-      PopUpMessage(pages[j]);
-      return 0;
+      return pages[j];
     }
 
     if (lengths > 1 && j === input.length - 1) {
@@ -1215,33 +1199,131 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
-  console.log(123);
-  var pop = document.getElementsById("popup");
-  pop.css('display', 'flex');
-  var word = document.querySelector('#popup #background #box #message p');
-  word.textContent(type);
+  if (type < 4) {
+    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！'];
+    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses'];
+    $('#popup .box_login, #popup .box_delete').css('display', 'none');
+    $('#popup .box_regular').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+    $('#popup #background .box_regular .message p').html("".concat(PopUpTital[type]));
+    $('#popup #background .box_regular .message figure img').attr("src", "./image/PopUpMessage/PopUpMessage_".concat(PopUpGif[type], ".gif"));
+  } else if (type == 4) {
+    $('#popup .box_regular, #popup .box_delete').css('display', 'none');
+    $('#popup .box_login').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+  } else {
+    console.log('delete');
+    $('#popup .box_regular, #popup .box_login').css('display', 'none');
+    $('#popup .box_delete').css('display', 'flex');
+    $('#popup').css('display', 'flex');
+  }
+}
+
+function getAllUser() {
+  return _getAllUser.apply(this, arguments);
+}
+
+function _getAllUser() {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+    var all_user;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            all_user = [];
+            _context5.next = 3;
+            return $.get('./getAllUser', {}, function (data) {
+              all_user = data;
+            });
+
+          case 3:
+            return _context5.abrupt("return", all_user);
+
+          case 4:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _getAllUser.apply(this, arguments);
+}
+
+function sergetProject(_x12) {
+  return _sergetProject.apply(this, arguments);
+}
+
+function _sergetProject() {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(user) {
+    var all_project;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return $.get('./sergetProject', {
+              user: user
+            }, function (data) {
+              all_project = data;
+              all_project = all_project.sort(function (a, b) {
+                return a.remainday - b.remainday;
+              });
+            });
+
+          case 2:
+            return _context6.abrupt("return", all_project);
+
+          case 3:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+  return _sergetProject.apply(this, arguments);
+}
+
+function getColor(color) {
+  var ColorCode = ['#F42850', '#F6A93B', '#F4EC28', '#7ED321', '#4A90E2', '#8E5FF4', '#FC75CE'];
+  var ColorImgSrc = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  for (var i = 0; i < 7; i++) {
+    if (color === ColorCode[i]) {
+      return ColorImgSrc[i];
+    }
+  }
 }
 
 var _default = {
   gettabledata: gettabledata,
-  //get id inside the row of column select from database
+  // get id inside the row of column select from database
   getMonthlyMoney: getMonthlyMoney,
-  //get money in each table, remember to use caltotalmoney to get in integer
+  // get money in each table, remember to use caltotalmoney to get in integer
   caltotalmoney: caltotalmoney,
-  //calculate total money
+  // calculate total money
   getProjectMoney: getProjectMoney,
-  //get daily project saving
+  // get daily project saving
   calprojectpercent: calprojectpercent,
-  //calculate project complete %(in .1f )
+  // calculate project complete %(in .1f )
   StringtoInt: StringtoInt,
-  //transfer string to integer
+  // transfer string to integer
   datetransfer: datetransfer,
-  //tranfer date to 0date if date<10
-  checkBlank: checkBlank //check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  // tranfer date to 0date if date<10
+  checkBlank: checkBlank,
+  // check if there is a blank in input. Need to input all input to check, and it will return 1 for all inputs are filled
+  getAllUser: getAllUser,
+  // get all users' id
+  sergetProject: sergetProject,
+  // FOR SERVER TO GET PROJECT
+  PopUpMessage: PopUpMessage,
+  // popup message, need to input the word you want to show
+  getColor: getColor // turn the color code into the color, need to input the color code of the project
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"signup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1250,6 +1332,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
+
+var _fs = _interopRequireDefault(require("fs"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -1372,14 +1458,18 @@ $(document).ready(function () {
       if ("".concat(data) !== 'failed,try again') {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
-        ID = data; //process(ID)
+        ID = data;
+        localStorage.setItem("ID", data); //process(ID)
       } else {
-        $("#login-output").html("".concat(data));
+        mod.PopUpMessage(4);
       }
 
       ;
     });
   });
+});
+$('#popup #background .confirm').click(function () {
+  $('#popup').css('display', 'none');
 });
 
 function transmit() {
@@ -1389,7 +1479,7 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js"}],"../node_modules/process/browser.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"../node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -1751,7 +1841,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33974" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40236" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

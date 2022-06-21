@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"id":"image/Accounting/box_SelectDate.png","dependencies":[],"generated":{"js":"module.exports=\"8367a53928e2cb450c53c337bc6257bc.png\";"},"sourceMaps":null,"error":null,"hash":"84b10471ab3d0c7de115936e45ff0a2b","cacheData":{}}
+=======
+{"id":"image/Accounting/box_SelectDate.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"8367a53928e2cb450c53c337bc6257bc.png\";"},"sourceMaps":null,"error":null,"hash":"84b10471ab3d0c7de115936e45ff0a2b","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

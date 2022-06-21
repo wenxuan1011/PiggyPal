@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"id":"image/btn/btn_AddProject.png","dependencies":[],"generated":{"js":"module.exports=\"d205ed408ccfa916b13600254c291b98.png\";"},"sourceMaps":null,"error":null,"hash":"7689d084ed0e2795a109aa24e6443f55","cacheData":{}}
+=======
+{"id":"image/btn/btn_AddProject.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"d205ed408ccfa916b13600254c291b98.png\";"},"sourceMaps":null,"error":null,"hash":"7689d084ed0e2795a109aa24e6443f55","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe

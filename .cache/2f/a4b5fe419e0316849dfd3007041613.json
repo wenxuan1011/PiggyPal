@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 {"id":"image/signup/main_image.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1652360778334}],"generated":{"js":"module.exports = \"f6b32a27ed0be044ecd8c9604c6b5592.png\";"},"sourceMaps":null,"error":null,"hash":"ba9f5c6b84bb6c462ce068d37dcd20e7","cacheData":{"env":{}}}
 =======
 {"id":"image/signup/main_image.png","dependencies":[],"generated":{"js":"module.exports=\"f6b32a27ed0be044ecd8c9604c6b5592.png\";"},"sourceMaps":null,"error":null,"hash":"ba9f5c6b84bb6c462ce068d37dcd20e7","cacheData":{}}
 >>>>>>> afc0866294ccfb2885672a83b6b33fe6e126a5a1
+=======
+{"id":"image/signup/main_image.png","dependencies":[{"name":"/home/wp2022/users/stanly/public_html/piggypal/PiggyPal/package.json","includedInParent":true,"mtime":1655657187756}],"generated":{"js":"module.exports = \"f6b32a27ed0be044ecd8c9604c6b5592.png\";"},"sourceMaps":null,"error":null,"hash":"ba9f5c6b84bb6c462ce068d37dcd20e7","cacheData":{"env":{}}}
+>>>>>>> a4cc1e46e3447cb18414248e8983eb98ea628bfe
