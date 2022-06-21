@@ -33,7 +33,7 @@ function getdetail(){
                 var value = mod.gettabledata(data, 'cost',i)
                 var type = mod.gettabledata(data, 'type',i)
                 var sort = mod.gettabledata(data, 'sort', i)
-                if(item == ''||value == ''||type == '3'||type == '2'){
+                if(item == ''||value == ''||type == '2'||type == '3'){
                     continue;
                 }
                 //create element
@@ -61,9 +61,12 @@ function getdetail(){
                 box.appendChild(paragraphone)
                 box.appendChild(paragraphtwo)
             }
+            $('#mainpage #detail_block .list').css("display", "flex")
+            $('#mainpage #detail_block .no_deals').css("display", "none")
         }
         else{
-
+            $('#mainpage #detail_block .list').css("display", "none")
+            $('#mainpage #detail_block .no_deals').css("display", "flex")
         }
     }
     )

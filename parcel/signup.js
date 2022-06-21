@@ -133,7 +133,7 @@ $(document).ready(function() {
         ID = data
       }
       else{
-        mod.PopUpMessage(4)
+        mod.PopUpMessage(5)
       };
     });
   })

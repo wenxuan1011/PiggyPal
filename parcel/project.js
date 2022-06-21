@@ -273,7 +273,8 @@ $(document).ready(function() {
         MEMBER = [ID]
         // 還沒加入均分
         $('#project_form textarea[name=note]').val('')
-        $("#add_project_-output").html(`${data}`);
+        $("#add_project_-output").html(`${data}`)
+        mod.PopUpMessage(4)
       }
       else{
         mod.PopUpMessage(2)

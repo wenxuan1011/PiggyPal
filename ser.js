@@ -276,8 +276,11 @@ app.get('/getAccount',(req,res) =>{
 
 
 // record
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3b94e58d886fe8d9a80e818010e856b1ed342b55
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), year VARCHAR(4), month VARCHAR(2), day VARCHAR(2), cost VARCHAR(30), sort VARCHAR(30), items VARCHAR(30), account VARCHAR(30), type VARCHAR(1))')
   

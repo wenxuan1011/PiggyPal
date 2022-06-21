@@ -210,9 +210,9 @@ export function checkBlank(page, ...input){
 }
 
 export function PopUpMessage(type){
-    if(type < 4){
-        const PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！']
-        const PopUpGif = ['pig', 'congrate', 'eye', 'glasses']
+    if(type < 5){
+        const PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！', '已成功新增！']
+        const PopUpGif = ['pig', 'congrate', 'eye', 'glasses', 'added']
         
         $('#popup .box_login, #popup .box_delete').css('display','none')
         $('#popup .box_regular').css('display','flex')
@@ -221,13 +221,12 @@ export function PopUpMessage(type){
         $('#popup #background .box_regular .message figure img').attr("src",
         `./image/PopUpMessage/PopUpMessage_${PopUpGif[type]}.gif`)
     }
-    else if(type == 4){
+    else if(type == 5){
         $('#popup .box_regular, #popup .box_delete').css('display','none')
         $('#popup .box_login').css('display','flex')
         $('#popup').css('display','flex')
     }
     else{
-        console.log('delete')
         $('#popup .box_regular, #popup .box_login').css('display','none')
         $('#popup .box_delete').css('display','flex')
         $('#popup').css('display','flex')

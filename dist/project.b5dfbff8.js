@@ -1240,20 +1240,19 @@ function checkBlank(page) {
 }
 
 function PopUpMessage(type) {
-  if (type < 4) {
-    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！'];
-    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses'];
+  if (type < 5) {
+    var PopUpTital = ['恭喜本月已存下xx元', '恭喜完成專案！', '請輸入完整資訊', '功能待開發！', '已成功新增！'];
+    var PopUpGif = ['pig', 'congrate', 'eye', 'glasses', 'added'];
     $('#popup .box_login, #popup .box_delete').css('display', 'none');
     $('#popup .box_regular').css('display', 'flex');
     $('#popup').css('display', 'flex');
     $('#popup #background .box_regular .message p').html("".concat(PopUpTital[type]));
     $('#popup #background .box_regular .message figure img').attr("src", "./image/PopUpMessage/PopUpMessage_".concat(PopUpGif[type], ".gif"));
-  } else if (type == 4) {
+  } else if (type == 5) {
     $('#popup .box_regular, #popup .box_delete').css('display', 'none');
     $('#popup .box_login').css('display', 'flex');
     $('#popup').css('display', 'flex');
   } else {
-    console.log('delete');
     $('#popup .box_regular, #popup .box_login').css('display', 'none');
     $('#popup .box_delete').css('display', 'flex');
     $('#popup').css('display', 'flex');
@@ -1557,7 +1556,7 @@ $(document).ready(function () {
         $('#main').css("display", "flex");
         ID = data;
       } else {
-        mod.PopUpMessage(4);
+        mod.PopUpMessage(5);
       }
 
       ;
@@ -2287,6 +2286,8 @@ $(document).ready(function () {
 
         $('#project_form textarea[name=note]').val('');
         $("#add_project_-output").html("".concat(data));
+
+        _module.default.PopUpMessage(4);
       } else {
         _module.default.PopUpMessage(2);
       }
