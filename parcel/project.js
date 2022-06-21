@@ -1659,5 +1659,5 @@ function setStickerSrc(){
     console.log("parti_num="+parti_num)
       //fail callback
   })
-
+//
 }

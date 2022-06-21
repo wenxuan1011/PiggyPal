@@ -274,12 +274,33 @@ body
         position: absolute
         top: 0
 
-        #personal_btn
+        .personal_btn_bg
             position: absolute
             top: 6.4vh
             right: 0
+
+            width: 10.1vh
+            height: 5.91133vh
+            top: 6.404vh
+            background: #8E5FF4
+            border-radius: 10px 0px 0px 10px
+            margin: 0 0 0 36.1vh
+            z-index: 0
+            #personal_btn
+                position: absolute
+                top: 0.492611vh
+                right: 4vh
+                object-fit: cover
+                z-index: 1
+                border-radius: 10px
+            #personal_btn_arrow
+                position: absolute
+                top: 2.21675vh
+                right: 1.5vh
+                object-fit: cover
+                z-index: 1
         
-        #add_deals_circle
+        #add_project_btn
             position: fixed
             bottom: 13.423vh
             right: 5.6vw
@@ -368,6 +389,7 @@ body
                 width: 100%
                 height: 58.235%
 
+
             #daily_expend 
                 background-color: #8D5EF3
                 background-position: center
@@ -405,13 +427,15 @@ body
                         color: white
                         margin: 0 0 0 0
                 
+
+        
         #detail_block
             display: flex
             flex-direction: column
             align-items: center
             width: 100vw
             height: auto
-            margin: 2.59vh 0
+            margin: 2.59vh 0 0 0
 
             #detail_bar
                 display: flex
@@ -420,11 +444,11 @@ body
                 align-items: center
                 width: 79.7333vw
                 height: 3.463vh
-                margin: 0
+                margin: 0 0 2.525vh 0
                 
                 p
                     margin: 0 3vw 0 0
-
+            
             .no_deals
                 display: none
                 justify-content: center
@@ -438,7 +462,6 @@ body
                 p
                     font-size: 13px
                     color: #737474
-                
             
             .list
               display: none
@@ -488,8 +511,7 @@ body
               a:nth-last-child(1)
                 border-bottom: none
                 margin: 0 0 10px 0
-
-
+                
         #detail_block
         .add_button
     
@@ -1044,21 +1066,97 @@ body
             p
                 padding: 0 0 12px 0
                 border-bottom: none
+            p:nth-child(1)
+                color: #BEBEBF
+            p:nth-child(3)
+                color: #BEBEBF
+            p:nth-child(4)
+                color: #BEBEBF
 
             p:nth-child(2)
                 border-bottom: 2px solid #410ADF
+                color: #0D0E10
 
-        #no_project
+        #normal_save_money_list
             display: none
-            flex-direction: row
-            justify-content: center
+            flex-direction: column
             align-items: center
             width: 80.2667vw
-            height: 10vh
-            background-color: white
-            box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
-            border-radius: 8px
-            margin: 0 0 7.88vh 0
+            height: auto
+            margin: 5.17vh 0 0 0
+            #more_sm_infor_btn
+                margin: 0 4vw 0 0
+            .normal_save_money
+                display: none
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 80.2667vw
+                height: 13.054vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 7.88vh 0
+
+                
+
+                .normal_save_money_infor
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    width: 80%
+                    height: auto
+                    margin: 0 0 0 5.33vw
+                    font-size: 12px
+
+                    .type_and_point
+                        display: flex
+                        flex-direction: row
+                        justify-content: space-between
+                        align-items: center
+                        width: 100%
+                        height: 1.847vh
+                        margin: 0 0 15px 0 
+
+                        img
+                            margin: 0 2.133vw 0 0
+
+                        p
+                            margin: 0
+                            color: #747474
+                        #item_sm
+                            margin: 0 40vw 0 0
+                            
+                    .save_money_infor
+                        display: flex
+                        flex-direction: row
+                        justify-content: space-between
+                        align-items: center
+                        width: 100%
+                        height: 1.847vh
+                        margin: 0 0 15px 5px
+
+                        #percent_sm
+                            font-family: Roboto Bold
+                            font-size: 24px
+        #project_list_all
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: auto
+            height: auto
+
+            #no_project
+                display: none
+                flex-direction: row
+                justify-content: center
+                align-items: center
+                width: 80.2667vw
+                height: 10vh
+                background-color: white
+                box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1)
+                border-radius: 8px
+                margin: 0 0 7.88vh 0
         
         #project_list
             display: flex
@@ -1479,7 +1577,118 @@ body
                 margin: 0
                 padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
+    #show_normal_save_money
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
 
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                right: 6.9333vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #graph_box_sm
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 28.82vh
+            margin: 2.955vh 0 0 0
+
+            #graph_sm
+                margin: 3.394vh 0 0 0
+        
+        #project_detail_sm
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 90vw
+            height: 22.1675vh
+            background-color: white
+            margin: 2.894vh 0 0 0
+            border-radius: 10px
+
+            #title_sm
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 3.2vh 0 0 0
+
+                p
+                    font-size: 15px
+                // display: flex
+                // flex-direction: row
+                // align-items: center
+                // width: 100%
+                // height: 20%
+                // margin: 1.5vh 0 0.5vh 0
+                // img
+                //     margin: 0 2.933vw 0 5vw
+                // p
+                //     font-size: 14px
+            #date_box_sm
+                display: flex
+                flex-direction: row
+                justify-content: left
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 4.68vh 0 0 0
+                padding: 2vh 0
+                p
+                    font-size: 13px
+                #money
+                    font-size: 25px
+                    font-family: "Roboto Bold"
+    
+            #target_money_sm
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: center
+                width: 74.6667vw
+                height: 2.463vh
+                margin: 0 0 20px 0
+                padding: 2vh 0
+                border-top: 0.2px solid #B3B3B3
+                // margin: 0
+                // padding: 1.1084vh 0
+                // border-top: 0.2px solid #B3B3B3
+                p
+                    font-size: 13px
+                #money
+                    color: #737474
 
     #show_joint_project
         display: none
@@ -1604,7 +1813,146 @@ body
                 margin: 0 0 20px 0
                 padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
+    #personal_page
+        display: flex
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: auto
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid 
 
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+
+            img
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+
+        #photo_and_name
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 13.547vh
+            margin: 4.31vh 0 0 0
+            
+            img
+                margin: 0 0 1.97vh 0
+                border-radius: 30px
+                object-fit: cover
+            
+            p
+                font-size: 1.47vh
+                margin: 0
+
+        #financial_setting
+            display: flex
+            flex-direction: column
+            width: 85.333vw
+            height: 22.78vh
+            margin: 3.325vh 0 0 0
+
+            p
+                font-size: 1.724vh
+                margin: 0
+
+        #account_setting
+            display: flex
+            flex-direction: column
+            width: 85.333vw
+            height: 29vh
+            margin: 3.325vh 0 20vh 0
+
+            p
+                font-size: 1.724vh
+                margin: 0
+
+        .list
+            list-style-type: none
+            background-color: white
+            width: 100%
+            border-radius: 10px
+            margin: 2.0936vh 0 0 0
+
+            li
+                display: flex
+                flex-direction: row
+                align-items: center
+                border-bottom: 0.3px solid #B3B3B3
+                border-radius: 0
+
+                p
+                    display: block
+                    color: black
+                    width: 75%
+                    padding: 1.724vh 5.6vw 1.724vh 5.6vw
+                    text-decoration: none
+                    font-size: 2vh !important
+            
+            li:nth-last-child(1)
+                border-style: none
+
+    #change_personal_page
+        display: none
+        flex-direction: column
+        align-items: center
+        width: 100vw
+        height: 100vh
+        background-color: #F4F4F4
+        transform: translateX(100%)
+        transition: 0.5s
+        position: absolute
+        top: 0
+        border: none
+        border-left: solid
+        backdrop-filter: none
+        
+        .bar
+            display: flex
+            flex-direction: column
+            align-items: center
+            width: 100vw
+            height: 11.9458vh
+            background-color: white
+            border-bottom: 0.3px solid #B3B3B3
+            margin: 0 0 9.36vh 0
+
+            img:nth-child(1)
+                position: absolute
+                left: 6.6667vw
+                top: 6.0345vh
+
+            img:nth-child(2)
+                position: absolute
+                left: 89.6vw
+                top: 6.0345vh
+
+            p
+                font-size: 1.97vh
+                position: relative
+                top: 6.0345vh
+                margin: 0
+        img
+            object-fit: cover
 
     #personal_page
         display: none

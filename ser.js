@@ -509,13 +509,10 @@ app.get('/getaprojectmoney', (req,res) => {
   var color = "'" + req.query.color + "'"
   var target_number = "'" + req.query.target_number + "'"
   const summation = `SELECT * FROM project WHERE id = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
-  console.log(summation)
   connection.query(summation,(err,rows)=>{
     if(err)console.log('failed to get a project total saved money')
-    console.log('bbb',rows)
     for(var i in rows){
       result += mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
-      console.log('aaa',result)
     }
     res.send(`${result}`)
     
@@ -567,7 +564,7 @@ const storage = multer.diskStorage({
     
   },
   filename: (req, file, cb) =>{
-    console.log(file)
+    //console.log(file)
     //console.log(path.extname(file.originalname))
     cb(null, `1` + `${path.extname(file.originalname)}`);
   }
@@ -581,9 +578,9 @@ app.get('/upload', (req, res) =>{
 });
 
 app.post('/upload', upload.single("image"), (req, res) =>{
-  console.log(req.body.usr_name)
-  console.log(path.extname(req.file.originalname))
-  console.log(123)
+  // console.log(req.body.usr_name)
+  // console.log(path.extname(req.file.originalname))
+  // console.log(123)
   fs.rename(`./dist/image/personal_pic/1${path.extname(req.file.originalname)}`, `./dist/image/personal_pic/${req.body.usr_name}${path.extname(req.file.originalname)}`, (err) => {
     if (err) throw err;
     console.log('Rename complete!');

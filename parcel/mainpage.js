@@ -16,7 +16,7 @@ $('#add_deals_circle').click((event) => {
         $('#add_deals').css("transform", "translateX(0%)")
     },100)
 })
-//show today's detail
+
 function getdetail(){
     var today= new Date()
     $.get('./getmainpagedetail',{
@@ -71,7 +71,7 @@ function getdetail(){
     }
     )
 }
-//show mainpage datail's type picture
+
 function detailpicture(data, type){
     var exptype = ['飲食', '購物', '家居', '個人', '交通', '娛樂', '醫療', '其他']
     var intype = ['薪水', '獎金', '投資', '還款', '中獎', '利息', '其他']
