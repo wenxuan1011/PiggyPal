@@ -18,7 +18,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6165
+const port = 6166
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
@@ -594,6 +594,30 @@ app.post('/upload', upload.single("image"), (req, res) =>{
   res.send("Image uploaded");
 })
 
+//get graph data
+app.get('/getGraphDetail',(req, res) =>{
+    let ID = "'" + `${req.query.id}` + "'"
+    let NAME = "'" + `${req.query.name}` + "'"
+    connection.query(`SELECT * FROM account WHERE id = ${ID} and items = ${NAME}`, (err, rows, fields) =>{
+      if(err){
+        console.log(err)
+      }
+      else{
+          var sort_result = rows.sort(function(a, b){
+            return `${a.year}/${a.month}/${a.day}` > `${b.year}/${b.month}/${b.day}` ? 1 : -1
+          })
+          var x = []
+          var y = []
+          for(var i in sort_result){
+            var date_string = `${sort_result[i].year}/${sort_result[i].month}/${sort_result[i].day}`
+            x.push(date_string)
+            y.push(sort_result[i].cost)
+          } 
+          res.send([x, y])
+      }
+    })
+})
+
 /////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////
 //update monthly financial
 app.get('/sergetfinancial', (req,res) =>{
@@ -632,6 +656,7 @@ app.get('/sergetfinancial', (req,res) =>{
     }
   })
 })
+
 /////////above is updated at 00:00,below is updated at 23:59////////////////////////////////////
 //get all users' id in database
 app.get('/getAllUser', (req,res) => {
@@ -788,4 +813,7 @@ app.get('/setfinancialexpenditure',(req, res) =>{
     }
   })
 })
+
+
+
 //connection.end()

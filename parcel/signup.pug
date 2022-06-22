@@ -289,8 +289,8 @@ html
           img(src = "./image/btn/btn_close.png", width = "5.33333%")
           p 個人專案
         #graph_box 
-          img(src = "./image/project/Project_month-bg.png", height = "25px")
-          img#graph(src = "./image/project/Project_personalProject_graph.png", height = "67%")
+          //img(src = "./image/project/Project_month-bg.png", height = "25px")
+          canvas#mychart(height="170" width="280")
         .project_detail
           .title 
             p#item 一般儲蓄
@@ -513,6 +513,7 @@ html
 
   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
+  script(src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js")
   script(src="./signup.js")
   script(src="./personal.js")
   script(src="./mainpage.js")
@@ -525,3 +526,4 @@ html
   script(src="./serverjobs.js")
   script(src="./selectormodule.js")
   script(src="./personal_pic.js")
+  script(src="./graphic.js")
