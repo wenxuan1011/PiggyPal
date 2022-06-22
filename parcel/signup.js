@@ -1,5 +1,5 @@
 import * as mod from './module.js'
-import fs from 'fs'
+
 //import process from './dailymoney.js'
 
 $('#change-to-login').click(function(){
@@ -36,13 +36,13 @@ $('#navbar img:nth-child(3)').click(function(){
   $('#add_deals').css('display','none');
 })
 
-$('#navbar img:nth-child(4), #main #mainpage #add_project_btn').click(function(){
+$('#navbar img:nth-child(4), #main #mainpage #add_deal_btn').click(function(){
   selected_to_unselected();
   present_page = navbar[3];
   unselected_to_selected();
 })
 
-$('#navbar img:nth-child(5)').click(function(){
+$('#navbar img:nth-child(5), #mainpage #project_view .add_project .planned_speed img').click(function(){
   selected_to_unselected();
   present_page = navbar[4];
   unselected_to_selected();
@@ -109,15 +109,18 @@ $(document).ready(function() {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val(),
     }, (data) => {
-      if(`${data}` === "signup"){
+      if(`${data}` !== "Signup faild."){
+        localStorage.setItem("ID", data)
+        ID = data
+        console.log(data)
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
-        ID = $('#signup input[name=id]').val()
         
       }
       else{
         $("#signup-output").html(`${data}`);
-        ID= data
+        
+        mod.PopUpMessage(2)
         //process(ID)
       };
     });
@@ -136,6 +139,7 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
+        console.log(data)
         localStorage.setItem("ID", data)
         //process(ID)
       }

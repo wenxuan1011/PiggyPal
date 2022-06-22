@@ -1,13 +1,15 @@
-import ID from './signup.js'
+// import ID from './signup.js'
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
-
-$('#login_btn, #save').click((event) => {
+$('#login_btn, #save, #signup_btn').click((event) => {
     event.preventDefault()
     setTimeout(() => {
         getdetail()
     }, 100)
 })
+
+
 
 $('#add_deals_circle').click((event) => {
     event.preventDefault()    

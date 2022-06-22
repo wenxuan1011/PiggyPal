@@ -1,6 +1,6 @@
 // open/close accounting
 import * as mod from './module.js'
-$('#accounting #everyday_earn #add_deals_btn').click(function(){
+$('#accounting #everyday_earn #add_deals_btn, #main #mainpage #add_deal_btn').click(function(){
   var today = new Date()
   $('#add_deals').css("display", "flex")
   

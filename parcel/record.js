@@ -1,5 +1,6 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 // 0支出 1收入
 var click_op = 0;
@@ -86,7 +87,7 @@ $(document).ready(function() {
 
   
   // --------------- what is this ? ---------------
-  $('#accounting #everyday_earn #add_deals_btn').click((event)=> {
+  $('#accounting #everyday_earn #add_deals_btn, #main #mainpage #add_deal_btn').click((event)=> {
     $('#add_deals').css("display", "flex")
     setTimeout(() => {
       $('#add_deals').css("transform", "translateX(0%)")
@@ -162,7 +163,7 @@ $(function(){
 });
 
 
-$('#login_btn, #save, .datebox').click((event) => {
+$('#login_btn, #save, .datebox,#signup_btn').click((event) => {
   event.preventDefault()
   var count = 0
   var interval = setInterval(function(){
@@ -173,7 +174,6 @@ $('#login_btn, #save, .datebox').click((event) => {
     getdetailincome()
     getdetailexpenditure()
     showtoday()
-    console.log(count)
     count++
   },1000 )
   

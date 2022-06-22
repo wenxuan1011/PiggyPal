@@ -300,7 +300,7 @@ body
                 object-fit: cover
                 z-index: 1
         
-        #add_project_btn
+        #add_deal_btn
             position: fixed
             bottom: 13.423vh
             right: 5.6vw
@@ -383,12 +383,24 @@ body
 
             .planned_speed
                 display: flex
-                flex-direction: row
+                flex-direction: column
                 justify-content: center
                 align-items: center
                 width: 100%
                 height: 58.235%
 
+            #normal_graph
+                background: url(./image/MainPage/MainPage_general_savings.png) no-repeat center / contain
+
+                p
+                    font-size: 8px
+                    color: #A3A9AF
+                    margin: 3px 0
+
+                p:nth-child(2)
+                    font-size: 16px
+                    color: black
+                    font-weight: bold
 
             #daily_expend 
                 background-color: #8D5EF3
@@ -1294,7 +1306,12 @@ body
                 height: 4.31vh
                 width: 100%
                 margin: 0 0 2.586vh 0
-
+            .box:nth-child(5)
+                .participate_member
+                    margin: 0 0 0 5vh
+                    img
+                        object-fit: cover
+                        border-radius: 34px
             .box:nth-child(8)
                 align-items: start
                 margin: 0 0 6.48vh 0
@@ -1460,6 +1477,9 @@ body
             p
                 font-size: 16px
                 margin: 2.09vh 0 3.85vh 0
+            img:nth-child(1)
+                border-radius: 30px
+                object-fit: cover
 
         #wrong
             display: none
@@ -1653,6 +1673,7 @@ body
         top: 0
         border: none
         border-left: solid
+
         .bar
             display: flex
             flex-direction: column
@@ -1686,6 +1707,19 @@ body
             height: 28.82vh
             margin: 2.955vh 0 0 0
 
+            .drop_down_btn
+                display: flex
+                justify-content: center
+                width: 84px
+                height: 25px
+                align-items: center
+                background: url(./image/project/Project_month-bg.png) no-repeat center / contain
+                margin: 1.6vh 0 0 0 
+
+                p
+                    font-weight: bold
+                    font-size: 13px
+
             #graph_sm
                 margin: 3.394vh 0 0 0
         
@@ -1694,7 +1728,7 @@ body
             flex-direction: column
             align-items: center
             width: 90vw
-            height: 22.1675vh
+            height: auto
             background-color: white
             margin: 2.894vh 0 0 0
             border-radius: 10px
@@ -1710,16 +1744,7 @@ body
 
                 p
                     font-size: 15px
-                // display: flex
-                // flex-direction: row
-                // align-items: center
-                // width: 100%
-                // height: 20%
-                // margin: 1.5vh 0 0.5vh 0
-                // img
-                //     margin: 0 2.933vw 0 5vw
-                // p
-                //     font-size: 14px
+
             #date_box_sm
                 display: flex
                 flex-direction: row
@@ -1745,9 +1770,7 @@ body
                 margin: 0 0 20px 0
                 padding: 2vh 0
                 border-top: 0.2px solid #B3B3B3
-                // margin: 0
-                // padding: 1.1084vh 0
-                // border-top: 0.2px solid #B3B3B3
+
                 p
                     font-size: 13px
                 #money
@@ -1794,7 +1817,7 @@ body
                 top: 6.0345vh
                 margin: 0
 
-        #drop_down_btn
+        .drop_down_btn
             display: flex
             justify-content: center
             width: 84px
@@ -1802,14 +1825,11 @@ body
             align-items: center
             background: url(./image/project/Project_month-bg.png) no-repeat center / contain
             margin: 1.6vh 0 0 0 
-            
+
             p
                 font-weight: bold
                 font-size: 13px
                 
-
-            
-
         .ranking_list
             display: flex
             flex-direction: column
@@ -2076,7 +2096,6 @@ body
                 p:nth-child(2)
                     font-weight: normal
                     color: #838484
-
 
 
     #personal_page

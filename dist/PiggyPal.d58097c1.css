@@ -252,7 +252,7 @@ body {
         right: 1.5vh;
         object-fit: cover;
         z-index: 1; }
-    #main #mainpage #add_project_btn {
+    #main #mainpage #add_deal_btn {
       position: fixed;
       bottom: 13.423vh;
       right: 5.6vw; }
@@ -321,11 +321,21 @@ body {
           font-size: 14px; }
       #main #mainpage #project_block .planned_speed {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 58.235%; }
+      #main #mainpage #project_block #normal_graph {
+        background: url(MainPage_general_savings.4f1845aa.png) no-repeat center/contain; }
+        #main #mainpage #project_block #normal_graph p {
+          font-size: 8px;
+          color: #A3A9AF;
+          margin: 3px 0; }
+        #main #mainpage #project_block #normal_graph p:nth-child(2) {
+          font-size: 16px;
+          color: black;
+          font-weight: bold; }
       #main #mainpage #project_block #daily_expend {
         background-color: #8D5EF3;
         background-position: center;
@@ -1100,6 +1110,11 @@ body {
         height: 4.31vh;
         width: 100%;
         margin: 0 0 2.586vh 0; }
+      #main #add_project #project_form .box:nth-child(5) .participate_member {
+        margin: 0 0 0 5vh; }
+        #main #add_project #project_form .box:nth-child(5) .participate_member img {
+          object-fit: cover;
+          border-radius: 34px; }
       #main #add_project #project_form .box:nth-child(8) {
         align-items: start;
         margin: 0 0 6.48vh 0;
@@ -1240,6 +1255,9 @@ body {
       #main #add_member #result p {
         font-size: 16px;
         margin: 2.09vh 0 3.85vh 0; }
+      #main #add_member #result img:nth-child(1) {
+        border-radius: 30px;
+        object-fit: cover; }
     #main #add_member #wrong {
       display: none;
       flex-direction: column;
@@ -1435,6 +1453,17 @@ body {
       width: 100vw;
       height: 28.82vh;
       margin: 2.955vh 0 0 0; }
+      #main #show_normal_save_money #graph_box_sm .drop_down_btn {
+        display: flex;
+        justify-content: center;
+        width: 84px;
+        height: 25px;
+        align-items: center;
+        background: url(Project_month-bg.6ec81e0b.png) no-repeat center/contain;
+        margin: 1.6vh 0 0 0; }
+        #main #show_normal_save_money #graph_box_sm .drop_down_btn p {
+          font-weight: bold;
+          font-size: 13px; }
       #main #show_normal_save_money #graph_box_sm #graph_sm {
         margin: 3.394vh 0 0 0; }
     #main #show_normal_save_money #project_detail_sm {
@@ -1442,7 +1471,7 @@ body {
       flex-direction: column;
       align-items: center;
       width: 90vw;
-      height: 22.1675vh;
+      height: auto;
       background-color: white;
       margin: 2.894vh 0 0 0;
       border-radius: 10px; }
@@ -1519,7 +1548,7 @@ body {
         position: relative;
         top: 6.0345vh;
         margin: 0; }
-    #main #show_joint_project #drop_down_btn {
+    #main #show_joint_project .drop_down_btn {
       display: flex;
       justify-content: center;
       width: 84px;
@@ -1527,7 +1556,7 @@ body {
       align-items: center;
       background: url(Project_month-bg.6ec81e0b.png) no-repeat center/contain;
       margin: 1.6vh 0 0 0; }
-      #main #show_joint_project #drop_down_btn p {
+      #main #show_joint_project .drop_down_btn p {
         font-weight: bold;
         font-size: 13px; }
     #main #show_joint_project .ranking_list {

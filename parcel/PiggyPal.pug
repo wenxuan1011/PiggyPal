@@ -51,7 +51,7 @@ html
           .check
             input(type='checkbox', name='check') 
             label I read and agree to terms and condition.
-          button(type="submit")
+          button#signup_btn(type="submit")
             img(src = "./image/signup/btn_SignUp.png" height = "100%")
       .other_choice
         img(src="./image/signup/line_OrConnectWith.png", height = "9%")
@@ -68,7 +68,7 @@ html
         .personal_btn_bg
           img#personal_btn(src = "./image/MainPage/MainPage_personal.png", height = "81.25%", width = "47.561%")
           img#personal_btn_arrow(src = "./image/btn/arrow_right_white.png", height = "25%", width = "10%")        
-        img#add_project_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
+        img#add_deal_btn(src = "./image/MainPage/MainPage_AddAccounting.png", width = "50px", height = "50px")
         #balance_bar
           p $0
           p 本月可用
@@ -82,8 +82,9 @@ html
               .title
                 img(src = "./image/project/Project_colordot_purple.png", height = "17.647%")
                 p 一般儲蓄
-              .planned_speed
-                img(src = "./image/MainPage/MainPage_general savings.png", height = "100%")
+              .planned_speed#normal_graph
+                p 6月已存下
+                p $ 1000
             .add_project
               .title
                 img(src = "./image/MainPage/Project_colordot_grey.png", height = "17.647%")
@@ -249,7 +250,6 @@ html
             input(type = "text", name = "target_number")
           .box
             p 參與成員
-            //- p#member
             .participate_member
             img#add_mem(src = "./image/MainPage/addcircle.png", height = "85.7%")
           .box
@@ -319,7 +319,7 @@ html
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
           img(src = "./image/btn/btn_close.png", width = "5.33333%")
           p 共同專案
-        #drop_down_btn
+        .drop_down_btn
           p Ranking
         .ranking_list
         .project_detail
@@ -350,18 +350,19 @@ html
           img(src = "./image/btn/btn_close.png", height = "2.22167%")
           p 一般儲蓄
         #graph_box_sm
-          img(src = "./image/project/Project_month-bg.png", height = "25px")
+          .drop_down_btn
+            p Month
           img#graph_sm(src = "./image/project/Project_general savings_graph.png", height = "67%")
         #project_detail_sm
           #title_sm
             p#item 一般儲蓄
             img(src = "./image/btn/btn_edit.png", height = "18px")
           #date_box_sm 
-            p 4月已存下
+            p 6月已存下 &nbsp;
             p#money $500 
           #target_money_sm
             p 每月固定儲蓄金額
-            p#money $800    
+            p#money $1000    
 
       #show_complete_project
         .bar
@@ -544,7 +545,7 @@ html
             .DeleteBox
               p.deleteaccount 刪除帳號
 
-  script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+  script(src="https://code.jquery.com/jquery-3.5.1.min.js")
   script(src="https://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js")
   script(src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js")
   script(src="./signup.js")
@@ -556,7 +557,7 @@ html
   script(src="./project.js")
   script(src="./account.js")
   script(src="./mainpage.js")
-  script(src="./serverjobs.js")
   script(src="./selectormodule.js")
   script(src="./personal_pic.js")
   script(src="./graphic.js")
+  script(src="./serverjobs.js")

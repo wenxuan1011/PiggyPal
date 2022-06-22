@@ -1540,8 +1540,12 @@ body {
         #main #show_joint_project .ranking_list .member_block img:nth-child(1) {
           object-fit: cover;
           border-radius: 30px;
+<<<<<<< HEAD
           margin: 0 0 0 20px;
           filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); }
+=======
+          margin: 0 0 0 25px; }
+>>>>>>> 95cdd4ca41ab8bc9433df6d5c73f2731417b80ed
         #main #show_joint_project .ranking_list .member_block p {
           font-size: 12px;
           color: #737474; }
@@ -1551,6 +1555,7 @@ body {
           justify-content: space-between;
           align-items: end;
           width: 72%;
+<<<<<<< HEAD
           height: auto;
           margin: 0 25px 0 0; }
           #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money {
@@ -1592,6 +1597,9 @@ body {
               width: 50%;
               height: 10px;
               border-radius: 10px; }
+=======
+          margin: 0 25px 0 0; }
+>>>>>>> 95cdd4ca41ab8bc9433df6d5c73f2731417b80ed
     #main #show_joint_project .project_detail {
       display: flex;
       flex-direction: column;

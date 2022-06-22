@@ -1,5 +1,6 @@
-import ID from './signup.js' 
+//import ID from './signup.js' 
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 var todayExpenditure=0
 var todayIncome = 0
@@ -160,7 +161,7 @@ function showPiggy(remain, used, premain, pused){
     var today = new Date()
     var moneypercent = (used/remain)/(24-today.getHours())*100
     var projectmoney = (pused/premain)
-    console.log(moneypercent,projectmoney)
+    //console.log(moneypercent,projectmoney)
     if(moneypercent>0){
         if(remain<100){
             $('#main #mainpage #project_block #daily_expend #piggy_face').attr("src", './image/MainPage/piggy-shock.png')

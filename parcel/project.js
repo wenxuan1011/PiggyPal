@@ -1,8 +1,9 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
 import gra from './graphic.js'
 import { async } from 'regenerator-runtime'
+var ID = localStorage.getItem("ID")
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
@@ -189,9 +190,10 @@ function clickHiddenPriceTag(eve){
 }
 
 // show personal/joint project box
-$('#navbar img:nth-child(5), #project #type_bar').click((event) => {
+$('#navbar img:nth-child(5), #project #type_bar, #mainpage #project_view .add_project .planned_speed img').click((event) => {
   event.preventDefault()
   getallproject(SHOW_PERSONAL_OR_JOINT)
+  getnormalproject()
 })
 
 // create getallproject function to draw .project_block in #project
@@ -224,13 +226,14 @@ async function getallproject(TF){
         var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number)
         console.log('totalmoney',totalmoney)
         var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100
-        console.log(percent)
         percent = Math.round(percent, -1)
         var type = mod.gettabledata(result, 'personal_or_joint', i)
         project_list[i] = project_name
+        // ----------------------------------
         color_list[i] = color
         percent_list[i] = percent
         console.log(type)
+        // -----------------------------------
         if (type >=2){
           judge = true
         }
@@ -323,6 +326,15 @@ async function getallproject(TF){
   else{
     $('#no_project').css("display", "none")
   }
+}
+
+async function getnormalproject(){
+  await $.get('./getnormalproject', {
+    id:ID
+  },(data) => {
+    $('#percent_sm').html(`$${data}`)
+    $('#project_detail_sm #date_box_sm #money').html(`$${data}`)
+  })
 }
 
 
