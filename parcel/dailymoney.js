@@ -1,5 +1,6 @@
-import ID from './signup.js' 
+//import ID from './signup.js' 
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 var todayExpenditure=0
 var todayIncome=0

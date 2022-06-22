@@ -1,5 +1,6 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 // 0支出 1收入
 var click_op = 0;
@@ -166,14 +167,13 @@ $('#login_btn, #save, .datebox').click((event) => {
   event.preventDefault()
   var count = 0
   var interval = setInterval(function(){
-    if(count==10){
+    if(count==4){
       count=0
       clearInterval(interval)
     }
     getdetailincome()
     getdetailexpenditure()
     showtoday()
-    console.log(count)
     count++
   },1000 )
   

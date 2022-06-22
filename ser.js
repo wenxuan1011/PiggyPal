@@ -8,11 +8,9 @@ import config from './config.js'
 import mysql from 'mysql'
 import mod from './parcel/module.js'
 import bodyParser from 'body-parser'
-import serverjob from './parcel/serverjobs.js'
-import cron from 'node-cron'
+//import serverjob from './parcel/serverjobs.js'
+
 import { connect } from 'http2'
-import { rmSync } from 'fs'
-import { userInfo } from 'os'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -29,17 +27,8 @@ app.listen(port, () => {
 })
 
 //run everyday
-cron.schedule("0 0 * * *", function() {
-  var today = new Date()
-  console.log(today);
-  serverjob.dailyStartprocess();
-});
 
-cron.schedule("58 23 * * *", function() {
-  var today = new Date()
-  console.log(today);
-  serverjob.dailyEndprocess();
-});
+
 
 // static
 app.use(express.static(`${__dirname}/dist`))
@@ -52,6 +41,7 @@ connection.connect(err => {
   }
 })
 
+
 // sign up
 app.get('/signup', (req, res) => {
   // create table
@@ -61,38 +51,38 @@ app.get('/signup', (req, res) => {
   let UID = "'" + `${req.query.id}` + "'"
   let NAME = "'" + `${req.query.name}` + "'"
   let PWD = "'" + `${req.query.password}` + "'"
-   
-  let add_user = false
-  const search_id = `
-    SELECT id FROM user
-    WHERE id = ${UID}`
-  const add = `INSERT INTO user (id, name, password) VALUES (${UID}, ${NAME}, ${PWD})`
-  connection.query(search_id, (err, rows, fields) => {
-    if (err)
-      console.log('fail to search: ', err)
-    console.log(rows)
-    if (rows[0] === undefined) {
-      add_user = true
-    }
-    else{
-      res.send("Signup faild.")
-    }
-  })
-  
-  setTimeout(() => {
-    var today = new Date()
-    if (add_user){
-      console.log(add_user)
-      connection.query(add, (err, result) => {
-        if (err) console.log('fail to insert: ', err)
-      })
-      const saved = `INSERT INTO user (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money) VAALUES(${UID}, 每月儲蓄, #8E5FF4, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, 0, ${UID}, 均分, 2, 0)`
-      connection.query(saved, (err) => {
-        if (err) console.log('Failed to add personal saved project: ',err)
-      })
-      res.send("signup")
-    }
-  }, 100)
+  if(mod.checkBlank(UID,NAME,PWD)==1){
+    let add_user = true
+    const search_id = `
+      SELECT id FROM user
+      WHERE id = ${UID}`
+    const add = `INSERT INTO user (id, name, password) VALUES (${UID}, ${NAME}, ${PWD})`
+    connection.query(search_id, (err, rows, fields) => {
+      if (err)
+        console.log('fail to search: ', err)
+      console.log(rows)
+      if (rows[0] === undefined) {
+        var today = new Date()
+        if (add_user){
+          console.log(add_user)
+          connection.query(add, (err, result) => {
+            if (err) console.log('fail to insert: ', err)
+          })
+          const saved = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money) VALUES(${UID}, 'normal_project', '#8E5FF4', ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, '1000000', ${UID}, '均分', '', '0', '0')`
+          connection.query(saved, (err) => {
+            if (err) console.log('Failed to add personal saved project: ',err)
+          })
+          res.send(req.query.id)
+        }
+      }
+      else{
+        res.send("Signup faild.")
+      }
+    })
+  }
+  else{
+    res.send("Signup faild.")
+  }
   
   
 })
@@ -183,12 +173,18 @@ app.get('/financial',(req,res) => {
     connection.query(update, (err) => {
       if (err) console.log('fail to insert: ', err)
     })
+    if (TYPE == 2){
+      const fixed = `UPDATE project SET target_number = ${MONEY} WHERE id = ${UID} and project_name = 'normal_project'`
+      connection.query(fixed, (err) =>{
+        if(err) console.log("Can't set financial in project", err)
+      })
+    }
     res.send('0')
   }
   else{
     res.send(mod.checkBlank('financial',TYPE, ITEM, YEAR, MONTH, DAY, MONEY, REPEAT))
   }
-  
+
 })
 
 // get financial table
@@ -320,8 +316,8 @@ app.get('/record',(req,res) => {
 app.get('/todaymoney',(req,res) =>{
   //connection.query('CREATE TABLE IF NOT EXISTS record (id VARCHAR(30), item VARCHAR(30), cost VARCHAR(30), date VARCHAR(8), type VARCHAR(1))')
   //var output=['income', 'expenditure', 'fixedincome', 'fixedexpenditure', 'fixedsaving']
-  let search_user=''
-  let ID="'"+`${req.query.ID}`+"'"
+
+  let ID="'"+`${req.query.id}`+"'"
   let table=`${req.query.table}`
   let selection=`${req.query.selection}`
   let month=mod.datetransfer(req.query.month)
@@ -329,7 +325,7 @@ app.get('/todaymoney',(req,res) =>{
   let year=req.query.year
   let type="'"+`${req.query.type}`+"'"
   
-  search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and day = ${date} and year= ${year}`
+  const search_user= `SELECT ${selection} FROM ${table} WHERE id = ${ID} and type= ${type} and month= ${month} and day = ${date} and year= ${year}`
   //console.log(search_user)
   connection.query(search_user,(err,row,fields) => {
     //console.log(row)
@@ -491,14 +487,16 @@ app.get('/getProject',(req,res) =>{
 })
 
 app.get('/projectcomplete', (req,res) => {
-  var ID = "'"+req.query.ID+"'"
-  var project_number = "'"+req.query.project_name+"'"
-  var color = "'"+req.query.color+"'"
-  var target_number = "'"+req.query.target_number+"'"
-  var member = "'"+req.query.member+"'"
-  const complete = `UPDATE project SET personal_or_joint = -1 WHERE id = ${ID} and project_name = ${project_number} and color = ${color} and target_number = ${target_number} and member = ${member}` 
+  var ID = "'"+`${req.query.ID}`+"'"
+  var project_number = "'"+`${req.query.project_name}`+"'"
+  var color = "'"+`${req.query.color}`+"'"
+  var target_number = "'"+`${req.query.target_number}`+"'"
+  var member = "'"+`${req.query.member}`+"'"
+  const complete = `UPDATE project SET personal_or_joint = '-1' WHERE id = ${ID} and project_name = ${project_number} and color = ${color} and target_number = ${target_number} and member = ${member}` 
+  console.log(complete)
   connection.query(complete, (err) => {
     if(err) console.log('failed to complete project',err)
+    res.send('finish')
   })
 })
 
@@ -508,18 +506,41 @@ app.get('/getaprojectmoney', (req,res) => {
   var project_name= "'"+req.query.project_name+"'"
   var color = "'" + req.query.color + "'"
   var target_number = "'" + req.query.target_number + "'"
-  const summation = `SELECT * FROM project WHERE id = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
-  connection.query(summation,(err,rows)=>{
-    if(err)console.log('failed to get a project total saved money')
+  var ID = ''
+  const choseProject = `SELECT * FROM project WHERE member = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+  
+  connection.query(choseProject,(err,rows)=>{
+    if(err)console.log('failed to get a project total saved money',err)
+    ID = "'"+mod.gettabledata(rows, 'id', 0)+"'"
+    const summation = `SELECT * FROM project WHERE id = ${ID} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+    
+    connection.query(summation,(err,rows)=>{
+    if(err)console.log('failed to get a project total saved money',err)
     for(var i in rows){
       result += mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
     }
     res.send(`${result}`)
     
   })
+  })
+
+  
   
 })
 
+app.get('/getnormalproject',(req,res) => {
+  var id = "'"+req.query.id+"'"
+  const normal = `SELECT * FROM project WHERE id = ${id} and project_name = 'normal_project'`
+  connection.query(normal, (err,rows) =>{
+    if (err) console.log('failed to get normal project', err)
+    ///console.log(rows)
+    if(rows[0]===undefined){
+      res.send("nothing")
+    }
+    var result = mod.gettabledata(rows, 'saved_money', 0)
+    res.send(result)
+  })
+})
 //get project creater
 app.get('/getCreater',(req,res) =>{
   let member = "'"+`${req.query.ID}`+"'"
@@ -558,6 +579,7 @@ import multer  from 'multer'
 import path  from 'path'
 import fs from 'fs'
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) =>{
     cb(null, "./dist/image/personal_pic");
@@ -591,6 +613,7 @@ app.post('/upload', upload.single("image"), (req, res) =>{
 /////////////////please add your code above, below are the codes that server need to do every day//////////////////////////////////
 //update monthly financial
 app.get('/sergetfinancial', (req,res) =>{
+  console.log("sergetfinancial")
   var today = new Date()
   var search_all = 'SELECT * FROM project'
   connect.query(search_all , (err, row, fields) =>{
@@ -638,6 +661,7 @@ app.get('/getAllUser', (req,res) => {
     for(let i in rows){
       all_user.push(mod.gettabledata(rows, 'id', i))
     }
+    //console.log(all_user)
     res.send(all_user)
   })
   
@@ -645,6 +669,7 @@ app.get('/getAllUser', (req,res) => {
 
 //get specific user's projects
 app.get('/sergetProject',(req,res) => {
+  console.log("setgetproject")
   var result = []
   var user = req.query.user
   
@@ -658,22 +683,29 @@ app.get('/sergetProject',(req,res) => {
       var remainday= (lastday-startday)
 
       //reamin money
-      let remain_money = mod.StringtoInt(mod.gettabledata(rows, 'target_number', i))-mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
-      if(remainday>0){
-        remainday= Math.ceil(remainday/(1000*3600*24))+1
+      if(mod.StringtoInt(mod.gettabledata(rows,'personal_or_joint',i)) <= 0){
+        continue
       }
       else{
-        remainday = -1
+        let remain_money = mod.StringtoInt(mod.gettabledata(rows, 'target_number', i))/mod.StringtoInt(mod.gettabledata(rows,'personal_or_joint',i))-mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
+        if(remainday>0){
+          remainday= Math.ceil(remainday/(1000*3600*24))+1
+        }
+        else{
+          remainday = -1
+        }
+        var buffer = new Object
+        buffer["id"] = mod.gettabledata(rows, 'id', i)
+        buffer["project_name"] = mod.gettabledata(rows, 'project_name', i)
+        buffer["member"] = mod.gettabledata(rows, 'member', i)
+        buffer["personal_or_joint"] = mod.gettabledata(rows, 'personal_or_joint', i)
+        buffer["saved_money"] = Math.floor(mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i)))
+        buffer["remain_money"] = Math.round(remain_money/remainday)
+        buffer["remainday"] = remainday
+        //console.log(buffer)
+        result.push(buffer)
       }
-      var buffer = new Object
-      buffer["id"] = mod.gettabledata(rows, 'id', i)
-      buffer["project_name"] = mod.gettabledata(rows, 'project_name', i)
-      buffer["member"] = mod.gettabledata(rows, 'member', i)
-      buffer["personal_or_joint"] = mod.gettabledata(rows, 'personal_or_joint', i)
-      buffer["saved_money"] = Math.floor(mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i)))
-      buffer["remain_money"] = Math.round(remain_money/remainday)
-      buffer["remainday"] = remainday
-      result.push(buffer)
+      
     }
     res.send(result)
   })
@@ -681,17 +713,18 @@ app.get('/sergetProject',(req,res) => {
 })
 //save money in project
 app.get('/saveMoneytoProject',(req,res) =>{
+  console.log("saveMoneytoProject")
   let id="'"+`${req.query.id}`+"'"
   let member="'"+`${req.query.member}`+"'"
   let personal_or_joint = "'"+`${req.query.personal_or_joint}`+"'"
   let project_name = "'"+`${req.query.project_name}`+"'"
-  let saved_money = "'"+`${req.query.saving_money}`+"'"
+  let saved_money = "'"+`${Math.round(req.query.saving_money,0)}`+"'"
   let saveded_money = "'"+`${mod.StringtoInt(req.query.saving_money)-mod.StringtoInt(req.query.saved_money)}`+"'"
   let date = "'"+`${req.query.date}`+"'"
   let month = "'"+`${req.query.month}`+"'"
   let year = "'"+`${req.query.year}`+"'"
 
-  const accounting = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${member}, ${year}, ${month}, ${date}, ${saveded_money}, 'project_saving', ${project_name}, 現金, '3')`
+  const accounting = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${member}, ${year}, ${month}, ${date}, ${saveded_money}, 'project_saving', ${project_name}, '現金', '3')`
   connection.query(accounting, (err,rows,fields)=>{
   
     if(err)console.log("There are some problem: ",err)
@@ -699,6 +732,7 @@ app.get('/saveMoneytoProject',(req,res) =>{
   
   const update=`UPDATE project SET saved_money=${saved_money} 
   WHERE id=${id} and member = ${member} and personal_or_joint =${personal_or_joint} and project_name = ${project_name}`
+  //console.log(update)
   connection.query(update, (err, rows, fields)=>{
     if(err)console.log("There must be some same data",err)
     res.send(update)
@@ -721,21 +755,29 @@ app.get('/useMoneyinProject',(req,res) =>{
   
     if(err)console.log("There are some problem: ",err)
   })
-  
+
   const update=`UPDATE project SET saved_money=${saveded_money} 
   WHERE id=${id} and member = ${member} and personal_or_joint =${personal_or_joint} and project_name = ${project_name}`
   connection.query(update, (err, rows, fields)=>{
     if(err)console.log("There must be some same data",err)
+    if(rows[0]==undefined){
+      res.send('none')
+    }
     res.send(update)
   })
 })
 
 app.get('/setfinancialincome',(req, res) =>{
+  console.log("setfinancialincome")
   var today = new Date()
-  let UID = req.query.id
+  let UID = "'"+ `${req.query.id}` +"'"
   const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
+  //console.log(setfinancial)
   connection.query(setfinancial, (err, rows, fields)=>{
     if(err)console.log("There are something wrong: ",err)
+    if(rows[0]==undefined){
+      res.send('none')
+    }
     for(let i in rows){
       let UID = mod.gettabledata(rows,'id', i)
       let type = mod.gettabledata(rows,'type', i)
@@ -744,21 +786,27 @@ app.get('/setfinancialincome',(req, res) =>{
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
       if (repeats == '每月' && date == `${mod.datetransfer(today.getDate())}`&& type == '0'){
-        const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 1)`
+        const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', '1')`
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })
       }
     }
+    res.send('finish')
   })
 })
 
 app.get('/setfinancialexpenditure',(req, res) =>{
+  console.log("setfinancialexpenditure")
   var today = new Date()
-  let UID = req.query.id
+  let UID = "'"+ req.query.id +"'"
   const setfinancial = `SELECT * FROM financial WHERE id =${UID}` 
   connection.query(setfinancial, (err, rows, fields)=>{
     if(err)console.log("There are something wrong: ",err)
+    console.log('Hi',rows)
+    if(rows[0]==undefined){
+      res.send('')
+    }
     for(let i in rows){
       let UID = mod.gettabledata(rows,'id', i)
       let type = mod.gettabledata(rows,'type', i)
@@ -768,18 +816,20 @@ app.get('/setfinancialexpenditure',(req, res) =>{
       let date = mod.gettabledata(rows, 'day', i)
       let money = mod.gettabledata(rows, 'money', i)
       let repeats = mod.gettabledata(rows, 'repeats', i)
-      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
+      if (repeats == '每月' && date == `${mod.datetransfer(today.getDate())}`&& type == '1'){
         const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 0)`
         connection.query(addFinancial,(err, rows, fields)=>{
+          if(err)console.log("There are something wrong: ",err)
         })
       }
-      if (repeats == '重複' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
+      if (repeats == '每月' && date == `${mod.datetransfer(today.getDate())}`&& type == '2'){
         const addFinancial = `INSERT INTO account (id, year, month, day, cost, sort, items, account, type) VALUE (${UID}, ${today.getFullYear()}, ${mod.datetransfer(today.getMonth()+1)}, ${mod.datetransfer(today.getDate())}, ${money}, 'financial', ${item}, '現金', 0)`
         connection.query(addFinancial,(err, rows, fields)=>{
           if(err)console.log("There are something wrong: ",err)
         })
       }
     }
+    res.send('finish')
   })
 })
 //connection.end()

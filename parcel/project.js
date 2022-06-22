@@ -1,6 +1,7 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
+var ID = localStorage.getItem("ID")
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
@@ -172,6 +173,7 @@ function showProjectDetail(project_name, personal_or_joint){
 $('#navbar img:nth-child(5), #project #type_bar').click((event) => {
   event.preventDefault()
   getallproject(SHOW_PERSONAL_OR_JOINT)
+  getnormalproject()
 })
 
 // create getallproject function
@@ -202,11 +204,9 @@ async function getallproject(TF){
         var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number)
         console.log('totalmoney',totalmoney)
         var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100
-        console.log(percent)
         percent = Math.round(percent, -1)
         var type = mod.gettabledata(result, 'personal_or_joint', i)
         project_list[i] = project_name
-        console.log(type)
         if (type >=2){
           judge = true
         }
@@ -283,6 +283,7 @@ async function getallproject(TF){
           }, 100)
           event.preventDefault()  // I'm not sure is it right or not
           showProjectDetail(project_list[i], 'joint')
+          getProjectCreater(project_list[i])
         })
       }
     }
@@ -294,7 +295,15 @@ async function getallproject(TF){
     $('#no_project').css("display", "none")
   }
 }
-      
+
+async function getnormalproject(){
+  await $.get('./getnormalproject', {
+    id:ID
+  },(data) => {
+    $('#percent_sm').html(`$${data}`)
+    $('#project_detail_sm #date_box_sm #money').html(`$${data}`)
+  })
+}
 
 function getProjectMember(creater, project_name){
 $.get('./getMember',{

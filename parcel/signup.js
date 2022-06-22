@@ -1,5 +1,5 @@
 import * as mod from './module.js'
-import fs from 'fs'
+
 //import process from './dailymoney.js'
 
 $('#change-to-login').click(function(){
@@ -109,15 +109,18 @@ $(document).ready(function() {
       id: $('#signup input[name=id]').val(),
       password: $('#signup input[name=password]').val(),
     }, (data) => {
-      if(`${data}` === "signup"){
+      if(`${data}` !== "Signup faild."){
+        localStorage.setItem("ID", data)
+        //ID = data
+        //console.log(data)
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
-        ID = $('#signup input[name=id]').val()
         
       }
       else{
         $("#signup-output").html(`${data}`);
-        ID= data
+        
+        mod.PopUpMessage(2)
         //process(ID)
       };
     });
@@ -136,6 +139,7 @@ $(document).ready(function() {
         $('#Login').css("display", "none");
         $('#main').css("display", "flex");
         ID = data
+        console.log(data)
         localStorage.setItem("ID", data)
         //process(ID)
       }

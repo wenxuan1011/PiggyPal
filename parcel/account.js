@@ -1,5 +1,6 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 // open/close add_account_page
 $('#account #add_account_page_btn').click(function(){

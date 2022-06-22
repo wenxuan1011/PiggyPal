@@ -875,24 +875,6 @@ try {
 }
 
 },{}],"module.js":[function(require,module,exports) {
-/*
-This is the place to put some module for easy coding
-if you want to use the module in this file, please following the steps below
-    Put this code in the beginning of your js:
-        import * as mod from './module.js'
-    when you want to use the mod inside, use 
-        module.functionname()
-    to call the function, some may need to put the parameter in the ()
-
-
-If anyone want to add some new mod in the file, please set the function name as well-known 
-as possible. Moreover, rememder to export function at the buttom of the code. 
-
-If it is convenient, use the annotation at the buttom of export to let others know what is 
-this function doing
-
-By Maker
-*/
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -900,9 +882,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PopUpMessage = PopUpMessage;
 exports.StringtoInt = StringtoInt;
-exports.caldaymoney = caldaymoney;
 exports.calprojectpercent = calprojectpercent;
-exports.caltotalmoney = caltotalmoney;
 exports.checkBlank = checkBlank;
 exports.datetransfer = datetransfer;
 exports.default = void 0;
@@ -935,17 +915,12 @@ function gettabledata(table, parameter, row) {
   return result;
 }
 
-function getTodayMoney(ID, table, year, month, date, selection, type) {
-  var result = caldaymoney(ID, table, year, month, date, selection, type);
-  return result;
+function getTodayMoney(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
+  return _getTodayMoney.apply(this, arguments);
 }
 
-function caldaymoney(_x, _x2, _x3, _x4, _x5, _x6, _x7) {
-  return _caldaymoney.apply(this, arguments);
-}
-
-function _caldaymoney() {
-  _caldaymoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(ID, table, year, month, date, selection, type) {
+function _getTodayMoney() {
+  _getTodayMoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(ID, table, year, month, date, selection, type) {
     var results;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
@@ -954,7 +929,7 @@ function _caldaymoney() {
             results = 0;
             _context.next = 3;
             return $.get('./todaymoney', {
-              ID: ID,
+              id: ID,
               table: table,
               selection: selection,
               month: month,
@@ -990,21 +965,16 @@ function _caldaymoney() {
       }
     }, _callee);
   }));
-  return _caldaymoney.apply(this, arguments);
+  return _getTodayMoney.apply(this, arguments);
 }
 
-function getMonthlyMoney(ID, table, selection, type) {
-  var result = caltotalmoney(ID, table, selection, type);
-  return result;
-}
-
-function caltotalmoney(_x8, _x9, _x10, _x11) {
-  return _caltotalmoney.apply(this, arguments);
+function getMonthlyMoney(_x8, _x9, _x10, _x11) {
+  return _getMonthlyMoney.apply(this, arguments);
 } //need to check what is the detail in table
 
 
-function _caltotalmoney() {
-  _caltotalmoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(ID, table, selection, type) {
+function _getMonthlyMoney() {
+  _getMonthlyMoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(ID, table, selection, type) {
     var results, today;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
@@ -1049,7 +1019,7 @@ function _caltotalmoney() {
       }
     }, _callee2);
   }));
-  return _caltotalmoney.apply(this, arguments);
+  return _getMonthlyMoney.apply(this, arguments);
 }
 
 function getProjectMoney(_x12) {
@@ -1058,18 +1028,18 @@ function getProjectMoney(_x12) {
 
 function _getProjectMoney() {
   _getProjectMoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(ID) {
-    var results, checkcomplete;
+    var results;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             results = 0;
-            checkcomplete = false;
-            _context3.next = 4;
+            _context3.next = 3;
             return $.get('./getProject', {
               ID: ID
             }, function (data) {
               var totalremain = 0;
+              console.log(data);
 
               for (var i in data) {
                 var lastday = new Date("".concat(gettabledata(data, "end_month", i), "/").concat(gettabledata(data, "end_day", i), "/").concat(gettabledata(data, "end_year", i)));
@@ -1081,16 +1051,14 @@ function _getProjectMoney() {
 
                 var remainday = Math.abs(lastday - startday);
 
-                if (remainday > 0 || remainday !== undefined || gettabledata(data, 'personal_or_joint', i) > 0) {
+                if (remainday > 0 || remainday !== undefined || StringtoInt(gettabledata(data, 'personal_or_joint', i)) > 0) {
                   remainday = Math.ceil(remainday / (1000 * 3600 * 24)) + 1;
                   var money = StringtoInt(gettabledata(data, "target_number", i)) / StringtoInt(gettabledata(data, 'personal_or_joint', i)) - StringtoInt(gettabledata(data, "saved_money", i)); //0 is for simulating money already save for this project
 
                   if (money > 0) {
-                    checkcomplete = false;
                     money = money / remainday;
                     totalremain += money;
                   } else {
-                    checkcomplete = true;
                     checkProjectComplete(data, i);
                   }
                 } else continue;
@@ -1099,10 +1067,10 @@ function _getProjectMoney() {
               results = totalremain;
             });
 
-          case 4:
+          case 3:
             return _context3.abrupt("return", results);
 
-          case 5:
+          case 4:
           case "end":
             return _context3.stop();
         }
@@ -1112,48 +1080,31 @@ function _getProjectMoney() {
   return _getProjectMoney.apply(this, arguments);
 }
 
-function checkProjectComplete(_x13, _x14) {
-  return _checkProjectComplete.apply(this, arguments);
+function checkProjectComplete(data, i) {
+  $.get('./projectcomplete', {
+    ID: gettabledata(data, 'id', i),
+    project_name: gettabledata(data, 'project_name', i),
+    color: gettabledata(data, 'color', i),
+    target_number: gettabledata(data, 'target_number', i),
+    member: gettabledata(data, 'member', i)
+  }, function (data) {
+    console.log(data);
+  });
 }
 
-function _checkProjectComplete() {
-  _checkProjectComplete = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(data, i) {
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.next = 2;
-            return $.get('./projectcomplete', {
-              ID: gettabledata(data, 'id', i),
-              project_name: gettabledata(data, 'project_name', i),
-              color: gettabledata(data, 'color', i),
-              target_number: gettabledata(data, 'target_number', i),
-              member: gettabledata(data, 'member', i)
-            }, function (data) {});
-
-          case 2:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4);
-  }));
-  return _checkProjectComplete.apply(this, arguments);
-}
-
-function calprojectpercent(_x15, _x16) {
+function calprojectpercent(_x13, _x14) {
   return _calprojectpercent.apply(this, arguments);
 }
 
 function _calprojectpercent() {
-  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(ID, project_name) {
+  _calprojectpercent = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(ID, project_name) {
     var result;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             result = 0;
-            _context5.next = 3;
+            _context4.next = 3;
             return $.get('./getproject', {
               ID: ID
             }, function (data) {
@@ -1166,14 +1117,14 @@ function _calprojectpercent() {
             });
 
           case 3:
-            return _context5.abrupt("return", Math.round(result, -1));
+            return _context4.abrupt("return", Math.round(result, -1));
 
           case 4:
           case "end":
-            return _context5.stop();
+            return _context4.stop();
         }
       }
-    }, _callee5);
+    }, _callee4);
   }));
   return _calprojectpercent.apply(this, arguments);
 }
@@ -1265,43 +1216,55 @@ function getAllUser() {
 }
 
 function _getAllUser() {
-  _getAllUser = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-    var all_user;
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+  _getAllUser = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+    var all_user, buffer, i;
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             all_user = [];
-            _context6.next = 3;
+            _context5.next = 3;
             return $.get('./getAllUser', {}, function (data) {
               all_user = data;
             });
 
           case 3:
-            return _context6.abrupt("return", all_user);
+            buffer = '';
 
-          case 4:
+            for (i = 0; i < all_user.length; i++) {
+              if (all_user[i] == buffer) {
+                all_user.splice(i, 1);
+                i = JSON.stringify(i - 1);
+              } else {
+                buffer = all_user[i];
+              }
+            }
+
+            console.log(all_user);
+            return _context5.abrupt("return", all_user);
+
+          case 7:
           case "end":
-            return _context6.stop();
+            return _context5.stop();
         }
       }
-    }, _callee6);
+    }, _callee5);
   }));
   return _getAllUser.apply(this, arguments);
 }
 
-function sergetProject(_x17) {
+function sergetProject(_x15) {
   return _sergetProject.apply(this, arguments);
 }
 
 function _sergetProject() {
-  _sergetProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(user) {
+  _sergetProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(user) {
     var all_project;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context7.next = 2;
+            _context6.next = 2;
             return $.get('./sergetProject', {
               user: user
             }, function (data) {
@@ -1312,14 +1275,14 @@ function _sergetProject() {
             });
 
           case 2:
-            return _context7.abrupt("return", all_project);
+            return _context6.abrupt("return", all_project);
 
           case 3:
           case "end":
-            return _context7.stop();
+            return _context6.stop();
         }
       }
-    }, _callee7);
+    }, _callee6);
   }));
   return _sergetProject.apply(this, arguments);
 }
@@ -1358,19 +1321,19 @@ function detailpicture(data, type) {
   }
 }
 
-function getaprojectmoney(_x18, _x19, _x20, _x21) {
+function getaprojectmoney(_x16, _x17, _x18, _x19) {
   return _getaprojectmoney.apply(this, arguments);
 }
 
 function _getaprojectmoney() {
-  _getaprojectmoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(id, project_name, color, target_number) {
+  _getaprojectmoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(id, project_name, color, target_number) {
     var result;
-    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
             result = 0;
-            _context8.next = 3;
+            _context7.next = 3;
             return $.get('./getaprojectmoney', {
               id: id,
               project_name: project_name,
@@ -1381,14 +1344,14 @@ function _getaprojectmoney() {
             });
 
           case 3:
-            return _context8.abrupt("return", result);
+            return _context7.abrupt("return", result);
 
           case 4:
           case "end":
-            return _context8.stop();
+            return _context7.stop();
         }
       }
-    }, _callee8);
+    }, _callee7);
   }));
   return _getaprojectmoney.apply(this, arguments);
 }
@@ -1398,8 +1361,6 @@ var _default = {
   // get id inside the row of column select from database
   getMonthlyMoney: getMonthlyMoney,
   // get money in each table, remember to use caltotalmoney to get in integer
-  caltotalmoney: caltotalmoney,
-  // calculate total money
   getProjectMoney: getProjectMoney,
   // get daily project saving
   calprojectpercent: calprojectpercent,
@@ -1424,9 +1385,7 @@ var _default = {
 
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
-
-},{}],"signup.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js"}],"record.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1436,170 +1395,9 @@ exports.default = void 0;
 
 var mod = _interopRequireWildcard(require("./module.js"));
 
-var _fs = _interopRequireDefault(require("fs"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-//import process from './dailymoney.js'
-$('#change-to-login').click(function () {
-  $("#SignUp").css("display", "none");
-  $("#Login").css("display", "flex");
-});
-$('#change-to-signup').click(function () {
-  $("#Login").css("display", "none");
-  $("#SignUp").css("display", "flex");
-}); // navbar change page
-
-var navbar = ['barcode', 'account', 'mainpage', 'accounting', 'project'];
-var present_page = 'mainpage';
-$('#navbar img:nth-child(1)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[0];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(2)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[1];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(3)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[2];
-  unselected_to_selected();
-  $('#add_deals').css('display', 'none');
-});
-$('#navbar img:nth-child(4), #main #mainpage #add_project_btn').click(function () {
-  selected_to_unselected();
-  present_page = navbar[3];
-  unselected_to_selected();
-});
-$('#navbar img:nth-child(5)').click(function () {
-  selected_to_unselected();
-  present_page = navbar[4];
-  unselected_to_selected();
-});
-
-function selected_to_unselected() {
-  if (present_page == navbar[0]) {
-    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/unselect/barcode_unselect.png");
-    $('#barcode').css("display", "none");
-  } else if (present_page == navbar[1]) {
-    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/unselect/account_unselect.png");
-    $('#account').css("display", "none");
-  } else if (present_page == navbar[2]) {
-    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/unselect/mainpage_unselect.png");
-    $('#mainpage').css("display", "none");
-  } else if (present_page == navbar[3]) {
-    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/unselect/accounting_unselect.png");
-    $('#accounting').css("display", "none");
-  } else {
-    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/unselect/project_unselect.png");
-    $('#project').css("display", "none");
-  }
-
-  ;
-}
-
-;
-
-function unselected_to_selected() {
-  if (present_page == navbar[0]) {
-    $('#navbar img:nth-child(1)').attr("src", "./image/navbar/selected/barcode_select.png");
-    $('#barcode').css("display", "flex");
-    window.location.href = 'https://luffy.ee.ncku.edu.tw/~stanly/test_camera/docs/index.html?';
-  } else if (present_page == navbar[1]) {
-    $('#navbar img:nth-child(2)').attr("src", "./image/navbar/selected/account_select.png");
-    $('#account').css("display", "flex");
-  } else if (present_page == navbar[2]) {
-    $('#navbar img:nth-child(3)').attr("src", "./image/navbar/selected/mainpage_select.png");
-    $('#mainpage').css("display", "flex");
-  } else if (present_page == navbar[3]) {
-    $('#navbar img:nth-child(4)').attr("src", "./image/navbar/selected/accounting_select.png");
-    $('#accounting').css("display", "flex");
-  } else {
-    $('#navbar img:nth-child(5)').attr("src", "./image/navbar/selected/project_select.png");
-    $('#project').css("display", "flex");
-  }
-
-  ;
-}
-
-;
-var ID = "";
-$(document).ready(function () {
-  // sign up
-  $('#signup button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./signup', {
-      name: $('#signup input[name=name]').val(),
-      id: $('#signup input[name=id]').val(),
-      password: $('#signup input[name=password]').val()
-    }, function (data) {
-      if ("".concat(data) === "signup") {
-        $('#SignUp').css("display", "none");
-        $('#main').css("display", "flex");
-        ID = $('#signup input[name=id]').val();
-      } else {
-        $("#signup-output").html("".concat(data));
-        ID = data; //process(ID)
-      }
-
-      ;
-    });
-  }); // login
-
-  $('#login button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    ID = $('#login input[name=id]').val();
-    $.get('./login', {
-      id: $('#login input[name=id]').val(),
-      password: $('#login input[name=pw]').val()
-    }, function (data) {
-      if ("".concat(data) !== 'failed,try again') {
-        $('#Login').css("display", "none");
-        $('#main').css("display", "flex");
-        ID = data;
-        localStorage.setItem("ID", data); //process(ID)
-      } else {
-        mod.PopUpMessage(5);
-      }
-
-      ;
-    });
-  });
-});
-$('#popup #background .confirm').click(function () {
-  $('#popup').css('display', 'none');
-});
-
-function transmit() {
-  return ID;
-}
-
-;
-var _default = transmit;
-exports.default = _default;
-},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"record.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _signup = _interopRequireDefault(require("./signup.js"));
-
-var mod = _interopRequireWildcard(require("./module.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -1609,7 +1407,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// 0支出 1收入
+var ID = localStorage.getItem("ID"); // 0支出 1收入
+
 var click_op = 0; //spend
 
 var t = document.getElementById("spend"); //name
@@ -1629,7 +1428,7 @@ $(document).ready(function () {
 
     if (click_op !== 2) {
       $.get('./record', {
-        id: _signup.default,
+        id: ID,
         date: $('#fin input[name=date]').val(),
         cost: $('#fin input[name=cost]').val(),
         sort: $('#fin #sort').text(),
@@ -1658,7 +1457,7 @@ $(document).ready(function () {
       });
     } else {
       $.get('./record', {
-        id: _signup.default,
+        id: ID,
         date: $('#fin input[name=date]').val(),
         cost: $('#fin input[name=cost]').val(),
         sort: $('#fin #sort').text(),
@@ -1763,7 +1562,7 @@ $('#login_btn, #save, .datebox').click(function (event) {
   event.preventDefault();
   var count = 0;
   var interval = setInterval(function () {
-    if (count == 10) {
+    if (count == 4) {
       count = 0;
       clearInterval(interval);
     }
@@ -1771,7 +1570,6 @@ $('#login_btn, #save, .datebox').click(function (event) {
     getdetailincome();
     getdetailexpenditure();
     showtoday();
-    console.log(count);
     count++;
   }, 1000);
 });
@@ -1784,7 +1582,7 @@ function getdetailincome() {
   var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
   var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
   $.get('./getmainpagedetail', {
-    id: _signup.default,
+    id: ID,
     date: DAY,
     month: MONTH,
     year: YEAR
@@ -1847,7 +1645,7 @@ function getdetailexpenditure() {
   var MONTH = "'" + "".concat(DATE[0]) + "".concat(DATE[1]) + "'";
   var DAY = "'" + "".concat(DATE[3]) + "".concat(DATE[4]) + "'";
   $.get('./getmainpagedetail', {
-    id: _signup.default,
+    id: ID,
     date: DAY,
     month: MONTH,
     year: YEAR
@@ -1917,12 +1715,12 @@ function _showtoday() {
             MONTH = "".concat(DATE[0]) + "".concat(DATE[1]);
             DAY = "".concat(DATE[3]) + "".concat(DATE[4]);
             _context.next = 6;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 0);
+            return mod.getTodayMoney(ID, 'account', YEAR, MONTH, DAY, 'cost', 0);
 
           case 6:
             dayExpenditure = _context.sent;
             _context.next = 9;
-            return mod.getTodayMoney(_signup.default, 'account', YEAR, MONTH, DAY, 'cost', 1);
+            return mod.getTodayMoney(ID, 'account', YEAR, MONTH, DAY, 'cost', 1);
 
           case 9:
             dayIncome = _context.sent;
@@ -1951,7 +1749,7 @@ function transmitIncomeOrExpend() {
 ;
 var _default = transmitIncomeOrExpend;
 exports.default = _default;
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1979,7 +1777,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39969" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34996" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

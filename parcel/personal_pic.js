@@ -1,4 +1,5 @@
-import ID from './signup.js'
+//import ID from './signup.js'
+var ID = localStorage.getItem("ID")
 var l_id = localStorage.getItem("ID")
 function CheckImgExists(imgurl) {
   return new Promise(function(resolve, reject) {

@@ -1,7 +1,8 @@
-"use strict";
-import 'regenerator-runtime/runtime.js'
-import ID from './signup.js'
+// "use strict";
+// import 'regenerator-runtime/runtime.js'
+//import ID from './signup.js'
 import * as mod from './module.js'
+var ID = localStorage.getItem("ID")
 
 var TIME = new Date()
 

@@ -16,9 +16,8 @@ this function doing
 
 By Maker
 */
-"use strict";
+//"use strict";
 import 'regenerator-runtime/runtime.js'
-
 var today=new Date();
 
 export function gettabledata(table, parameter, row){
@@ -29,15 +28,11 @@ export function gettabledata(table, parameter, row){
     return result;
 }
 
-export function getTodayMoney(ID,table,year,month,date,selection,type){
-    var result= caldaymoney(ID,table,year,month,date,selection,type)
-    return result
-}
 
-export async function caldaymoney(ID,table,year,month,date,selection,type){
+export async function getTodayMoney(ID,table,year,month,date,selection,type){
     var results=0
     await $.get('./todaymoney',{
-        ID:ID,
+        id:ID,
         table:table,
         selection:selection,
         month:month,
@@ -63,12 +58,7 @@ export async function caldaymoney(ID,table,year,month,date,selection,type){
     return results;
 }
 
-export function getMonthlyMoney(ID,table,selection,type){
-    var result= caltotalmoney(ID,table,selection,type)
-    return result
-}
-
-export async function caltotalmoney(ID,table,selection,type){
+export async function getMonthlyMoney(ID,table,selection,type){
     var results=0
     var today= new Date()
     await $.get('./monthlymoney',{
@@ -100,11 +90,11 @@ export async function caltotalmoney(ID,table,selection,type){
 
 export async function getProjectMoney(ID){
     var results=0
-    var checkcomplete =false
     await $.get('./getProject',{
         ID:ID,
     },(data) =>{
         var totalremain = 0
+        console.log(data)
         for (let i in data){
             let lastday = new Date(`${gettabledata(data, `end_month`, i)}/${gettabledata(data, `end_day`, i)}/${gettabledata(data, `end_year`, i)}`)
             let startday = new Date()
@@ -113,16 +103,14 @@ export async function getProjectMoney(ID){
             }
             var remainday= Math.abs(lastday-startday)
             
-            if(remainday>0 || remainday !== undefined || gettabledata(data, 'personal_or_joint', i)>0){
+            if(remainday>0 || remainday !== undefined || StringtoInt(gettabledata(data, 'personal_or_joint', i))>0){
                 remainday= Math.ceil(remainday/(1000*3600*24))+1
                 let money= (StringtoInt(gettabledata(data, `target_number`,i))/StringtoInt(gettabledata(data, 'personal_or_joint',i)))-StringtoInt(gettabledata(data, `saved_money`,i))//0 is for simulating money already save for this project
                 if(money>0){
-                    checkcomplete = false
                     money= money/remainday
                     totalremain+=money
                 }
                 else{
-                    checkcomplete = true
                     checkProjectComplete(data, i)
                 }
             }
@@ -134,15 +122,15 @@ export async function getProjectMoney(ID){
     return results;
 }
 
-async function checkProjectComplete(data, i){
-    await $.get('./projectcomplete',{
-        ID:gettabledata(data,'id',i),
-        project_name:gettabledata(data,'project_name',i),
-        color:gettabledata(data,'color',i),
-        target_number:gettabledata(data,'target_number',i),
-        member:gettabledata(data,'member',i),
+function checkProjectComplete(data, i){
+    $.get('./projectcomplete',{
+        ID: gettabledata(data,'id',i),
+        project_name: gettabledata(data,'project_name',i),
+        color: gettabledata(data,'color',i),
+        target_number: gettabledata(data,'target_number',i),
+        member: gettabledata(data,'member',i),
     },(data) => {
-
+        console.log(data)
     })
 }
 export async function calprojectpercent(ID, project_name){
@@ -239,6 +227,17 @@ export async function getAllUser(){
         ,(data) =>{
             all_user = data
         })
+    var buffer = ''
+    for (var i=0;i< all_user.length;i++){
+        if(all_user[i] == buffer){
+            all_user.splice(i,1)
+            i=JSON.stringify(i-1)
+        }
+        else{
+            buffer = all_user[i]
+        }
+    }
+    console.log(all_user)
     return all_user
 }
 
@@ -253,6 +252,7 @@ export async function sergetProject(user){
         })
         
     })
+    //console.log(all_project)
     return all_project
 }
 
@@ -303,7 +303,6 @@ export async function getaprojectmoney(id, project_name, color, target_number){
 export default{
     gettabledata, // get id inside the row of column select from database
     getMonthlyMoney, // get money in each table, remember to use caltotalmoney to get in integer
-    caltotalmoney, // calculate total money
     getProjectMoney, // get daily project saving
     calprojectpercent, // calculate project complete %(in .1f )
     StringtoInt, // transfer string to integer

@@ -1,6 +1,6 @@
-import ID from './signup.js'
+//import ID from './signup.js'
 import * as mod from './module.js'
-
+var ID = localStorage.getItem("ID")
 //need to export to signup.js
 var TYPE = 0
 
