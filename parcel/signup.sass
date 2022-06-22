@@ -1541,6 +1541,35 @@ body
 
                 p
                     font-size: 15px
+                    font-weight: bold
+
+            .money_tag
+                display: flex
+                justify-content: left
+                align-items: center
+                width: 95%
+                height: 3.0788vh
+                margin: 4vh 0 0 0
+
+                .TagPosition
+                    display: flex
+                    justify-content: right
+                    align-items: center
+                    width: auto
+                    height: 100%
+
+                    .PriceTag_Div
+                        display: none
+                        justify-content: center
+                        align-items: center
+                        background: url(./image/project/Project_pricetag_bg.png) no-repeat center / contain
+                        width: 61px
+                        height: 29px
+
+                        p
+                            font-size: 13px
+                            color: white
+                            padding: 0 0 3.5px 0
 
             .planned_speed_graph
                 display: flex
@@ -1549,7 +1578,8 @@ body
                 align-items: center
                 width: 74.6667vw
                 height: 2.1vh
-                margin: 7.635vh 0 0 0
+                margin: 1.5vh 0 0 0
+                font-weight: bold
 
                 .SpeedBar
                     display: flex
@@ -1567,7 +1597,6 @@ body
                         border-radius: 10px
                         margin: 0
 
-
             .complete_percent
                 display: flex
                 flex-direction: row
@@ -1580,6 +1609,7 @@ body
                 p
                     font-size: 12px
                     margin: 0 0 2px
+                    font-weight: bold
 
                 #percent
                     font-size: 24px
@@ -1787,7 +1817,8 @@ body
                 img:nth-child(1)
                     object-fit: cover
                     border-radius: 30px
-                    margin: 0 0 0 25px
+                    margin: 0 0 0 20px
+                    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
                 
                 p
                     font-size: 12px
@@ -1799,7 +1830,53 @@ body
                     justify-content: space-between
                     align-items: end
                     width: 72%
+                    height: auto
                     margin: 0 25px 0 0
+
+                    .tag_and_money
+                        display: flex
+                        flex-direction: row
+                        justify-content: space-between
+                        align-items: center
+                        width: 100%
+                        height: auto
+
+                        .tag_position
+                            display: flex
+                            flex-direction: row
+                            justify-content: right
+                            align-items: center
+                            width: 50%
+                            height: auto
+
+                            .tag
+                                display: flex
+                                justify-content: center
+                                align-items: center
+                                background: url(./image/project/Project_pricetag_bg.png) no-repeat center / contain
+                                width: 61px
+                                height: 29px
+
+                                p
+                                    font-size: 13px
+                                    color: white
+                                    padding: 0 0 3.5px 0
+
+                    .progress_bar_bg
+                        display: flex
+                        justify-content: left
+                        align-items: center
+                        width: 100%
+                        height: 8px
+                        background-color: #EBEBEB
+                        border-radius: 10px
+
+                        .progress_bar
+                            display: flex
+                            background-color: orange
+                            width: 50%
+                            height: 10px
+                            border-radius: 10px
 
         .project_detail
             display: flex
@@ -1820,7 +1897,36 @@ body
                 margin: 3.2vh 0 0 0
 
                 p
+                    font-weight: bold
                     font-size: 15px
+
+            .money_tag
+                display: flex
+                justify-content: left
+                align-items: center
+                width: 95%
+                height: 3.0788vh
+                margin: 4vh 0 0 0
+
+                .TagPosition
+                    display: flex
+                    justify-content: right
+                    align-items: center
+                    width: auto
+                    height: 100%
+
+                    .PriceTag_Div
+                        display: none
+                        justify-content: center
+                        align-items: center
+                        background: url(./image/project/Project_pricetag_bg.png) no-repeat center / contain
+                        width: 61px
+                        height: 29px
+
+                        p
+                            font-size: 13px
+                            color: white
+                            padding: 0 0 3.5px 0
 
             .planned_speed_graph
                 display: flex
@@ -1829,7 +1935,24 @@ body
                 align-items: center
                 width: 74.6667vw
                 height: 2.1vh
-                margin: 7.635vh 0 0 0
+                margin: 1.5vh 0 0 0
+                font-weight: bold
+
+                .SpeedBar
+                    display: flex
+                    align-items: center
+                    width: 60vw
+                    height: 2.3vw
+                    background-color: #CECECE
+                    border-radius: 10px
+
+                    .ColorBar
+                        display: flex
+                        width: 50%
+                        height: 125%
+                        background-color: orange
+                        border-radius: 10px
+                        margin: 0
 
             .complete_percent
                 display: flex
@@ -1842,6 +1965,7 @@ body
 
                 p
                     font-size: 12px
+                    font-weight: bold
                     margin: 0 0 2px
 
                 #percent

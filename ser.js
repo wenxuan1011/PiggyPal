@@ -279,7 +279,6 @@ app.get('/getAccount',(req,res) =>{
 
 
 // record
-
 app.get('/record',(req,res) => {
   connection.query('CREATE TABLE IF NOT EXISTS account(id VARCHAR(30), year VARCHAR(4), month VARCHAR(2), day VARCHAR(2), cost VARCHAR(30), sort VARCHAR(30), items VARCHAR(30), account VARCHAR(30), type VARCHAR(1))')
   
@@ -502,13 +501,20 @@ app.get('/projectcomplete', (req,res) => {
   })
 })
 
-app.get('/getaprojectmoney', (req,res) => {
+app.get('/getaprojectmoney', async (req,res) => {
   var result = 0
   var id = "'"+req.query.id+"'"
   var project_name= "'"+req.query.project_name+"'"
   var color = "'" + req.query.color + "'"
   var target_number = "'" + req.query.target_number + "'"
-  const summation = `SELECT * FROM project WHERE id = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+  var ID = ''
+  const choseProject = `SELECT * FROM project WHERE member = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+  await connection.query(choseProject,(err,rows)=>{
+    if(err)console.log('failed to get a project total saved money')
+    ID = mod.gettabledata(rows, 'id', 0)
+  })
+
+  const summation = `SELECT * FROM project WHERE id = ${ID} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
   connection.query(summation,(err,rows)=>{
     if(err)console.log('failed to get a project total saved money')
     for(var i in rows){

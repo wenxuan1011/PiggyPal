@@ -158,12 +158,19 @@ function showProjectDetail(project_name, personal_or_joint){
       var totalmoney = await mod.getaprojectmoney(data[0], data[1], data[2], data[9])
       var percent = totalmoney / mod.StringtoInt(data[9])*100
       percent = Math.round(percent, -1)
+      // draw progress bar
+      var tagposition = (percent/100)*245+30
+      tagposition = Math.round(tagposition, -1)
+      console.log(tagposition)
       $(`${page_tag} .SpeedBar .ColorBar`).css("width", `${percent}%`)
+      $(`${page_tag} .money_tag .TagPosition`).css("width", `${tagposition}px`)
+      $(`${page_tag} .money_tag .TagPosition #PriceTag`).html(`$ ${totalmoney}`)
       $(`${page_tag} .SpeedBar .ColorBar`).css("background-color", `${data[2]}`)
+      // ------------------------------------------------------------------------
       $(`${page_tag} .project_detail #percent`).html(`${percent}%`)
       let date = `${data[3]}.${data[4]}.${data[5]} - ${data[6]}.${data[7]}.${data[8]}`
       $(`${page_tag} .project_detail .date_box #date`).html(date)
-      let money = '$' + `${data[9]}`
+      let money = `$${data[9]}`
       $(`${page_tag} .project_detail .planned_speed_graph #money`).html(money)
       $(`${page_tag} .project_detail .target_money #money`).html(money)
     }
@@ -172,13 +179,27 @@ function showProjectDetail(project_name, personal_or_joint){
   })
 }
 
+$('#show_personal_project .planned_speed_graph .SpeedBar, #show_joint_project .planned_speed_graph .SpeedBar').click(function(){
+  $('#show_personal_project .money_tag .TagPosition .PriceTag_Div, #show_joint_project .project_detail .money_tag .TagPosition .PriceTag_Div').css("display", "flex")
+  setTimeout(() => {
+    document.addEventListener("click", clickHiddenPriceTag)
+  }, 100)
+})
+
+function clickHiddenPriceTag(eve){
+  if( eve.target.class != ".ColorBar" ){
+    $('#show_personal_project .money_tag .TagPosition .PriceTag_Div, #show_joint_project .project_detail .money_tag .TagPosition .PriceTag_Div').css("display", "none")
+  }
+  document.removeEventListener("click", clickHiddenPriceTag)
+}
+
 // show personal/joint project box
 $('#navbar img:nth-child(5), #project #type_bar').click((event) => {
   event.preventDefault()
   getallproject(SHOW_PERSONAL_OR_JOINT)
 })
 
-// create getallproject function
+// create getallproject function to draw .project_block in #project
 async function getallproject(TF){
   var show_no_project = true
   var judge = true
@@ -205,9 +226,9 @@ async function getallproject(TF){
         var end_month = mod.gettabledata(result, 'end_month', i)
         var end_day = mod.gettabledata(result, 'end_day', i)
         var target_number = mod.gettabledata(result, 'target_number', i)
-        var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number) //-------
+        var totalmoney = await mod.getaprojectmoney(id, project_name, color, target_number)
         console.log('totalmoney',totalmoney)
-        var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100 //-------
+        var percent = totalmoney/mod.StringtoInt(mod.gettabledata(result, 'target_number', i))*100
         console.log(percent)
         percent = Math.round(percent, -1)
         var type = mod.gettabledata(result, 'personal_or_joint', i)
@@ -309,7 +330,7 @@ async function getallproject(TF){
 }
       
 
-function getProjectMember(creater, project_name){
+function getProjectMember(creater, user, project_name){
 $.get('./getMember',{
 ID: creater,
 project_name: project_name,
@@ -318,7 +339,7 @@ project_name: project_name,
       const container = document.querySelector('#main #show_joint_project .ranking_list')
       container.innerHTML=`<div></div>`
       var member_list = []
-      // var saved_money_list = []
+      var percent_list = []
       var count_member=0
       var have_pic=0
       for(var i in data){
@@ -326,46 +347,59 @@ project_name: project_name,
         count_member++ 
         member_list[i] =  member_1       
       }
-      // for(var i in data){
-      //   console.log("i=="+i)
-      //   console.log("member_list[i]=="+member_list[i])
-      // }
-      var k=0
-      
       for (var i in data){
-        var member_ = mod.gettabledata(data,'member', i)
-        var saved_money = mod.gettabledata(data,'saved_money', i)
         var target_money = mod.gettabledata(data,'target_number', i)/count_member
-        // member_list[i] = member_
-        // saved_money_list[i] = saved_money
-        //create element
-        // const container = document.querySelector('#main #project #project_list')
+        var percent = (mod.gettabledata(data, 'saved_money', i)/target_money)*100
+        percent = Math.round(percent, -1)
+        percent_list[i] = percent
         const block = document.createElement('div')
-        const box = document.createElement('div')
+        const box1 = document.createElement('div')
         const member_pic = document.createElement('img')
+        // draw member price tag
+        const box2 = document.createElement('div')
         const already_save = document.createElement('p')
-        const progress_bar_bottom = document.createElement('img')
+        const box3 = document.createElement('div')
+        const box4 = document.createElement('div')
+        const member_money = document.createElement('p')
+        // -----------------------------------------------------
+        const progress_bar_bottom = document.createElement('div')
+        const progress_bar = document.createElement('div')
         //set text
         already_save.textContent = `$${target_money}`
+        member_money.textContent = `$ ${mod.gettabledata(data,'saved_money', i)}`
         //set attribute
         block.setAttribute('class', 'member_block')
         block.setAttribute('id', `${member_list[i]}block`)
-        box.setAttribute('class', 'member_box')      
+        box1.setAttribute('class', 'member_box')
+        box2.setAttribute('class', 'tag_and_money')
+        box3.setAttribute('class', 'tag_position')
+        box4.setAttribute('class', 'tag')
         member_pic.setAttribute('id', `${member_list[i]}`)
         member_pic.setAttribute('src', `./image/personal_pic/2.jpg`)
-        // member_pic.setAttribute('src', `./image/personal_pic/${save_personal_pic[i]}`)
-        member_pic.setAttribute('width', '10%')
-        member_pic.setAttribute('height', '68%')
-        progress_bar_bottom.setAttribute('src', './image/project/Project_collab_processBar-bg.png')
-        progress_bar_bottom.setAttribute('width', '100%')
-        progress_bar_bottom.setAttribute('id', 'progress_bar_bottom_id')
+        member_pic.setAttribute('width', '11.5%')
+        member_pic.setAttribute('height', '80%')
+        progress_bar_bottom.setAttribute('class', 'progress_bar_bg')
+        progress_bar.setAttribute('class', 'progress_bar')
         //append child
         container.appendChild(block)
         block.appendChild(member_pic)
-        block.appendChild(box)
-        box.appendChild(already_save)
-        box.appendChild(progress_bar_bottom)
-        // j++
+        block.appendChild(box1)
+        box1.appendChild(box2)
+        box1.appendChild(progress_bar_bottom)
+        box2.appendChild(box3)
+        box2.appendChild(already_save)
+        box3.appendChild(box4)
+        box4.appendChild(member_money)
+        progress_bar_bottom.appendChild(progress_bar)
+      }
+      for(let i=0;i<member_list.length;i++){
+        $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("width", `${percent_list[i]}%`)
+        if(member_list[i]===user){
+          $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("background-color", '#8E5FF4')
+        }
+        else{
+          $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("background-color", '#E4CCFF')
+        }
       }
       if(count_member===1){
         have_pic=0
@@ -1255,16 +1289,15 @@ function getProjectCreater(project_name){
     project_name: project_name,
   },(data)=>{
       if(data != "nothing"){
-        console.log('123456')
-          var project_name = mod.gettabledata(data,'project_name', 0)
-          var creater = mod.gettabledata(data, 'id',0)
-          //return [creater, project_name]
-          getProjectMember(creater, project_name)
-        }
-        else{
-          console.log('wrong')
-        }
-      })
+        var project_name = mod.gettabledata(data,'project_name', 0)
+        var creater = mod.gettabledata(data, 'id',0)
+        var user = mod.gettabledata(data, 'member',0)
+        getProjectMember(creater, user, project_name)
+      }
+      else{
+        console.log('wrong')
+      }
+    })
 }
 
 $(document).ready(function() {
@@ -1331,83 +1364,79 @@ $(document).ready(function() {
         $('#add_member #result').css("display", "flex");
         $('#add_member #result p').html(`${data}`);
         $('#add_member #wrong').css("display", "none");
-        //----------------------------------------------------------------
-        // var have_pic = 0
-// while(have_pic==0)
-// {  
-      var have_pic=0
-      CheckImgExists(
-        "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".jpg"
-        //imgurl here
-      ).then(()=>{
-        $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".jpg")
-        have_pic=1
-        //success callback
-      }).catch(()=>{
-        // console.log(2)
-        if(have_pic === 0)
-        {
-          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
-        }
-          //fail callback
-      })
-      CheckImgExists(
-        "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".png"
-        //imgurl here
-      ).then(()=>{
-        $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".png")
-        have_pic=1
-        //success callback
-      }).catch(()=>{
-        if(have_pic === 0)
-        {
-          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
-        }
-          //fail callback
-      })
-      CheckImgExists(
-        "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".jpeg"
-        //imgurl here
-      ).then(()=>{
-        $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".jpeg")
-        have_pic=1
-        //success callback
-      }).catch(()=>{
-        if(have_pic === 0)
-        {
-          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
-        }
-          //fail callback
-      })
-      CheckImgExists(
-        "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".MOV"
-        //imgurl here
-      ).then(()=>{
-        $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".MOV")
-        have_pic=1
-        //success callback
-      }).catch(()=>{
-        if(have_pic === 0)
-        {
-          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
-        }
-          //fail callback
-      })
-      CheckImgExists(
-        "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".mp4"
-        //imgurl here
-      ).then(()=>{
-        $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".mp4")
-        have_pic=1
-        //success callback
-      }).catch(()=>{
-        if(have_pic === 0)
-        {
-          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
-        }
-          //fail callback
-      })
-      //---------------------------------
+        var have_pic=0
+        CheckImgExists(
+          "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".jpg"
+          //imgurl here
+        ).then(()=>{
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".jpg")
+          have_pic=1
+          //success callback
+        }).catch(()=>{
+          // console.log(2)
+          if(have_pic === 0)
+          {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
+          }
+            //fail callback
+        })
+        CheckImgExists(
+          "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".png"
+          //imgurl here
+        ).then(()=>{
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".png")
+          have_pic=1
+          //success callback
+        }).catch(()=>{
+          if(have_pic === 0)
+          {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
+          }
+            //fail callback
+        })
+        CheckImgExists(
+          "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".jpeg"
+          //imgurl here
+        ).then(()=>{
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".jpeg")
+          have_pic=1
+          //success callback
+        }).catch(()=>{
+          if(have_pic === 0)
+          {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
+          }
+            //fail callback
+        })
+        CheckImgExists(
+          "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".MOV"
+          //imgurl here
+        ).then(()=>{
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".MOV")
+          have_pic=1
+          //success callback
+        }).catch(()=>{
+          if(have_pic === 0)
+          {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
+          }
+            //fail callback
+        })
+        CheckImgExists(
+          "http://luffy.ee.ncku.edu.tw:"+port+"/image/personal_pic/"+l_id+".mp4"
+          //imgurl here
+        ).then(()=>{
+          $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/"+l_id+".mp4")
+          have_pic=1
+          //success callback
+        }).catch(()=>{
+          if(have_pic === 0)
+          {
+            $("#add_member #result img:nth-child(1)").attr("src", "./image/personal_pic/2.jpg")
+          }
+            //fail callback
+        })
+        //---------------------------------
       }
       else{
         $('#add_member #result').css("display", "none");
@@ -1424,10 +1453,6 @@ $(document).ready(function() {
 
     console.log(MEMBER)
     console.log("last_participant = "+last_participant)
-    // var sticker1,sticker2,sticker3,sticker4 = showParticipationImage()
-    // var sticker2 = mod.showParticipationImage(sticker2)
-    // var sticker3 = mod.showParticipationImage(sticker3)
-    // var sticker4 = mod.showParticipationImage(sticker4)
     if(parti_num===0){
       showParticipationImage()
       setStickerSrc()
@@ -1446,7 +1471,6 @@ var last_participant = ""
 
 //show participant image
 function showParticipationImage(){
-  
   const container = document.querySelector('#add_project #project_form .box:nth-child(5) .participate_member')
   container.innerHTML=`<div></div>`
 
@@ -1459,31 +1483,20 @@ function showParticipationImage(){
   //set attribute
   block.setAttribute('class', 'sticker_block')
   block.setAttribute('id', `memberimage`)
-  // last_participant = last_participant
-  // sticker.setAttribute('src', `${image_src}`)
-  
-
-  // sticker.setAttribute('src', "./image/personal_pic/2.jpg")
-  
   sticker1.setAttribute('height', '34px')
   sticker1.setAttribute('width', '34px')
-  // sticker1.setAttribute("src", "./image/personal_pic/2.jpg")
   sticker2.setAttribute('height', '34px')
   sticker2.setAttribute('width', '34px')
-  // sticker2.setAttribute("src", "./image/personal_pic/2.jpg")
   sticker3.setAttribute('height', '34px')
   sticker3.setAttribute('width', '34px')
-  // sticker3.setAttribute("src", "./image/personal_pic/2.jpg")
   sticker4.setAttribute('height', '34px')
   sticker4.setAttribute('width', '34px')
-  // sticker4.setAttribute("src", "./image/personal_pic/2.jpg")
   //append child
   container.appendChild(block)
   block.appendChild(sticker1)
   block.appendChild(sticker2)
   block.appendChild(sticker3)
   block.appendChild(sticker4)
-  // return sticker1,sticker2,sticker3,sticker4
 }
 
 function setStickerSrc(){

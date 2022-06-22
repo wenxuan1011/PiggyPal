@@ -1308,7 +1308,32 @@ body {
         height: 2.463vh;
         margin: 3.2vh 0 0 0; }
         #main #show_personal_project .project_detail .title p {
-          font-size: 15px; }
+          font-size: 15px;
+          font-weight: bold; }
+      #main #show_personal_project .project_detail .money_tag {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 95%;
+        height: 3.0788vh;
+        margin: 4vh 0 0 0; }
+        #main #show_personal_project .project_detail .money_tag .TagPosition {
+          display: flex;
+          justify-content: right;
+          align-items: center;
+          width: auto;
+          height: 100%; }
+          #main #show_personal_project .project_detail .money_tag .TagPosition .PriceTag_Div {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: url(Project_pricetag_bg.bd30a82a.png) no-repeat center/contain;
+            width: 61px;
+            height: 29px; }
+            #main #show_personal_project .project_detail .money_tag .TagPosition .PriceTag_Div p {
+              font-size: 13px;
+              color: white;
+              padding: 0 0 3.5px 0; }
       #main #show_personal_project .project_detail .planned_speed_graph {
         display: flex;
         flex-direction: row;
@@ -1316,7 +1341,8 @@ body {
         align-items: center;
         width: 74.6667vw;
         height: 2.1vh;
-        margin: 7.635vh 0 0 0; }
+        margin: 1.5vh 0 0 0;
+        font-weight: bold; }
         #main #show_personal_project .project_detail .planned_speed_graph .SpeedBar {
           display: flex;
           align-items: center;
@@ -1341,7 +1367,8 @@ body {
         margin: 1.724vh 0 0 0; }
         #main #show_personal_project .project_detail .complete_percent p {
           font-size: 12px;
-          margin: 0 0 2px; }
+          margin: 0 0 2px;
+          font-weight: bold; }
         #main #show_personal_project .project_detail .complete_percent #percent {
           font-size: 24px;
           margin: 0 10px 0 0; }
@@ -1513,7 +1540,8 @@ body {
         #main #show_joint_project .ranking_list .member_block img:nth-child(1) {
           object-fit: cover;
           border-radius: 30px;
-          margin: 0 0 0 25px; }
+          margin: 0 0 0 20px;
+          filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); }
         #main #show_joint_project .ranking_list .member_block p {
           font-size: 12px;
           color: #737474; }
@@ -1523,7 +1551,47 @@ body {
           justify-content: space-between;
           align-items: end;
           width: 72%;
+          height: auto;
           margin: 0 25px 0 0; }
+          #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: auto; }
+            #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money .tag_position {
+              display: flex;
+              flex-direction: row;
+              justify-content: right;
+              align-items: center;
+              width: 50%;
+              height: auto; }
+              #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money .tag_position .tag {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: url(Project_pricetag_bg.bd30a82a.png) no-repeat center/contain;
+                width: 61px;
+                height: 29px; }
+                #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money .tag_position .tag p {
+                  font-size: 13px;
+                  color: white;
+                  padding: 0 0 3.5px 0; }
+          #main #show_joint_project .ranking_list .member_block .member_box .progress_bar_bg {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            width: 100%;
+            height: 8px;
+            background-color: #EBEBEB;
+            border-radius: 10px; }
+            #main #show_joint_project .ranking_list .member_block .member_box .progress_bar_bg .progress_bar {
+              display: flex;
+              background-color: orange;
+              width: 50%;
+              height: 10px;
+              border-radius: 10px; }
     #main #show_joint_project .project_detail {
       display: flex;
       flex-direction: column;
@@ -1541,7 +1609,32 @@ body {
         height: 2.463vh;
         margin: 3.2vh 0 0 0; }
         #main #show_joint_project .project_detail .title p {
+          font-weight: bold;
           font-size: 15px; }
+      #main #show_joint_project .project_detail .money_tag {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 95%;
+        height: 3.0788vh;
+        margin: 4vh 0 0 0; }
+        #main #show_joint_project .project_detail .money_tag .TagPosition {
+          display: flex;
+          justify-content: right;
+          align-items: center;
+          width: auto;
+          height: 100%; }
+          #main #show_joint_project .project_detail .money_tag .TagPosition .PriceTag_Div {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: url(Project_pricetag_bg.bd30a82a.png) no-repeat center/contain;
+            width: 61px;
+            height: 29px; }
+            #main #show_joint_project .project_detail .money_tag .TagPosition .PriceTag_Div p {
+              font-size: 13px;
+              color: white;
+              padding: 0 0 3.5px 0; }
       #main #show_joint_project .project_detail .planned_speed_graph {
         display: flex;
         flex-direction: row;
@@ -1549,7 +1642,22 @@ body {
         align-items: center;
         width: 74.6667vw;
         height: 2.1vh;
-        margin: 7.635vh 0 0 0; }
+        margin: 1.5vh 0 0 0;
+        font-weight: bold; }
+        #main #show_joint_project .project_detail .planned_speed_graph .SpeedBar {
+          display: flex;
+          align-items: center;
+          width: 60vw;
+          height: 2.3vw;
+          background-color: #CECECE;
+          border-radius: 10px; }
+          #main #show_joint_project .project_detail .planned_speed_graph .SpeedBar .ColorBar {
+            display: flex;
+            width: 50%;
+            height: 125%;
+            background-color: orange;
+            border-radius: 10px;
+            margin: 0; }
       #main #show_joint_project .project_detail .complete_percent {
         display: flex;
         flex-direction: row;
@@ -1560,6 +1668,7 @@ body {
         margin: 1.724vh 0 0 0; }
         #main #show_joint_project .project_detail .complete_percent p {
           font-size: 12px;
+          font-weight: bold;
           margin: 0 0 2px; }
         #main #show_joint_project .project_detail .complete_percent #percent {
           font-size: 24px;
