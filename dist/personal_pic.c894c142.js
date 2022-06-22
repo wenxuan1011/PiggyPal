@@ -1607,7 +1607,7 @@ function CheckImgExists(imgurl) {
   });
 }
 
-var port = 6165; //使用方式
+var port = 6168; //使用方式
 
 var have_pic = 0;
 CheckImgExists("http://luffy.ee.ncku.edu.tw:" + port + "/image/personal_pic/" + l_id + ".jpg" //imgurl here
@@ -1738,7 +1738,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34584" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33595" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,13 +2,12 @@ import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
 import gra from './graphic.js'
-
 import { async } from 'regenerator-runtime'
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
-var port = 6166
+var port = 6168
 var last_participant = ""
 var parti_num=0
 //偵測有沒有圖片
@@ -32,38 +31,31 @@ for(let i=1;i<5;i++){
     $('#project #type_bar p:nth-child('+`${i}`+')').css("color", "#0D0E10")
     if(i===1){
       $('#project_list_all').css("display", "none")
-      // $('#project_list').css("display", "none")
-      // $('#project #add_project_btn').css("display", "none")
-      // $('#project #no_project').css("display", "none")
+      $('#complete_project_all').css("display", "none")
       $('#normal_save_money_list').css("display", "flex")
-      // $('#normal_save_money').css("display", "flex")
-      $('#normal_save_money_list .normal_save_money').css("display", "flex")
+      //$('#normal_save_money_list .normal_save_money').css("display", "flex")
     }
     else if(i===2){
       SHOW_PERSONAL_OR_JOINT = false
       $('#project_list_all').css("display", "flex")
-      // $('#project_list').css("display", "flex")
-      // $('#project #add_project_btn').css("display", "block")
+      $('#complete_project_all').css("display", "none")
       $('#normal_save_money_list').css("display", "none")
-      $('#normal_save_money_list .normal_save_money').css("display", "none")
+      //$('#normal_save_money_list .normal_save_money').css("display", "none")
 
     }
     else if(i===3){
       SHOW_PERSONAL_OR_JOINT = true
       $('#project_list_all').css("display", "flex")
-      // $('#project_list').css("display", "flex")
-      // $('#project #add_project_btn').css("display", "block")
+      $('#complete_project_all').css("display", "none")
       $('#normal_save_money_list').css("display", "none")
-      $('#normal_save_money_list .normal_save_money').css("display", "none")
-
+      //$('#normal_save_money_list .normal_save_money').css("display", "none")
     }
     else{
       $('#project_list_all').css("display", "none")
-      // $('#project_list').css("display", "none")
-      // $('#project #add_project_btn').css("display", "none")
+      $('#complete_project_all').css("display", "flex")
       $('#normal_save_money_list').css("display", "none")
-      $('#project #no_project').css("display", "none")
-      $('#normal_save_money_list .normal_save_money').css("display", "none")
+      //$('#project #no_project').css("display", "none")
+      //$('#normal_save_money_list .normal_save_money').css("display", "none")
 
     }
     for(let j=1;j<5;j++){
@@ -107,6 +99,14 @@ $('#show_personal_project .bar img').click(function(){
   }, 500)
 })
 
+$('#show_joint_project .bar img').click(function(){
+  $('#show_joint_project').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#show_joint_project').css("display", "none")
+  }, 500)
+})
+
+
 // open/close normal_save_money page
 $('.normal_save_money').click(function(){
   $('#show_normal_save_money').css("display", "flex")
@@ -119,13 +119,6 @@ $('#show_normal_save_money .bar img').click(function(){
   $('#show_normal_save_money').css("transform", "translateX(100%)")
   setTimeout(() => {
     $('#show_normal_save_money').css("display", "none")
-  }, 500)
-})
-
-$('#show_joint_project .bar img').click(function(){
-  $('#show_joint_project').css("transform", "translateX(100%)")
-  setTimeout(() => {
-    $('#show_joint_project').css("display", "none")
   }, 500)
 })
 
@@ -163,7 +156,7 @@ function showProjectDetail(project_name, personal_or_joint){
       // draw progress bar
       var tagposition = (percent/100)*245+30
       tagposition = Math.round(tagposition, -1)
-      console.log(tagposition)
+      //console.log(tagposition)
       $(`${page_tag} .SpeedBar .ColorBar`).css("width", `${percent}%`)
       $(`${page_tag} .money_tag .TagPosition`).css("width", `${tagposition}px`)
       $(`${page_tag} .money_tag .TagPosition #PriceTag`).html(`$ ${totalmoney}`)
@@ -331,7 +324,149 @@ async function getallproject(TF){
     $('#no_project').css("display", "none")
   }
 }
-      
+
+
+// ---------------------------------------------------------------------------------
+// show complete project box
+$('#project #type_bar p:nth-child(4)').click((event) => {
+  event.preventDefault()
+  getCompleteProject()
+})
+
+async function getCompleteProject(){
+  var show_no_complete_project = true
+  var result = 0
+  await $.get('./getProject',{
+    ID: ID,
+  },(data)=>{
+    result = data
+  })
+  if(result != "nothing"){
+    const container = document.querySelector('#main #project #complete_project_list')
+    container.innerHTML=`<div></div>`
+    var complete_list = []
+    var color_list = []
+    var j = 0
+    for (var i in result){
+        var id = mod.gettabledata(result,'id', i)
+        var project_name = mod.gettabledata(result,'project_name', i)
+        var color = mod.gettabledata(result, 'color',i)
+        var start_year = mod.gettabledata(result, 'start_year', i)
+        var start_month = mod.gettabledata(result, 'start_month', i)
+        var start_day = mod.gettabledata(result, 'start_day', i)
+        var end_year = mod.gettabledata(result, 'end_year', i)
+        var end_month = mod.gettabledata(result, 'end_month', i)
+        var end_day = mod.gettabledata(result, 'end_day', i)
+        var type = mod.gettabledata(result, 'personal_or_joint', i)
+        console.log('complete', type)
+        if (type != -1){
+          continue;
+        }
+        console.log('add')
+        complete_list[j] = project_name
+        color_list[j] = color
+        j++
+        //create element
+        const block = document.createElement('div')
+        const infor_1 = document.createElement('div')
+        const infor_2 = document.createElement('div')
+        const dot = document.createElement('img')
+        const name = document.createElement('p')
+        const date = document.createElement('p')
+        const infor_3 = document.createElement('div')
+        const speed = document.createElement('p')
+        const bar = document.createElement('div')
+        const color_bar = document.createElement('div')
+        const btn = document.createElement('img')
+        //set text
+        name.textContent = `${project_name}`
+        date.textContent = `${start_year}.${start_month}.${start_day}-${end_year}.${end_month}.${end_day}`
+        speed.textContent = '100%'
+        //set attribute
+        block.setAttribute('class', 'project_block')
+        block.setAttribute('id', `${project_name}_complete`)
+        infor_1.setAttribute('class', 'project_infor')
+        infor_2.setAttribute('class', 'type_and_date')
+        infor_3.setAttribute('class', 'plannd_speed_infor')
+        dot.setAttribute('src', `./image/project/Project_colordot_${mod.getColor(color)}.png`)
+        dot.setAttribute('height', '35%')
+        bar.setAttribute('class', 'SpeedBar')
+        color_bar.setAttribute('class', 'ColorBar')
+        color_bar.setAttribute('style', `background-color:${color}`)
+        btn.setAttribute('src', './image/btn/btn_arrow_right.png')
+        btn.setAttribute('height', '17%')
+        btn.setAttribute('id', 'right_btn')
+        name.setAttribute('id', 'item')
+        speed.setAttribute('id', 'percent')
+        //append child
+        container.appendChild(block)
+        block.appendChild(infor_1)
+        block.appendChild(btn)
+        bar.appendChild(color_bar)
+        infor_1.appendChild(infor_2)
+        infor_1.appendChild(infor_3)
+        infor_1.appendChild(bar)
+        infor_2.appendChild(dot)
+        infor_2.appendChild(name)
+        infor_2.appendChild(date)
+        infor_3.appendChild(speed)
+        // display no_project box or not
+        show_no_complete_project = false
+    }
+    for(let i=0;i<complete_list.length;i++){
+      $(`#${complete_list[i]}_complete .SpeedBar .ColorBar`).css("width", "100%")
+      $(`#${complete_list[i]}_complete`).click(function(e){
+        $('#show_complete_project').css("display", "flex")
+        setTimeout(() => {
+          $('#show_complete_project').css("transform", "translateX(0%)")
+          mod.PopUpMessage(1)
+        }, 100)
+        event.preventDefault()  // I'm not sure is it right or not
+        showCompleteProjectDetail(complete_list[i])
+      })
+    }
+  }
+  if(show_no_complete_project===true){
+    $('#no_complete_project').css("display", "flex")
+  }
+  else{
+    $('#no_complete_project').css("display", "none")
+  }
+}
+
+$('#show_complete_project .bar img').click(function(){
+  $('#show_complete_project').css("transform", "translateX(100%)")
+  setTimeout(() => {
+    $('#show_complete_project').css("display", "none")
+  }, 500)
+})
+
+function showCompleteProjectDetail(project_name){
+  $.get('./getProjectDetail',{
+    id: ID,
+    name: project_name
+  },(data)=>{
+    if(data!==false){
+      console.log(data[1])
+      $('#show_complete_project #complete_project_form .box:nth-child(1) p:nth-child(2)').html(data[1])
+      $('#show_complete_project #complete_project_form .box:nth-child(2) img').attr("src", `./image/project/Project_colordot_${mod.getColor(data[2])}.png`)
+      var date = `${data[3]}.${data[4]}.${data[5]} - ${data[6]}.${data[7]}.${data[8]}`
+      $('#show_complete_project #complete_project_form .box:nth-child(3) p:nth-child(2)').html(date)
+      $('#show_complete_project #complete_project_form .box:nth-child(4) p:nth-child(2)').html(data[9])
+      var type = '個人專案'
+      if(data[10]!=1){
+        type = '共同專案'
+      }
+      $('#show_complete_project #complete_project_form .box:nth-child(5) p:nth-child(2)').html(type)
+      if(data[11]===''){
+        data[11] = '（無）'
+      }
+      $('#show_complete_project #complete_project_form .box:nth-child(8) p:nth-child(2)').html(data[11])
+    }
+  })
+}
+// ---------------------------------------------------------------------------------
+
 
 function getProjectMember(creater, user, project_name){
 $.get('./getMember',{
@@ -396,12 +531,28 @@ project_name: project_name,
         progress_bar_bottom.appendChild(progress_bar)
       }
       for(let i=0;i<member_list.length;i++){
+        var tagposition = (percent_list[i]/100)*243+25
+        tagposition = Math.round(tagposition, -1)
+        console.log(tagposition)
+        $(`#${member_list[i]}block .member_box .tag_position`).css("width", `${tagposition}px`)
         $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("width", `${percent_list[i]}%`)
         if(member_list[i]===user){
           $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("background-color", '#8E5FF4')
         }
         else{
           $(`#${member_list[i]}block .progress_bar_bg .progress_bar`).css("background-color", '#E4CCFF')
+        }
+        $(`#show_joint_project #${member_list[i]}block .progress_bar_bg`).click(function(){
+          $(`#show_joint_project #${member_list[i]}block .member_box .tag_position .tag`).css("display", "flex")
+          setTimeout(() => {
+            document.addEventListener("click", clickHiddenTag)
+          }, 100)
+        })
+        function clickHiddenTag(eve){
+          if(eve.target.id != `#${member_list[i]}block`){
+            $(`#show_joint_project #${member_list[i]}block .member_box .tag_position .tag`).css("display", "none")
+          }
+          document.removeEventListener("click", clickHiddenTag)
         }
       }
       if(count_member===1){
@@ -1284,6 +1435,7 @@ project_name: project_name,
       
   })
 }
+
 
 // rank dynamic add
 function getProjectCreater(project_name){

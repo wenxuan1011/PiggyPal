@@ -18,7 +18,7 @@ const __dirname = dirname(__filename)
 
 var connection = mysql.createConnection(config.mysql)
 const app = express()
-const port = 6166
+const port = 6168
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
@@ -85,15 +85,13 @@ app.get('/signup', (req, res) => {
       connection.query(add, (err, result) => {
         if (err) console.log('fail to insert: ', err)
       })
-      const saved = `INSERT INTO user (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money) VAALUES(${UID}, 每月儲蓄, #8E5FF4, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, 0, ${UID}, 均分, 2, 0)`
+      const saved = `INSERT INTO project (id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, member, distribute, notes, personal_or_joint, saved_money) VALUES(${UID}, '每月儲蓄', '#8E5FF4', ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, ${today.getFullYear()}, ${today.getMonth()+1}, ${today.getDate()}, '0', ${UID}, '均分', '', '2', '0')`
       connection.query(saved, (err) => {
         if (err) console.log('Failed to add personal saved project: ',err)
       })
       res.send("signup")
     }
   }, 100)
-  
-  
 })
 
 //login
@@ -390,7 +388,7 @@ app.get('/getProjectDetail',(req,res) => {
       let result = [mod.gettabledata(row, 'id', 0), mod.gettabledata(row, 'project_name', 0), mod.gettabledata(row, 'color', 0),
                 mod.gettabledata(row, 'start_year', 0), mod.gettabledata(row, 'start_month', 0), mod.gettabledata(row, 'start_day', 0),
                 mod.gettabledata(row, 'end_year', 0), mod.gettabledata(row, 'end_month', 0), mod.gettabledata(row, 'end_day', 0),
-                mod.gettabledata(row, 'target_number', 0)]
+                mod.gettabledata(row, 'target_number', 0), mod.gettabledata(row, 'personal_or_joint', 0), mod.gettabledata(row, 'notes', 0)]
       res.send(result)
     }
   })
@@ -459,20 +457,6 @@ app.get('/project',(req,res) => {
 })
 
 
-// //傳port值給前端
-// app.get('/getPort',(req,res) =>{
-//   let port_ = "'"+`${req.query.port}`+"'"
-//     if(err)
-//       console.log('fail to search: ', err)
-//     if(row[0]===undefined){
-//       res.send("nothing")
-//     }
-//     else{
-//       res.send(port_)
-//     }
-//   })
-
-
 ///get project table
 app.get('/getProject',(req,res) =>{
   let UID = "'"+`${req.query.ID}`+"'"
@@ -498,6 +482,7 @@ app.get('/projectcomplete', (req,res) => {
   const complete = `UPDATE project SET personal_or_joint = -1 WHERE id = ${ID} and project_name = ${project_number} and color = ${color} and target_number = ${target_number} and member = ${member}` 
   connection.query(complete, (err) => {
     if(err) console.log('failed to complete project',err)
+    res.send('finish')
   })
 })
 
@@ -511,17 +496,16 @@ app.get('/getaprojectmoney', async (req,res) => {
   const choseProject = `SELECT * FROM project WHERE member = ${id} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
   await connection.query(choseProject,(err,rows)=>{
     if(err)console.log('failed to get a project total saved money')
-    ID = mod.gettabledata(rows, 'id', 0)
-  })
-
-  const summation = `SELECT * FROM project WHERE id = ${ID} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
-  connection.query(summation,(err,rows)=>{
+    ID = "'"+mod.gettabledata(rows, 'id', 0)+"'"
+    const summation = `SELECT * FROM project WHERE id = ${ID} and project_name = ${project_name} and color = ${color} and target_number = ${target_number}`
+    connection.query(summation,(err,rows)=>{
     if(err)console.log('failed to get a project total saved money')
     for(var i in rows){
       result += mod.StringtoInt(mod.gettabledata(rows, 'saved_money', i))
     }
     res.send(`${result}`)
     
+  })
   })
   
 })

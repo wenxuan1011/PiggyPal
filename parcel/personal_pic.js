@@ -12,7 +12,7 @@ function CheckImgExists(imgurl) {
     }
   })
 }
-var port=6166
+var port=6168
 
 //使用方式
 var have_pic = 0

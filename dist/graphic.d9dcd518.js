@@ -1582,92 +1582,79 @@ function transmit() {
 ;
 var _default = transmit;
 exports.default = _default;
-},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"account.js":[function(require,module,exports) {
+},{"./module.js":"module.js","fs":"../node_modules/parcel-bundler/src/builtins/_empty.js"}],"graphic.js":[function(require,module,exports) {
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
 var _signup = _interopRequireDefault(require("./signup.js"));
 
-var mod = _interopRequireWildcard(require("./module.js"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// open/close add_account_page
-$('#account #add_account_page_btn').click(function () {
-  $('#add_account_page').css("display", "flex");
-  setTimeout(function () {
-    $('#add_account_page').css("transform", "translateX(0%)");
-  }, 100);
+var x = [];
+var y = []; // 2D繪圖
+
+var ctx = document.getElementById('mychart').getContext('2d');
+var linechart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    // x軸
+    labels: [],
+    datasets: [{
+      label: 'Money',
+      // y軸
+      data: [],
+      fill: true,
+      // 線的顏色
+      borderColor: '#FFFFFF',
+      // 填滿的顏色
+      backgroundColor: '#FFFFFF'
+    }]
+  }
 });
-$('#add_account_page .bar img').click(function () {
-  $('#add_account_page').css("transform", "translateX(100%)");
-  setTimeout(function () {
-    $('#add_account_page').css("display", "none");
-  }, 500);
-}); // get account list from table
 
-$('#navbar img:nth-child(2), #add_account_page .bar img').click(function () {
-  ShowAccountList();
-}); // create ShowFinancialList function
-
-function ShowAccountList() {
-  $.get('./getAccount', {
-    ID: _signup.default
+function getGraphData(project_name, personal_or_joint, color) {
+  var back_color_r = color.slice(1, 3);
+  var back_color_g = color.slice(3, 5);
+  var back_color_b = color.slice(5, 7);
+  back_color_r = Number.parseInt(back_color_r, 16);
+  back_color_g = Number.parseInt(back_color_g, 16);
+  back_color_b = Number.parseInt(back_color_b, 16);
+  linechart.destroy();
+  $.get('./getGraphDetail', {
+    id: _signup.default,
+    name: project_name
   }, function (data) {
-    if (data != "nothing") {
-      var container = document.querySelector('#account #account_div #account_list');
-      container.innerHTML = "<div></div>";
-
-      for (var i in data) {
-        var account_name = mod.gettabledata(data, 'name', i);
-        var account_money = mod.gettabledata(data, 'money', i); //create element
-
-        var block = document.createElement('div');
-        var name = document.createElement('p');
-        var money = document.createElement('p'); //set text
-
-        name.textContent = "".concat(account_name);
-        money.textContent = "$".concat(account_money); //set attribute
-
-        block.setAttribute('class', 'account_box'); //append child
-
-        container.appendChild(block);
-        block.appendChild(name);
-        block.appendChild(money);
-      }
-
-      $('#no_account').css("display", "none");
-    } else {
-      $('#no_account').css("display", "flex");
-    }
-  });
-}
-
-$(document).ready(function () {
-  // add account
-  $('#account_form button[type="submit"]').click(function (event) {
-    event.preventDefault();
-    $.get('./account', {
-      id: _signup.default,
-      name: $('#account_form input[name=name]').val(),
-      currency: $('#account_form #currency').text(),
-      money: $('#account_form input[name=money]').val()
-    }, function (data) {
-      if (data === '0') {
-        $('#add_account_page #account_form .box:nth-child(1) input').val('');
-        $('#add_account_page #account_form .box:nth-child(2) .currency_div p').text('TWD');
-        $('#add_account_page #account_form .box:nth-child(3) input').val('');
-        mod.PopUpMessage(4);
-      } else {
-        mod.PopUpMessage(2);
+    x = data[0];
+    y = data[1];
+    linechart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        // x軸
+        labels: x,
+        datasets: [{
+          label: 'Money',
+          // y軸
+          data: y,
+          fill: true,
+          // 線的顏色
+          borderColor: color,
+          // 填滿的顏色
+          backgroundColor: "rgba(".concat(back_color_r, ",").concat(back_color_g, ",").concat(back_color_b, ",0.15)")
+        }]
       }
     });
   });
-});
-},{"./signup.js":"signup.js","./module.js":"module.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}
+
+var _default = {
+  getGraphData: getGraphData
+};
+exports.default = _default;
+},{"./signup.js":"signup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1871,5 +1858,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","account.js"], null)
-//# sourceMappingURL=account.344917f4.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","graphic.js"], null)
+//# sourceMappingURL=graphic.d9dcd518.js.map

@@ -166,7 +166,7 @@ $('#login_btn, #save, .datebox').click((event) => {
   event.preventDefault()
   var count = 0
   var interval = setInterval(function(){
-    if(count==10){
+    if(count==4){
       count=0
       clearInterval(interval)
     }

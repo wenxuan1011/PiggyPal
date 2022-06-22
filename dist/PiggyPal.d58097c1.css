@@ -920,7 +920,7 @@ body {
       #main #project #normal_save_money_list #more_sm_infor_btn {
         margin: 0 4vw 0 0; }
       #main #project #normal_save_money_list .normal_save_money {
-        display: none;
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -964,13 +964,13 @@ body {
             #main #project #normal_save_money_list .normal_save_money .normal_save_money_infor .save_money_infor #percent_sm {
               font-family: Roboto Bold;
               font-size: 24px; }
-    #main #project #project_list_all {
+    #main #project #project_list_all, #main #project #complete_project_all {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: auto;
       height: auto; }
-      #main #project #project_list_all #no_project {
+      #main #project #project_list_all #no_project, #main #project #project_list_all #no_complete_project, #main #project #complete_project_all #no_project, #main #project #complete_project_all #no_complete_project {
         display: none;
         flex-direction: row;
         justify-content: center;
@@ -981,72 +981,74 @@ body {
         box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         margin: 0 0 7.88vh 0; }
-    #main #project #project_list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 80.2667vw;
-      height: auto;
-      margin: 5.17vh 0 0 0; }
-      #main #project #project_list .project_block {
+      #main #project #project_list_all #project_list, #main #project #project_list_all #complete_project_list, #main #project #complete_project_all #project_list, #main #project #complete_project_all #complete_project_list {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
         width: 80.2667vw;
-        height: 13.054vh;
-        background-color: white;
-        box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        margin: 0 0 7.88vh 0; }
-        #main #project #project_list .project_block #right_btn {
-          margin: 0 4vw 0 0; }
-        #main #project #project_list .project_block .project_infor {
+        height: auto;
+        margin: 5.17vh 0 0 0; }
+        #main #project #project_list_all #project_list .project_block, #main #project #project_list_all #complete_project_list .project_block, #main #project #complete_project_all #project_list .project_block, #main #project #complete_project_all #complete_project_list .project_block {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          justify-content: space-between;
           align-items: center;
-          width: 80%;
-          height: auto;
-          margin: 0 0 0 5.33vw;
-          font-size: 12px; }
-          #main #project #project_list .project_block .project_infor .type_and_date {
+          width: 80.2667vw;
+          height: 13.054vh;
+          background-color: white;
+          box-shadow: 0px 8px 23px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          margin: 0 0 7.88vh 0; }
+          #main #project #project_list_all #project_list .project_block #right_btn, #main #project #project_list_all #complete_project_list .project_block #right_btn, #main #project #complete_project_all #project_list .project_block #right_btn, #main #project #complete_project_all #complete_project_list .project_block #right_btn {
+            margin: 0 4vw 0 0; }
+          #main #project #project_list_all #project_list .project_block .project_infor, #main #project #project_list_all #complete_project_list .project_block .project_infor, #main #project #complete_project_all #project_list .project_block .project_infor, #main #project #complete_project_all #complete_project_list .project_block .project_infor {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            width: 100%;
-            height: 1.847vh;
-            margin: 0 0 15px 0; }
-            #main #project #project_list .project_block .project_infor .type_and_date img {
-              margin: 0 2.133vw 0 0; }
-            #main #project #project_list .project_block .project_infor .type_and_date p {
-              margin: 0; }
-            #main #project #project_list .project_block .project_infor .type_and_date #item {
-              margin: 0 auto 0 0; }
-          #main #project #project_list .project_block .project_infor .plannd_speed_infor {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: 1.847vh;
-            margin: 0 0 15px 5px; }
-            #main #project #project_list .project_block .project_infor .plannd_speed_infor #percent {
-              font-family: Roboto Bold;
-              font-size: 24px; }
-          #main #project #project_list .project_block .project_infor .SpeedBar {
-            display: flex;
-            align-items: center;
-            width: 64vw;
-            height: 2vw;
-            background-color: #CECECE;
-            border-radius: 10px; }
-            #main #project #project_list .project_block .project_infor .SpeedBar .ColorBar {
+            width: 80%;
+            height: auto;
+            margin: 0 0 0 5.33vw;
+            font-size: 12px; }
+            #main #project #project_list_all #project_list .project_block .project_infor .type_and_date, #main #project #project_list_all #complete_project_list .project_block .project_infor .type_and_date, #main #project #complete_project_all #project_list .project_block .project_infor .type_and_date, #main #project #complete_project_all #complete_project_list .project_block .project_infor .type_and_date {
               display: flex;
-              width: 0%;
-              height: 120%;
-              border-radius: 10px;
-              margin: 0; }
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              height: 1.847vh;
+              margin: 0 0 15px 0; }
+              #main #project #project_list_all #project_list .project_block .project_infor .type_and_date img, #main #project #project_list_all #complete_project_list .project_block .project_infor .type_and_date img, #main #project #complete_project_all #project_list .project_block .project_infor .type_and_date img, #main #project #complete_project_all #complete_project_list .project_block .project_infor .type_and_date img {
+                margin: 0 2.133vw 0 0; }
+              #main #project #project_list_all #project_list .project_block .project_infor .type_and_date p, #main #project #project_list_all #complete_project_list .project_block .project_infor .type_and_date p, #main #project #complete_project_all #project_list .project_block .project_infor .type_and_date p, #main #project #complete_project_all #complete_project_list .project_block .project_infor .type_and_date p {
+                margin: 0; }
+              #main #project #project_list_all #project_list .project_block .project_infor .type_and_date #item, #main #project #project_list_all #complete_project_list .project_block .project_infor .type_and_date #item, #main #project #complete_project_all #project_list .project_block .project_infor .type_and_date #item, #main #project #complete_project_all #complete_project_list .project_block .project_infor .type_and_date #item {
+                margin: 0 auto 0 0; }
+            #main #project #project_list_all #project_list .project_block .project_infor .plannd_speed_infor, #main #project #project_list_all #complete_project_list .project_block .project_infor .plannd_speed_infor, #main #project #complete_project_all #project_list .project_block .project_infor .plannd_speed_infor, #main #project #complete_project_all #complete_project_list .project_block .project_infor .plannd_speed_infor {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              height: 1.847vh;
+              margin: 0 0 15px 5px; }
+              #main #project #project_list_all #project_list .project_block .project_infor .plannd_speed_infor #percent, #main #project #project_list_all #complete_project_list .project_block .project_infor .plannd_speed_infor #percent, #main #project #complete_project_all #project_list .project_block .project_infor .plannd_speed_infor #percent, #main #project #complete_project_all #complete_project_list .project_block .project_infor .plannd_speed_infor #percent {
+                font-family: Roboto Bold;
+                font-size: 24px; }
+            #main #project #project_list_all #project_list .project_block .project_infor .SpeedBar, #main #project #project_list_all #complete_project_list .project_block .project_infor .SpeedBar, #main #project #complete_project_all #project_list .project_block .project_infor .SpeedBar, #main #project #complete_project_all #complete_project_list .project_block .project_infor .SpeedBar {
+              display: flex;
+              align-items: center;
+              width: 64vw;
+              height: 2vw;
+              background-color: #CECECE;
+              border-radius: 10px; }
+              #main #project #project_list_all #project_list .project_block .project_infor .SpeedBar .ColorBar, #main #project #project_list_all #complete_project_list .project_block .project_infor .SpeedBar .ColorBar, #main #project #complete_project_all #project_list .project_block .project_infor .SpeedBar .ColorBar, #main #project #complete_project_all #complete_project_list .project_block .project_infor .SpeedBar .ColorBar {
+                display: flex;
+                width: 0%;
+                height: 120%;
+                border-radius: 10px;
+                margin: 0; }
+    #main #project #complete_project_all {
+      display: none; }
     #main #project #add_project_btn {
       margin: 0 0 20vh 0; }
   #main #add_project {
@@ -1518,7 +1520,16 @@ body {
         top: 6.0345vh;
         margin: 0; }
     #main #show_joint_project #drop_down_btn {
-      margin: 1.724vh 0 0 0; }
+      display: flex;
+      justify-content: center;
+      width: 84px;
+      height: 25px;
+      align-items: center;
+      background: url(Project_month-bg.6ec81e0b.png) no-repeat center/contain;
+      margin: 1.6vh 0 0 0; }
+      #main #show_joint_project #drop_down_btn p {
+        font-weight: bold;
+        font-size: 13px; }
     #main #show_joint_project .ranking_list {
       display: flex;
       flex-direction: column;
@@ -1568,10 +1579,11 @@ body {
               width: 50%;
               height: auto; }
               #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money .tag_position .tag {
-                display: flex;
+                display: none;
                 justify-content: center;
                 align-items: center;
                 background: url(Project_pricetag_bg.bd30a82a.png) no-repeat center/contain;
+                min-width: 61px;
                 width: 61px;
                 height: 29px; }
                 #main #show_joint_project .ranking_list .member_block .member_box .tag_and_money .tag_position .tag p {
@@ -1693,6 +1705,63 @@ body {
         margin: 0 0 20px 0;
         padding: 2vh 0;
         border-top: 0.2px solid #B3B3B3; }
+  #main #show_complete_project {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    background-color: #F4F4F4;
+    transform: translateX(100%);
+    transition: 0.5s;
+    position: absolute;
+    top: 0;
+    border: none;
+    border-left: solid; }
+    #main #show_complete_project .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      height: 11.9458vh;
+      background-color: white;
+      border-bottom: 0.3px solid #B3B3B3; }
+      #main #show_complete_project .bar img:nth-child(1) {
+        position: absolute;
+        left: 6.6667vw;
+        top: 6.0345vh; }
+      #main #show_complete_project .bar img:nth-child(2) {
+        position: absolute;
+        right: 6.9333vw;
+        top: 6.0345vh; }
+      #main #show_complete_project .bar p {
+        font-size: 1.97vh;
+        position: relative;
+        top: 6.0345vh;
+        margin: 0; }
+    #main #show_complete_project #complete_project_form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 72.2667vw;
+      height: auto;
+      margin: 7vh 0; }
+      #main #show_complete_project #complete_project_form .box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        margin: 1vh 0; }
+        #main #show_complete_project #complete_project_form .box p {
+          font-size: 13px;
+          font-weight: bold;
+          color: black; }
+        #main #show_complete_project #complete_project_form .box p:nth-child(2) {
+          font-weight: normal;
+          color: #838484; }
   #main #personal_page {
     display: flex;
     flex-direction: column;
@@ -2306,4 +2375,4 @@ body {
   height: 240px  !important; }
 
 
-/*# sourceMappingURL=signup.53978396.css.map */
+/*# sourceMappingURL=PiggyPal.d58097c1.css.map */

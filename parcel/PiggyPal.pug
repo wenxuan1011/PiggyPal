@@ -3,7 +3,8 @@ html
   head
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1")
-    link(href="./signup.sass", rel="stylesheet")
+    link(rel="shortcut icon" href="./image/btn/PiggyPal_logo.png" type="image/x-icon")
+    link(href="./PiggyPal.sass", rel="stylesheet")
     link(rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css")
     title PiggyPal
   body
@@ -204,10 +205,7 @@ html
           p 個人專案
           p 共同專案
           p 達成成就
-      
         #normal_save_money_list
-          //- #no_normal_save_money
-          //-   p 尚未建立專案
           .normal_save_money
             .normal_save_money_infor
               .type_and_point
@@ -221,6 +219,10 @@ html
           #no_project
             p 尚未建立專案
           img#add_project_btn(src = "./image/btn/btn_AddProject.png", height = "32px")
+        #complete_project_all 
+          #complete_project_list
+          #no_complete_project
+            p 尚未達成就
 
       #add_project
         .bar
@@ -276,7 +278,6 @@ html
             input(type = "text", name = "userid")
             img(src = "./image/btn/btn_search.png", height = "47.56%")
         #result
-          //- img(src = "./image/MainPage/MainPage_personal.png", height = "66.6%", width = "28.2667%")
           img(src = "./image/PersonalPage/Personal_userPic.png", height = "106vh", width = "28.2667%")
           p USER
           img#add_mem_btn(src = "./image/btn/btn_save.png", width = "52%")
@@ -318,7 +319,8 @@ html
           img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
           img(src = "./image/btn/btn_close.png", width = "5.33333%")
           p 共同專案
-        img#drop_down_btn(src = "./image/project/Project_month-bg.png", width = "22.4%")
+        #drop_down_btn
+          p Ranking
         .ranking_list
         .project_detail
           .title 
@@ -360,6 +362,37 @@ html
           #target_money_sm
             p 每月固定儲蓄金額
             p#money $800    
+
+      #show_complete_project
+        .bar
+          img(src = "./image/btn/btn_arrow_back.png", width = "6.4%")
+          img(src = "./image/btn/btn_close.png", width = "5.33333%")
+          p 達成目標
+        #complete_project_form
+          .box
+            p 專案名稱
+            p name
+          .box
+            p 分類顏色
+            img(src = "./image/project/Project_colordot_orange.png", width = "6.273%")
+          .box
+            p 日期
+            p date
+          .box
+            p 目標金額
+            p money
+          .box
+            p 專案類型
+            p 個人專案
+          .box
+            p 分配設定
+            p （預設）均分
+          .box
+            p 提醒
+            img(src = "./image/project/btn_switch.png", width = "17.71%")
+          .box
+            p 備註
+            p 巴拉巴拉
 
       #personal_page
         .bar

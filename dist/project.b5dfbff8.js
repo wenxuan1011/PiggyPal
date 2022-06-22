@@ -1975,7 +1975,79 @@ var _default = {
   InitialColor: InitialColor
 };
 exports.default = _default;
-},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./module.js":"module.js"}],"project.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime.js":"../node_modules/regenerator-runtime/runtime.js","./signup.js":"signup.js","./module.js":"module.js"}],"graphic.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _signup = _interopRequireDefault(require("./signup.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var x = [];
+var y = []; // 2D繪圖
+
+var ctx = document.getElementById('mychart').getContext('2d');
+var linechart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    // x軸
+    labels: [],
+    datasets: [{
+      label: 'Money',
+      // y軸
+      data: [],
+      fill: true,
+      // 線的顏色
+      borderColor: '#FFFFFF',
+      // 填滿的顏色
+      backgroundColor: '#FFFFFF'
+    }]
+  }
+});
+
+function getGraphData(project_name, personal_or_joint, color) {
+  var back_color_r = color.slice(1, 3);
+  var back_color_g = color.slice(3, 5);
+  var back_color_b = color.slice(5, 7);
+  back_color_r = Number.parseInt(back_color_r, 16);
+  back_color_g = Number.parseInt(back_color_g, 16);
+  back_color_b = Number.parseInt(back_color_b, 16);
+  linechart.destroy();
+  $.get('./getGraphDetail', {
+    id: _signup.default,
+    name: project_name
+  }, function (data) {
+    x = data[0];
+    y = data[1];
+    linechart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        // x軸
+        labels: x,
+        datasets: [{
+          label: 'Money',
+          // y軸
+          data: y,
+          fill: true,
+          // 線的顏色
+          borderColor: color,
+          // 填滿的顏色
+          backgroundColor: "rgba(".concat(back_color_r, ",").concat(back_color_g, ",").concat(back_color_b, ",0.15)")
+        }]
+      }
+    });
+  });
+}
+
+var _default = {
+  getGraphData: getGraphData
+};
+exports.default = _default;
+},{"./signup.js":"signup.js"}],"project.js":[function(require,module,exports) {
 "use strict";
 
 var _signup = _interopRequireDefault(require("./signup.js"));
@@ -1983,6 +2055,8 @@ var _signup = _interopRequireDefault(require("./signup.js"));
 var _module = _interopRequireDefault(require("./module.js"));
 
 var _selectormodule = _interopRequireDefault(require("./selectormodule.js"));
+
+var _graphic = _interopRequireDefault(require("./graphic.js"));
 
 var _regeneratorRuntime2 = require("regenerator-runtime");
 
@@ -2001,7 +2075,7 @@ var PERSONAL_OR_JOINT = false; // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false;
 var MEMBER = [_signup.default];
 var TIME = new Date();
-var port = 6165;
+var port = 6168;
 var last_participant = "";
 var parti_num = 0; //偵測有沒有圖片
 
@@ -2028,34 +2102,24 @@ var _loop = function _loop(i) {
     $('#project #type_bar p:nth-child(' + "".concat(i) + ')').css("color", "#0D0E10");
 
     if (i === 1) {
-      $('#project_list_all').css("display", "none"); // $('#project_list').css("display", "none")
-      // $('#project #add_project_btn').css("display", "none")
-      // $('#project #no_project').css("display", "none")
-
-      $('#normal_save_money_list').css("display", "flex"); // $('#normal_save_money').css("display", "flex")
-
-      $('#normal_save_money_list .normal_save_money').css("display", "flex");
+      $('#project_list_all').css("display", "none");
+      $('#complete_project_all').css("display", "none");
+      $('#normal_save_money_list').css("display", "flex"); //$('#normal_save_money_list .normal_save_money').css("display", "flex")
     } else if (i === 2) {
       SHOW_PERSONAL_OR_JOINT = false;
-      $('#project_list_all').css("display", "flex"); // $('#project_list').css("display", "flex")
-      // $('#project #add_project_btn').css("display", "block")
-
-      $('#normal_save_money_list').css("display", "none");
-      $('#normal_save_money_list .normal_save_money').css("display", "none");
+      $('#project_list_all').css("display", "flex");
+      $('#complete_project_all').css("display", "none");
+      $('#normal_save_money_list').css("display", "none"); //$('#normal_save_money_list .normal_save_money').css("display", "none")
     } else if (i === 3) {
       SHOW_PERSONAL_OR_JOINT = true;
-      $('#project_list_all').css("display", "flex"); // $('#project_list').css("display", "flex")
-      // $('#project #add_project_btn').css("display", "block")
-
-      $('#normal_save_money_list').css("display", "none");
-      $('#normal_save_money_list .normal_save_money').css("display", "none");
+      $('#project_list_all').css("display", "flex");
+      $('#complete_project_all').css("display", "none");
+      $('#normal_save_money_list').css("display", "none"); //$('#normal_save_money_list .normal_save_money').css("display", "none")
     } else {
-      $('#project_list_all').css("display", "none"); // $('#project_list').css("display", "none")
-      // $('#project #add_project_btn').css("display", "none")
-
-      $('#normal_save_money_list').css("display", "none");
-      $('#project #no_project').css("display", "none");
-      $('#normal_save_money_list .normal_save_money').css("display", "none");
+      $('#project_list_all').css("display", "none");
+      $('#complete_project_all').css("display", "flex");
+      $('#normal_save_money_list').css("display", "none"); //$('#project #no_project').css("display", "none")
+      //$('#normal_save_money_list .normal_save_money').css("display", "none")
     }
 
     for (var j = 1; j < 5; j++) {
@@ -2098,6 +2162,12 @@ $('#show_personal_project .bar img').click(function () {
   setTimeout(function () {
     $('#show_personal_project').css("display", "none");
   }, 500);
+});
+$('#show_joint_project .bar img').click(function () {
+  $('#show_joint_project').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#show_joint_project').css("display", "none");
+  }, 500);
 }); // open/close normal_save_money page
 
 $('.normal_save_money').click(function () {
@@ -2110,12 +2180,6 @@ $('#show_normal_save_money .bar img').click(function () {
   $('#show_normal_save_money').css("transform", "translateX(100%)");
   setTimeout(function () {
     $('#show_normal_save_money').css("display", "none");
-  }, 500);
-});
-$('#show_joint_project .bar img').click(function () {
-  $('#show_joint_project').css("transform", "translateX(100%)");
-  setTimeout(function () {
-    $('#show_joint_project').css("display", "none");
   }, 500);
 }); // open/close add_member
 
@@ -2149,7 +2213,7 @@ function showProjectDetail(project_name, personal_or_joint) {
               page_tag = "#show_".concat(personal_or_joint, "_project");
 
               if (!(data !== false)) {
-                _context.next = 23;
+                _context.next = 22;
                 break;
               }
 
@@ -2163,8 +2227,8 @@ function showProjectDetail(project_name, personal_or_joint) {
               percent = Math.round(percent, -1); // draw progress bar
 
               tagposition = percent / 100 * 245 + 30;
-              tagposition = Math.round(tagposition, -1);
-              console.log(tagposition);
+              tagposition = Math.round(tagposition, -1); //console.log(tagposition)
+
               $("".concat(page_tag, " .SpeedBar .ColorBar")).css("width", "".concat(percent, "%"));
               $("".concat(page_tag, " .money_tag .TagPosition")).css("width", "".concat(tagposition, "px"));
               $("".concat(page_tag, " .money_tag .TagPosition #PriceTag")).html("$ ".concat(totalmoney));
@@ -2176,10 +2240,10 @@ function showProjectDetail(project_name, personal_or_joint) {
               money = "$".concat(data[9]);
               $("".concat(page_tag, " .project_detail .planned_speed_graph #money")).html(money);
               $("".concat(page_tag, " .project_detail .target_money #money")).html(money);
-              _context.next = 23;
+              _context.next = 22;
               break;
 
-            case 23:
+            case 22:
             case "end":
               return _context.stop();
           }
@@ -2216,11 +2280,13 @@ $('#navbar img:nth-child(5), #project #type_bar').click(function (event) {
 
 function getallproject(_x2) {
   return _getallproject.apply(this, arguments);
-}
+} // ---------------------------------------------------------------------------------
+// show complete project box
+
 
 function _getallproject() {
   _getallproject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(TF) {
-    var show_no_project, judge, result, container, project_list, color_list, percent_list, i, id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, totalmoney, percent, type, _container, block, infor_1, infor_2, dot, name, date, infor_3, speed, bar, color_bar, btn, _loop2, _i2;
+    var show_no_project, judge, result, container, project_list, color_list, percent_list, i, id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, target_number, totalmoney, percent, type, _container, block, infor_1, infor_2, dot, name, date, infor_3, speed, bar, color_bar, btn, _loop3, _i2;
 
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
@@ -2349,7 +2415,7 @@ function _getallproject() {
             break;
 
           case 83:
-            _loop2 = function _loop2(_i2) {
+            _loop3 = function _loop3(_i2) {
               $("#".concat(project_list[_i2], " .SpeedBar .ColorBar")).css("width", "".concat(percent_list[_i2], "%"));
 
               if (SHOW_PERSONAL_OR_JOINT === false) {
@@ -2361,6 +2427,8 @@ function _getallproject() {
                   event.preventDefault(); // I'm not sure is it right or not
 
                   showProjectDetail(project_list[_i2], 'personal');
+
+                  _graphic.default.getGraphData(project_list[_i2], 1, color_list[_i2]);
                 });
               } else {
                 $("#" + "".concat(project_list[_i2])).click(function (e) {
@@ -2377,7 +2445,7 @@ function _getallproject() {
             };
 
             for (_i2 = 0; _i2 < project_list.length; _i2++) {
-              _loop2(_i2);
+              _loop3(_i2);
             }
 
           case 85:
@@ -2396,6 +2464,199 @@ function _getallproject() {
   }));
   return _getallproject.apply(this, arguments);
 }
+
+$('#project #type_bar p:nth-child(4)').click(function (event) {
+  event.preventDefault();
+  getCompleteProject();
+});
+
+function getCompleteProject() {
+  return _getCompleteProject.apply(this, arguments);
+}
+
+function _getCompleteProject() {
+  _getCompleteProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    var show_no_complete_project, result, container, complete_list, color_list, j, i, id, project_name, color, start_year, start_month, start_day, end_year, end_month, end_day, type, block, infor_1, infor_2, dot, name, date, infor_3, speed, bar, color_bar, btn, _loop4, _i3;
+
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            show_no_complete_project = true;
+            result = 0;
+            _context3.next = 4;
+            return $.get('./getProject', {
+              ID: _signup.default
+            }, function (data) {
+              result = data;
+            });
+
+          case 4:
+            if (!(result != "nothing")) {
+              _context3.next = 75;
+              break;
+            }
+
+            container = document.querySelector('#main #project #complete_project_list');
+            container.innerHTML = "<div></div>";
+            complete_list = [];
+            color_list = [];
+            j = 0;
+            _context3.t0 = _regeneratorRuntime().keys(result);
+
+          case 11:
+            if ((_context3.t1 = _context3.t0()).done) {
+              _context3.next = 73;
+              break;
+            }
+
+            i = _context3.t1.value;
+            id = _module.default.gettabledata(result, 'id', i);
+            project_name = _module.default.gettabledata(result, 'project_name', i);
+            color = _module.default.gettabledata(result, 'color', i);
+            start_year = _module.default.gettabledata(result, 'start_year', i);
+            start_month = _module.default.gettabledata(result, 'start_month', i);
+            start_day = _module.default.gettabledata(result, 'start_day', i);
+            end_year = _module.default.gettabledata(result, 'end_year', i);
+            end_month = _module.default.gettabledata(result, 'end_month', i);
+            end_day = _module.default.gettabledata(result, 'end_day', i);
+            type = _module.default.gettabledata(result, 'personal_or_joint', i);
+            console.log('complete', type);
+
+            if (!(type != -1)) {
+              _context3.next = 26;
+              break;
+            }
+
+            return _context3.abrupt("continue", 11);
+
+          case 26:
+            console.log('add');
+            complete_list[j] = project_name;
+            color_list[j] = color;
+            j++; //create element
+
+            block = document.createElement('div');
+            infor_1 = document.createElement('div');
+            infor_2 = document.createElement('div');
+            dot = document.createElement('img');
+            name = document.createElement('p');
+            date = document.createElement('p');
+            infor_3 = document.createElement('div');
+            speed = document.createElement('p');
+            bar = document.createElement('div');
+            color_bar = document.createElement('div');
+            btn = document.createElement('img'); //set text
+
+            name.textContent = "".concat(project_name);
+            date.textContent = "".concat(start_year, ".").concat(start_month, ".").concat(start_day, "-").concat(end_year, ".").concat(end_month, ".").concat(end_day);
+            speed.textContent = '100%'; //set attribute
+
+            block.setAttribute('class', 'project_block');
+            block.setAttribute('id', "".concat(project_name, "_complete"));
+            infor_1.setAttribute('class', 'project_infor');
+            infor_2.setAttribute('class', 'type_and_date');
+            infor_3.setAttribute('class', 'plannd_speed_infor');
+            dot.setAttribute('src', "./image/project/Project_colordot_".concat(_module.default.getColor(color), ".png"));
+            dot.setAttribute('height', '35%');
+            bar.setAttribute('class', 'SpeedBar');
+            color_bar.setAttribute('class', 'ColorBar');
+            color_bar.setAttribute('style', "background-color:".concat(color));
+            btn.setAttribute('src', './image/btn/btn_arrow_right.png');
+            btn.setAttribute('height', '17%');
+            btn.setAttribute('id', 'right_btn');
+            name.setAttribute('id', 'item');
+            speed.setAttribute('id', 'percent'); //append child
+
+            container.appendChild(block);
+            block.appendChild(infor_1);
+            block.appendChild(btn);
+            bar.appendChild(color_bar);
+            infor_1.appendChild(infor_2);
+            infor_1.appendChild(infor_3);
+            infor_1.appendChild(bar);
+            infor_2.appendChild(dot);
+            infor_2.appendChild(name);
+            infor_2.appendChild(date);
+            infor_3.appendChild(speed); // display no_project box or not
+
+            show_no_complete_project = false;
+            _context3.next = 11;
+            break;
+
+          case 73:
+            _loop4 = function _loop4(_i3) {
+              $("#".concat(complete_list[_i3], "_complete .SpeedBar .ColorBar")).css("width", "100%");
+              $("#".concat(complete_list[_i3], "_complete")).click(function (e) {
+                $('#show_complete_project').css("display", "flex");
+                setTimeout(function () {
+                  $('#show_complete_project').css("transform", "translateX(0%)");
+
+                  _module.default.PopUpMessage(1);
+                }, 100);
+                event.preventDefault(); // I'm not sure is it right or not
+
+                showCompleteProjectDetail(complete_list[_i3]);
+              });
+            };
+
+            for (_i3 = 0; _i3 < complete_list.length; _i3++) {
+              _loop4(_i3);
+            }
+
+          case 75:
+            if (show_no_complete_project === true) {
+              $('#no_complete_project').css("display", "flex");
+            } else {
+              $('#no_complete_project').css("display", "none");
+            }
+
+          case 76:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _getCompleteProject.apply(this, arguments);
+}
+
+$('#show_complete_project .bar img').click(function () {
+  $('#show_complete_project').css("transform", "translateX(100%)");
+  setTimeout(function () {
+    $('#show_complete_project').css("display", "none");
+  }, 500);
+});
+
+function showCompleteProjectDetail(project_name) {
+  $.get('./getProjectDetail', {
+    id: _signup.default,
+    name: project_name
+  }, function (data) {
+    if (data !== false) {
+      console.log(data[1]);
+      $('#show_complete_project #complete_project_form .box:nth-child(1) p:nth-child(2)').html(data[1]);
+      $('#show_complete_project #complete_project_form .box:nth-child(2) img').attr("src", "./image/project/Project_colordot_".concat(_module.default.getColor(data[2]), ".png"));
+      var date = "".concat(data[3], ".").concat(data[4], ".").concat(data[5], " - ").concat(data[6], ".").concat(data[7], ".").concat(data[8]);
+      $('#show_complete_project #complete_project_form .box:nth-child(3) p:nth-child(2)').html(date);
+      $('#show_complete_project #complete_project_form .box:nth-child(4) p:nth-child(2)').html(data[9]);
+      var type = '個人專案';
+
+      if (data[10] != 1) {
+        type = '共同專案';
+      }
+
+      $('#show_complete_project #complete_project_form .box:nth-child(5) p:nth-child(2)').html(type);
+
+      if (data[11] === '') {
+        data[11] = '（無）';
+      }
+
+      $('#show_complete_project #complete_project_form .box:nth-child(8) p:nth-child(2)').html(data[11]);
+    }
+  });
+} // ---------------------------------------------------------------------------------
+
 
 function getProjectMember(creater, user, project_name) {
   $.get('./getMember', {
@@ -2463,7 +2724,11 @@ function getProjectMember(creater, user, project_name) {
         progress_bar_bottom.appendChild(progress_bar);
       }
 
-      for (var _i = 0; _i < member_list.length; _i++) {
+      var _loop2 = function _loop2(_i) {
+        tagposition = percent_list[_i] / 100 * 243 + 25;
+        tagposition = Math.round(tagposition, -1);
+        console.log(tagposition);
+        $("#".concat(member_list[_i], "block .member_box .tag_position")).css("width", "".concat(tagposition, "px"));
         $("#".concat(member_list[_i], "block .progress_bar_bg .progress_bar")).css("width", "".concat(percent_list[_i], "%"));
 
         if (member_list[_i] === user) {
@@ -2471,6 +2736,27 @@ function getProjectMember(creater, user, project_name) {
         } else {
           $("#".concat(member_list[_i], "block .progress_bar_bg .progress_bar")).css("background-color", '#E4CCFF');
         }
+
+        $("#show_joint_project #".concat(member_list[_i], "block .progress_bar_bg")).click(function () {
+          $("#show_joint_project #".concat(member_list[_i], "block .member_box .tag_position .tag")).css("display", "flex");
+          setTimeout(function () {
+            document.addEventListener("click", clickHiddenTag);
+          }, 100);
+        });
+
+        function clickHiddenTag(eve) {
+          if (eve.target.id != "#".concat(member_list[_i], "block")) {
+            $("#show_joint_project #".concat(member_list[_i], "block .member_box .tag_position .tag")).css("display", "none");
+          }
+
+          document.removeEventListener("click", clickHiddenTag);
+        }
+      };
+
+      for (var _i = 0; _i < member_list.length; _i++) {
+        var tagposition;
+
+        _loop2(_i);
       }
 
       if (count_member === 1) {
@@ -3453,7 +3739,7 @@ function setStickerSrc() {
     console.log("parti_num=" + parti_num); //fail callback
   }); //
 }
-},{"./signup.js":"signup.js","./module.js":"module.js","./selectormodule.js":"selectormodule.js","regenerator-runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./signup.js":"signup.js","./module.js":"module.js","./selectormodule.js":"selectormodule.js","./graphic.js":"graphic.js","regenerator-runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3481,7 +3767,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34584" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33595" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
