@@ -23,14 +23,14 @@ cron.schedule("58 23 * * *", function() {
     console.log(today);
     serverjob.dailyEndprocess();
 });
-
+*/
 $('#navbar').click(async (event) => {
     event.preventDefault()
     dailyStartprocess()
     dailyEndprocess()
     
 })
-*/
+
 
 ///////////////do before day end///////////////
 
@@ -43,7 +43,7 @@ async function dailyEndprocess(){
         await setVariable(all_user[i])
         await calculatemoney(today,totalday)
         await saveMoneytoProject(all_user[i])
-        //await setfinancialexpenditure(all_user[0])
+        await setfinancialexpenditure(all_user[0])
         await checkmonthlyspend(all_user[i])
         console.log(todayExpenditure, todayIncome, Expenditure, Income, MonthlyExpend, MonthlyIncome, MonthlySaving)
     }
@@ -185,7 +185,7 @@ async function dailyStartprocess(){
     //console.log(all_user)
     for(var i in all_user){
         console.log('Now update ', all_user[i],' data')
-        //setfinancialincome(all_user[i])
+        setfinancialincome(all_user[i])
     }
     
 }

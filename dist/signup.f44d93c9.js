@@ -1495,9 +1495,9 @@ $(document).ready(function () {
       password: $('#signup input[name=password]').val()
     }, function (data) {
       if ("".concat(data) !== "Signup faild.") {
-        localStorage.setItem("ID", data);
-        ID = data;
-        console.log(data);
+        localStorage.setItem("ID", data); //ID = data
+        //console.log(data)
+
         $('#SignUp').css("display", "none");
         $('#main').css("display", "flex");
       } else {
@@ -1569,7 +1569,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34996" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34194" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

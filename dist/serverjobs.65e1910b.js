@@ -3517,70 +3517,89 @@ cron.schedule("58 23 * * *", function() {
     console.log(today);
     serverjob.dailyEndprocess();
 });
-
-$('#navbar').click(async (event) => {
-    event.preventDefault()
-    dailyStartprocess()
-    dailyEndprocess()
-    
-})
 */
-///////////////do before day end///////////////
+
+$('#navbar').click( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(event) {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            event.preventDefault();
+            dailyStartprocess();
+            dailyEndprocess();
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}()); ///////////////do before day end///////////////
 
 function dailyEndprocess() {
   return _dailyEndprocess.apply(this, arguments);
 }
 
 function _dailyEndprocess() {
-  _dailyEndprocess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  _dailyEndprocess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     var today, totalday, all_user, i;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             today = new Date();
             totalday = setremainDay(today, totalday);
-            _context.next = 4;
+            _context2.next = 4;
             return mod.getAllUser();
 
           case 4:
-            all_user = _context.sent;
-            _context.t0 = _regeneratorRuntime().keys(all_user);
+            all_user = _context2.sent;
+            _context2.t0 = _regeneratorRuntime().keys(all_user);
 
           case 6:
-            if ((_context.t1 = _context.t0()).done) {
-              _context.next = 20;
+            if ((_context2.t1 = _context2.t0()).done) {
+              _context2.next = 22;
               break;
             }
 
-            i = _context.t1.value;
+            i = _context2.t1.value;
             console.log('now update', all_user[i], 'data');
-            _context.next = 11;
+            _context2.next = 11;
             return setVariable(all_user[i]);
 
           case 11:
-            _context.next = 13;
+            _context2.next = 13;
             return calculatemoney(today, totalday);
 
           case 13:
-            _context.next = 15;
+            _context2.next = 15;
             return saveMoneytoProject(all_user[i]);
 
           case 15:
-            _context.next = 17;
-            return checkmonthlyspend(all_user[i]);
+            _context2.next = 17;
+            return setfinancialexpenditure(all_user[0]);
 
           case 17:
+            _context2.next = 19;
+            return checkmonthlyspend(all_user[i]);
+
+          case 19:
             console.log(todayExpenditure, todayIncome, Expenditure, Income, MonthlyExpend, MonthlyIncome, MonthlySaving);
-            _context.next = 6;
+            _context2.next = 6;
             break;
 
-          case 20:
+          case 22:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _dailyEndprocess.apply(this, arguments);
 }
@@ -3610,86 +3629,86 @@ function setremainDay(today, totalday) {
   return totalday;
 }
 
-function setVariable(_x) {
+function setVariable(_x2) {
   return _setVariable.apply(this, arguments);
 }
 
 function _setVariable() {
-  _setVariable = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(ID) {
+  _setVariable = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(ID) {
     var today;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             console.log("start setVariable");
             today = new Date();
-            _context2.next = 4;
+            _context3.next = 4;
             return mod.getTodayMoney(ID, 'account', today.getFullYear(), mod.StringtoInt(today.getMonth()) + 1, today.getDate(), 'cost', 0);
 
           case 4:
-            todayExpenditure = _context2.sent;
-            _context2.next = 7;
+            todayExpenditure = _context3.sent;
+            _context3.next = 7;
             return mod.getTodayMoney(ID, 'account', today.getFullYear(), mod.StringtoInt(today.getMonth()) + 1, today.getDate(), 'cost', 1);
 
           case 7:
-            todayIncome = _context2.sent;
-            _context2.next = 10;
+            todayIncome = _context3.sent;
+            _context3.next = 10;
             return mod.getMonthlyMoney(ID, 'account', 'cost', 0);
 
           case 10:
-            Expenditure = _context2.sent;
-            _context2.next = 13;
+            Expenditure = _context3.sent;
+            _context3.next = 13;
             return mod.getMonthlyMoney(ID, 'account', 'cost', 3);
 
           case 13:
-            ProjectSaved = _context2.sent;
-            _context2.next = 16;
+            ProjectSaved = _context3.sent;
+            _context3.next = 16;
             return mod.getMonthlyMoney(ID, 'account', 'cost', 1);
 
           case 16:
-            Income = _context2.sent;
-            _context2.next = 19;
+            Income = _context3.sent;
+            _context3.next = 19;
             return mod.getMonthlyMoney(ID, 'financial', 'money', 0);
 
           case 19:
-            MonthlyIncome = _context2.sent;
-            _context2.next = 22;
+            MonthlyIncome = _context3.sent;
+            _context3.next = 22;
             return mod.getMonthlyMoney(ID, 'financial', 'money', 1);
 
           case 22:
-            MonthlyExpend = _context2.sent;
-            _context2.next = 25;
+            MonthlyExpend = _context3.sent;
+            _context3.next = 25;
             return mod.getMonthlyMoney(ID, 'financial', 'money', 2);
 
           case 25:
-            MonthlySaving = _context2.sent;
-            _context2.next = 28;
+            MonthlySaving = _context3.sent;
+            _context3.next = 28;
             return mod.getProjectMoney(ID);
 
           case 28:
-            ProjectSaving = _context2.sent;
+            ProjectSaving = _context3.sent;
             ProjectSaving = Math.ceil(ProjectSaving);
 
           case 30:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _setVariable.apply(this, arguments);
 }
 
-function calculatemoney(_x2, _x3) {
+function calculatemoney(_x3, _x4) {
   return _calculatemoney.apply(this, arguments);
 }
 
 function _calculatemoney() {
-  _calculatemoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(today, totalday) {
+  _calculatemoney = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(today, totalday) {
     var DailyRemain, actualDailyRemain;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             console.log("start calculate money");
             DailyRemain = (MonthlyIncome - MonthlyExpend - MonthlySaving - Expenditure + Income + todayExpenditure) / (mod.StringtoInt(totalday - today.getDate()) + 1);
@@ -3706,37 +3725,37 @@ function _calculatemoney() {
 
           case 4:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return _calculatemoney.apply(this, arguments);
 }
 
-function saveMoneytoProject(_x4) {
+function saveMoneytoProject(_x5) {
   return _saveMoneytoProject.apply(this, arguments);
 }
 
 function _saveMoneytoProject() {
-  _saveMoneytoProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(ID) {
+  _saveMoneytoProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(ID) {
     var all_project, count, today, saving_money, date, month, year;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             console.log("saveMoneyProject");
-            _context4.next = 3;
+            _context5.next = 3;
             return mod.sergetProject(ID);
 
           case 3:
-            all_project = _context4.sent;
+            all_project = _context5.sent;
             count = 0;
             today = new Date();
 
           case 6:
             if (!(ProjectSaving > 0 && count < all_project.length)) {
-              _context4.next = 21;
+              _context5.next = 21;
               break;
             }
 
@@ -3756,7 +3775,7 @@ function _saveMoneytoProject() {
             month = mod.datetransfer(today.getMonth() + 1);
             year = today.getFullYear();
             console.log('DMY:', date, month, year);
-            _context4.next = 18;
+            _context5.next = 18;
             return $.get('./saveMoneytoProject', {
               id: all_project[count].id,
               member: all_project[count].member,
@@ -3773,30 +3792,30 @@ function _saveMoneytoProject() {
 
           case 18:
             count++;
-            _context4.next = 6;
+            _context5.next = 6;
             break;
 
           case 21:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4);
+    }, _callee5);
   }));
   return _saveMoneytoProject.apply(this, arguments);
 }
 
-function setfinancialexpenditure(_x5) {
+function setfinancialexpenditure(_x6) {
   return _setfinancialexpenditure.apply(this, arguments);
 }
 
 function _setfinancialexpenditure() {
-  _setfinancialexpenditure = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(ID) {
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+  _setfinancialexpenditure = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(ID) {
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context5.next = 2;
+            _context6.next = 2;
             return $.get('./setfinancialexpenditure', {
               id: ID
             }, function (data) {
@@ -3805,25 +3824,25 @@ function _setfinancialexpenditure() {
 
           case 2:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5);
+    }, _callee6);
   }));
   return _setfinancialexpenditure.apply(this, arguments);
 }
 
-function checkmonthlyspend(_x6) {
+function checkmonthlyspend(_x7) {
   return _checkmonthlyspend.apply(this, arguments);
 } //////do at day start///////////////
 
 
 function _checkmonthlyspend() {
-  _checkmonthlyspend = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(ID) {
+  _checkmonthlyspend = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(ID) {
     var debt;
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
             console.log("checkmonthlyspend");
 
@@ -3857,10 +3876,10 @@ function _checkmonthlyspend() {
 
           case 2:
           case "end":
-            return _context6.stop();
+            return _context7.stop();
         }
       }
-    }, _callee6);
+    }, _callee7);
   }));
   return _checkmonthlyspend.apply(this, arguments);
 }
@@ -3870,45 +3889,46 @@ function dailyStartprocess() {
 }
 
 function _dailyStartprocess() {
-  _dailyStartprocess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+  _dailyStartprocess = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
     var all_user, i;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.next = 2;
-            return mod.getAllUser();
-
-          case 2:
-            all_user = _context7.sent;
-
-            //console.log(all_user)
-            for (i in all_user) {
-              console.log('Now update ', all_user[i], ' data'); //setfinancialincome(all_user[i])
-            }
-
-          case 4:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7);
-  }));
-  return _dailyStartprocess.apply(this, arguments);
-}
-
-function setfinancialincome(_x7) {
-  return _setfinancialincome.apply(this, arguments);
-}
-
-function _setfinancialincome() {
-  _setfinancialincome = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(id) {
     return _regeneratorRuntime().wrap(function _callee8$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
+            _context8.next = 2;
+            return mod.getAllUser();
+
+          case 2:
+            all_user = _context8.sent;
+
+            //console.log(all_user)
+            for (i in all_user) {
+              console.log('Now update ', all_user[i], ' data');
+              setfinancialincome(all_user[i]);
+            }
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+  return _dailyStartprocess.apply(this, arguments);
+}
+
+function setfinancialincome(_x8) {
+  return _setfinancialincome.apply(this, arguments);
+}
+
+function _setfinancialincome() {
+  _setfinancialincome = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(id) {
+    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
             console.log(111);
-            _context8.next = 3;
+            _context9.next = 3;
             return $.get('./setfinancialincome', {
               id: id
             }, function (data) {
@@ -3917,10 +3937,10 @@ function _setfinancialincome() {
 
           case 3:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
-    }, _callee8);
+    }, _callee9);
   }));
   return _setfinancialincome.apply(this, arguments);
 }
@@ -3952,7 +3972,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34996" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34194" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
