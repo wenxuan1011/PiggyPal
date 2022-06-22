@@ -1,12 +1,14 @@
 import ID from './signup.js'
 import mod from './module.js'
 import sel from './selectormodule.js'
+import gra from './graphic.js'
+
 import { async } from 'regenerator-runtime'
 var PERSONAL_OR_JOINT = false  // personal = false, joint = true
 var SHOW_PERSONAL_OR_JOINT = false
 var MEMBER = [ID]
 var TIME = new Date()
-var port = 6165
+var port = 6166
 var last_participant = ""
 var parti_num=0
 //偵測有沒有圖片
@@ -151,7 +153,7 @@ function showProjectDetail(project_name, personal_or_joint){
   $.get('./getProjectDetail',{
     id: ID,
     name: project_name,
-  },async(data)=>{
+  }, async(data)=>{
     let page_tag = `#show_${personal_or_joint}_project`
     if(data !== false){
       $(`${page_tag} .project_detail .title #item`).html(`${data[1]}`)
@@ -285,6 +287,7 @@ async function getallproject(TF){
           }, 100)
           event.preventDefault()  // I'm not sure is it right or not
           showProjectDetail(project_list[i], 'personal')
+          gra.getGraphData(project_list[i], 1, color_list[i])
         })
       }
       else{
